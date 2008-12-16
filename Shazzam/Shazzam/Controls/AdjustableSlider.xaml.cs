@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 
 namespace Shazzam.Controls {
@@ -18,7 +8,8 @@ namespace Shazzam.Controls {
   /// Interaction logic for AdjustableSlider.xaml
   /// </summary>
   public partial class AdjustableSlider : UserControl {
-    public AdjustableSlider() {
+    public AdjustableSlider()
+    {
       InitializeComponent();
       internalSlider.ValueChanged += new RoutedPropertyChangedEventHandler<double>(internalSlider_ValueChanged);
       maxTextBox.TextChanged += new TextChangedEventHandler(maxTextBox_TextChanged);
@@ -27,7 +18,8 @@ namespace Shazzam.Controls {
 
     }
     DoubleAnimation anim = new DoubleAnimation();
-    void animationTextBox_TextChanged(object sender, TextChangedEventArgs e) {
+    void animationTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
       int candidate;
       //if (double.TryParse(animationTextBox.Text, out candidate))
       //{
@@ -36,8 +28,16 @@ namespace Shazzam.Controls {
       int.TryParse(animationTextBox.Text, out candidate);
       //if (candidate > 0)
       //{
-     // ChangeAnimationTimespan(candidate);
+      // ChangeAnimationTimespan(candidate);
       ChangeAnimationTimespan(new TimeSpan(0, 0, 0, 0, candidate));
+      if (candidate==0)
+      {
+        sliderStackPanel.Visibility = Visibility.Visible;
+      }
+      else
+      {
+        sliderStackPanel.Visibility = Visibility.Collapsed;
+      }
 
       //}
       //else
@@ -48,7 +48,8 @@ namespace Shazzam.Controls {
 
     }
 
-    private void ChangeAnimationTimespan(TimeSpan candidate) {
+    private void ChangeAnimationTimespan(TimeSpan candidate)
+    {
       anim.RepeatBehavior = RepeatBehavior.Forever;
       anim.AccelerationRatio = .2;
       anim.DecelerationRatio = .2;
@@ -59,7 +60,8 @@ namespace Shazzam.Controls {
       this.internalSlider.BeginAnimation(Slider.ValueProperty, anim);
     }
 
-    void minTextBox_TextChanged(object sender, TextChangedEventArgs e) {
+    void minTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
       double candidate;
       if (double.TryParse(minTextBox.Text, out candidate))
       {
@@ -73,7 +75,8 @@ namespace Shazzam.Controls {
       }
     }
 
-    void maxTextBox_TextChanged(object sender, TextChangedEventArgs e) {
+    void maxTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
       double candidate;
       if (double.TryParse(maxTextBox.Text, out candidate))
       {
@@ -82,16 +85,16 @@ namespace Shazzam.Controls {
         {
           ChangeAnimationTimespan(anim.Duration.TimeSpan);
         }
-        catch 
+        catch
         {
           //ignore any errors
         }
-         
 
       }
     }
 
-    void internalSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
+    void internalSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
       this.Value = e.NewValue;
       RaiseValueChangedEvent();
     }
@@ -106,10 +109,11 @@ namespace Shazzam.Controls {
                 new PropertyChangedCallback(OnValueChanged)));
 
     /// <summary>
-    /// Gets or sets the Value property.  This dependency property 
+    /// Gets or sets the Value property.  This dependency property
     /// indicates the current value of the AdjustableSlider.
     /// </summary>
-    public Double Value {
+    public Double Value
+    {
       get { return (Double)GetValue(ValueProperty); }
       set { SetValue(ValueProperty, value); }
     }
@@ -117,7 +121,8 @@ namespace Shazzam.Controls {
     /// <summary>
     /// Handles changes to the Value property.
     /// </summary>
-    private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+    private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
       ((AdjustableSlider)d).OnValueChanged(e);
 
     }
@@ -125,7 +130,8 @@ namespace Shazzam.Controls {
     /// <summary>
     /// Provides derived classes an opportunity to handle changes to the Value property.
     /// </summary>
-    protected virtual void OnValueChanged(DependencyPropertyChangedEventArgs e) {
+    protected virtual void OnValueChanged(DependencyPropertyChangedEventArgs e)
+    {
       internalSlider.Value = (Double)e.NewValue;
     }
 
@@ -141,10 +147,11 @@ namespace Shazzam.Controls {
                 new PropertyChangedCallback(OnMinimumChanged)));
 
     /// <summary>
-    /// Gets or sets the Minimum property.  This dependency property 
+    /// Gets or sets the Minimum property.  This dependency property
     /// indicates Minimum allowed value for the control.
     /// </summary>
-    public Double Minimum {
+    public Double Minimum
+    {
       get { return (Double)GetValue(MinimumProperty); }
       set { SetValue(MinimumProperty, value); }
     }
@@ -152,14 +159,16 @@ namespace Shazzam.Controls {
     /// <summary>
     /// Handles changes to the Minimum property.
     /// </summary>
-    private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+    private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
       ((AdjustableSlider)d).OnMinimumChanged(e);
     }
 
     /// <summary>
     /// Provides derived classes an opportunity to handle changes to the Minimum property.
     /// </summary>
-    protected virtual void OnMinimumChanged(DependencyPropertyChangedEventArgs e) {
+    protected virtual void OnMinimumChanged(DependencyPropertyChangedEventArgs e)
+    {
       this.minTextBox.Text = e.NewValue.ToString();
     }
 
@@ -176,10 +185,11 @@ namespace Shazzam.Controls {
                 new PropertyChangedCallback(OnMaximumChanged)));
 
     /// <summary>
-    /// Gets or sets the Maximum property.  This dependency property 
+    /// Gets or sets the Maximum property.  This dependency property
     /// indicates Maximum allowed value for control.
     /// </summary>
-    public Double Maximum {
+    public Double Maximum
+    {
       get { return (Double)GetValue(MaximumProperty); }
       set { SetValue(MaximumProperty, value); }
     }
@@ -187,14 +197,16 @@ namespace Shazzam.Controls {
     /// <summary>
     /// Handles changes to the Maximum property.
     /// </summary>
-    private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+    private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
       ((AdjustableSlider)d).OnMaximumChanged(e);
     }
 
     /// <summary>
     /// Provides derived classes an opportunity to handle changes to the Maximum property.
     /// </summary>
-    protected virtual void OnMaximumChanged(DependencyPropertyChangedEventArgs e) {
+    protected virtual void OnMaximumChanged(DependencyPropertyChangedEventArgs e)
+    {
       this.maxTextBox.Text = e.NewValue.ToString();
     }
 
@@ -211,10 +223,11 @@ namespace Shazzam.Controls {
                 new PropertyChangedCallback(OnAnimationValueChanged)));
 
     /// <summary>
-    /// Gets or sets the AnimationValue property.  This dependency property 
+    /// Gets or sets the AnimationValue property.  This dependency property
     /// indicates AnimationValue allowed value for control.
     /// </summary>
-    public Double AnimationValue {
+    public Double AnimationValue
+    {
       get { return (Double)GetValue(AnimationValueProperty); }
       set { SetValue(AnimationValueProperty, value); }
     }
@@ -222,19 +235,20 @@ namespace Shazzam.Controls {
     /// <summary>
     /// Handles changes to the AnimationValue property.
     /// </summary>
-    private static void OnAnimationValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+    private static void OnAnimationValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
       ((AdjustableSlider)d).OnAnimationValueChanged(e);
     }
 
     /// <summary>
     /// Provides derived classes an opportunity to handle changes to the AnimationValue property.
     /// </summary>
-    protected virtual void OnAnimationValueChanged(DependencyPropertyChangedEventArgs e) {
+    protected virtual void OnAnimationValueChanged(DependencyPropertyChangedEventArgs e)
+    {
       this.animationTextBox.Text = e.NewValue.ToString();
     }
 
     #endregion
-
 
     #region IsForwardAnimation
 
@@ -247,10 +261,11 @@ namespace Shazzam.Controls {
                 new PropertyChangedCallback(OnIsForwardAnimationChanged)));
 
     /// <summary>
-    /// Gets or sets the IsForwardAnimation property.  This dependency property 
+    /// Gets or sets the IsForwardAnimation property.  This dependency property
     /// indicates whether animation is forward or backward.
     /// </summary>
-    public bool IsForwardAnimation {
+    public bool IsForwardAnimation
+    {
       get { return (bool)GetValue(IsForwardAnimationProperty); }
       set { SetValue(IsForwardAnimationProperty, value); }
     }
@@ -258,19 +273,19 @@ namespace Shazzam.Controls {
     /// <summary>
     /// Handles changes to the IsForwardAnimation property.
     /// </summary>
-    private static void OnIsForwardAnimationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+    private static void OnIsForwardAnimationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
       ((AdjustableSlider)d).OnIsForwardAnimationChanged(e);
     }
 
     /// <summary>
     /// Provides derived classes an opportunity to handle changes to the IsForwardAnimation property.
     /// </summary>
-    protected virtual void OnIsForwardAnimationChanged(DependencyPropertyChangedEventArgs e) {
+    protected virtual void OnIsForwardAnimationChanged(DependencyPropertyChangedEventArgs e)
+    {
     }
 
     #endregion
-
-
 
     #region ValueChanged
 
@@ -283,7 +298,8 @@ namespace Shazzam.Controls {
     /// <summary>
     /// Occurs when Value changes
     /// </summary>
-    public event RoutedEventHandler ValueChanged {
+    public event RoutedEventHandler ValueChanged
+    {
       add { AddHandler(ValueChangedEvent, value); }
       remove { RemoveHandler(ValueChangedEvent, value); }
     }
@@ -291,7 +307,8 @@ namespace Shazzam.Controls {
     /// <summary>
     /// A helper method to raise the ValueChanged event.
     /// </summary>
-    protected RoutedEventArgs RaiseValueChangedEvent() {
+    protected RoutedEventArgs RaiseValueChangedEvent()
+    {
       return RaiseValueChangedEvent(this);
     }
 
@@ -299,7 +316,8 @@ namespace Shazzam.Controls {
     /// A static helper method to raise the ValueChanged event on a target element.
     /// </summary>
     /// <param name="target">UIElement or ContentElement on which to raise the event</param>
-    internal static RoutedEventArgs RaiseValueChangedEvent(DependencyObject target) {
+    internal static RoutedEventArgs RaiseValueChangedEvent(DependencyObject target)
+    {
       if (target == null) return null;
 
       RoutedEventArgs args = new RoutedEventArgs();
@@ -309,9 +327,6 @@ namespace Shazzam.Controls {
     }
 
     #endregion
-
-
-
 
   }
 }

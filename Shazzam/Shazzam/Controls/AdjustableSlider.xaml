@@ -29,7 +29,7 @@
 									MinWidth='40'
 									x:Name='maxTextBox'>100</TextBox>
 			</StackPanel>
-			<StackPanel Orientation='Horizontal'>
+			<StackPanel Orientation='Horizontal' x:Name='sliderStackPanel'>
 				<TextBlock  Margin='5,0,0,0'
 										VerticalAlignment='Center'
 										Foreground='{StaticResource NeutralWhiteBrush}'
