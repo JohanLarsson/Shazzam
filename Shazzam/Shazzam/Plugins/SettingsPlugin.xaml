@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Shazzam.Plugins.SettingsPlugin"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:settings="clr-namespace:Shazzam.Properties"
+             Height="300">
+  <Grid  Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="12" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="12" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="12" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="12" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="12" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="12" />
+      <RowDefinition Height="Auto" />
+
+    </Grid.RowDefinitions>
+    <StackPanel>
+      <TextBlock TextElement.Foreground="#FFF"
+                 Grid.Row="0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Center"
+                 Margin="0,0,0,0">Location of DirectX FX compiler:</TextBlock>
+      <!-- Default file location for Direct X-->
+      <TextBlock Foreground="#8FFF"
+                 HorizontalAlignment='Left'
+                 Grid.Row="0"
+                 VerticalAlignment="Center"
+                 Opacity="0.5"
+                 TextTrimming="CharacterEllipsis"
+                 Margin="20,10,26,0"
+                 Text="{Binding Source={x:Static settings:Settings.Default}, Path=DirectX_FxcPath }"
+                 TextWrapping="NoWrap"
+                 ToolTip='{Binding Source={x:Static settings:Settings.Default}, Path=DirectX_FxcPath }' />
+      <Button Content='Change Path...' x:Name='ChooseFxcLocation'
+              Margin="20,10,26,0" Click='ChooseFxcLocation_Click'></Button>
+    </StackPanel>
+  </Grid>
+</UserControl>

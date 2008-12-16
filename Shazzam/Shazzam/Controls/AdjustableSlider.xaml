@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="Shazzam.Controls.AdjustableSlider"
+						 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+						 xmlns:converters='clr-namespace:Shazzam.Converters'>
+	<UserControl.Resources>
+		<converters:DoubleToStringConverter x:Key='doubleConverter' />
+	</UserControl.Resources>
+	<Grid>
+		<WrapPanel Margin='0,3'
+							 Background='{StaticResource VeryDarkBrush}'>
+			<StackPanel Orientation='Horizontal'>
+				<TextBlock DockPanel.Dock='Left'
+									 Foreground='{StaticResource NeutralWhiteBrush}'
+									 HorizontalAlignment='Center'
+									 Margin='5,0,0,0'
+									 VerticalAlignment='Center'> Min:</TextBlock>
+				<TextBox Margin='5,3,0,3'
+								 VerticalAlignment='Center'
+								 MinWidth='40'
+								 x:Name='minTextBox'>0</TextBox>
+			</StackPanel>
+			<StackPanel Orientation='Horizontal'>
+				<TextBlock  Margin='5,0,0,0'
+										VerticalAlignment='Center'
+										Foreground='{StaticResource NeutralWhiteBrush}'
+										DockPanel.Dock='Left'> Max:</TextBlock>
+				<TextBox  Margin='5,3,0,3'
+									VerticalAlignment='Center'
+									MinWidth='40'
+									x:Name='maxTextBox'>100</TextBox>
+			</StackPanel>
+			<StackPanel Orientation='Horizontal'>
+				<TextBlock  Margin='5,0,0,0'
+										VerticalAlignment='Center'
+										Foreground='{StaticResource NeutralWhiteBrush}'
+										DockPanel.Dock='Left'> Value:</TextBlock>
+				<Slider  Margin='5,3'
+								 x:Name='internalSlider'
+								 Minimum='{Binding ElementName=minTextBox, Path=Text}'
+								 Maximum='{Binding ElementName=maxTextBox, Path=Text}'
+								 AutoToolTipPlacement='TopLeft'
+								 AutoToolTipPrecision='3'
+								 IsMoveToPointEnabled='True'
+								 MinWidth='90'
+								 MinHeight='5'
+								 ToolTip='{Binding RelativeSource={RelativeSource Self}, 
+														Path=Value,Converter={StaticResource doubleConverter}}' />
+			</StackPanel>
+			<StackPanel Orientation='Horizontal'>
+				<TextBlock  Margin='5,0,7,0'
+										VerticalAlignment='Center'
+										Foreground='{StaticResource NeutralWhiteBrush}'
+										DockPanel.Dock='Left'>Animation Value:</TextBlock>
+				<TextBox  Margin='5,3,0,3'
+									VerticalAlignment='Center'
+									MinWidth='40'
+									x:Name='animationTextBox'>0.0</TextBox>
+			</StackPanel>
+		</WrapPanel>
+	</Grid>
+</UserControl>

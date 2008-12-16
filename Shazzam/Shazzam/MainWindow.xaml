@@ -1,0 +1,197 @@
+﻿<Window x:Class='Shazzam.MainWindow'
+        xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
+        xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
+        xmlns:converters='clr-namespace:Shazzam.Converters'
+        xmlns:commands='clr-namespace:Shazzam.Commands'
+        xmlns:view='clr-namespace:Shazzam.Views'
+        Title='Shazzam - 1.0 Shader Effect Tester'
+        WindowState='Maximized'
+        Background='Black'
+        xmlns:d='http://schemas.microsoft.com/expression/blend/2008'
+        xmlns:mc='http://schemas.openxmlformats.org/markup-compatibility/2006'
+        mc:Ignorable='d'
+        Icon='Images/star.png'>
+  <Window.Resources>
+
+    <converters:StringToVisibilityConverter x:Key='visConverter' />
+    <SolidColorBrush x:Key='ImageBorderBrush'
+                     Color='#FF16404C' />
+    <Style x:Key='ImageInsideBorder'
+           TargetType='{x:Type Border}'>
+      <Setter Property='BorderBrush'
+              Value='White' />
+      <Setter Property='Background'
+              Value='{DynamicResource ImageBorderBrush}' />
+      <Setter Property='CornerRadius'
+              Value='2,2,2,2' />
+      <Setter Property='BorderThickness'
+              Value='2' />
+      <Setter Property='HorizontalAlignment'
+              Value='Center' />
+      <Setter Property='VerticalAlignment'
+              Value='Center' />
+      <Setter Property='Padding'
+              Value='4' />
+      <Setter Property='Margin'
+              Value='4' />
+    </Style>
+    <Style x:Key='ImageOutsideBorder'
+           TargetType='{x:Type Border}'>
+      <Setter Property='BorderBrush'
+              Value='White' />
+      <Setter Property='Background'
+              Value='{DynamicResource ImageBorderBrush}' />
+      <Setter Property='CornerRadius'
+              Value='2,2,2,2' />
+      <Setter Property='BorderThickness'
+              Value='6' />
+      <Setter Property='HorizontalAlignment'
+              Value='Center' />
+      <Setter Property='VerticalAlignment'
+              Value='Center' />
+
+      <Setter Property='Margin'
+              Value='1' />
+    </Style>
+
+  </Window.Resources>
+  <Window.CommandBindings>
+
+    <CommandBinding Command='ApplicationCommands.Open'
+                    Executed='Open_Executed' />
+    <CommandBinding Command='commands:AppCommands.OpenImage'
+                    Executed='OpenImage_Executed' />
+    <CommandBinding Command='ApplicationCommands.Save'
+                    Executed='Save_Executed' />
+    <CommandBinding Command='ApplicationCommands.SaveAs'
+                    Executed='SaveAs_Executed' />
+
+    <CommandBinding Command='commands:AppCommands.ApplyShader'
+                    Executed='AppyShader_Executed' CanExecute='CommandBinding_CanExecute_1'/>
+    <CommandBinding Command='commands:AppCommands.RemoveShader'
+                    Executed='RemoveShader_Executed' />
+    <CommandBinding Command='commands:AppCommands.CompileShader'
+                    Executed='CompileShader_Executed'
+                    CanExecute='CompileShaderBinding_CanExecute' />
+    <CommandBinding Command='commands:AppCommands.FullScreen'
+                    Executed='FullScreen_Executed' />
+
+    <CommandBinding Command='commands:AppCommands.FullScreenCode'
+                    Executed='FullScreenCode_Executed' />
+  </Window.CommandBindings>
+
+  <Grid Background="#101010">
+
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition x:Name="PluginsColumn"
+                        Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <StackPanel Grid.Column='0'>
+      <view:MenuView x:Name='menuView'></view:MenuView>
+      <view:PluginView Margin='10'></view:PluginView>
+
+      <!-- <view:DynamicInputView Margin='10' x:Name='dynamicView' />-->
+      <StackPanel x:Name='testStack' />
+    </StackPanel>
+    <Grid  Grid.Column='1'
+           Margin='3,6,0,0'>
+      <Grid.RowDefinitions>
+        <RowDefinition Height='5*'
+                       x:Name='imageRow' />
+        <RowDefinition Height='4'
+                       x:Name='splitterRow' />
+        <RowDefinition Height='5*'
+                       x:Name='codeRow' />
+      </Grid.RowDefinitions>
+      <!--<StackPanel DockPanel.Dock='Bottom'>
+      <Button HorizontalAlignment='Center'
+              Content='Execute'
+              Click='Button_Click' />
+    </StackPanel>-->
+      <GridSplitter Grid.Row='1'
+                    Grid.ColumnSpan='1' />
+
+      <view:CodeTabView x:Name='codeTabView'
+                        DockPanel.Dock='Bottom'
+                        Grid.Row='2' />
+      <TabControl Background='{DynamicResource NeutralDarkBrush}'
+                  x:Name='imageTabControl'
+                  Grid.Row='0'>
+        <TabItem Header='Custom Image'>
+          <Border     Style='{DynamicResource ImageOutsideBorder}'>
+            <Border     Style='{DynamicResource ImageInsideBorder}'>
+              <Image x:Name='userImage'
+                     Source='Images/ColorRange.png'
+                     HorizontalAlignment='Center'
+                     VerticalAlignment='Center' />
+            </Border>
+          </Border>
+        </TabItem>
+        <TabItem Header='Sample1'>
+
+          <Border     Style='{DynamicResource ImageOutsideBorder}'>
+            <Border     Style='{DynamicResource ImageInsideBorder}'>
+              <Image x:Name='sampleImage1'
+                     Source='Images/Fire1.jpg'
+                     HorizontalAlignment='Center'
+                     VerticalAlignment='Center' />
+
+            </Border>
+          </Border>
+        </TabItem>
+        <TabItem Header='Sample2'>
+
+          <Border Style='{DynamicResource ImageOutsideBorder}'>
+            <Border Style='{DynamicResource ImageInsideBorder}'>
+              <Image x:Name='sampleImage2'
+                     Source='Images/Light1.jpg'
+                     HorizontalAlignment='Center'
+                     VerticalAlignment='Center' />
+
+            </Border>
+          </Border>
+        </TabItem>
+        <TabItem Header='Sample3'>
+
+          <Border Style='{DynamicResource ImageOutsideBorder}'>
+            <Border Style='{DynamicResource ImageInsideBorder}'>
+              <Image x:Name='sampleImage3'
+                     Source='Images/SpikeBalls.jpg'
+                     HorizontalAlignment='Center'
+                     VerticalAlignment='Center' />
+
+            </Border>
+          </Border>
+        </TabItem>
+        <TabItem Header='Sample4'>
+
+          <Border Style='{DynamicResource ImageOutsideBorder}'>
+            <Border Style='{DynamicResource ImageInsideBorder}'>
+              <Image x:Name='sampleImage4'
+                     Source='Images/Crystal.jpg'
+                     HorizontalAlignment='Center'
+                     VerticalAlignment='Center' />
+
+            </Border>
+          </Border>
+        </TabItem>
+        <TabItem Header='Sample5'>
+
+          <Border Style='{DynamicResource ImageOutsideBorder}'>
+            <Border Style='{DynamicResource ImageInsideBorder}'>
+              <Image x:Name='sampleImage5'
+                     Source='Images/gears.jpg'
+                     HorizontalAlignment='Center'
+                     VerticalAlignment='Center' />
+
+            </Border>
+          </Border>
+        </TabItem>
+      </TabControl>
+
+      <!--</Grid>-->
+
+    </Grid>
+  </Grid>
+</Window>
