@@ -335,6 +335,7 @@
     <Content Include="Assemblies\ICSharpCode.TextEditor.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\lines.jpg" />
     <Resource Include="Images\gears.jpg" />
     <Resource Include="Views\info.png" />
     <Resource Include="Images\help.ico" />

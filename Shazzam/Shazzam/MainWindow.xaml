@@ -169,7 +169,7 @@
           <Border Style='{DynamicResource ImageOutsideBorder}'>
             <Border Style='{DynamicResource ImageInsideBorder}'>
               <Image x:Name='sampleImage4'
-                     Source='Images/Crystal.jpg'
+                     Source='Images/lines.jpg'
                      HorizontalAlignment='Center'
                      VerticalAlignment='Center' />
 
