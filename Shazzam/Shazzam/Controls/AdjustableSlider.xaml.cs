@@ -15,49 +15,80 @@ namespace Shazzam.Controls {
       maxTextBox.TextChanged += new TextChangedEventHandler(maxTextBox_TextChanged);
       minTextBox.TextChanged += new TextChangedEventHandler(minTextBox_TextChanged);
       animationTextBox.TextChanged += new TextChangedEventHandler(animationTextBox_TextChanged);
+      animationTextBox.PreviewTextInput += new System.Windows.Input.TextCompositionEventHandler(animationTextBox_PreviewTextInput);
+      NameScope.SetNameScope(sliderStackPanel, new NameScope());
+      sliderStackPanel.RegisterName(internalSlider.Name, internalSlider);
+    }
+
+    void animationTextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+    {
+      if (!(char.IsNumber(e.Text[0]) || e.Text == "."))
+      {
+        e.Handled = true;
+      }
 
     }
+
     DoubleAnimation anim = new DoubleAnimation();
+    Storyboard story = new Storyboard();
     void animationTextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
       int candidate;
-      //if (double.TryParse(animationTextBox.Text, out candidate))
-      //{
-      //  this.AnimationValue = candidate;
-      //}
-      int.TryParse(animationTextBox.Text, out candidate);
-      //if (candidate > 0)
-      //{
-      // ChangeAnimationTimespan(candidate);
-      ChangeAnimationTimespan(new TimeSpan(0, 0, 0, 0, candidate));
-      if (candidate==0)
-      {
-        sliderStackPanel.Visibility = Visibility.Visible;
-      }
-      else
-      {
-        sliderStackPanel.Visibility = Visibility.Collapsed;
-      }
 
-      //}
-      //else
-      //{
-      //  anim.BeginTime=null;
-      //  this.internalSlider.BeginAnimation(Slider.ValueProperty, anim);
-      //}
-
+      if (int.TryParse(animationTextBox.Text, out candidate))
+      {
+        // negative animations should not be allowed
+        if (candidate < 0)
+        {
+          return;
+        }
+        // do not show the slider when animation is active
+        // reason:  the UI is too distracting on short animations
+        if (candidate == 0)
+        {
+          sliderStackPanel.Visibility = Visibility.Visible;
+        }
+        else
+        {
+          sliderStackPanel.Visibility = Visibility.Collapsed;
+        }
+        ChangeAnimationTimespan(new TimeSpan(0, 0, 0, 0, candidate));
+      }
     }
 
     private void ChangeAnimationTimespan(TimeSpan candidate)
     {
+
       anim.RepeatBehavior = RepeatBehavior.Forever;
-      anim.AccelerationRatio = .2;
-      anim.DecelerationRatio = .2;
+      anim.AccelerationRatio = .25;
+      anim.DecelerationRatio = .25;
       anim.From = internalSlider.Minimum;
       anim.To = internalSlider.Maximum;
-      anim.Duration = candidate; //new TimeSpan(0, 0, 0, 0, candidate);
+      anim.Duration = candidate; 
       anim.AutoReverse = true;
-      this.internalSlider.BeginAnimation(Slider.ValueProperty, anim);
+
+      if (!story.Children.Contains(anim))
+      {
+        story.Children.Add(anim);
+
+        Storyboard.SetTargetName(anim, internalSlider.Name);
+        Storyboard.SetTargetProperty(anim, new PropertyPath(Slider.ValueProperty));
+
+      }
+
+      if (candidate == TimeSpan.Zero)
+      {
+        anim.BeginTime = null;
+        story.Stop(sliderStackPanel);
+
+      }
+      else
+      {
+        anim.BeginTime = new TimeSpan(0, 0, 0, 0, 1);
+        story.Begin(sliderStackPanel, true); // be sure and set the IsControllable param to true
+      }
+
+
     }
 
     void minTextBox_TextChanged(object sender, TextChangedEventArgs e)

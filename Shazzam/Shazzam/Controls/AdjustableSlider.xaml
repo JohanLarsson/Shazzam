@@ -54,7 +54,7 @@
 				<TextBox  Margin='5,3,0,3'
 									VerticalAlignment='Center'
 									MinWidth='40'
-									x:Name='animationTextBox'>0.0</TextBox>
+									x:Name='animationTextBox' ToolTip='Zero = no animation.  Postive number = number of milliseconds '>0.0</TextBox>
 			</StackPanel>
 		</WrapPanel>
 	</Grid>
