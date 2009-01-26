@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using ICSharpCode.TextEditor.Document;
 using Microsoft.CSharp;
 using Shazzam.CodeGen;
+using System.Xml;
 namespace Shazzam.Views {
 
 	public partial class CodeTabView : UserControl {
@@ -19,6 +20,7 @@ namespace Shazzam.Views {
 		ICSharpCode.TextEditor.TextEditorControl _vbTextEditor;
 		List<ShaderModelConstantRegister> _constantRegisters;
 		ShaderEffect se2;
+    private DefaultHighlightingStrategy _hlslHS;
 
 		private ShaderCompiler _compiler;
 		public CodeTabView() {
@@ -31,9 +33,18 @@ namespace Shazzam.Views {
 			_csTextEditor = SetupEditor();
 			_vbTextEditor = SetupEditor();
 
-			_shaderTextEditor.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("C #");
+      //_shaderTextEditor.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("C #");
+      using (var stream = typeof(CodeTabView).Assembly.GetManifestResourceStream("Shazzam.Resources.HLSLSyntax.xshd"))
+      {
+        var reader = new XmlTextReader(stream);
+        var sm = new SyntaxMode("HLSL.xshd", "HLSL", ".fx");
+        _hlslHS = HighlightingDefinitionParser.Parse(sm, reader);
+        _hlslHS.ResolveReferences(); // don't forget this!
+        reader.Close();
+      }
+      _shaderTextEditor.Document.HighlightingStrategy = _hlslHS; 
 			this.formsHost.Child = _shaderTextEditor;
-
+      
 			_csTextEditor.Document.HighlightingStrategy = HighlightingStrategyFactory.CreateHighlightingStrategy("C #");
 			this.formsHostCs.Child = _csTextEditor;
 			this.formsHostVb.Child = _vbTextEditor;
@@ -234,7 +245,7 @@ namespace Shazzam.Views {
 					return;
 				}
 
-				_shaderTextEditor.Document.HighlightingStrategy = HighlightingManager.Manager.FindHighlighterForFile(".cs");
+        _shaderTextEditor.Document.HighlightingStrategy = _hlslHS;// _ HighlightingManager.Manager.FindHighlighterForFile(".cs");
 
 
 

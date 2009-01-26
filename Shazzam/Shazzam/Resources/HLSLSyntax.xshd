@@ -1,0 +1,379 @@
+﻿<?xml version="1.0"?>
+
+<SyntaxDefinition name = "HLSL"
+									extensions = ".fx">
+
+	<Properties>
+		<Property name="LineComment"
+							value="//"/>
+	</Properties>
+
+	<Digits name = "Digits"
+					bold = "false"
+					italic = "false"
+					color = "Black"/>
+
+	<RuleSets>
+		<RuleSet ignorecase = "false">
+			<Delimiters>~!%^*()-+=|\#/{}[]:;"'&lt;&gt; , .?</Delimiters>
+
+			<Span name = "LineComment"
+						bold = "false"
+						italic = "false"
+						color = "Green"
+						stopateol = "true">
+				<Begin>//</Begin>
+			</Span>
+
+			<MarkPrevious bold = "true"
+										italic = "false"
+										color = "MidnightBlue">(</MarkPrevious>
+			
+
+			<KeyWords name = "floatTypes"
+								bold = "true"
+								italic = "false"
+								color = "Maroon">
+				<Key word = "float" />
+				<Key word = "float1" />
+				<Key word = "float2" />
+				<Key word = "float3" />
+				<Key word = "float4" />
+				<Key word = "float1x1" />
+				<Key word = "float1x2" />
+				<Key word = "float1x3" />
+				<Key word = "float1x4" />
+				<Key word = "float2x1" />
+				<Key word = "float2x2" />
+				<Key word = "float2x3" />
+				<Key word = "float2x4" />
+				<Key word = "float3x1" />
+				<Key word = "float3x2" />
+				<Key word = "float3x3" />
+				<Key word = "float3x4" />
+				<Key word = "float4x1" />
+				<Key word = "float4x2" />
+				<Key word = "float4x3" />
+				<Key word = "float4x4" />
+			</KeyWords>
+
+			<KeyWords name = "doubleTypes"
+								bold = "true"
+								italic = "false"
+								color = "Maroon">
+				<Key word = "double" />
+				<Key word = "double1" />
+				<Key word = "double2" />
+				<Key word = "double3" />
+				<Key word = "double4" />
+				<Key word = "double1x1" />
+				<Key word = "double1x2" />
+				<Key word = "double1x3" />
+				<Key word = "double1x4" />
+				<Key word = "double2x1" />
+				<Key word = "double2x2" />
+				<Key word = "double2x3" />
+				<Key word = "double2x4" />
+				<Key word = "double3x1" />
+				<Key word = "double3x2" />
+				<Key word = "double3x3" />
+				<Key word = "double3x4" />
+				<Key word = "double4x1" />
+				<Key word = "double4x2" />
+				<Key word = "double4x3" />
+				<Key word = "double4x4" />
+			</KeyWords>
+
+			<KeyWords name = "intTypes"
+								bold = "true"
+								italic = "false"
+								color = "Maroon">
+				<Key word = "int" />
+				<Key word = "int1" />
+				<Key word = "int2" />
+				<Key word = "int3" />
+				<Key word = "int4" />
+				<Key word = "int1x1" />
+				<Key word = "int1x2" />
+				<Key word = "int1x3" />
+				<Key word = "int1x4" />
+				<Key word = "int2x1" />
+				<Key word = "int2x2" />
+				<Key word = "int2x3" />
+				<Key word = "int2x4" />
+				<Key word = "int3x1" />
+				<Key word = "int3x2" />
+				<Key word = "int3x3" />
+				<Key word = "int3x4" />
+				<Key word = "int4x1" />
+				<Key word = "int4x2" />
+				<Key word = "int4x3" />
+				<Key word = "int4x4" />
+			</KeyWords>
+
+			<KeyWords name = "boolTypes"
+								bold = "true"
+								italic = "false"
+								color = "Maroon">
+				<Key word = "bool" />
+				<Key word = "bool1" />
+				<Key word = "bool2" />
+				<Key word = "bool3" />
+				<Key word = "bool4" />
+				<Key word = "bool1x1" />
+				<Key word = "bool1x2" />
+				<Key word = "bool1x3" />
+				<Key word = "bool1x4" />
+				<Key word = "bool2x1" />
+				<Key word = "bool2x2" />
+				<Key word = "bool2x3" />
+				<Key word = "bool2x4" />
+				<Key word = "bool3x1" />
+				<Key word = "bool3x2" />
+				<Key word = "bool3x3" />
+				<Key word = "bool3x4" />
+				<Key word = "bool4x1" />
+				<Key word = "bool4x2" />
+				<Key word = "bool4x3" />
+				<Key word = "bool4x4" />
+			</KeyWords>
+
+			<KeyWords name = "otherTypes"
+								bold = "false"
+								italic = "false"
+								color = "Maroon">
+				<Key word = "vector" />
+				<Key word = "matrix" />
+			</KeyWords>
+
+			<KeyWords name = "intrinsics"
+								bold = "true"
+								italic = "false"
+								color = "CornflowerBlue">
+				<Key word = "abs" />
+				<Key word = "acos" />
+				<Key word = "all" />
+				<Key word = "any" />
+				<Key word = "asin" />
+				<Key word = "atan" />
+				<Key word = "atan2" />
+				<Key word = "ceil" />
+				<Key word = "clamp" />
+				<Key word = "clip" />
+				<Key word = "cos" />
+				<Key word = "cosh" />
+				<Key word = "cross" />
+				<Key word = "D3DCOLORtoUBYTE4" />
+				<Key word = "ddx" />
+				<Key word = "ddy" />
+				<Key word = "degrees" />
+				<Key word = "determinant" />
+				<Key word = "distance" />
+				<Key word = "dot" />
+				<Key word = "exp" />
+				<Key word = "exp2" />
+				<Key word = "faceforward" />
+				<Key word = "floor" />
+				<Key word = "fmod" />
+				<Key word = "frac" />
+				<Key word = "frexp" />
+				<Key word = "fwidth" />
+				<Key word = "isinfinite" />
+				<Key word = "isinf" />
+				<Key word = "isnan" />
+				<Key word = "ldexp" />
+				<Key word = "len" />
+				<Key word = "length" />
+				<Key word = "lerp" />
+				<Key word = "log" />
+				<Key word = "log10" />
+				<Key word = "log2" />
+				<Key word = "max" />
+				<Key word = "min" />
+				<Key word = "modf" />
+				<Key word = "mul" />
+				<Key word = "normalize" />
+				<Key word = "pow" />
+				<Key word = "radians" />
+				<Key word = "reflect" />
+				<Key word = "refract" />
+				<Key word = "round" />
+				<Key word = "rsqrt" />
+				<Key word = "saturate" />
+				<Key word = "sin" />
+				<Key word = "sign" />
+				<Key word = "sincos" />
+				<Key word = "sinh" />
+				<Key word = "smoothstep" />
+				<Key word = "step" />
+				<Key word = "sqrt" />
+				<Key word = "tan" />
+				<Key word = "tanh" />
+				<Key word = "transpose" />
+			</KeyWords>
+
+			<KeyWords name = "textureIntrinsics"
+								bold = "true"
+								italic = "false"
+								color = "Maroon">
+				<Key word = "tex1D" />
+				<Key word = "tex1Dproj" />
+				<Key word = "tex1Dbias" />
+				<Key word = "tex2D" />
+				<Key word = "tex2Dproj" />
+				<Key word = "tex2Dbias" />
+				<Key word = "tex3D" />
+				<Key word = "tex3Dproj" />
+				<Key word = "tex3Dbias" />
+				<Key word = "texCUBE" />
+				<Key word = "texCUBEproj" />
+				<Key word = "texCUBEbias" />
+			</KeyWords>
+
+			<KeyWords name = "punctuation"
+								bold = "false"
+								italic = "false"
+								color = "DarkGreen">
+				<Key word = "?" />
+				<Key word = "," />
+				<Key word = "." />
+				<Key word = ";" />
+				<Key word = "(" />
+				<Key word = ")" />
+				<Key word = "[" />
+				<Key word = "]" />
+				<Key word = "{" />
+				<Key word = "}" />
+				<Key word = "+" />
+				<Key word = "-" />
+				<Key word = "/" />
+				<Key word = "%" />
+				<Key word = "*" />
+				<Key word = "&lt;" />
+				<Key word = "&gt;" />
+				<Key word = "^" />
+				<Key word = "=" />
+				<Key word = "~" />
+				<Key word = "!" />
+				<Key word = "|" />
+				<Key word = "&amp;" />
+			</KeyWords>
+
+			<KeyWords name = "keywordsLowerCase"
+								bold="true"
+								italic="false"
+								color="Blue">
+				<Key word = "compile" />
+				<Key word = "const" />
+				<Key word = "do" />
+				<Key word = "else" />
+				<Key word = "extern" />
+				<Key word = "false" />
+				<Key word = "for" />
+				<Key word = "half" />
+				<Key word = "if" />
+				<Key word = "inline" />
+				<Key word = "in" />
+				<Key word = "inout" />
+				<Key word = "out" />
+				<Key word = "register" />
+				<Key word = "return" />
+				<Key word = "sampler" />
+				<Key word = "sampler1D" />
+				<Key word = "sampler2D" />
+				<Key word = "sampler3D" />
+				<Key word = "sampler" />
+				<Key word = "shared" />
+				<Key word = "static" />
+				<Key word = "struct" />
+				<Key word = "true" />
+				<Key word = "typedef" />
+				<Key word = "uniform" />
+				<Key word = "void" />
+				<Key word = "volatile" />
+				<Key word = "while" />
+			</KeyWords>
+			<KeyWords name = "reserved"
+								bold="true"
+								italic="false"
+								color="LightGray">
+				<Key word = "auto" />
+				<Key word = "break" />
+				<Key word = "char" />
+				<Key word = "class" />
+				<Key word = "case" />
+				<Key word = "catch" />
+				<Key word = "default" />
+				<Key word = "const_cast" />
+				<Key word = "continue" />
+				<Key word = "explicit" />
+				<Key word = "friend" />
+				<Key word = "dynamic_cast" />
+				<Key word = "enum" />
+				<Key word = "mutable" />
+				<Key word = "namespace" />
+				<Key word = "goto" />
+				<Key word = "long" />
+				<Key word = "private" />
+				<Key word = "protected" />
+				<Key word = "new" />
+				<Key word = "operator" />
+				<Key word = "reinterpret_cast" />
+				<Key word = "short" />
+				<Key word = "public" />
+				<Key word = "static_cast" />
+				<Key word = "switch" />
+				<Key word = "signed" />
+				<Key word = "sizeof" />
+				<Key word = "throw" />
+				<Key word = "try" />
+				<Key word = "template" />
+				<Key word = "this" />
+				<Key word = "typename" />
+				<Key word = "unsigned" />
+				<Key word = "using" />
+				<Key word = "union" />
+				<Key word = "virtual" />
+			</KeyWords>
+			<KeyWords name = "semantics"
+								bold = "true"
+								italic = "false"
+								color = "Orange">
+				<Key word = "COLOR" />
+				<Key word = "TEXCOORD" />
+				<Key word = "VFACE" />
+				<Key word = "VPOS" />
+				<Key word = "BINORMAL" />
+				<Key word = "BLENDINDICES" />
+				<Key word = "BLENDWEIGHT" />
+				<Key word = "NORMAL" />
+				<Key word = "POSITION" />
+				<Key word = "POSITIONT" />
+				<Key word = "PSIZE" />
+				<Key word = "TANGENT" />
+
+				<Key word = "FOG" />
+				<Key word = "TESSFACTOR" />
+
+			</KeyWords>
+		</RuleSet>
+		<RuleSet ignorecase = "true">
+			<KeyWords name = "keywordsAnyCase"
+								bold="true"
+								italic="false"
+								color="DimGray">
+				<Key word = "asm" />
+				<Key word = "decl" />
+				<Key word = "pass" />
+				<Key word = "pixelshader" />
+				<Key word = "string" />
+				<Key word = "technique" />
+				<Key word = "texture" />
+				<Key word = "vector" />
+				<Key word = "vertexshader" />
+			</KeyWords>
+		
+		</RuleSet>
+	</RuleSets>
+</SyntaxDefinition>
+

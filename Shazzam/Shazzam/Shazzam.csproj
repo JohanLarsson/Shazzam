@@ -35,7 +35,7 @@
     <SuiteName>By Walt Ritscher</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>9</ApplicationRevision>
+    <ApplicationRevision>11</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -320,6 +320,7 @@
     <Content Include="Samples\ZoomBlur.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Resources\HLSLSyntax.xshd" />
     <None Include="Shazzam_TemporaryKey.pfx" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>

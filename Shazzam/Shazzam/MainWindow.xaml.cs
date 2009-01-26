@@ -6,6 +6,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using System.IO;
+using System.Windows.Media;
 
 namespace Shazzam {
 	//  Images
@@ -33,7 +34,19 @@ namespace Shazzam {
 
 			if (Properties.Settings.Default.LastImageFile != String.Empty)
 			{
-				LoadImage(Properties.Settings.Default.LastImageFile);
+        if (File.Exists(Properties.Settings.Default.LastImageFile))
+        {
+          LoadImage(Properties.Settings.Default.LastImageFile);
+        }
+        else
+        {
+          Uri resourceUri = new Uri("images/ColorRange.png", UriKind.Relative);
+          System.Windows.Resources.StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
+
+          BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+          userImage.Source = temp;
+        }
+			
 			}
 			imageTabControl.SelectedIndex = Properties.Settings.Default.LastImageTabIndex;
 
