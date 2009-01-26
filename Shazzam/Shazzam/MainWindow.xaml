@@ -16,6 +16,29 @@
     <converters:StringToVisibilityConverter x:Key='visConverter' />
     <SolidColorBrush x:Key='ImageBorderBrush'
                      Color='#FF16404C' />
+     <DrawingBrush x:Key="AlphaGrid"
+                                TileMode="Tile"
+                                Viewport="0 0 0.05 0.05"
+                                Stretch="UniformToFill">
+                    <DrawingBrush.Drawing>
+                      <DrawingGroup>
+                        <GeometryDrawing Brush="Gray">
+                          <GeometryDrawing.Geometry>
+                            <GeometryGroup>
+                              <RectangleGeometry Rect="0 0 10 10">
+
+                              </RectangleGeometry>
+                              <RectangleGeometry Rect="10 10 10 10">
+
+                              </RectangleGeometry>
+                            </GeometryGroup>
+                          </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+
+                      </DrawingGroup>
+
+                    </DrawingBrush.Drawing>
+                  </DrawingBrush>
     <Style x:Key='ImageInsideBorder'
            TargetType='{x:Type Border}'>
       <Setter Property='BorderBrush'
@@ -67,7 +90,8 @@
                     Executed='SaveAs_Executed' />
 
     <CommandBinding Command='commands:AppCommands.ApplyShader'
-                    Executed='AppyShader_Executed' CanExecute='CommandBinding_CanExecute_1'/>
+                    Executed='AppyShader_Executed'
+                    CanExecute='CommandBinding_CanExecute_1' />
     <CommandBinding Command='commands:AppCommands.RemoveShader'
                     Executed='RemoveShader_Executed' />
     <CommandBinding Command='commands:AppCommands.CompileShader'
@@ -121,10 +145,14 @@
         <TabItem Header='Custom Image'>
           <Border     Style='{DynamicResource ImageOutsideBorder}'>
             <Border     Style='{DynamicResource ImageInsideBorder}'>
-              <Image x:Name='userImage'
-                     Source='Images/ColorRange.png'
-                     HorizontalAlignment='Center'
-                     VerticalAlignment='Center' />
+              <!-- checkered background-->
+              <Border Background='{StaticResource AlphaGrid}'>
+                
+                <Image x:Name='userImage'
+                       Source='Images/ColorRange.png'
+                       HorizontalAlignment='Center'
+                       VerticalAlignment='Center' />
+              </Border>
             </Border>
           </Border>
         </TabItem>
@@ -132,11 +160,12 @@
 
           <Border     Style='{DynamicResource ImageOutsideBorder}'>
             <Border     Style='{DynamicResource ImageInsideBorder}'>
-              <Image x:Name='sampleImage1'
-                     Source='Images/Fire1.jpg'
-                     HorizontalAlignment='Center'
-                     VerticalAlignment='Center' />
-
+              <Border Background='{StaticResource AlphaGrid}'>
+                <Image x:Name='sampleImage1'
+                       Source='Images/Fire1.jpg'
+                       HorizontalAlignment='Center'
+                       VerticalAlignment='Center' />
+              </Border>
             </Border>
           </Border>
         </TabItem>
@@ -144,10 +173,12 @@
 
           <Border Style='{DynamicResource ImageOutsideBorder}'>
             <Border Style='{DynamicResource ImageInsideBorder}'>
-              <Image x:Name='sampleImage2'
-                     Source='Images/Light1.jpg'
-                     HorizontalAlignment='Center'
-                     VerticalAlignment='Center' />
+              <Border Background='{StaticResource AlphaGrid}'>
+                <Image x:Name='sampleImage2'
+                       Source='Images/Light1.jpg'
+                       HorizontalAlignment='Center'
+                       VerticalAlignment='Center' />
+              </Border>
 
             </Border>
           </Border>
@@ -156,11 +187,12 @@
 
           <Border Style='{DynamicResource ImageOutsideBorder}'>
             <Border Style='{DynamicResource ImageInsideBorder}'>
-              <Image x:Name='sampleImage3'
-                     Source='Images/SpikeBalls.jpg'
-                     HorizontalAlignment='Center'
-                     VerticalAlignment='Center' />
-
+              <Border Background='{StaticResource AlphaGrid}'>
+                <Image x:Name='sampleImage3'
+                       Source='Images/SpikeBalls.jpg'
+                       HorizontalAlignment='Center'
+                       VerticalAlignment='Center' />
+              </Border>
             </Border>
           </Border>
         </TabItem>
@@ -168,11 +200,12 @@
 
           <Border Style='{DynamicResource ImageOutsideBorder}'>
             <Border Style='{DynamicResource ImageInsideBorder}'>
-              <Image x:Name='sampleImage4'
-                     Source='Images/lines.jpg'
-                     HorizontalAlignment='Center'
-                     VerticalAlignment='Center' />
-
+              <Border Background='{StaticResource AlphaGrid}'>
+                <Image x:Name='sampleImage4'
+                       Source='Images/lines.jpg'
+                       HorizontalAlignment='Center'
+                       VerticalAlignment='Center' />
+              </Border>
             </Border>
           </Border>
         </TabItem>
@@ -180,10 +213,12 @@
 
           <Border Style='{DynamicResource ImageOutsideBorder}'>
             <Border Style='{DynamicResource ImageInsideBorder}'>
-              <Image x:Name='sampleImage5'
-                     Source='Images/gears.jpg'
-                     HorizontalAlignment='Center'
-                     VerticalAlignment='Center' />
+              <Border Background='{StaticResource AlphaGrid}'>
+                <Image x:Name='sampleImage5'
+                       Source='Images/gears.jpg'
+                       HorizontalAlignment='Center'
+                       VerticalAlignment='Center' />
+              </Border>
 
             </Border>
           </Border>
