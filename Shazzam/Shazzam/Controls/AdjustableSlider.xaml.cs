@@ -29,7 +29,7 @@ namespace Shazzam.Controls {
 
     }
 
-    DoubleAnimation anim = new DoubleAnimation();
+    DoubleAnimation sliderAnim = new DoubleAnimation();
     Storyboard story = new Storyboard();
     void animationTextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
@@ -59,32 +59,32 @@ namespace Shazzam.Controls {
     private void ChangeAnimationTimespan(TimeSpan candidate)
     {
 
-      anim.RepeatBehavior = RepeatBehavior.Forever;
-      anim.AccelerationRatio = .25;
-      anim.DecelerationRatio = .25;
-      anim.From = internalSlider.Minimum;
-      anim.To = internalSlider.Maximum;
-      anim.Duration = candidate; 
-      anim.AutoReverse = true;
+      sliderAnim.RepeatBehavior = RepeatBehavior.Forever;
+      sliderAnim.AccelerationRatio = .25;
+      sliderAnim.DecelerationRatio = .25;
+      sliderAnim.From = internalSlider.Minimum;
+      sliderAnim.To = internalSlider.Maximum;
+      sliderAnim.Duration = candidate; 
+      sliderAnim.AutoReverse = true;
 
-      if (!story.Children.Contains(anim))
+      if (!story.Children.Contains(sliderAnim))
       {
-        story.Children.Add(anim);
+        story.Children.Add(sliderAnim);
 
-        Storyboard.SetTargetName(anim, internalSlider.Name);
-        Storyboard.SetTargetProperty(anim, new PropertyPath(Slider.ValueProperty));
+        Storyboard.SetTargetName(sliderAnim, internalSlider.Name);
+        Storyboard.SetTargetProperty(sliderAnim, new PropertyPath(Slider.ValueProperty));
 
       }
 
       if (candidate == TimeSpan.Zero)
       {
-        anim.BeginTime = null;
+        sliderAnim.BeginTime = null;
         story.Stop(sliderStackPanel);
 
       }
       else
       {
-        anim.BeginTime = new TimeSpan(0, 0, 0, 0, 1);
+        sliderAnim.BeginTime = new TimeSpan(0, 0, 0, 0, 1);
         story.Begin(sliderStackPanel, true); // be sure and set the IsControllable param to true
       }
 
@@ -99,7 +99,7 @@ namespace Shazzam.Controls {
         this.Minimum = candidate;
         try
         {
-          ChangeAnimationTimespan(anim.Duration.TimeSpan);
+          ChangeAnimationTimespan(sliderAnim.Duration.TimeSpan);
         }
         catch
         { }
@@ -114,7 +114,7 @@ namespace Shazzam.Controls {
         this.Maximum = candidate;
         try
         {
-          ChangeAnimationTimespan(anim.Duration.TimeSpan);
+          ChangeAnimationTimespan(sliderAnim.Duration.TimeSpan);
         }
         catch
         {
