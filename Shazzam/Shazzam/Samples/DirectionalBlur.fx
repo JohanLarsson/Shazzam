@@ -1,14 +1,21 @@
-//--------------------------------------------------------------------------------------
-// 
-// WPF ShaderEffect HLSL -- DirectionalBlurEffect
-//
-//--------------------------------------------------------------------------------------
+/// <class>DirectionalBlurEffect</class>
+/// <namespace>Shazzam.Shaders</namespace>
+/// <description>An effect that blurs in a single direction.</description>
 
 //-----------------------------------------------------------------------------------------
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
 //-----------------------------------------------------------------------------------------
 
+/// <summary>The direction of the blur (in degrees).</summary>
+/// <minValue>0</minValue>
+/// <maxValue>360</maxValue>
+/// <defaultValue>0</defaultValue>
 float Angle : register(C0);
+
+/// <summary>The scale of the blur (as a fraction of the input size).</summary>
+/// <minValue>0</minValue>
+/// <maxValue>0.01</maxValue>
+/// <defaultValue>0.003</defaultValue>
 float BlurAmount : register(C1);
 
 //--------------------------------------------------------------------------------------

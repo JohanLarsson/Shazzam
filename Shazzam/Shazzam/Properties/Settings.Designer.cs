@@ -73,7 +73,7 @@ namespace Shazzam.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Program Files\\Microsoft DirectX SDK (August 2008)\\Utilities\\bin\\x86\\fxc.exe")]
+        [global::System.Configuration.DefaultSettingValueAttribute("%DXSDK_DIR%\\Utilities\\bin\\x86\\fxc.exe")]
         public string DirectX_FxcPath {
             get {
                 return ((string)(this["DirectX_FxcPath"]));
@@ -104,6 +104,54 @@ namespace Shazzam.Properties {
             }
             set {
                 this["Colors"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Shazzam.Shaders")]
+        public string GeneratedNamespace {
+            get {
+                return ((string)(this["GeneratedNamespace"]));
+            }
+            set {
+                this["GeneratedNamespace"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IndentUsingTabs {
+            get {
+                return ((bool)(this["IndentUsingTabs"]));
+            }
+            set {
+                this["IndentUsingTabs"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int IndentSpaces {
+            get {
+                return ((int)(this["IndentSpaces"]));
+            }
+            set {
+                this["IndentSpaces"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("WPF")]
+        public string TargetFramework {
+            get {
+                return ((string)(this["TargetFramework"]));
+            }
+            set {
+                this["TargetFramework"] = value;
             }
         }
     }

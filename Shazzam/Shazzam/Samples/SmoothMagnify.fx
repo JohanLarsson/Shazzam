@@ -1,17 +1,40 @@
-//--------------------------------------------------------------------------------------
-// 
-// WPF ShaderEffect HLSL -- SmoothMagnifyEffect
-//
-//--------------------------------------------------------------------------------------
+/// <class>SmoothMagnifyEffect</class>
+/// <namespace>Shazzam.Shaders</namespace>
+/// <description>An effect that magnifies a circular region with a smooth boundary.</description>
 
 //-----------------------------------------------------------------------------------------
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
 //-----------------------------------------------------------------------------------------
 
-float2 center : register(C0);
-float inner_radius: register(C2);
-float magnification : register(c3);
-float outer_radius : register(c4);
+/// <summary>The center of the magnified region.</summary>
+/// <minValue>0,0</minValue>
+/// <maxValue>1,1</maxValue>
+/// <defaultValue>0.5,0.5</defaultValue>
+float2 Center : register(C0);
+
+/// <summary>The inner radius of the magnified region.</summary>
+/// <minValue>0</minValue>
+/// <maxValue>1</maxValue>
+/// <defaultValue>0.2</defaultValue>
+float InnerRadius: register(C1);
+
+/// <summary>The outer radius of the magnified region.</summary>
+/// <minValue>0</minValue>
+/// <maxValue>1</maxValue>
+/// <defaultValue>0.4</defaultValue>
+float OuterRadius : register(C2);
+
+/// <summary>The magnification factor.</summary>
+/// <minValue>1</minValue>
+/// <maxValue>5</maxValue>
+/// <defaultValue>2</defaultValue>
+float Magnification : register(C3);
+
+/// <summary>The aspect ratio (width / height) of the input.</summary>
+/// <minValue>0.5</minValue>
+/// <maxValue>2</maxValue>
+/// <defaultValue>1.5</defaultValue>
+float AspectRatio : register(C4);
 
 //--------------------------------------------------------------------------------------
 // Sampler Inputs (Brushes, including ImplicitInput)
@@ -25,36 +48,9 @@ sampler2D implicitInputSampler : register(S0);
 
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
-
-
-   float2 center_to_pixel = uv - center; // vector from center to pixel
-   
-	float distance = length(center_to_pixel);
-	
-	float4 color;
-	
-	float2 sample_point;
-	
-	if(distance < outer_radius) {
-	
-      if( distance < inner_radius ) {
-         sample_point = center + (center_to_pixel / magnification);
-	   }
-	   else {
-	      float radius_diff = outer_radius - inner_radius;
-	      float ratio = (distance - inner_radius ) / radius_diff; // 0 == inner radius, 1 == outer_radius
-	      ratio = ratio * 3.14159; //  -pi/2 .. pi/2	      
-	      float adjusted_ratio = cos( ratio );  // -1 .. 1
-	      adjusted_ratio = adjusted_ratio + 1;   // 0 .. 2
-	      adjusted_ratio = adjusted_ratio / 2;   // 0 .. 1
-	   
-	      sample_point = ( (center + (center_to_pixel / magnification) ) * (  adjusted_ratio)) + ( uv * ( 1 - adjusted_ratio) );
-	   }
-	}
-	else {
-	   sample_point = uv;
-	}
-
-	return tex2D( implicitInputSampler, sample_point );
-	
+	float2 centerToPixel = uv - Center;
+	float dist = length(centerToPixel / float2(1, AspectRatio));
+	float ratio = smoothstep(InnerRadius, max(InnerRadius, OuterRadius), dist);
+	float2 samplePoint = lerp(Center + centerToPixel / Magnification, uv, ratio);
+	return tex2D(implicitInputSampler, samplePoint);
 }

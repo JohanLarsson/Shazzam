@@ -5,7 +5,7 @@
                     xmlns:a="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
 
   <ResourceDictionary.MergedDictionaries>
-       <ResourceDictionary Source="\Resources\BrushesRD.xaml" />
+       <ResourceDictionary Source="/Resources/BrushesRD.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
   <!-- 

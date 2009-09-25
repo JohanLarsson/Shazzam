@@ -4,7 +4,7 @@
                     xmlns:a='clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero'>
 
   <ResourceDictionary.MergedDictionaries>
-    <ResourceDictionary Source="\Resources\BrushesRD.xaml" />
+    <ResourceDictionary Source="/Resources/BrushesRD.xaml" />
   </ResourceDictionary.MergedDictionaries>
   <Style x:Key='{x:Type Menu}'
          TargetType='{x:Type Menu}'>
@@ -115,9 +115,9 @@
                     CornerRadius='0,4,4,4'
                     SnapsToDevicePixels='True'
                     Background='#585858'>
-              <c:IndexingStackPanel
-                  IsItemsHost='True'
-                                    KeyboardNavigation.DirectionalNavigation='Cycle' />
+              <c:IndexingStackPanel IsItemsHost='True'
+                                    KeyboardNavigation.DirectionalNavigation='Cycle'
+									Grid.IsSharedSizeScope='True' />
             </Border>
           </a:SystemDropShadowChrome>
         </Popup>
@@ -253,7 +253,7 @@
           <ColumnDefinition Width='*' />
           <ColumnDefinition Width='Auto'
                             SharedSizeGroup='Shortcut' />
-          <ColumnDefinition Width='13' />
+          <ColumnDefinition Width='20' />
         </Grid.ColumnDefinitions>
         <ContentPresenter Name='Icon'
                           Margin='6,4,6,4'
@@ -286,8 +286,7 @@
                    TextElement.Foreground='#FFF'
                    Grid.Column='2'
                    Text='{TemplateBinding InputGestureText}'
-                   Margin='5,4,0,4'
-                   DockPanel.Dock='Right' />
+                   Margin='12,4,0,4' />
       </Grid>
     </Border>
     <ControlTemplate.Triggers>
@@ -378,17 +377,17 @@
                    TextElement.Foreground='#FFF'
                    Grid.Column='2'
                    Text='{TemplateBinding InputGestureText}'
-                   Margin='5,2,2,2'
+                   Margin='12,4,0,4'
                    DockPanel.Dock='Right' />
         <Path Name='Arrow'
-              Margin='4,0,0,0'
+              Margin='8,0,0,0'
               Grid.Column='3'
               HorizontalAlignment='Left'
               VerticalAlignment='Center'
               Data='M 0 0 L 0 7 L 4 3.5 Z'
               Fill='White' />
         <Popup Name='Popup'
-               HorizontalOffset='-8'
+               HorizontalOffset='-4'
                Placement='Right'
                IsOpen='{TemplateBinding IsSubmenuOpen}'
                AllowsTransparency='True'
@@ -400,9 +399,9 @@
                     CornerRadius='4,4,4,4'
                     SnapsToDevicePixels='True'
                     Background='#585858'>
-              <c:IndexingStackPanel
-                  IsItemsHost='True'
-                                    KeyboardNavigation.DirectionalNavigation='Cycle' />
+              <c:IndexingStackPanel IsItemsHost='True'
+                                    KeyboardNavigation.DirectionalNavigation='Cycle'
+									Grid.IsSharedSizeScope='True' />
             </Border>
           </a:SystemDropShadowChrome>
         </Popup>
@@ -462,8 +461,6 @@
                Value='TopLevelHeader'>
         <Setter Property='Template'
                 Value='{StaticResource {x:Static MenuItem.TopLevelHeaderTemplateKey}}' />
-        <Setter Property='Grid.IsSharedSizeScope'
-                Value='true' />
       </Trigger>
       <Trigger Property='Role'
                Value='TopLevelItem'>

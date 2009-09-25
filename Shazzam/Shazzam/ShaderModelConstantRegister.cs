@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Media3D;
 
 namespace Shazzam {
 	/// <summary>
@@ -8,136 +12,59 @@ namespace Shazzam {
 	/// </summary>
 	public class ShaderModelConstantRegister {
 
-		public static ShaderModelConstantRegister Parse(string rawStringFromHLSL) {
-			try
-			{
-				rawStringFromHLSL = rawStringFromHLSL.Trim();
-				ShaderModelConstantRegister temp = new ShaderModelConstantRegister();
-				rawStringFromHLSL = rawStringFromHLSL.Replace(":", " : ");
-				temp.ConstantRegister = ExtractRegisterNumber(rawStringFromHLSL);
-				temp.VariableType = ExtractVariableType(rawStringFromHLSL);
-				temp.VariableName = ExtractVariableName(rawStringFromHLSL);
-				return temp;
-			}
-			catch (Exception)
-			{
-
-				throw new Exception("Cannot parse the string");
-			}
+		public ShaderModelConstantRegister(string registerName, Type registerType, int registerNumber,
+			string description, object minValue, object maxValue, object defaultValue)
+		{
+			this.RegisterName = registerName;
+			this.RegisterType = registerType;
+			this.RegisterNumber = registerNumber;
+			this.Description = description;
+			this.MinValue = minValue;
+			this.MaxValue = maxValue;
+			this.DefaultValue = defaultValue;
 		}
-
-
-
-		private Int32 _constantRegister;
-		private String _variableName;
-		#region Parsing
-		/// <summary>
-		/// Determines the Register Number
-		/// Given a string from in the following format:
-		/// float twistAmount : register(C1);
-		/// ExtractRegisterNumber will determine the Register number (1)
-		/// </summary>
-		///
-		/// <param name="rawData">A string contain raw data to parse. Should be in the following format: 'float twistAmount : register(C1);'</param>
-		/// <returns>The number of the register</returns>
-		private static int ExtractRegisterNumber(string rawData) {
-			string pattern = @"(?<paren>\([Cc]\d+\))";
-
-			if (!Regex.IsMatch(rawData, pattern))
-			{
-				return -1;
-			}
-			var m = Regex.Match(rawData, pattern);
-			string result = m.ToString();
-			result = result.ToUpper();
-			result = result.Replace("(", "").Replace(")", "").Replace("C", "");
-			return Int32.Parse(result);
-		}
-
-		/// <summary>
-		/// Determines the Register PropertyType
-		/// Given a string from in the following format:
-		/// float twistAmount : register(C1);
-		/// ExtractRegisterNumber will determine the Register  (1)
-		/// </summary>
-		/// <param name="rawData">A string contain raw data to parse. Should be in the following format: 'float twistAmount : register(C1);'</param>
-		/// <returns>The Type of the variable (Double, Point, Color)</returns>
-		private static Type ExtractVariableType(string rawData) {
-			if (rawData.StartsWith("float "))
-			{
-				return typeof(double);
-			}
-			else if (rawData.StartsWith("float2 "))
-			{
-				return typeof(System.Windows.Point);
-			}
-			else if (rawData.StartsWith("float4 "))
-			{
-				return typeof(System.Windows.Media.Color);
-			}
-			else
-			{
-				return typeof(object);
-
-			}
-
-		}
-
-		/// <summary>
-		/// Determines the variable name
-		/// Given a string from in the following format:
-		/// float twistAmount : register(C1);
-		/// ExtractRegisterNumber will determine the Register  (1)
-		/// </summary>
-		/// <param name="rawData">A string contain raw data to parse. Should be in the following format: 'float twistAmount : register(C1);'</param>
-		/// <returns>The name of the variable </returns>
-		public static string ExtractVariableName(string rawData) {
-			
-			string pattern = @"(?<=:)\\s\w+";
-			string[] parts = Regex.Split(rawData, pattern);
-			parts = rawData.Split(new String[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-			return parts[1];
-		}
-		#endregion
 
 		#region Properties
 		/// <summary>
-		/// The Register Number for this Register variable
+		/// The name of this register variable.
 		/// </summary>
-		public Int32 ConstantRegister {
-			get {
-				return _constantRegister;
-			}
-			set {
-				if (value < 0)
-				{
-					throw new ArgumentOutOfRangeException(String.Format("Negative values not allowed for {0}.{1}", this.GetType().Name, "ConstantRegister"));
-				}
-				else
-				{
-					_constantRegister = value;
-				}
-			}
-		}
-		/// <summary>
-		///  The data type of this Register variable
-		/// </summary>
-		public Type VariableType { get; set; }
+		public string RegisterName { get; private set; }
 
 		/// <summary>
-		/// the desired Variable name for this Register variable
+		///  The .NET type of this register variable.
 		/// </summary>
-		public String VariableName {
-			get {
-				return _variableName;
-			}
-			set {
-				_variableName = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(value);
-			}
-		}
-		public Control AffliatedControl { get; set; }
+		public Type RegisterType { get; private set; }
+
+		/// <summary>
+		/// The register number of this register variable.
+		/// </summary>
+		public int RegisterNumber { get; private set; }
+
+		/// <summary>
+		/// The description of this register variable.
+		/// </summary>
+		public string Description { get; private set; }
+
+		/// <summary>
+		/// The minimum value for this register variable.
+		/// </summary>
+		public object MinValue { get; private set; }
+
+		/// <summary>
+		/// The maximum value for this register variable.
+		/// </summary>
+		public object MaxValue { get; private set; }
+
+		/// <summary>
+		/// The default value of this register variable.
+		/// </summary>
+		public object DefaultValue { get; private set; }
+
+		/// <summary>
+		/// The user interface control associated with this register variable.
+		/// </summary>
+		public Control AffiliatedControl { get; set; }
 		#endregion
-
 	}
 }
 

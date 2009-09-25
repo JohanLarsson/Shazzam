@@ -1,13 +1,15 @@
-//--------------------------------------------------------------------------------------
-// 
-// WPF ShaderEffect HLSL -- BrightExtractEffect
-//
-//--------------------------------------------------------------------------------------
+/// <class>BrightExtractEffect</class>
+/// <namespace>Shazzam.Shaders</namespace>
+/// <description>An effect that dims all but the brightest pixels.</description>
 
 //-----------------------------------------------------------------------------------------
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
 //-----------------------------------------------------------------------------------------
 
+/// <summary>Threshold below which values are discarded.</summary>
+/// <minValue>0</minValue>
+/// <maxValue>1</maxValue>
+/// <defaultValue>0.5</defaultValue>
 float Threshold : register(C0);
 
 //--------------------------------------------------------------------------------------
@@ -24,10 +26,16 @@ sampler2D implicitInputSampler : register(S0);
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
     // Look up the original image color.
-    float4 c = tex2D(implicitInputSampler, uv);
+    float4 originalColor = tex2D(implicitInputSampler, uv);
+    
+    // Undo pre-multiplied alpha.
+	float3 rgb = originalColor.rgb / originalColor.a;
 
-    // Adjust it to keep only values brighter than the specified threshold.
-    return saturate((c - Threshold) / (1 - Threshold));
+    // Adjust RGB to keep only values brighter than the specified threshold.
+    rgb = saturate((rgb - Threshold) / (1 - Threshold));
+    
+    // Re-apply alpha.
+    return float4(rgb * originalColor.a, originalColor.a);
 }
 
 

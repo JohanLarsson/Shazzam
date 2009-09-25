@@ -1,16 +1,34 @@
-//--------------------------------------------------------------------------------------
-// 
-// WPF ShaderEffect HLSL -- MagnifyEffect
-//
-//--------------------------------------------------------------------------------------
+/// <class>MagnifyEffect</class>
+/// <namespace>Shazzam.Shaders</namespace>
+/// <description>An effect that magnifies a circular region.</description>
 
 //-----------------------------------------------------------------------------------------
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
 //-----------------------------------------------------------------------------------------
 
-float2 radii : register(C0);
-float2 center : register(C1);
-float  amount : register(C2);
+/// <summary>The center of the magnified region.</summary>
+/// <minValue>0,0</minValue>
+/// <maxValue>1,1</maxValue>
+/// <defaultValue>0.5,0.5</defaultValue>
+float2 Center : register(C0);
+
+/// <summary>The radius of the magnified region.</summary>
+/// <minValue>0</minValue>
+/// <maxValue>1</maxValue>
+/// <defaultValue>0.25</defaultValue>
+float Radius : register(C1);
+
+/// <summary>The magnification factor.</summary>
+/// <minValue>1</minValue>
+/// <maxValue>5</maxValue>
+/// <defaultValue>2</defaultValue>
+float Magnification : register(C2);
+
+/// <summary>The aspect ratio (width / height) of the input.</summary>
+/// <minValue>0.5</minValue>
+/// <maxValue>2</maxValue>
+/// <defaultValue>1.5</defaultValue>
+float AspectRatio : register(C4);
 
 //--------------------------------------------------------------------------------------
 // Sampler Inputs (Brushes, including ImplicitInput)
@@ -24,23 +42,12 @@ sampler2D  implicitInputSampler : register(S0);
 
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
-   float2 origUv = uv;
-   float2 ray = origUv - center;
-   float2 rt = ray / radii;
-
-   // Outside of radii, we jus show the regular image.  Radii is ellipse radii, so width x height radius 
-   float lengthRt = length(rt);
-   
-   float2 texuv;
-   if (lengthRt > 1)
-   {
-       texuv = origUv;
-   }
-   else
-   {
-       texuv = center + amount * ray;
-   }
-   
-   return tex2D(implicitInputSampler, texuv);
+	float2 centerToPixel = uv - Center;
+	float dist = length(centerToPixel / float2(1, AspectRatio));
+	float2 samplePoint = uv;
+	if (dist < Radius) {
+		samplePoint = Center + centerToPixel / Magnification;
+	}
+	return tex2D(implicitInputSampler, samplePoint);
 }
 

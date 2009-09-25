@@ -1,14 +1,21 @@
-//--------------------------------------------------------------------------------------
-// 
-// WPF ShaderEffect HLSL -- EmbossedEffect
-//
-//--------------------------------------------------------------------------------------
+/// <class>EmbossedEffect</class>
+/// <namespace>Shazzam.Shaders</namespace>
+/// <description>An effect that embosses the input.</description>
 
 //-----------------------------------------------------------------------------------------
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
 //-----------------------------------------------------------------------------------------
 
+/// <summary>The amplitude of the embossing.</summary>
+/// <minValue>0</minValue>
+/// <maxValue>1</maxValue>
+/// <defaultValue>0.5</defaultValue>
 float Amount : register(C0);
+
+/// <summary>The separation between samples (as a fraction of input size).</summary>
+/// <minValue>0</minValue>
+/// <maxValue>0.01</maxValue>
+/// <defaultValue>0.003</defaultValue>
 float Width : register(C1);
 
 //--------------------------------------------------------------------------------------

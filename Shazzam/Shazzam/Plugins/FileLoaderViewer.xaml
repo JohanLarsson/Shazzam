@@ -5,29 +5,25 @@
   <Grid>
     <TabControl>
       <TabItem Header='Shaders'>
-        <DockPanel LastChildFill='True'>
+        <DockPanel LastChildFill='True' Margin='10'>
 
-          <TextBlock DockPanel.Dock='Top'
-                     Margin='3,10,0,0'>
-            <Hyperlink Foreground='Gold'
+          <TextBlock DockPanel.Dock='Top'>
+            <Hyperlink Foreground='{StaticResource HighlightBrush}'
                        Click='Hyperlink_Click'>Change location</Hyperlink></TextBlock>
 
           <ListBox x:Name='fileListBox'
-                   Margin='10,8'
-                   SelectionChanged='fileListBox_SelectionChanged'
-                   Height='250'></ListBox>
+                   Margin='0,5,0,0'
+                   SelectionChanged='fileListBox_SelectionChanged'/>
         </DockPanel>
       </TabItem>
       <TabItem Header='Sample Shaders'>
 
-        <DockPanel LastChildFill='True'>
-          <TextBlock DockPanel.Dock='Top'
-                     Margin='3,10,0,0'>
+        <DockPanel LastChildFill='True' Margin='10'>
+          <TextBlock DockPanel.Dock='Top'>
           Pre-installed samples</TextBlock>
           <ListBox x:Name='sampleListBox'
-                   Margin='10,8'
-                   SelectionChanged='sampleListBox_SelectionChanged'
-                   Height='250'></ListBox>
+                   Margin='0,5,0,0'
+                   SelectionChanged='sampleListBox_SelectionChanged'/>
 
         </DockPanel>
       </TabItem>

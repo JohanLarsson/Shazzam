@@ -8,10 +8,5 @@ namespace Shazzam.Views {
 		public MenuView() {
 			InitializeComponent();
 		}
-
-		private void MenuItem_Click(object sender, System.Windows.RoutedEventArgs e) {
-			string path = string.Format("{0}{1}", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),Constants.Paths.GeneratedShaders);
-			Process.Start(path);
-		}
 	}
 }

@@ -19,6 +19,7 @@
     <ManifestKeyFile>Shazzam_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>true</SignManifests>
+    <ExpressionBlendVersion>3.0.1927.0</ExpressionBlendVersion>
     <PublishUrl>http://shazzam-tool.com/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -59,7 +60,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.TextEditor, Version=2.2.1.2648, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a, processorArchitecture=MSIL" />
+    <Reference Include="ICSharpCode.TextEditor, Version=2.2.1.2648, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Assemblies\ICSharpCode.TextEditor.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework.Aero">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -99,6 +103,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Controls\AdjustableSlider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\AdjustableSliderPair.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\AdjustableSliderTriplet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\AdjustableSliderQuadruplet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -171,19 +191,25 @@
     <Compile Include="Commands\AppCommands.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Commands\ApplyShaderCommandBinding.cs" />
-    <Compile Include="Commands\CompileShaderCommandBinding.cs" />
-    <Compile Include="Commands\RemoveShaderCommandBinding.cs" />
-    <Compile Include="Commands\FullScreenCodeCommandBinding.cs" />
-    <Compile Include="Commands\DockLeftCommandBinding.cs" />
-    <Compile Include="Commands\FullScreenCommandBinding.cs" />
-    <Compile Include="Commands\OpenImageCommandBinding.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Controls\AdjustableSlider.xaml.cs">
       <DependentUpon>AdjustableSlider.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AdjustableSliderPair.xaml.cs">
+      <DependentUpon>AdjustableSliderPair.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AdjustableSliderTriplet.xaml.cs">
+      <DependentUpon>AdjustableSliderTriplet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AdjustableSliderQuadruplet.xaml.cs">
+      <DependentUpon>AdjustableSliderQuadruplet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Icons.xaml.cs">
+      <DependentUpon>Icons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\EqualityConverter.cs" />
+    <Compile Include="Converters\RegisterValueConverter.cs" />
+    <Compile Include="Converters\InvertBooleanConverter.cs" />
     <Compile Include="Converters\DoubleToStringConverter.cs" />
     <Compile Include="Converters\VisiblityToVisibilityConverter.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
@@ -218,8 +244,10 @@
     <Compile Include="Reveal.cs" />
     <Compile Include="RoutedEventHelper.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="ShaderModel.cs" />
     <Compile Include="ShaderModelConstantRegister.cs" />
     <Compile Include="ShazzamSwitchboard.cs" />
+    <Compile Include="TargetFramework.cs" />
     <Compile Include="Views\CodeTabsView.xaml.cs">
       <DependentUpon>CodeTabsView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -333,9 +361,6 @@
     <Resource Include="Images\Light1.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assemblies\ICSharpCode.TextEditor.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Images\lines.jpg" />
     <Resource Include="Images\gears.jpg" />
     <Resource Include="Views\info.png" />
@@ -404,7 +429,7 @@
     </PublishFile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\" />
+    <Folder Include="Assemblies\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,128 +3,81 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:commands='clr-namespace:Shazzam.Commands'>
 
-  <UserControl.Resources>
+	<UserControl.Resources>
 
-    <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="\Resources\MenuRD.xaml" />
-      </ResourceDictionary.MergedDictionaries>
-    </ResourceDictionary>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/Resources/MenuRD.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
 
-  </UserControl.Resources>
-  <Grid HorizontalAlignment='Stretch'
-        VerticalAlignment='Stretch'>
-    <Grid Margin="0,5,0,5"
-          DockPanel.Dock='Left'>
+	</UserControl.Resources>
+	<Grid>
+		<Grid Margin="0,5,0,5">
+			<Border BorderBrush="#484848" BorderThickness="0,0,1,0" CornerRadius="0,4,4,0">
+				<Border.Background>
+					<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+						<GradientStop Offset="0.0" Color="#484848" />
+						<GradientStop Offset="1.0" Color="#282828" />
+					</LinearGradientBrush>
+				</Border.Background>
+			</Border>
 
-      <Border BorderBrush="#484848"
-              BorderThickness="0,0,1,0"
-              CornerRadius="0,4,4,0">
-        <Border.Background>
-          <LinearGradientBrush StartPoint="0,0"
-                               EndPoint="0,1">
-            <GradientStop Offset="0.0"
-                          Color="#484848" />
-            <GradientStop Offset="1.0"
-                          Color="#282828" />
-          </LinearGradientBrush>
-        </Border.Background>
-      </Border>
+			<Border BorderBrush="{StaticResource HighlightBrush}" BorderThickness="0,1,0,0" CornerRadius="0,4,0,0" VerticalAlignment="Top" Height="25">
+				<Border.Background>
+					<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+						<GradientStop Offset="0.0" Color="#505050" />
+						<GradientStop Offset="1.0" Color="#282828" />
+					</LinearGradientBrush>
+				</Border.Background>
+			</Border>
 
-      <Border BorderBrush="{StaticResource HighlightBrush}"
-              BorderThickness="0,1,0,0"
-              CornerRadius="0,4,0,0"
-              VerticalAlignment="Top"
-              Height="25">
-        <Border.Background>
-          <LinearGradientBrush StartPoint="0,0"
-                               EndPoint="0,1">
-            <GradientStop Offset="0.0"
-                          Color="#505050" />
-            <GradientStop Offset="1.0"
-                          Color="#282828" />
-          </LinearGradientBrush>
-        </Border.Background>
-      </Border>
+			<Border BorderBrush="#777" BorderThickness="0,1,0,0" CornerRadius="0,4,4,0" />
+			<Border BorderBrush="#404040" BorderThickness="0,0,0,1" CornerRadius="0,4,4,0" />
+			<Border CornerRadius="0,0,4,0" VerticalAlignment="Bottom" Height="33" BorderBrush="{StaticResource HighlightBrush}" Opacity='.4' BorderThickness="0,1,0,0">
+				<Border.Background>
+					<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+						<GradientStop Color="#10FFFFFF" Offset="0" />
+						<GradientStop Color="#00FFFFFF" Offset="1" />
+					</LinearGradientBrush>
+				</Border.Background>
+			</Border>
+		</Grid>
+		
+		<Menu Background='Black' Grid.Column='0' VerticalAlignment="Top" Height="24" Margin="0,6,1,0">
+			<MenuItem Header='_File'>
+				<MenuItem Header='Open _Shader File...' Command='ApplicationCommands.Open' />
+				<MenuItem Header='Open _Image File...' Command='commands:AppCommands.OpenImage' />
+				<Separator />
+				<MenuItem Header='_Save' Command='ApplicationCommands.Save' />
+				<MenuItem Header='Save _As...' Command='ApplicationCommands.SaveAs' />
+				<Separator />
+				<MenuItem Header='E_xit' Command='commands:AppCommands.Exit'/>
+			</MenuItem>
 
-      <Border BorderBrush="#777"
-              BorderThickness="0,1,0,0"
-              CornerRadius="0,4,4,0" />
-      <Border BorderBrush="#404040"
-              BorderThickness="0,0,0,1"
-              CornerRadius="0,4,4,0" />
-      <Border CornerRadius="0,0,4,0"
-              VerticalAlignment="Bottom"
-              Height="33"
-              BorderBrush="{StaticResource HighlightBrush}"
-              Opacity='.4'
-              BorderThickness="0,1,0,0">
-        <Border.Background>
-          <LinearGradientBrush StartPoint="0,0"
-                               EndPoint="0,1">
-            <GradientStop Color="#10FFFFFF"
-                          Offset="0" />
-            <GradientStop Color="#00FFFFFF"
-                          Offset="1" />
-          </LinearGradientBrush>
-        </Border.Background>
+			<MenuItem Header='_Edit' Visibility='Collapsed'>
+				<MenuItem Header='_Undo' Command='ApplicationCommands.Undo' />
+				<MenuItem Header='_Redo' Command='ApplicationCommands.Redo' />
+				<Separator />
+				<MenuItem Header='_Cut' Command='ApplicationCommands.Cut' />
+				<MenuItem Header='C_opy' Command='ApplicationCommands.Copy' />
+				<MenuItem Header='_Paste' Command='ApplicationCommands.Paste' />
+				<Separator />
+				<MenuItem Header='Find' Command='ApplicationCommands.Find' />
+			</MenuItem>
 
-      </Border>
+			<MenuItem Header='_Tools'>
+				<MenuItem Header='_Apply Shader' Command='commands:AppCommands.ApplyShader' />
+				<MenuItem Header='_Remove Shader' Command='commands:AppCommands.RemoveShader' />
+				<MenuItem Header='_Compile Shader' Command='commands:AppCommands.CompileShader' />
+				<Separator />
+				<MenuItem Header='_Explore Compiled Shaders (*.ps)' Command='commands:AppCommands.ExploreCompiledShaders' />
+			</MenuItem>
 
-    </Grid>
-    <Menu Background='Black'
-          Grid.Column='0'
-          VerticalAlignment="Top"
-          Height="24"
-          Margin="0,6,1,0">
-      <MenuItem Header='_File'>
-
-        <MenuItem Header='Open _Shader File...'
-                  Command='ApplicationCommands.Open' />
-        <MenuItem Header='Open _Image File...'
-                  Command='commands:AppCommands.OpenImage' />
-        <Separator Height='5' />
-        <MenuItem Header='_Save'
-                  InputGestureText='' />
-        <MenuItem Header='Save _As...'
-                  Command='ApplicationCommands.SaveAs' />
-        <Separator Height='5' />
-        <MenuItem Header='E_xit' />
-      </MenuItem>
-      <MenuItem Header='_Edit'
-                Visibility='Collapsed'>
-        <MenuItem Command='ApplicationCommands.Undo'
-                  Header='_Undo' />
-        <MenuItem Command='ApplicationCommands.Redo'
-                  Header='_Redo' />
-        <Separator Height='5' />
-        <MenuItem Command='ApplicationCommands.Cut'
-                  Header='_Cut' />
-        <MenuItem Command='ApplicationCommands.Copy'
-                  Header='C_opy' />
-        <MenuItem Command='ApplicationCommands.Paste'
-                  Header='_Paste' />
-        <Separator />
-        <MenuItem Command='ApplicationCommands.Find'
-                  Header='Find' />
-      </MenuItem>
-
-      <MenuItem Header='_Tools'>
-        <MenuItem Command='commands:AppCommands.ApplyShader' />
-        <MenuItem Command='commands:AppCommands.RemoveShader' />
-        <MenuItem Command='commands:AppCommands.CompileShader' />
-        <Separator />
-        <MenuItem Header='View Compiled Shaders (*.ps)' Click='MenuItem_Click'/>
-      </MenuItem>
-
-      <MenuItem  Header='_View'>
-        <MenuItem Header='_Full Screen Image'
-                  Command='commands:AppCommands.FullScreen' />
-        <!--<MenuItem Header='Code Window _Left'
-                  Command='commands:AppCommands.DockLeft' />-->
-        <MenuItem Header='Full Screen Code'
-                  Command='commands:AppCommands.FullScreenCode' />
-      </MenuItem>
-    </Menu>
-  </Grid>
+			<MenuItem  Header='_View'>
+				<MenuItem Header='Full Screen _Image' Command='commands:AppCommands.FullScreenImage' />
+				<MenuItem Header='Full Screen _Code' Command='commands:AppCommands.FullScreenCode' />
+			</MenuItem>
+		</Menu>
+	</Grid>
 </UserControl>

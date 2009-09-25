@@ -22,24 +22,18 @@ namespace Shazzam.Views {
 		}
 
 		private void LoadPlugins() {
-			if (ShazzamSwitchboard.IsFXCompilerAvailable()==false)
-			{
-				AddSettingsPlugin();
-				return;
-			}
-
 			AddSettingsPlugin();
 			//// add the settings plugin (we always want this to be at the end)
 			Plugin colorLoader = new Plugin();
 			colorLoader.Root = new Kaxaml.Plugins.ColorPicker.ColorPickerPlugin();
 			colorLoader.Name = "Color Picker";
-			colorLoader.Description = "Color assistant.";
+			colorLoader.Description = "Color assistant";
 			Plugins.Add(colorLoader);
 
 			Plugin fileLoader = new Plugin();
 			fileLoader.Root = new FileLoaderPlugin();
 			fileLoader.Name = "Shader Loader";
-			fileLoader.Description = "Pick a Shader fx file to open.";
+			fileLoader.Description = "Pick a shader file to open";
 		
 			Plugins.Add(fileLoader);
 
@@ -56,7 +50,7 @@ namespace Shazzam.Views {
 			Plugin settings = new Plugin();
 			settings.Root = new SettingsPlugin();
 			settings.Name = "Settings";
-			settings.Description = "Modify program settings and options (Ctrl+E)";
+			settings.Description = "Modify program settings and options";
 			//settings.Key = Key.E;
 			//settings.ModifierKeys = ModifierKeys.Control;
 			Plugins.Add(settings);

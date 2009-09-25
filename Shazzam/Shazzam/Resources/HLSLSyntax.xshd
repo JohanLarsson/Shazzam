@@ -26,8 +26,8 @@
 			</Span>
 
 			<MarkPrevious bold = "true"
-										italic = "false"
-										color = "MidnightBlue">(</MarkPrevious>
+						  italic = "false"
+						  color = "MidnightBlue">(</MarkPrevious>
 			
 
 			<KeyWords name = "floatTypes"
@@ -139,7 +139,7 @@
 			</KeyWords>
 
 			<KeyWords name = "otherTypes"
-								bold = "false"
+								bold = "true"
 								italic = "false"
 								color = "Maroon">
 				<Key word = "vector" />
@@ -154,7 +154,11 @@
 				<Key word = "acos" />
 				<Key word = "all" />
 				<Key word = "any" />
+				<Key word = "asdouble" />
+				<Key word = "asfloat" />
 				<Key word = "asin" />
+				<Key word = "asint" />
+				<Key word = "asuint" />
 				<Key word = "atan" />
 				<Key word = "atan2" />
 				<Key word = "ceil" />
@@ -178,13 +182,15 @@
 				<Key word = "frac" />
 				<Key word = "frexp" />
 				<Key word = "fwidth" />
+				<Key word = "GetRenderTargetSamplePosition" />
+				<Key word = "GetRenderTargetSampleCount" />
 				<Key word = "isinfinite" />
 				<Key word = "isinf" />
 				<Key word = "isnan" />
 				<Key word = "ldexp" />
-				<Key word = "len" />
 				<Key word = "length" />
 				<Key word = "lerp" />
+				<Key word = "lit" />
 				<Key word = "log" />
 				<Key word = "log10" />
 				<Key word = "log2" />
@@ -192,6 +198,7 @@
 				<Key word = "min" />
 				<Key word = "modf" />
 				<Key word = "mul" />
+				<Key word = "noise" />
 				<Key word = "normalize" />
 				<Key word = "pow" />
 				<Key word = "radians" />
@@ -200,34 +207,43 @@
 				<Key word = "round" />
 				<Key word = "rsqrt" />
 				<Key word = "saturate" />
-				<Key word = "sin" />
 				<Key word = "sign" />
+				<Key word = "sin" />
 				<Key word = "sincos" />
 				<Key word = "sinh" />
 				<Key word = "smoothstep" />
-				<Key word = "step" />
 				<Key word = "sqrt" />
+				<Key word = "step" />
 				<Key word = "tan" />
 				<Key word = "tanh" />
 				<Key word = "transpose" />
+				<Key word = "trunc" />
 			</KeyWords>
 
 			<KeyWords name = "textureIntrinsics"
 								bold = "true"
 								italic = "false"
-								color = "Maroon">
+								color = "CornflowerBlue">
 				<Key word = "tex1D" />
-				<Key word = "tex1Dproj" />
 				<Key word = "tex1Dbias" />
+				<Key word = "tex1Dgrad" />
+				<Key word = "tex1Dlod" />
+				<Key word = "tex1Dproj" />
 				<Key word = "tex2D" />
-				<Key word = "tex2Dproj" />
 				<Key word = "tex2Dbias" />
+				<Key word = "tex2Dgrad" />
+				<Key word = "tex2Dlod" />
+				<Key word = "tex2Dproj" />
 				<Key word = "tex3D" />
-				<Key word = "tex3Dproj" />
 				<Key word = "tex3Dbias" />
+				<Key word = "tex3Dgrad" />
+				<Key word = "tex3Dlod" />
+				<Key word = "tex3Dproj" />
 				<Key word = "texCUBE" />
-				<Key word = "texCUBEproj" />
 				<Key word = "texCUBEbias" />
+				<Key word = "texCUBEgrad" />
+				<Key word = "texCUBElod" />
+				<Key word = "texCUBEproj" />
 			</KeyWords>
 
 			<KeyWords name = "punctuation"

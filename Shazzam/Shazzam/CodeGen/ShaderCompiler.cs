@@ -11,27 +11,20 @@ namespace Shazzam.CodeGen {
 		public void Compile(string codeText) {
 			IsCompiled = false;
 			// verify that the DirectX composer exe (fxc.exe) path is stored in settings
-			if (Path.GetFileName(Properties.Settings.Default.DirectX_FxcPath).ToLower() != "fxc.exe")
+			string fxcPath = Environment.ExpandEnvironmentVariables(Properties.Settings.Default.DirectX_FxcPath);
+			if (Path.GetFileName(fxcPath).ToLower() != "fxc.exe" || !File.Exists(fxcPath))
 			{
-				throw new CompilerException("Ensure that the DirectX SDK is installed and that the correct path is configure in Settings pane.  \r\n\r\nCurrent setting for path is " + Properties.Settings.Default.DirectX_FxcPath);
-			
+				throw new CompilerException("Could not find the effect compiler \"fxc.exe\". " +
+					"Ensure that the DirectX SDK is installed and the correct path is configured in the Settings pane.\n\n" +
+					"The current setting is \"" + Properties.Settings.Default.DirectX_FxcPath + "\".");
 			}
 
-			// verify that the DirectX composer (fxc.exe) is available 
-			if (File.Exists(Properties.Settings.Default.DirectX_FxcPath) == false)
-			{
-				throw new FileNotFoundException("Cannot find the DirectX FXC.exe file.  Ensure that the DirectX SDK is installed and that the correct path is configure in Settings pane. \r\n\r\nCurrent setting for path is " + Properties.Settings.Default.DirectX_FxcPath);
-			
-			}
 			// create app folder
 			string path = string.Format("{0}{1}", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),Constants.Paths.GeneratedShaders);
 			if (Directory.Exists(path) == false)
 			{
 				Directory.CreateDirectory(path);
 			}
-			// set path to temporary folder
-		//	string path = string.Format("{0}\\tmp", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
-			//string errorText;
 			
 			// create new file with fx extension
 			using (FileStream fs = new FileStream(path + Constants.FileNames.TempShaderFx, FileMode.Create))
@@ -40,7 +33,7 @@ namespace Shazzam.CodeGen {
 				fs.Write(data, 0, data.Length);
 			}
 
-			ProcessStartInfo psi = new ProcessStartInfo(Properties.Settings.Default.DirectX_FxcPath);
+			ProcessStartInfo psi = new ProcessStartInfo(fxcPath);
 			psi.CreateNoWindow = true;
 			psi.UseShellExecute = false;
 

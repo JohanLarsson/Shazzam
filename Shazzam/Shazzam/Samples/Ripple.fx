@@ -1,17 +1,40 @@
-//--------------------------------------------------------------------------------------
-// 
-// WPF ShaderEffect HLSL -- RippleEffect
-//
-//--------------------------------------------------------------------------------------
+/// <class>RippleEffect</class>
+/// <namespace>Shazzam.Shaders</namespace>
+/// <description>An effect that superimposes rippling waves on the input.</description>
 
 //-----------------------------------------------------------------------------------------
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
 //-----------------------------------------------------------------------------------------
 
-float2 center : register(C0);
-float amplitude : register(C1);
-float frequency: register(C2);
-float phase: register(C3);
+/// <summary>The center of the ripples.</summary>
+/// <minValue>0,0</minValue>
+/// <maxValue>1,1</maxValue>
+/// <defaultValue>0.5,0.5</defaultValue>
+float2 Center : register(C0);
+
+/// <summary>The amplitude of the ripples.</summary>
+/// <minValue>0</minValue>
+/// <maxValue>1</maxValue>
+/// <defaultValue>0.1</defaultValue>
+float Amplitude : register(C1);
+
+/// <summary>The frequency of the ripples.</summary>
+/// <minValue>0</minValue>
+/// <maxValue>100</maxValue>
+/// <defaultValue>70</defaultValue>
+float Frequency: register(C2);
+
+/// <summary>The phase of the ripples.</summary>
+/// <minValue>-20</minValue>
+/// <maxValue>20</maxValue>
+/// <defaultValue>0</defaultValue>
+float Phase: register(C3);
+
+/// <summary>The aspect ratio (width / height) of the input.</summary>
+/// <minValue>0.5</minValue>
+/// <maxValue>2</maxValue>
+/// <defaultValue>1.5</defaultValue>
+float AspectRatio : register(C4);
 
 //--------------------------------------------------------------------------------------
 // Sampler Inputs (Brushes, including ImplicitInput)
@@ -26,26 +49,23 @@ sampler2D implicitInputSampler : register(S0);
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
  
-   float2 dir = uv - center;
-   
-   float2 toPixel = uv - center; // vector from center to pixel
-	float distance = length(toPixel);
-	float2 direction = toPixel/distance;
-	float angle = atan2(direction.y, direction.x);
+	float2 dir = uv - Center; // vector from center to pixel
+	dir.y /= AspectRatio;
+	float dist = length(dir);
+	dir /= dist;
+	dir.y *= AspectRatio;
+
 	float2 wave;
-	sincos(frequency * distance + phase, wave.x, wave.y);
+	sincos(Frequency * dist + Phase, wave.x, wave.y);
 		
-	float falloff = saturate(1-distance);
+	float falloff = saturate(1 - dist);
 	falloff *= falloff;
 		
-	distance += amplitude * wave.x * falloff;
-   sincos(angle, direction.y, direction.x);
-   float2 uv2 = center + distance * direction;
-   
-   float lighting = saturate(wave.y * falloff) * 0.2 + 0.8;
-   
-   float4 color = tex2D( implicitInputSampler, uv2 );
-   color.rgb *= lighting;
-   
-   return color;
+	dist += Amplitude * wave.x * falloff;
+	float2 samplePoint = Center + dist * dir;
+	float4 color = tex2D(implicitInputSampler, samplePoint);
+
+	float lighting = 1 - Amplitude * 0.2 * (1 - saturate(wave.y * falloff));
+	color.rgb *= lighting;
+	return color;
 }

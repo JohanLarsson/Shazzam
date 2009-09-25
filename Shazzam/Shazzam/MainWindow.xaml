@@ -17,26 +17,21 @@
     <SolidColorBrush x:Key='ImageBorderBrush'
                      Color='#FF16404C' />
      <DrawingBrush x:Key="AlphaGrid"
-                                TileMode="Tile"
-                                Viewport="0 0 0.05 0.05"
-                                Stretch="UniformToFill">
+				   TileMode="Tile"
+				   Viewport="0 0 8 8"
+				   ViewportUnits="Absolute"
+				   Stretch="UniformToFill">
                     <DrawingBrush.Drawing>
                       <DrawingGroup>
                         <GeometryDrawing Brush="Gray">
                           <GeometryDrawing.Geometry>
                             <GeometryGroup>
-                              <RectangleGeometry Rect="0 0 10 10">
-
-                              </RectangleGeometry>
-                              <RectangleGeometry Rect="10 10 10 10">
-
-                              </RectangleGeometry>
+                              <RectangleGeometry Rect="0 0 10 10"/>
+                              <RectangleGeometry Rect="10 10 10 10"/>
                             </GeometryGroup>
                           </GeometryDrawing.Geometry>
                         </GeometryDrawing>
-
                       </DrawingGroup>
-
                     </DrawingBrush.Drawing>
                   </DrawingBrush>
     <Style x:Key='ImageInsideBorder'
@@ -79,29 +74,19 @@
 
   </Window.Resources>
   <Window.CommandBindings>
+    <CommandBinding Command='ApplicationCommands.Open' Executed='Open_Executed' />
+    <CommandBinding Command='commands:AppCommands.OpenImage' Executed='OpenImage_Executed' />
+    <CommandBinding Command='ApplicationCommands.Save' Executed='Save_Executed' />
+    <CommandBinding Command='ApplicationCommands.SaveAs' Executed='SaveAs_Executed' />
+    <CommandBinding Command='commands:AppCommands.Exit' Executed='Exit_Executed' />
 
-    <CommandBinding Command='ApplicationCommands.Open'
-                    Executed='Open_Executed' />
-    <CommandBinding Command='commands:AppCommands.OpenImage'
-                    Executed='OpenImage_Executed' />
-    <CommandBinding Command='ApplicationCommands.Save'
-                    Executed='Save_Executed' />
-    <CommandBinding Command='ApplicationCommands.SaveAs'
-                    Executed='SaveAs_Executed' />
+    <CommandBinding Command='commands:AppCommands.ApplyShader' Executed='ApplyShader_Executed' CanExecute='ShaderCommand_CanExecute' />
+    <CommandBinding Command='commands:AppCommands.RemoveShader' Executed='RemoveShader_Executed' />
+    <CommandBinding Command='commands:AppCommands.CompileShader' Executed='CompileShader_Executed' CanExecute='ShaderCommand_CanExecute' />
+    <CommandBinding Command='commands:AppCommands.ExploreCompiledShaders' Executed='ExploreCompiledShaders_Executed' />
 
-    <CommandBinding Command='commands:AppCommands.ApplyShader'
-                    Executed='AppyShader_Executed'
-                    CanExecute='CommandBinding_CanExecute_1' />
-    <CommandBinding Command='commands:AppCommands.RemoveShader'
-                    Executed='RemoveShader_Executed' />
-    <CommandBinding Command='commands:AppCommands.CompileShader'
-                    Executed='CompileShader_Executed'
-                    CanExecute='CompileShaderBinding_CanExecute' />
-    <CommandBinding Command='commands:AppCommands.FullScreen'
-                    Executed='FullScreen_Executed' />
-
-    <CommandBinding Command='commands:AppCommands.FullScreenCode'
-                    Executed='FullScreenCode_Executed' />
+	<CommandBinding Command='commands:AppCommands.FullScreenImage' Executed='FullScreenImage_Executed' />
+    <CommandBinding Command='commands:AppCommands.FullScreenCode' Executed='FullScreenCode_Executed' />
   </Window.CommandBindings>
 
   <Grid Background="#101010">

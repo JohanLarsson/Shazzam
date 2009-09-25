@@ -9,7 +9,7 @@
     <ResourceDictionary>
 
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="\Resources\PluginTheme.xaml" />
+        <ResourceDictionary Source="/Resources/PluginTheme.xaml" />
       </ResourceDictionary.MergedDictionaries>
 
       <Style x:Key="PluginTabItem"

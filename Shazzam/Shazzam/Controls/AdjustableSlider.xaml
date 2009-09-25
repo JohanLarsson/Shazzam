@@ -1,61 +1,86 @@
 ﻿<UserControl x:Class="Shazzam.Controls.AdjustableSlider"
-						 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-						 xmlns:converters='clr-namespace:Shazzam.Converters'>
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:converters='clr-namespace:Shazzam.Converters'>
 	<UserControl.Resources>
 		<converters:DoubleToStringConverter x:Key='doubleConverter' />
 	</UserControl.Resources>
-	<Grid>
-		<WrapPanel Margin='0,3'
-							 Background='{StaticResource VeryDarkBrush}'>
-			<StackPanel Orientation='Horizontal'>
-				<TextBlock DockPanel.Dock='Left'
-									 Foreground='{StaticResource NeutralWhiteBrush}'
-									 HorizontalAlignment='Center'
-									 Margin='5,0,0,0'
-									 VerticalAlignment='Center'> Min:</TextBlock>
-				<TextBox Margin='5,3,0,3'
-								 VerticalAlignment='Center'
-								 MinWidth='40'
-								 x:Name='minTextBox'>0</TextBox>
+	<WrapPanel Margin='0,3' Background='{StaticResource VeryDarkBrush}'>
+		<StackPanel VerticalAlignment='Center' Orientation='Horizontal' Margin='5,3,5,3'>
+			<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
+				   Margin='15,0,0,0'
+				   VerticalAlignment='Center'
+				   Text='Min:'/>
+			<TextBox x:Name='minTextBox'
+				 Margin='5,0,0,0'
+				 VerticalAlignment='Center'
+				 Width='40'
+				 Text='0'/>
+			<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
+				   Margin='5,0,0,0'
+				   VerticalAlignment='Center'
+				   Text='Max:'/>
+			<TextBox x:Name='maxTextBox'
+				 Margin='5,0,0,0'
+				 VerticalAlignment='Center'
+				 Width='40'
+				 Text='100'/>
+			<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
+				   Margin='5,0,0,0'
+				   VerticalAlignment='Center'
+				   Text='Value:'/>
+			<Slider x:Name='slider'
+					Margin='5,0,0,0'
+					Minimum='{Binding ElementName=minTextBox, Path=Text}'
+					Maximum='{Binding ElementName=maxTextBox, Path=Text}'
+					AutoToolTipPlacement='TopLeft'
+					AutoToolTipPrecision='3'
+					IsMoveToPointEnabled='True'
+					Width='90'
+					ToolTip='{Binding RelativeSource={RelativeSource Self}, Path=Value,Converter={StaticResource doubleConverter}}'/>
+		</StackPanel>
+		<Rectangle Fill='{StaticResource NeutralDarkBrush}' Width='1' Margin='0,3,-1,3' SnapsToDevicePixels='True'/>
+		<StackPanel VerticalAlignment='Center'>
+			<StackPanel Orientation='Horizontal' Margin='5,3,5,3'>
+				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
+				   VerticalAlignment='Center'
+				   Text='Animation:'/>
+				<ToggleButton x:Name='noAnimationToggleButton'
+						  IsChecked='True'
+						  ToolTip='None'
+						  Width='22'
+						  Height='22'
+						  Margin='5,0,0,0'
+						  VerticalAlignment='Center'>
+					<Rectangle Width='16'
+							   Height='16'
+							   Fill='{StaticResource NoAnimationIconBrush}'/>
+				</ToggleButton>
+				<ToggleButton x:Name='linearAnimationToggleButton'
+						  ToolTip='Linear'
+						  Width='22'
+						  Height='22'
+						  Margin='5,0,0,0'
+						  VerticalAlignment='Center'>
+					<Rectangle Width='16'
+							   Height='16'
+							   Fill='{StaticResource HorizontalAnimationIconBrush}'/>
+				</ToggleButton>
 			</StackPanel>
-			<StackPanel Orientation='Horizontal'>
-				<TextBlock  Margin='5,0,0,0'
-										VerticalAlignment='Center'
-										Foreground='{StaticResource NeutralWhiteBrush}'
-										DockPanel.Dock='Left'> Max:</TextBlock>
-				<TextBox  Margin='5,3,0,3'
-									VerticalAlignment='Center'
-									MinWidth='40'
-									x:Name='maxTextBox'>100</TextBox>
+			<StackPanel Orientation='Horizontal' Margin='5,3,5,3'>
+				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
+				   VerticalAlignment='Center'
+				   Text='Duration:'/>
+				<TextBox x:Name='durationTextBox'
+				 Margin='5,0,0,0'
+				 VerticalAlignment='Center'
+				 MinWidth='40'
+				 Text='0.5'/>
+				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
+				   Margin='5,0,0,0'
+				   VerticalAlignment='Center'
+				   Text='seconds'/>
 			</StackPanel>
-			<StackPanel Orientation='Horizontal' x:Name='sliderStackPanel'>
-				<TextBlock  Margin='5,0,0,0'
-										VerticalAlignment='Center'
-										Foreground='{StaticResource NeutralWhiteBrush}'
-										DockPanel.Dock='Left'> Value:</TextBlock>
-				<Slider  Margin='5,3'
-								 x:Name='internalSlider'
-								 Minimum='{Binding ElementName=minTextBox, Path=Text}'
-								 Maximum='{Binding ElementName=maxTextBox, Path=Text}'
-								 AutoToolTipPlacement='TopLeft'
-								 AutoToolTipPrecision='3'
-								 IsMoveToPointEnabled='True'
-								 MinWidth='90'
-								 MinHeight='5'
-								 ToolTip='{Binding RelativeSource={RelativeSource Self}, 
-														Path=Value,Converter={StaticResource doubleConverter}}' />
-			</StackPanel>
-			<StackPanel Orientation='Horizontal'>
-				<TextBlock  Margin='5,0,7,0'
-										VerticalAlignment='Center'
-										Foreground='{StaticResource NeutralWhiteBrush}'
-										DockPanel.Dock='Left'>Animation Value:</TextBlock>
-				<TextBox  Margin='5,3,0,3'
-									VerticalAlignment='Center'
-									MinWidth='40'
-									x:Name='animationTextBox' ToolTip='Zero = no animation.  Postive number = number of milliseconds '>0.0</TextBox>
-			</StackPanel>
-		</WrapPanel>
-	</Grid>
+		</StackPanel>
+	</WrapPanel>
 </UserControl>

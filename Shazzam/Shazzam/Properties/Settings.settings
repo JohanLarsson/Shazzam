@@ -15,13 +15,25 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DirectX_FxcPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Program Files\Microsoft DirectX SDK (August 2008)\Utilities\bin\x86\fxc.exe</Value>
+      <Value Profile="(Default)">%DXSDK_DIR%\Utilities\bin\x86\fxc.exe</Value>
     </Setting>
     <Setting Name="LastImageTabIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Colors" Type="System.String" Scope="User">
       <Value Profile="(Default)">Yellow,Green</Value>
+    </Setting>
+    <Setting Name="GeneratedNamespace" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Shazzam.Shaders</Value>
+    </Setting>
+    <Setting Name="IndentUsingTabs" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="IndentSpaces" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4</Value>
+    </Setting>
+    <Setting Name="TargetFramework" Type="System.String" Scope="User">
+      <Value Profile="(Default)">WPF</Value>
     </Setting>
   </Settings>
 </SettingsFile>

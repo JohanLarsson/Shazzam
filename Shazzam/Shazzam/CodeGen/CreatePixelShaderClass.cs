@@ -4,17 +4,27 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Threading;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using Microsoft.CSharp;
+using Shazzam.Converters;
+using Shazzam.Properties;
 
 namespace Shazzam.CodeGen {
-	class CreatePixelShaderClass {
+	static class CreatePixelShaderClass {
 
-		public static Assembly CompileInMemory(string code) {
+		public static string GetSourceText(CodeDomProvider currentProvider, ShaderModel shaderModel, bool includePixelShaderConstructor) {
+			return GenerateCode(currentProvider, BuildPixelShaderGraph(shaderModel, includePixelShaderConstructor));
+		}
+
+		public static Assembly CompileInMemory(string code)
+		{
 			var provider = new CSharpCodeProvider(new Dictionary<string, string>() { { "CompilerVersion", "v3.5" } });
 
 			CompilerParameters options = new CompilerParameters();
+			options.ReferencedAssemblies.Add("System.dll");
 			options.ReferencedAssemblies.Add("System.Core.dll");
 			options.ReferencedAssemblies.Add("WindowsBase.dll");
 			options.ReferencedAssemblies.Add("PresentationFramework.dll");
@@ -32,220 +42,341 @@ namespace Shazzam.CodeGen {
 			}
 			return generatedAssembly;
 		}
-		// Build WPF class
 
-		public static CodeCompileUnit BuildPixelShaderGraph(List<ShaderModelConstantRegister> rawShaderMembers) {
+		private static CodeCompileUnit BuildPixelShaderGraph(ShaderModel shaderModel, bool includePixelShaderConstructor) {
 			// Create a new CodeCompileUnit to contain
 			// the program graph.
-			var codeGraph = new CodeCompileUnit();
+			CodeCompileUnit codeGraph = new CodeCompileUnit();
 
-			CodeNamespace namespaces = AssignNamespacesToGraph(codeGraph);
+			// Create the namespace.
+			CodeNamespace codeNamespace = AssignNamespacesToGraph(codeGraph, shaderModel.GeneratedNamespace);
 
-			// Declare a new type
-			CodeTypeDeclaration shader = new CodeTypeDeclaration("AutoGenShaderEffect");
-			shader.BaseTypes.Add(new CodeTypeReference("ShaderEffect"));
-			// Add the new type to the namespace type collection.
-			namespaces.Types.Add(shader);
+			// Create the appropriate constructor.
+			CodeConstructor constructor = includePixelShaderConstructor ? CreatePixelShaderConstructor(shaderModel) : CreateDefaultConstructor(shaderModel);
 
-			CodeConstructor constructor = CreateConstructor(rawShaderMembers);
-			shader.Members.Add(constructor);
-			//	constructor = CreateStaticConstructor();
-			//		shader.Members.Add(constructor);
-
-			var field = GeneratePixelShaderRegister("input");
-			shader.Members.Add(field);
-			CodeMemberProperty prop = GenerateNormalDependencyProperty("input", "System.Windows.Media.Brush");
-			shader.Members.Add(prop);
-
-			foreach (var item in rawShaderMembers)
+			// Declare a new type.
+			CodeTypeDeclaration shader = new CodeTypeDeclaration
 			{
-				field = GenerateCRegisterRegister(item.VariableName, item.VariableType, item.ConstantRegister);
-				shader.Members.Add(field);
-				prop = GenerateNormalDependencyProperty(item.VariableName, item.VariableType.FullName);
-				shader.Members.Add(prop);
+				Name = shaderModel.GeneratedClassName,
+				BaseTypes =
+				{
+					new CodeTypeReference("ShaderEffect")
+				},
+				Members =
+				{
+					constructor,
+					CreateSamplerDependencyProperty(shaderModel.GeneratedClassName, "Input"),
+					CreateCLRProperty("Input", typeof(System.Windows.Media.Brush), null)
+				},
+			};
+			if (!String.IsNullOrEmpty(shaderModel.Description))
+			{
+				shader.Comments.Add(new CodeCommentStatement("<summary>" + shaderModel.Description + "</summary>"));
 			}
+
+			// Add a dependency property and a CLR property for each of the shader's register variables.
+			foreach (ShaderModelConstantRegister register in shaderModel.Registers)
+			{
+				shader.Members.Add(CreateShaderRegisterDependencyProperty(shaderModel, register));
+				shader.Members.Add(CreateCLRProperty(register.RegisterName, register.RegisterType, register.Description));
+			}
+
+			// Add the new type to the namespace.
+			codeNamespace.Types.Add(shader);
 
 			return codeGraph;
 		}
-		private static CodeMemberField GeneratePixelShaderRegister(string propertyName) {
 
-			propertyName = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(propertyName);
-			// create the dependency property
-			var field = new CodeMemberField("DependencyProperty", propertyName + "Property");
-			field.Attributes = MemberAttributes.Public | MemberAttributes.Static;
-
-			CodeTypeReferenceExpression shaderType = new CodeTypeReferenceExpression("ShaderEffect");
-			var method = new CodeMethodInvokeExpression(shaderType, "RegisterPixelShaderSamplerProperty");
-			// method.Method = new CodeMethodReferenceExpression(, "SetValue");
-			field.InitExpression = method;
-			method.Parameters.Add(new CodePrimitiveExpression(propertyName));
-			CodeTypeOfExpression typeOfExp = new CodeTypeOfExpression("AutoGenShaderEffect");
-			method.Parameters.Add(typeOfExp);
-			method.Parameters.Add(new CodePrimitiveExpression(0));
-			return field;
+		private static CodeMemberField CreateSamplerDependencyProperty(string className, string propertyName) {
+			return new CodeMemberField
+			{
+				Type = new CodeTypeReference("DependencyProperty"),
+				Name = propertyName + "Property",
+				Attributes = MemberAttributes.Public | MemberAttributes.Static,
+				InitExpression = new CodeMethodInvokeExpression
+				{
+					Method = new CodeMethodReferenceExpression
+					{
+						TargetObject = new CodeTypeReferenceExpression("ShaderEffect"),
+						MethodName = "RegisterPixelShaderSamplerProperty"
+					},
+					Parameters =
+					{
+						new CodePrimitiveExpression(propertyName),
+						new CodeTypeOfExpression(className),
+						new CodePrimitiveExpression(0)
+					}
+				}
+			};
 		}
 
-		private static CodeMemberField GenerateCRegisterRegister(string propertyName, Type propertyType, Int32 registerNumber) {
-
-			propertyName = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(propertyName);
-			// create the dependency property
-			var field = new CodeMemberField("DependencyProperty", propertyName + "Property");
-			field.Attributes = MemberAttributes.Public | MemberAttributes.Static;
-
-			CodeTypeReferenceExpression shaderType = new CodeTypeReferenceExpression("DependencyProperty");
-			var method = new CodeMethodInvokeExpression(shaderType, "Register");
-
-			field.InitExpression = method;
-
-			method.Parameters.Add(new CodePrimitiveExpression(propertyName));
-
-			CodeTypeOfExpression typeOfExp = new CodeTypeOfExpression(propertyType);
-
-			method.Parameters.Add(typeOfExp);
-			typeOfExp = new CodeTypeOfExpression("AutoGenShaderEffect");
-			method.Parameters.Add(typeOfExp);
-
-			CodeExpression[] args = new CodeExpression[2];
-			args[0] = new CodeObjectCreateExpression(propertyType);
-			var arg = new CodePrimitiveExpression(registerNumber);
-			args[1] = new CodeMethodInvokeExpression(null, "PixelShaderConstantCallback", arg);
-			CodeObjectCreateExpression codeEx = new CodeObjectCreateExpression(typeof(UIPropertyMetadata), args);
-
-			method.Parameters.Add(codeEx);
-			return field;
+		private static CodeMemberField CreateShaderRegisterDependencyProperty(ShaderModel shaderModel, ShaderModelConstantRegister register) {
+			return new CodeMemberField
+			{
+				Type = new CodeTypeReference("DependencyProperty"),
+				Name = register.RegisterName + "Property",
+				Attributes = MemberAttributes.Public | MemberAttributes.Static,
+				InitExpression = new CodeMethodInvokeExpression
+				{
+					Method = new CodeMethodReferenceExpression
+					{
+						TargetObject = new CodeTypeReferenceExpression("DependencyProperty"),
+						MethodName = "Register"
+					},
+					Parameters =
+					{
+                        new CodePrimitiveExpression(register.RegisterName),
+                        new CodeTypeOfExpression(CreateCodeTypeReference(register.RegisterType)),
+						new CodeTypeOfExpression(shaderModel.GeneratedClassName),
+						new CodeObjectCreateExpression
+						{
+							// Silverlight doesn't have UIPropertyMetadata.
+							CreateType = new CodeTypeReference(shaderModel.TargetFramework == TargetFramework.WPF ? "UIPropertyMetadata" : "PropertyMetadata"),
+							Parameters =
+							{
+								CreateDefaultValue(register.DefaultValue),
+								new CodeMethodInvokeExpression
+								{
+									Method = new CodeMethodReferenceExpression(null, "PixelShaderConstantCallback"),
+									Parameters =
+									{
+										new CodePrimitiveExpression(register.RegisterNumber)
+									}
+								}
+							}
+						}
+					}
+				}
+			};
 		}
 
-		private static CodeMemberProperty GenerateNormalDependencyProperty(string propertyName, string typeName) {
-			propertyName = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(propertyName);
-
-			var prop = new CodeMemberProperty();
-			prop.Name = propertyName;
-			prop.Type = new CodeTypeReference(typeName);
-			prop.Attributes = MemberAttributes.Public;
-			prop.HasGet = true;
-			prop.HasSet = true;
-
-			// create the getter
-			CodeMethodInvokeExpression m1;
-			m1 = new CodeMethodInvokeExpression();
-			m1.Method = new CodeMethodReferenceExpression(null, "GetValue");
-			m1.Parameters.Add(new CodeVariableReferenceExpression(propertyName + "Property"));
-
-			CodeExpression exp = new CodeCastExpression(typeName, m1);
-			prop.GetStatements.Add(new CodeMethodReturnStatement(exp));
-
-			// create the setter
-			CodeMethodInvokeExpression m2 = new CodeMethodInvokeExpression();
-			m2.Method = new CodeMethodReferenceExpression(null, "SetValue");
-			m2.Parameters.Add(new CodeVariableReferenceExpression(propertyName + "Property"));
-			m2.Parameters.Add(new CodeVariableReferenceExpression("value"));
-			prop.SetStatements.Add(m2);
-			return prop;
+		private static CodeExpression CreateDefaultValue(object defaultValue)
+		{
+			if (defaultValue == null)
+			{
+				return new CodePrimitiveExpression(null);
+			}
+			else
+			{
+				CodeTypeReference codeTypeReference = CreateCodeTypeReference(defaultValue.GetType());
+				if (defaultValue.GetType().IsPrimitive)
+				{
+					return new CodeCastExpression(codeTypeReference, new CodePrimitiveExpression(defaultValue));
+				}
+				else if (defaultValue is Point || defaultValue is Vector || defaultValue is Size)
+				{
+					Point point = (Point)RegisterValueConverter.ConvertToUsualType(defaultValue);
+					return new CodeObjectCreateExpression(codeTypeReference,
+						new CodePrimitiveExpression(point.X),
+						new CodePrimitiveExpression(point.Y));
+				}
+				else if (defaultValue is Point3D || defaultValue is Vector3D)
+				{
+					Point3D point3D = (Point3D)RegisterValueConverter.ConvertToUsualType(defaultValue);
+					return new CodeObjectCreateExpression(codeTypeReference,
+						new CodePrimitiveExpression(point3D.X),
+						new CodePrimitiveExpression(point3D.Y),
+						new CodePrimitiveExpression(point3D.Z));
+				}
+				else if (defaultValue is Point4D)
+				{
+					Point4D point4D = (Point4D)defaultValue;
+					return new CodeObjectCreateExpression(codeTypeReference,
+						new CodePrimitiveExpression(point4D.X),
+						new CodePrimitiveExpression(point4D.Y),
+						new CodePrimitiveExpression(point4D.Z),
+						new CodePrimitiveExpression(point4D.W));
+				}
+				else if (defaultValue is Color)
+				{
+					Color color = (Color)defaultValue;
+					return new CodeMethodInvokeExpression(new CodeTypeReferenceExpression(codeTypeReference),
+						"FromArgb",
+						new CodePrimitiveExpression(color.A),
+						new CodePrimitiveExpression(color.R),
+						new CodePrimitiveExpression(color.G),
+						new CodePrimitiveExpression(color.B));
+				}
+				else
+				{
+					return new CodeDefaultValueExpression(codeTypeReference);
+				}
+			}
 		}
 
-		private static CodeConstructor CreateStaticConstructor() {
-			CodeConstructor constructor = new CodeConstructor();
-			//	CodeMethodInvokeExpression method = new CodeMethodInvokeExpression();
-			constructor.Attributes = MemberAttributes.Static | MemberAttributes.Public;
+		private static CodeMemberProperty CreateCLRProperty(string propertyName, Type type, string description) {
+			CodeMemberProperty property = new CodeMemberProperty
+			{
+				Name = propertyName,
+				Type = CreateCodeTypeReference(type),
+				Attributes = MemberAttributes.Public | MemberAttributes.Final,
+				HasGet = true,
+				GetStatements =
+				{
+					new CodeMethodReturnStatement
+					{
+						Expression = new CodeCastExpression
+						{
+							TargetType = CreateCodeTypeReference(type),
+							Expression = new CodeMethodInvokeExpression
+							{
+								Method = new CodeMethodReferenceExpression(new CodeThisReferenceExpression(), "GetValue"),
+								Parameters = { new CodeVariableReferenceExpression(propertyName + "Property") }
+							}
+						}
+					}
+				},
+				HasSet = true,
+				SetStatements =
+				{
+					new CodeMethodInvokeExpression
+					{
+						Method = new CodeMethodReferenceExpression(new CodeThisReferenceExpression(), "SetValue"),
+						Parameters =
+						{
+							new CodeVariableReferenceExpression(propertyName + "Property"),
+							new CodeVariableReferenceExpression("value")
+						}
+					}
+				}
+			};
+			if (!String.IsNullOrEmpty(description))
+			{
+				property.Comments.Add(new CodeCommentStatement("<summary>" + description + "</summary>"));
+			}
+			return property;
+		}
+
+		private static CodeTypeReference CreateCodeTypeReference(Type type)
+		{
+			return type.IsPrimitive ? new CodeTypeReference(type) : new CodeTypeReference(type.Name);
+		}
+
+		private static CodeConstructor CreatePixelShaderConstructor(ShaderModel shaderModel)
+		{
+			// Create a constructor that takes a PixelShader as its only parameter.
+			CodeConstructor constructor = new CodeConstructor
+			{
+				Attributes = MemberAttributes.Public,
+				Parameters =
+				{
+					new CodeParameterDeclarationExpression("PixelShader", "shader")
+				},
+				Statements =
+				{
+					new CodeAssignStatement
+					{
+						Left = new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), "PixelShader"),
+						Right = new CodeArgumentReferenceExpression("shader")
+					},
+					new CodeSnippetStatement(""),
+					CreateUpdateMethod("Input")
+				}
+			};
+			foreach (ShaderModelConstantRegister register in shaderModel.Registers)
+			{
+				constructor.Statements.Add(CreateUpdateMethod(register.RegisterName));
+			}
 			return constructor;
 		}
-		private static CodeConstructor CreateConstructor(List<ShaderModelConstantRegister> rawShaderMembers) {
 
-			CodeConstructor constructor = new CodeConstructor();
-			CodeMethodInvokeExpression method = new CodeMethodInvokeExpression();
-			constructor.Attributes = MemberAttributes.Public;
-			var parm = new CodeParameterDeclarationExpression("PixelShader", "shader");
-			constructor.Parameters.Add(parm);
-			// Declare a new code entry point method.
-			CodeEntryPointMethod start = new CodeEntryPointMethod();
-			constructor.Statements.Add(new CodeCommentStatement("Note: for your project you must decide how to use the generated ShaderEffect class (Choose A or B below)."));
-			constructor.Statements.Add(new CodeCommentStatement("A: Comment out the following line if you are not passing in the shader and remove the shader parameter from the constructor"));
-			constructor.Statements.Add(new CodeSnippetStatement(""));
-
-			var statement = new CodeAssignStatement();
-			statement.Left = new CodeVariableReferenceExpression("PixelShader");
-			statement.Right = new CodeArgumentReferenceExpression("shader");
-			constructor.Statements.Add(statement);
-			constructor.Statements.Add(new CodeSnippetStatement(""));
-			constructor.Statements.Add(new CodeCommentStatement("B: Uncomment the following two lines - which load the *.ps file"));
-			constructor.Statements.Add(new CodeCommentStatement("Uri u = new Uri(@\"pack://application:,,,/bandedswirl.ps\");")); constructor.Statements.Add(new CodeCommentStatement("PixelShader = new PixelShader() { UriSource = u };"));
-
-			constructor.Statements.Add(new CodeSnippetStatement(""));
-			constructor.Statements.Add(new CodeCommentStatement("Must initialize each DependencyProperty that's affliated with a shader register"));
-			constructor.Statements.Add(new CodeCommentStatement("Ensures the shader initializes to the proper default value."));
-
-			constructor.Statements.Add(CreateUpdateMethod("Input"));
-			foreach (var item in rawShaderMembers)
+		private static CodeConstructor CreateDefaultConstructor(ShaderModel shaderModel)
+		{
+			// Create a default constructor.
+			string shaderRelativeUri = "/" + shaderModel.GeneratedNamespace + ";component/" + Path.GetFileNameWithoutExtension(shaderModel.ShaderFileName) + ".ps";
+			CodeConstructor constructor = new CodeConstructor
 			{
-				constructor.Statements.Add(CreateUpdateMethod(item.VariableName));
+				Attributes = MemberAttributes.Public,
+				Statements =
+				{
+					new CodeVariableDeclarationStatement
+					{
+						Type = new CodeTypeReference("PixelShader"),
+						Name = "pixelShader",
+						InitExpression = new CodeObjectCreateExpression("PixelShader")
+					},
+					new CodeAssignStatement
+					{
+						Left = new CodePropertyReferenceExpression(new CodeVariableReferenceExpression("pixelShader"), "UriSource"),
+						Right = new CodeObjectCreateExpression
+						{
+							CreateType = new CodeTypeReference("Uri"),
+							Parameters =
+							{
+								new CodePrimitiveExpression(shaderRelativeUri),
+								new CodeFieldReferenceExpression(new CodeTypeReferenceExpression("UriKind"), "Relative")
+							}
+						}
+					},
+					new CodeAssignStatement
+					{
+						Left = new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), "PixelShader"),
+						Right = new CodeArgumentReferenceExpression("pixelShader")
+					},
+					new CodeSnippetStatement(""),
+					CreateUpdateMethod("Input")
+				}
+			};
+			foreach (ShaderModelConstantRegister register in shaderModel.Registers)
+			{
+				constructor.Statements.Add(CreateUpdateMethod(register.RegisterName));
 			}
 			return constructor;
 		}
 
 		private static CodeMethodInvokeExpression CreateUpdateMethod(string propertyName) {
 
-			var method = new CodeMethodInvokeExpression();
-
-			var thisType = new CodeThisReferenceExpression();
-			method = new CodeMethodInvokeExpression();
-			method.Method = new CodeMethodReferenceExpression(thisType, "UpdateShaderValue");
-			method.Parameters.Add(new CodeVariableReferenceExpression(propertyName + "Property"));
-			return method;
+			return new CodeMethodInvokeExpression
+			{
+				Method = new CodeMethodReferenceExpression(new CodeThisReferenceExpression(), "UpdateShaderValue"),
+				Parameters =
+				{
+					new CodeVariableReferenceExpression(propertyName + "Property")
+				}
+			};
 		}
 
-		private static CodeNamespace AssignNamespacesToGraph(CodeCompileUnit codeGraph) {
-			CodeNamespace ns = new CodeNamespace("Shazzam.Shaders");
-			codeGraph.Namespaces.Add(ns);
+		private static CodeNamespace AssignNamespacesToGraph(CodeCompileUnit codeGraph, string namespaceName) {
+			// Add imports to the global (unnamed) namespace.
+			CodeNamespace globalNamespace = new CodeNamespace
+			{
+				Imports =
+				{
+					new CodeNamespaceImport("System"),
+					new CodeNamespaceImport("System.Windows"),
+					new CodeNamespaceImport("System.Windows.Media"),
+					new CodeNamespaceImport("System.Windows.Media.Effects"),
+					new CodeNamespaceImport("System.Windows.Media.Media3D")
+				}
+			};
+			codeGraph.Namespaces.Add(globalNamespace);
 
-			// using/Imports directives
-			ns.Imports.Add(new CodeNamespaceImport("System.Windows"));
-			ns.Imports.Add(new CodeNamespaceImport("System.Windows.Media"));
-			ns.Imports.Add(new CodeNamespaceImport("System.Windows.Media.Effects"));
+			// Create a named namespace.
+			CodeNamespace ns = new CodeNamespace(namespaceName);
+			codeGraph.Namespaces.Add(ns);
 			return ns;
 		}
 
-		public static string GetSourceText(CodeDomProvider currentProvider, List<ShaderModelConstantRegister> rawShaderMembers) {
-
-			GenerateCode(currentProvider, BuildPixelShaderGraph(rawShaderMembers));
-
-			// Build the source file name with the appropriate
-			// language extension.
-			String sourceFile;
-			if (currentProvider.FileExtension[0] == '.')
-			{
-				sourceFile = "TestGraph" + currentProvider.FileExtension;
-			}
-			else
-			{
-				sourceFile = "TestGraph." + currentProvider.FileExtension;
-			}
-
-			// Read in the generated source file and
-			// display the source text.
-			StreamReader sr = new StreamReader(sourceFile);
-			string x = sr.ReadToEnd();
-			sr.Close();
-			return x;
-		}
-		public static void GenerateCode(CodeDomProvider provider,  CodeCompileUnit compileunit) {
-			// Build the source file name with the appropriate
-			// language extension.
-			String sourceFile;
-			if (provider.FileExtension[0] == '.')
-			{
-				sourceFile = "TestGraph" + provider.FileExtension;
-			}
-			else
-			{
-				sourceFile = "TestGraph." + provider.FileExtension;
-			}
-
-			// Create an IndentedTextWriter, constructed with
-			// a StreamWriter to the source file.
-			IndentedTextWriter tw = new IndentedTextWriter(new StreamWriter(sourceFile, false), "    ");
+		private static string GenerateCode(CodeDomProvider provider, CodeCompileUnit compileUnit) {
 			// Generate source code using the code generator.
-			provider.GenerateCodeFromCompileUnit(compileunit, tw, new CodeGeneratorOptions());
-			tw.Close();
+			StringWriter writer = new StringWriter();
+			string indentString = Settings.Default.IndentUsingTabs ? "\t" : String.Format("{0," + Settings.Default.IndentSpaces.ToString() + "}", " ");
+			CodeGeneratorOptions options = new CodeGeneratorOptions { IndentString = indentString };
+			provider.GenerateCodeFromCompileUnit(compileUnit, writer, options);
+			string text = writer.ToString();
+
+			// Fix up code: make static DP fields readonly, and use triple-slash or triple-quote comments for XML doc comments.
+			if (provider.FileExtension == "cs")
+			{
+				text = text.Replace("public static DependencyProperty", "public static readonly DependencyProperty");
+				text = Regex.Replace(text, @"// <(?!/?auto-generated)", @"/// <");
+			}
+			else if (provider.FileExtension == "vb")
+			{
+				text = text.Replace("Public Shared ", "Public Shared ReadOnly ");
+				text = text.Replace("'<", "'''<");
+			}
+			return text;
 		}
 	}
 }

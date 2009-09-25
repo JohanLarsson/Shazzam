@@ -1,8 +1,6 @@
-﻿//--------------------------------------------------------------------------------------
-// 
-// WPF ShaderEffect HLSL -- InvertColorEffect
-//
-//--------------------------------------------------------------------------------------
+﻿/// <class>InvertColorEffect</class>
+/// <namespace>Shazzam.Shaders</namespace>
+/// <description>An effect that inverts all colors.</description>
 
 //--------------------------------------------------------------------------------------
 // Sampler Inputs (Brushes, including ImplicitInput)
@@ -17,8 +15,6 @@ sampler2D implicitInputSampler : register(S0);
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
    float4 color = tex2D( implicitInputSampler, uv );
-   float4 inverted_color = 1 - color;
-   inverted_color.a = color.a;
-   inverted_color.rgb *= inverted_color.a;
-   return inverted_color;
+   float4 invertedColor = float4(color.a - color.rgb, color.a);
+   return invertedColor;
 }

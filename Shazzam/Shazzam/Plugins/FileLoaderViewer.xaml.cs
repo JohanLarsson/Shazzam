@@ -13,15 +13,24 @@ namespace Shazzam.Views {
 			_exePath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 			FillList();
 			FillSampleList();
+			ShazzamSwitchboard.FileLoaderPlugin = this;
 		}
 		public CodeTabView CodeTabView { get; set; }
+
+		public void Update()
+		{
+			this.fileListBox.SelectedItem = null;
+			this.sampleListBox.SelectedItem = null;
+			FillList();
+			FillSampleList();
+		}
+
 		private void FillList() {
 			if (Directory.Exists(Properties.Settings.Default.FolderFX))
 			{
 				fileListBox.ItemsSource = Directory.GetFiles(Properties.Settings.Default.FolderFX, "*.fx").Select(filename => System.IO.Path.GetFileName(filename));
 
 			}
-
 		}
 
 		private void fileListBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -31,9 +40,9 @@ namespace Shazzam.Views {
 			}
 			string path = System.IO.Path.Combine(Properties.Settings.Default.FolderFX, fileListBox.SelectedItem.ToString());
 
-			ShazzamSwitchboard.CodeTabView.EnableControls(false);
-			ShazzamSwitchboard.CodeTabView.FillEditControls(path, true);
-
+			ShazzamSwitchboard.CodeTabView.OpenFile(path);
+			Properties.Settings.Default.LastFxFile = path;
+			Properties.Settings.Default.Save();
 		}
 
 		private void Hyperlink_Click(object sender, RoutedEventArgs e) {
@@ -46,6 +55,7 @@ namespace Shazzam.Views {
 			if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{
 				Properties.Settings.Default.FolderFX = ofd.SelectedPath;
+				Properties.Settings.Default.Save();
 				FillList();
 			}
 		}
@@ -58,7 +68,6 @@ namespace Shazzam.Views {
 				sampleListBox.ItemsSource = Directory.GetFiles(path, "*.fx").Select(filename => System.IO.Path.GetFileName(filename));
 
 			}
-
 		}
 
 		private void sampleListBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -69,8 +78,9 @@ namespace Shazzam.Views {
 			}
 			string path = System.IO.Path.Combine(samplesPath, sampleListBox.SelectedItem.ToString());
 
-			ShazzamSwitchboard.CodeTabView.EnableControls(false);
-			ShazzamSwitchboard.CodeTabView.FillEditControls(path, true);
+			ShazzamSwitchboard.CodeTabView.OpenFile(path);
+			Properties.Settings.Default.LastFxFile = path;
+			Properties.Settings.Default.Save();
 		}
 	}
 }

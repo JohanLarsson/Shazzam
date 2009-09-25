@@ -28,15 +28,19 @@ namespace Shazzam.Plugins {
 
 			if (Properties.Settings.Default.DirectX_FxcPath != string.Empty)
 			{
-				ofd.InitialDirectory = System.IO.Path.GetDirectoryName(Properties.Settings.Default.DirectX_FxcPath);
+				string fxcPath = Environment.ExpandEnvironmentVariables(Properties.Settings.Default.DirectX_FxcPath);
+				ofd.InitialDirectory = System.IO.Path.GetDirectoryName(fxcPath);
 			}
 			if (ofd.ShowDialog() == true)
 			{
-
-
 				Properties.Settings.Default.DirectX_FxcPath = ofd.FileName;
 				Properties.Settings.Default.Save();
 			}
+		}
+
+		private void RestoreDefaultFxcLocation_Click(object sender, RoutedEventArgs e) {
+			Properties.Settings.Default.DirectX_FxcPath = @"%DXSDK_DIR%\Utilities\bin\x86\fxc.exe";
+			Properties.Settings.Default.Save();
 		}
 	}
 }
