@@ -38,59 +38,59 @@
                  VerticalAlignment="Center"
                  Opacity="0.5"
                  TextTrimming="CharacterEllipsis"
-                 Margin="20,10,26,0"
+                 Margin="10,10,26,0"
                  Text="{Binding Source={x:Static settings:Settings.Default}, Path=DirectX_FxcPath }"
                  TextWrapping="NoWrap"
                  ToolTip='{Binding Source={x:Static settings:Settings.Default}, Path=DirectX_FxcPath }' />
-			<UniformGrid Rows="1" Margin="20,10,26,0">
+			<UniformGrid Rows="1" Margin="10,10,26,0">
 				<Button Content='Browse...' Click='ChooseFxcLocation_Click'/>
 				<Button Content='Restore Default' Margin="5,0,0,0" Click='RestoreDefaultFxcLocation_Click'/>
 			</UniformGrid >
 		</StackPanel>
 
 		<StackPanel Grid.Row="2">
-			<TextBlock Foreground="#FFF"
+			<TextBlock Foreground="{StaticResource NeutralWhiteBrush}"
 					   HorizontalAlignment="Left"
 					   VerticalAlignment="Center"
 					   Margin="0,0,0,0"
 					   Text="Target framework:"/>
 			<RadioButton Foreground="#FFF"
 						 HorizontalAlignment="Left"
-						 Margin="20,10,26,0"
+						 Margin="10,10,26,0"
 						 Content="WPF"
 						 IsChecked="{Binding Source={x:Static settings:Settings.Default}, Path=TargetFramework, Converter={StaticResource equalityConverter}, ConverterParameter=WPF}"/>
-			<RadioButton Foreground="#FFF"
+			<RadioButton Foreground="{StaticResource NeutralWhiteBrush}"
 						 HorizontalAlignment="Left"
-						 Margin="20,2,26,0"
+						 Margin="10,2,26,0"
 						 Content="Silverlight"
 						 IsChecked="{Binding Source={x:Static settings:Settings.Default}, Path=TargetFramework, Converter={StaticResource equalityConverter}, ConverterParameter=Silverlight}"/>
 		</StackPanel>
 	  
 		<StackPanel Grid.Row="4">
-			<TextBlock Foreground="#FFF"
+			<TextBlock Foreground="{StaticResource NeutralWhiteBrush}"
 					   HorizontalAlignment="Left"
 					   VerticalAlignment="Center"
 					   Margin="0,0,0,0"
 					   Text="Generated namespace:"/>
-			<TextBox Margin="20,10,26,0"
+			<TextBox Margin="10,10,26,0"
 					 Text="{Binding Source={x:Static settings:Settings.Default}, Path=GeneratedNamespace}"/>
 		</StackPanel>
 
 		<StackPanel Grid.Row="6">
-			<TextBlock Foreground="#FFF"
+			<TextBlock Foreground="{StaticResource NeutralWhiteBrush}"
 					   HorizontalAlignment="Left"
 					   VerticalAlignment="Center"
 					   Margin="0,0,0,0"
 					   Text="Indentation:"/>
-			<RadioButton Foreground="#FFF"
+			<RadioButton Foreground="{StaticResource NeutralWhiteBrush}"
 						 HorizontalAlignment="Left"
-						 Margin="20,10,26,0"
+						 Margin="10,10,26,0"
 						 Content="Use tabs"
 						 IsChecked="{Binding Source={x:Static settings:Settings.Default}, Path=IndentUsingTabs}"/>
 			<RadioButton x:Name="indentUsingSpacesRadioButton"
-						 Foreground="#FFF"
+						 Foreground="{StaticResource NeutralWhiteBrush}"
 						 HorizontalAlignment="Left"
-						 Margin="20,2,26,0"
+						 Margin="10,2,26,0"
 						 IsChecked="{Binding Source={x:Static settings:Settings.Default}, Path=IndentUsingTabs, Converter={StaticResource invertBooleanConverter}}">
 				<StackPanel Orientation="Horizontal">
 					<TextBlock Text="Use spaces:" VerticalAlignment="Center"/>

@@ -22,25 +22,25 @@ namespace Shazzam.Views {
 		}
 
 		private void LoadPlugins() {
-			AddSettingsPlugin();
-			//// add the settings plugin (we always want this to be at the end)
+
+			Plugin fileLoader = new Plugin();
+			fileLoader.Root = new FileLoaderPlugin();
+			fileLoader.Name = "Shader Loader";
+			fileLoader.Description = "Pick a shader file to open";
+
+			Plugins.Add(fileLoader);
 			Plugin colorLoader = new Plugin();
 			colorLoader.Root = new Kaxaml.Plugins.ColorPicker.ColorPickerPlugin();
 			colorLoader.Name = "Color Picker";
 			colorLoader.Description = "Color assistant";
 			Plugins.Add(colorLoader);
 
-			Plugin fileLoader = new Plugin();
-			fileLoader.Root = new FileLoaderPlugin();
-			fileLoader.Name = "Shader Loader";
-			fileLoader.Description = "Pick a shader file to open";
-		
-			Plugins.Add(fileLoader);
+			AddSettingsPlugin();
 
 			//// add the about plugin
 			Plugin about = new Plugin();
 			about.Root = new About();
-			about.Name = "About";
+			about.Name = "About Shazzam";
 			about.Description = "About Shazzam";
 			Plugins.Add(about);
 
