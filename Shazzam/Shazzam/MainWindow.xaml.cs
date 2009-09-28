@@ -38,6 +38,7 @@ namespace Shazzam {
 					BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
 					userImage.Source = temp;
 				}
+			
 
 			}
 			imageTabControl.SelectedIndex = Properties.Settings.Default.LastImageTabIndex;

@@ -5,208 +5,251 @@
 	<UserControl.Resources>
 		<converters:DoubleToStringConverter x:Key='doubleConverter' />
 	</UserControl.Resources>
-	<WrapPanel Margin='0,3' Background='{StaticResource VeryDarkBrush}'>
-		<StackPanel VerticalAlignment='Center'>
-			<StackPanel Orientation='Horizontal' Margin='5,3,5,3'>
+	<WrapPanel Margin='0,3'
+						 Background='{StaticResource VeryDarkBrush}'>
+		<StackPanel VerticalAlignment='Center'
+								MinWidth="290"
+								Margin="5,0,0,0">
+			<StackPanel Orientation='Horizontal'
+									Margin='5,3,5,3'>
 				<TextBlock Foreground='{StaticResource HighlightBrush}'
-						   Width='12'
-						   VerticalAlignment='Center'
-						   Text='X'/>
+									 Width='12'
+									 VerticalAlignment='Center'
+									 Text='X' />
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-						   Margin='5,0,0,0'
-						   VerticalAlignment='Center'
-						   Text='Min:'/>
+									 Margin='5,0,0,0'
+									 VerticalAlignment='Center'
+									 Text='Min:' />
 				<TextBox x:Name='xMinTextBox'
-						 Margin='5,0,0,0'
-						 VerticalAlignment='Center'
-						 Width='40'
-						 Text='0'/>
+								 Margin='5,0,0,0'
+								 VerticalAlignment='Center'
+								 Width='40'
+								 Text='0' />
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-						   Margin='5,0,0,0'
-						   VerticalAlignment='Center'
-						   Text='Max:'/>
+									 Margin='5,0,0,0'
+									 VerticalAlignment='Center'
+									 Text='Max:' />
 				<TextBox x:Name='xMaxTextBox'
-						 Margin='5,0,0,0'
-						 VerticalAlignment='Center'
-						 Width='40'
-						 Text='100'/>
+								 Margin='5,0,0,0'
+								 VerticalAlignment='Center'
+								 Width='40'
+								 Text='100' />
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-						   Margin='5,0,0,0'
-						   VerticalAlignment='Center'
-						   Text='Value:'/>
+									 Margin='5,0,0,0'
+									 VerticalAlignment='Center'
+									 Text='Value:' />
+				<TextBlock x:Name='xSliderText'
+									 Foreground='{StaticResource NeutralWhiteBrush}'
+									 VerticalAlignment='Center'
+									 Margin='5,0,0,0'
+									 Width='90'
+									 Text='{Binding ElementName=xSlider, Path=Value,StringFormat=F2}'
+									 Visibility='Collapsed' />
 				<Slider x:Name='xSlider'
-						Margin='5,0,0,0'
-						Minimum='{Binding ElementName=xMinTextBox, Path=Text}'
-						Maximum='{Binding ElementName=xMaxTextBox, Path=Text}'
-						AutoToolTipPlacement='TopLeft'
-						AutoToolTipPrecision='3'
-						IsMoveToPointEnabled='True'
-						Width='90'
-						ToolTip='{Binding RelativeSource={RelativeSource Self}, Path=Value,Converter={StaticResource doubleConverter}}'/>
+								Margin='5,0,0,0'
+								Minimum='{Binding ElementName=xMinTextBox, Path=Text}'
+								Maximum='{Binding ElementName=xMaxTextBox, Path=Text}'
+								AutoToolTipPlacement='TopLeft'
+								AutoToolTipPrecision='3'
+								IsMoveToPointEnabled='True'
+								Width='90'
+								ToolTip='{Binding RelativeSource={RelativeSource Self}, Path=Value,Converter={StaticResource doubleConverter}}' />
 			</StackPanel>
-			<StackPanel Orientation='Horizontal' Margin='5,3,5,3'>
+			<StackPanel Orientation='Horizontal'
+									Margin='5,3,5,3'>
 				<TextBlock Foreground='{StaticResource HighlightBrush}'
-						   Width='12'
-						   VerticalAlignment='Center'
-						   Text='Y'/>
+									 Width='12'
+									 VerticalAlignment='Center'
+									 Text='Y' />
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-						   Margin='5,0,0,0'
-						   VerticalAlignment='Center'
-						   Text='Min:'/>
+									 Margin='5,0,0,0'
+									 VerticalAlignment='Center'
+									 Text='Min:' />
 				<TextBox x:Name='yMinTextBox'
-						 Margin='5,0,0,0'
-						 VerticalAlignment='Center'
-						 Width='40'
-						 Text='0'/>
+								 Margin='5,0,0,0'
+								 VerticalAlignment='Center'
+								 Width='40'
+								 Text='0' />
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-						   Margin='5,0,0,0'
-						   VerticalAlignment='Center'
-						   Text='Max:'/>
+									 Margin='5,0,0,0'
+									 VerticalAlignment='Center'
+									 Text='Max:' />
 				<TextBox x:Name='yMaxTextBox'
-						 Margin='5,0,0,0'
-						 VerticalAlignment='Center'
-						 Width='40'
-						 Text='100'/>
+								 Margin='5,0,0,0'
+								 VerticalAlignment='Center'
+								 Width='40'
+								 Text='100' />
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-						   Margin='5,0,0,0'
-						   VerticalAlignment='Center'
-						   Text='Value:'/>
+									 Margin='5,0,0,0'
+									 VerticalAlignment='Center'
+									 Text='Value:' />
+				<TextBlock x:Name='ySliderText'
+									 Foreground='{StaticResource NeutralWhiteBrush}'
+									 VerticalAlignment='Center'
+									 Margin='5,0,0,0'
+									 Width='90'
+									 Text='{Binding ElementName=ySlider, Path=Value,StringFormat=F2}'
+									 Visibility='Collapsed' />
 				<Slider x:Name='ySlider'
-						Margin='5,0,0,0'
-						Minimum='{Binding ElementName=yMinTextBox, Path=Text}'
-						Maximum='{Binding ElementName=yMaxTextBox, Path=Text}'
-						AutoToolTipPlacement='TopLeft'
-						AutoToolTipPrecision='3'
-						IsMoveToPointEnabled='True'
-						Width='90'
-						ToolTip='{Binding RelativeSource={RelativeSource Self}, Path=Value,Converter={StaticResource doubleConverter}}'/>
+								Margin='5,0,0,0'
+								Minimum='{Binding ElementName=yMinTextBox, Path=Text}'
+								Maximum='{Binding ElementName=yMaxTextBox, Path=Text}'
+								AutoToolTipPlacement='TopLeft'
+								AutoToolTipPrecision='3'
+								IsMoveToPointEnabled='True'
+								Width='90'
+								ToolTip='{Binding RelativeSource={RelativeSource Self}, Path=Value,Converter={StaticResource doubleConverter}}' />
 			</StackPanel>
-			<StackPanel Orientation='Horizontal' Margin='5,3,5,3'>
+			<StackPanel Orientation='Horizontal'
+									Margin='5,3,5,3'>
 				<TextBlock Foreground='{StaticResource HighlightBrush}'
-						   Width='12'
-						   VerticalAlignment='Center'
-						   Text='Z'/>
+									 Width='12'
+									 VerticalAlignment='Center'
+									 Text='Z' />
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-						   Margin='5,0,0,0'
-						   VerticalAlignment='Center'
-						   Text='Min:'/>
+									 Margin='5,0,0,0'
+									 VerticalAlignment='Center'
+									 Text='Min:' />
 				<TextBox x:Name='zMinTextBox'
-						 Margin='5,0,0,0'
-						 VerticalAlignment='Center'
-						 Width='40'
-						 Text='0'/>
+								 Margin='5,0,0,0'
+								 VerticalAlignment='Center'
+								 Width='40'
+								 Text='0' />
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-						   Margin='5,0,0,0'
-						   VerticalAlignment='Center'
-						   Text='Max:'/>
+									 Margin='5,0,0,0'
+									 VerticalAlignment='Center'
+									 Text='Max:' />
 				<TextBox x:Name='zMaxTextBox'
-						 Margin='5,0,0,0'
-						 VerticalAlignment='Center'
-						 Width='40'
-						 Text='100'/>
+								 Margin='5,0,0,0'
+								 VerticalAlignment='Center'
+								 Width='40'
+								 Text='100' />
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-						   Margin='5,0,0,0'
-						   VerticalAlignment='Center'
-						   Text='Value:'/>
+									 Margin='5,0,0,0'
+									 VerticalAlignment='Center'
+									 Text='Value:' />
+				<TextBlock x:Name='zSliderText'
+									 Foreground='{StaticResource NeutralWhiteBrush}'
+									 VerticalAlignment='Center'
+									 Margin='5,0,0,0'
+									 Width='90'
+									 Text='{Binding ElementName=zSlider, Path=Value,StringFormat=F2}'
+									 Visibility='Collapsed' />
 				<Slider x:Name='zSlider'
-						Margin='5,0,0,0'
-						Minimum='{Binding ElementName=zMinTextBox, Path=Text}'
-						Maximum='{Binding ElementName=zMaxTextBox, Path=Text}'
-						AutoToolTipPlacement='TopLeft'
-						AutoToolTipPrecision='3'
-						IsMoveToPointEnabled='True'
-						Width='90'
-						ToolTip='{Binding RelativeSource={RelativeSource Self}, Path=Value,Converter={StaticResource doubleConverter}}'/>
+								Margin='5,0,0,0'
+								Minimum='{Binding ElementName=zMinTextBox, Path=Text}'
+								Maximum='{Binding ElementName=zMaxTextBox, Path=Text}'
+								AutoToolTipPlacement='TopLeft'
+								AutoToolTipPrecision='3'
+								IsMoveToPointEnabled='True'
+								Width='90'
+								ToolTip='{Binding RelativeSource={RelativeSource Self}, Path=Value,Converter={StaticResource doubleConverter}}' />
 			</StackPanel>
-			<StackPanel Orientation='Horizontal' Margin='5,3,5,3'>
+			<StackPanel Orientation='Horizontal'
+									Margin='5,3,5,3'>
 				<TextBlock Foreground='{StaticResource HighlightBrush}'
-						   Width='12'
-						   VerticalAlignment='Center'
-						   Text='W'/>
+									 Width='12'
+									 VerticalAlignment='Center'
+									 Text='W' />
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-						   Margin='5,0,0,0'
-						   VerticalAlignment='Center'
-						   Text='Min:'/>
+									 Margin='5,0,0,0'
+									 VerticalAlignment='Center'
+									 Text='Min:' />
 				<TextBox x:Name='wMinTextBox'
-						 Margin='5,0,0,0'
-						 VerticalAlignment='Center'
-						 Width='40'
-						 Text='0'/>
+								 Margin='5,0,0,0'
+								 VerticalAlignment='Center'
+								 Width='40'
+								 Text='0' />
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-						   Margin='5,0,0,0'
-						   VerticalAlignment='Center'
-						   Text='Max:'/>
+									 Margin='5,0,0,0'
+									 VerticalAlignment='Center'
+									 Text='Max:' />
 				<TextBox x:Name='wMaxTextBox'
-						 Margin='5,0,0,0'
-						 VerticalAlignment='Center'
-						 Width='40'
-						 Text='100'/>
+								 Margin='5,0,0,0'
+								 VerticalAlignment='Center'
+								 Width='40'
+								 Text='100' />
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-						   Margin='5,0,0,0'
-						   VerticalAlignment='Center'
-						   Text='Value:'/>
+									 Margin='5,0,0,0'
+									 VerticalAlignment='Center'
+									 Text='Value:' />
+				<TextBlock x:Name='wSliderText'
+									 Foreground='{StaticResource NeutralWhiteBrush}'
+									 VerticalAlignment='Center'
+									 Margin='5,0,0,0'
+									 Width='90'
+									 Text='{Binding ElementName=wSlider, Path=Value,StringFormat=F2}'
+									 Visibility='Collapsed' />
 				<Slider x:Name='wSlider'
-						Margin='5,0,0,0'
-						Minimum='{Binding ElementName=wMinTextBox, Path=Text}'
-						Maximum='{Binding ElementName=wMaxTextBox, Path=Text}'
-						AutoToolTipPlacement='TopLeft'
-						AutoToolTipPrecision='3'
-						IsMoveToPointEnabled='True'
-						Width='90'
-						ToolTip='{Binding RelativeSource={RelativeSource Self}, Path=Value,Converter={StaticResource doubleConverter}}'/>
+								Margin='5,0,0,0'
+								Minimum='{Binding ElementName=wMinTextBox, Path=Text}'
+								Maximum='{Binding ElementName=wMaxTextBox, Path=Text}'
+								AutoToolTipPlacement='TopLeft'
+								AutoToolTipPrecision='3'
+								IsMoveToPointEnabled='True'
+								Width='90'
+								ToolTip='{Binding RelativeSource={RelativeSource Self}, Path=Value,Converter={StaticResource doubleConverter}}' />
 			</StackPanel>
 		</StackPanel>
-		<Rectangle Fill='{StaticResource NeutralDarkBrush}' Width='1' Margin='0,3,-1,3' SnapsToDevicePixels='True'/>
+		<Rectangle Fill='{StaticResource NeutralDarkBrush}'
+							 Width='1'
+							 Margin='0,3,-1,3'
+							 SnapsToDevicePixels='True' />
 		<StackPanel VerticalAlignment='Center'>
-			<StackPanel Orientation='Horizontal' Margin='5,3,5,3'>
+			<StackPanel Orientation='Horizontal'
+									Margin='5,3,5,3'
+									MinWidth="60">
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-					   VerticalAlignment='Center'
-					   Text='Animation:'/>
+									 VerticalAlignment='Center'
+									 Text='Animation:'
+									 MinWidth="55" />
 				<ToggleButton x:Name='noAnimationToggleButton'
-							  IsChecked='True'
-							  ToolTip='None'
-							  Width='22'
-							  Height='22'
-							  Margin='5,0,0,0'
-							  VerticalAlignment='Center'>
+											IsChecked='True'
+											ToolTip='None'
+											Width='22'
+											Height='22'
+											Margin='5,0,0,0'
+											VerticalAlignment='Center'>
 					<Rectangle Width='16'
-							   Height='16'
-							   Fill='{StaticResource NoAnimationIconBrush}'/>
+										 Height='16'
+										 Fill='{StaticResource NoAnimationIconBrush}' />
 				</ToggleButton>
 				<ToggleButton x:Name='linearAnimationToggleButton'
-							  ToolTip='Linear'
-							  Width='22'
-							  Height='22'
-							  Margin='5,0,0,0'
-							  VerticalAlignment='Center'>
+											ToolTip='Linear'
+											Width='22'
+											Height='22'
+											Margin='5,0,0,0'
+											VerticalAlignment='Center'>
 					<Rectangle Width='16'
-							   Height='16'
-							   Fill='{StaticResource DiagonalAnimationIconBrush}'/>
+										 Height='16'
+										 Fill='{StaticResource DiagonalAnimationIconBrush}' />
 				</ToggleButton>
 				<ToggleButton x:Name='circularAnimationToggleButton'
-							  ToolTip='Circular'
-							  Width='22'
-							  Height='22'
-							  Margin='5,0,0,0'
-							  VerticalAlignment='Center'>
+											ToolTip='Circular'
+											Width='22'
+											Height='22'
+											Margin='5,0,0,0'
+											VerticalAlignment='Center'>
 					<Rectangle Width='16'
-							   Height='16'
-							   Fill='{StaticResource CircularAnimationIconBrush}'/>
+										 Height='16'
+										 Fill='{StaticResource CircularAnimationIconBrush}' />
 				</ToggleButton>
 			</StackPanel>
-			<StackPanel Orientation='Horizontal' Margin='5,3,5,3'>
+			<StackPanel Orientation='Horizontal'
+									Margin='5,3,5,3'>
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-					   VerticalAlignment='Center'
-					   Text='Duration:'/>
+									 VerticalAlignment='Center'
+									 Text='Duration:'
+									 MinWidth="55" />
 				<TextBox x:Name='durationTextBox'
-					 Margin='5,0,0,0'
-					 VerticalAlignment='Center'
-					 MinWidth='40'
-					 Text='0.5'/>
+								 Margin='5,0,0,0'
+								 VerticalAlignment='Center'
+								 MinWidth='40'
+								 Text='0.5' />
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
-					   Margin='5,0,0,0'
-					   VerticalAlignment='Center'
-					   Text='seconds'/>
+									 Margin='5,0,0,0'
+									 VerticalAlignment='Center'
+									 Text='seconds' />
 			</StackPanel>
 		</StackPanel>
 	</WrapPanel>

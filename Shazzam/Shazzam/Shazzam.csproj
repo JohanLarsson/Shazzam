@@ -350,6 +350,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Resources\HLSLSyntax.xshd" />
+    <Content Include="Samples\1_SampleSyntaxl.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Shazzam_TemporaryKey.pfx" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>

@@ -195,7 +195,7 @@ namespace Shazzam.Views
 
 			if (control != null)
 			{
-				control.Margin = new Thickness(25, 2, 25, 5);
+				control.Margin = new Thickness(15, 2, 25, 5);
 				this.inputControlPanel.Children.Add(control);
 				register.AffiliatedControl = control;
 			}

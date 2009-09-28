@@ -87,6 +87,8 @@ namespace Shazzam.Controls
 			this.linearAnimationToggleButton.Click += this.AnimationToggleButton_Click;
 			this.circularAnimationToggleButton.Click += this.AnimationToggleButton_Click;
 			this.durationTextBox.TextChanged += this.DurationTextBox_TextChanged;
+			durationTextBox.Text = Properties.Settings.Default.AnimationLengthDefault.ToString();
+
 		}
 
 		private void XMinTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -223,6 +225,15 @@ namespace Shazzam.Controls
 				this.xSliderValueAnimation.Duration.TimeSpan == TimeSpan.Zero)
 			{
 				this.storyboard.Stop(this);
+				xSlider.Visibility = Visibility.Visible;
+				xSliderText.Visibility = Visibility.Collapsed;
+				ySlider.Visibility = Visibility.Visible;
+				ySliderText.Visibility = Visibility.Collapsed;
+				zSlider.Visibility = Visibility.Visible;
+				zSliderText.Visibility = Visibility.Collapsed;
+				wSlider.Visibility = Visibility.Visible;
+				wSliderText.Visibility = Visibility.Collapsed;
+
 			}
 			else
 			{
@@ -234,6 +245,14 @@ namespace Shazzam.Controls
 				this.zSliderValueAnimation.BeginTime = TimeSpan.FromSeconds(zBeginTime);
 				this.wSliderValueAnimation.BeginTime = TimeSpan.FromSeconds(wBeginTime);
 				this.storyboard.Begin(this, true);
+				xSlider.Visibility = Visibility.Collapsed;
+				xSliderText.Visibility = Visibility.Visible;
+				ySlider.Visibility = Visibility.Collapsed;
+				ySliderText.Visibility = Visibility.Visible;
+				zSlider.Visibility = Visibility.Collapsed;
+				zSliderText.Visibility = Visibility.Visible;
+				wSlider.Visibility = Visibility.Collapsed;
+				wSliderText.Visibility = Visibility.Visible;
 			}
 		}
 

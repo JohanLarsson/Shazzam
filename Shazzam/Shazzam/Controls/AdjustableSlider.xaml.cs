@@ -5,9 +5,7 @@ using System.Windows.Media.Animation;
 
 namespace Shazzam.Controls
 {
-	/// <summary>
-	/// Interaction logic for AdjustableSlider.xaml.
-	/// </summary>
+	
 	public partial class AdjustableSlider : UserControl
 	{
 		private const double DefaultDuration = 0.5;
@@ -36,7 +34,9 @@ namespace Shazzam.Controls
 
 			this.noAnimationToggleButton.Click += this.AnimationToggleButton_Click;
 			this.linearAnimationToggleButton.Click += this.AnimationToggleButton_Click;
+			
 			this.durationTextBox.TextChanged += this.DurationTextBox_TextChanged;
+			durationTextBox.Text = Properties.Settings.Default.AnimationLengthDefault.ToString();
 		}
 
 		private void MinTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -76,6 +76,7 @@ namespace Shazzam.Controls
 			{
 				TimeSpan duration = TimeSpan.FromSeconds(Math.Max(0, number));
 				this.sliderValueAnimation.Duration = duration;
+			
 				this.UpdateAnimation();
 			}
 		}
@@ -89,10 +90,17 @@ namespace Shazzam.Controls
 				this.sliderValueAnimation.Duration.TimeSpan == TimeSpan.Zero)
 			{
 				this.storyboard.Stop(this);
+
+					slider.Visibility = Visibility.Visible;
+					sliderText.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
 				this.storyboard.Begin(this, true);
+				// moving the slider is distracting 
+					slider.Visibility = Visibility.Collapsed;
+					sliderText.Visibility = Visibility.Visible;
+
 			}
 		}
 

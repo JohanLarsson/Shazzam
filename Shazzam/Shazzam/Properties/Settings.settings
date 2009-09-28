@@ -35,5 +35,8 @@
     <Setting Name="TargetFramework" Type="System.String" Scope="User">
       <Value Profile="(Default)">WPF</Value>
     </Setting>
+    <Setting Name="AnimationLengthDefault" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.8</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
