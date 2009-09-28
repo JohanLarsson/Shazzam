@@ -8,15 +8,18 @@ using Microsoft.Win32;
 using System.IO;
 using System.Windows.Media;
 
-namespace Shazzam {
+namespace Shazzam
+{
 	//  Images
 	//  creative commons license
 	//  StuffEyeSee  http://www.flickr.com/photos/rcsaxon/689732379/
 	//  http://www.flickr.com/photos/glockenblume/2228713567/sizes/l/
 	//  http://www.flickr.com/photos/96dpi/2329024258/
 	//
-	public partial class MainWindow : Window {
-		public MainWindow() {
+	public partial class MainWindow : Window
+	{
+		public MainWindow()
+		{
 			Commands.AppCommands.Initialize();
 			InitializeComponent();
 			ShazzamSwitchboard.MainWindow = this;
@@ -38,35 +41,43 @@ namespace Shazzam {
 					BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
 					userImage.Source = temp;
 				}
-			
+
 
 			}
 			imageTabControl.SelectedIndex = Properties.Settings.Default.LastImageTabIndex;
 
 			if (!String.IsNullOrEmpty(Properties.Settings.Default.LastFxFile))
 			{
-				this.codeTabView.OpenFile(Properties.Settings.Default.LastFxFile);
-				ApplyEffect(codeTabView.CurrentShaderEffect);
+				if (File.Exists(Properties.Settings.Default.LastFxFile))
+				{
+					this.codeTabView.OpenFile(Properties.Settings.Default.LastFxFile);
+					ApplyEffect(codeTabView.CurrentShaderEffect);
+				}
+
 			}
 		}
 
-		void codeTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+		void codeTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
 			Properties.Settings.Default.LastImageTabIndex = imageTabControl.SelectedIndex;
 			Properties.Settings.Default.Save();
 		}
 
-		void codeTabView_ShaderEffectChanged(object sender, RoutedPropertyChangedEventArgs<object> e) {
+		void codeTabView_ShaderEffectChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+		{
 
 			ApplyEffect(codeTabView.CurrentShaderEffect);
 		}
 
-		private void LoadImage(string fileName) {
+		private void LoadImage(string fileName)
+		{
 			userImage.Source = null;
 			userImage.Source = new BitmapImage(new Uri(fileName));
 
 		}
 
-		private void ApplyEffect(ShaderEffect se) {
+		private void ApplyEffect(ShaderEffect se)
+		{
 			userImage.Effect = se;
 			sampleImage1.Effect = se;
 			sampleImage2.Effect = se;
@@ -75,7 +86,8 @@ namespace Shazzam {
 			sampleImage5.Effect = se;
 		}
 
-		private void Open_Executed(object sender, ExecutedRoutedEventArgs e) {
+		private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
 			var ofd = new Microsoft.Win32.OpenFileDialog();
 			ofd.Filter = "Shader Files (*.fx)|*.fx|All Files|*.*";
 
@@ -97,7 +109,8 @@ namespace Shazzam {
 			}
 		}
 
-		private void Save_Executed(object sender, ExecutedRoutedEventArgs e) {
+		private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
 			try
 			{
 				codeTabView.SaveFile();
@@ -109,7 +122,8 @@ namespace Shazzam {
 			}
 		}
 
-		private void SaveAs_Executed(object sender, ExecutedRoutedEventArgs e) {
+		private void SaveAs_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
 			var sfd = new Microsoft.Win32.SaveFileDialog();
 			sfd.Filter = "FX files|*.fx;|All Files|*.*";
 			sfd.InitialDirectory = Properties.Settings.Default.FolderFX;
@@ -128,19 +142,23 @@ namespace Shazzam {
 			}
 		}
 
-		private void Exit_Executed(object sender, ExecutedRoutedEventArgs e) {
+		private void Exit_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
 			Application.Current.Shutdown();
 		}
 
-		private void ApplyShader_Executed(object sender, ExecutedRoutedEventArgs e) {
+		private void ApplyShader_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
 			codeTabView.RenderShader();
 		}
 
-		private void CompileShader_Executed(object sender, ExecutedRoutedEventArgs e) {
+		private void CompileShader_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
 			codeTabView.CompileShader();
 		}
 
-		private void RemoveShader_Executed(object sender, ExecutedRoutedEventArgs e) {
+		private void RemoveShader_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
 			userImage.Effect = null;
 			sampleImage1.Effect = null;
 			sampleImage2.Effect = null;
@@ -149,12 +167,14 @@ namespace Shazzam {
 			sampleImage5.Effect = null;
 		}
 
-		private void ExploreCompiledShaders_Executed(object sender, System.Windows.RoutedEventArgs e) {
+		private void ExploreCompiledShaders_Executed(object sender, System.Windows.RoutedEventArgs e)
+		{
 			string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + Constants.Paths.GeneratedShaders;
 			System.Diagnostics.Process.Start(path);
 		}
 
-		private void FullScreenImage_Executed(object sender, ExecutedRoutedEventArgs e) {
+		private void FullScreenImage_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
 			if (codeRow.Height != new GridLength(0, GridUnitType.Pixel))
 			{
 				//	codeTabView.Visibility = Visibility.Collapsed;
@@ -171,7 +191,8 @@ namespace Shazzam {
 			}
 		}
 
-		private void FullScreenCode_Executed(object sender, ExecutedRoutedEventArgs e) {
+		private void FullScreenCode_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
 			//codeTabView.Visibility = Visibility;
 			if (imageRow.Height != new GridLength(0, GridUnitType.Pixel))
 			{
@@ -186,7 +207,8 @@ namespace Shazzam {
 
 			//	DockPanel.SetDock(codeTabView, Dock.Bottom);
 		}
-		private void OpenImage_Executed(object sender, ExecutedRoutedEventArgs e) {
+		private void OpenImage_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
 			OpenFileDialog ofd = new OpenFileDialog();
 			ofd.Filter = "Images|*.jpg;*.png;*.bmp;*.gif|All Files|*.*";
 
@@ -204,7 +226,8 @@ namespace Shazzam {
 			}
 		}
 
-		private void ShaderCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+		private void ShaderCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
 			string fxcPath = Environment.ExpandEnvironmentVariables(Properties.Settings.Default.DirectX_FxcPath);
 			e.CanExecute = File.Exists(fxcPath);
 		}
