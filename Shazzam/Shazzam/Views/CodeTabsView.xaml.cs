@@ -32,6 +32,7 @@ namespace Shazzam.Views
 		private ShaderCompiler _compiler;
 		private ShaderEffect _currentShaderEffect;
 		private DispatcherTimer timer;
+		
 
 		public CodeTabView()
 		{
@@ -65,12 +66,21 @@ namespace Shazzam.Views
 		{
 			this.messagePopup.IsOpen = false;
 			timer.Stop();
+			ShazzamSwitchboard.MainWindow.Effect = null;
+			ShazzamSwitchboard.MainWindow.Opacity = 1;
 		}
 
 		public void CompileShader()
 		{
 			try
 			{
+				 var blur = new BlurEffect();
+				 blur.Radius = 6;
+				 blur.RenderingBias = RenderingBias.Performance;
+				
+				 ShazzamSwitchboard.MainWindow.Effect = blur;
+				 ShazzamSwitchboard.MainWindow.Opacity = .3;
+			
 				_compiler.Compile(this.CodeText);
 				this.messagePopup.IsOpen = true;
 				this.messagePopup.StaysOpen = false;
