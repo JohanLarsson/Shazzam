@@ -26,6 +26,10 @@ namespace Shazzam.Commands {
 		public static readonly RoutedUICommand FullScreenCode = new RoutedUICommand("Full Screen Code", "FullScreenCode",
 			typeof(AppCommands), new InputGestureCollection { new KeyGesture(Key.F11) });
 
+		public static readonly RoutedUICommand WhatsNew = new RoutedUICommand("What's New and User Guide", "WhatsNew",
+			typeof(AppCommands), new InputGestureCollection { new KeyGesture(Key.F1) });
+
+
 		public static void Initialize() {
 			// Add a keyboard shortcut (Ctrl+Shift+S) to the "Save As" command.
 			ApplicationCommands.SaveAs.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift));

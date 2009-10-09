@@ -1,12 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-using System.IO;
-using System.Windows.Media;
+using System.Diagnostics;
 
 namespace Shazzam
 {
@@ -42,7 +42,6 @@ namespace Shazzam
 					userImage.Source = temp;
 				}
 
-
 			}
 			imageTabControl.SelectedIndex = Properties.Settings.Default.LastImageTabIndex;
 
@@ -50,8 +49,15 @@ namespace Shazzam
 			{
 				if (File.Exists(Properties.Settings.Default.LastFxFile))
 				{
+
 					this.codeTabView.OpenFile(Properties.Settings.Default.LastFxFile);
 					ApplyEffect(codeTabView.CurrentShaderEffect);
+
+				}
+				else
+				{
+					Properties.Settings.Default.LastFxFile = string.Empty;
+					Properties.Settings.Default.Save();
 				}
 
 			}
@@ -86,27 +92,68 @@ namespace Shazzam
 			sampleImage5.Effect = se;
 		}
 
-		private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
+		private void New_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			var ofd = new Microsoft.Win32.OpenFileDialog();
-			ofd.Filter = "Shader Files (*.fx)|*.fx|All Files|*.*";
-
+			//codeTabView.NewShader();
+			var dialog = new SaveFileDialog();
 			if (Properties.Settings.Default.FolderFX != string.Empty)
 			{
-				ofd.InitialDirectory = Properties.Settings.Default.FolderFX;
+				dialog.InitialDirectory = Properties.Settings.Default.FolderFX;
 			}
-			if (ofd.ShowDialog() == true)
+			dialog.CheckPathExists = true;
+			dialog.CreatePrompt = true;
+			dialog.Filter = "Shader File (*.fx) |*.fx";
+			if (dialog.ShowDialog() == true)
 			{
-				codeTabView.OpenFile(ofd.FileName);
-				Properties.Settings.Default.FolderFX = System.IO.Path.GetDirectoryName(ofd.FileName);
-				Properties.Settings.Default.LastFxFile = ofd.FileName;
-				Properties.Settings.Default.Save();
+				if (!IsValidFileName(dialog.SafeFileName))
+				{ return; }
+				FileStream temp = new FileStream(dialog.FileName, FileMode.Create, FileAccess.ReadWrite);
+				StreamWriter writer = new StreamWriter(temp);
+				writer.Write(Properties.Resources.NewShaderText);
+				writer.Close();
+				LoadShaderEditor(dialog);
 
-				if (ShazzamSwitchboard.FileLoaderPlugin != null)
-				{
-					ShazzamSwitchboard.FileLoaderPlugin.Update();
-				}
 			}
+
+		}
+		private static bool IsValidFileName(string filename)
+		{
+			if (string.Equals(filename, Constants.FileNames.TempShaderFx, StringComparison.OrdinalIgnoreCase))
+			{
+				MessageBox.Show(String.Format("'{0}' not allowed for file name as it is reserved for Shazzam.", Constants.FileNames.TempShaderFx));
+				return false;
+			}
+			return true;
+		}
+		private void LoadShaderEditor(FileDialog ofd)
+		{
+			codeTabView.OpenFile(ofd.FileName);
+			Properties.Settings.Default.FolderFX = System.IO.Path.GetDirectoryName(ofd.FileName);
+			Properties.Settings.Default.LastFxFile = ofd.FileName;
+			Properties.Settings.Default.Save();
+
+			if (ShazzamSwitchboard.FileLoaderPlugin != null)
+			{
+				ShazzamSwitchboard.FileLoaderPlugin.Update();
+			}
+
+		}
+		private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+
+			var dialog = new Microsoft.Win32.OpenFileDialog();
+			dialog.Filter = "Shader Files (*.fx)|*.fx|All Files|*.*";
+			if (Properties.Settings.Default.FolderFX != string.Empty)
+			{
+				dialog.InitialDirectory = Properties.Settings.Default.FolderFX;
+			}
+			if (dialog.ShowDialog() == true)
+			{
+				if (!IsValidFileName(dialog.SafeFileName))
+				{ return; }
+				LoadShaderEditor(dialog);
+			}
+
 		}
 
 		private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -230,6 +277,10 @@ namespace Shazzam
 		{
 			string fxcPath = Environment.ExpandEnvironmentVariables(Properties.Settings.Default.DirectX_FxcPath);
 			e.CanExecute = File.Exists(fxcPath);
+		}
+		private void WhatsNew_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			Process.Start("http://blog.shazzam-tool.com/");
 		}
 	}
 

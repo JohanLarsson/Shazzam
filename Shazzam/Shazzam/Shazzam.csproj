@@ -20,7 +20,8 @@
     <GenerateManifests>true</GenerateManifests>
     <SignManifests>true</SignManifests>
     <ExpressionBlendVersion>3.0.1927.0</ExpressionBlendVersion>
-    <PublishUrl>http://shazzam-tool.com/</PublishUrl>
+    <ApplicationIcon>Images\logo.ico</ApplicationIcon>
+    <PublishUrl>C:\Data\Projects\Publish\Shazzam\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -30,13 +31,14 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://shazzam-tool.com/test11/</InstallUrl>
     <SupportUrl>http://shazzam-tool.com/support.htm</SupportUrl>
     <ProductName>Shazzam</ProductName>
     <PublisherName>Shazzam - Shader Effect Editor</PublisherName>
     <SuiteName>By Walt Ritscher</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>11</ApplicationRevision>
+    <ApplicationRevision>13</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -58,6 +60,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.TextEditor, Version=2.2.1.2648, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a, processorArchitecture=MSIL">
@@ -249,6 +252,7 @@
     <Compile Include="ShaderModelConstantRegister.cs" />
     <Compile Include="ShazzamSwitchboard.cs" />
     <Compile Include="TargetFramework.cs" />
+    <Compile Include="ViewModels\CodeTabViewModel.cs" />
     <Compile Include="Views\CodeTabsView.xaml.cs">
       <DependentUpon>CodeTabsView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -280,6 +284,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Images\logo.ico" />
     <Content Include="Samples\BandedSwirl.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -322,6 +327,7 @@
     <Content Include="Samples\Monochrome.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Samples\New.txt" />
     <Content Include="Samples\Pinch.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -350,7 +356,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Resources\HLSLSyntax.xshd" />
-    <Content Include="Samples\1_SampleSyntaxl.fx">
+    <Content Include="Samples\1_SampleSyntax.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Shazzam_TemporaryKey.pfx" />

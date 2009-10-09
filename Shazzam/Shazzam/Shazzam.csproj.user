@@ -1,9 +1,8 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
-    <PublishUrlHistory>http://shazzam-tool.com/|C:\Data\Projects\Shazzam\publish\|publish\</PublishUrlHistory>
-    <InstallUrlHistory>
-    </InstallUrlHistory>
+    <PublishUrlHistory>C:\Data\Projects\Publish\Shazzam\|http://shazzam-tool.com/|C:\Data\Projects\Shazzam\publish\|publish\</PublishUrlHistory>
+    <InstallUrlHistory>http://shazzam-tool.com/test11/|http://shazzam-tool.com/</InstallUrlHistory>
     <SupportUrlHistory>http://shazzam-tool.com/support.htm</SupportUrlHistory>
     <UpdateUrlHistory>
     </UpdateUrlHistory>
@@ -13,5 +12,6 @@
     </ErrorReportUrlHistory>
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>true</VerifyUploadedFiles>
+    <EnableSecurityDebugging>false</EnableSecurityDebugging>
   </PropertyGroup>
 </Project>

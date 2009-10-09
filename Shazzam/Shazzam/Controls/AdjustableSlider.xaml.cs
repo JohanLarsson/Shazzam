@@ -5,7 +5,9 @@ using System.Windows.Media.Animation;
 
 namespace Shazzam.Controls
 {
-	
+	/// <summary>
+	/// Interaction logic for AdjustableSlider.xaml.
+	/// </summary>
 	public partial class AdjustableSlider : UserControl
 	{
 		private const double DefaultDuration = 0.5;
@@ -101,6 +103,22 @@ namespace Shazzam.Controls
 					slider.Visibility = Visibility.Collapsed;
 					sliderText.Visibility = Visibility.Visible;
 
+			
+				// get binding for reuse
+
+				//if (this.sliderValueAnimation.Duration< new TimeSpan(0, 0, 1))
+				//{
+				//	slider.Visibility = Visibility.Hidden;
+				//	sliderText.Visibility = Visibility.Visible;
+				//	//slider.IsEnabled = false;
+
+				//}
+				//else
+				//{
+				//	slider.Visibility = Visibility.Visible;
+				//	sliderText.Visibility = Visibility.Hidden;
+				//	//slider.IsEnabled = true;
+				//}
 			}
 		}
 
