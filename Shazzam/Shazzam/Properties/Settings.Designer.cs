@@ -166,5 +166,17 @@ namespace Shazzam.Properties {
                 this["AnimationLengthDefault"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FolderOutput {
+            get {
+                return ((string)(this["FolderOutput"]));
+            }
+            set {
+                this["FolderOutput"] = value;
+            }
+        }
     }
 }

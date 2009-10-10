@@ -19,8 +19,8 @@ namespace Shazzam.CodeGen {
 					"The current setting is \"" + Properties.Settings.Default.DirectX_FxcPath + "\".");
 			}
 
-			// create app folder
-			string path = string.Format("{0}{1}", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),Constants.Paths.GeneratedShaders);
+			// create application folder
+			string path = Properties.Settings.Default.FolderOutput;
 			if (Directory.Exists(path) == false)
 			{
 				Directory.CreateDirectory(path);

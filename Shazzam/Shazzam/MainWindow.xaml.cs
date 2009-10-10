@@ -7,6 +7,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace Shazzam
 {
@@ -41,8 +42,9 @@ namespace Shazzam
 					BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
 					userImage.Source = temp;
 				}
-
 			}
+
+			
 			imageTabControl.SelectedIndex = Properties.Settings.Default.LastImageTabIndex;
 
 			if (!String.IsNullOrEmpty(Properties.Settings.Default.LastFxFile))
@@ -59,6 +61,12 @@ namespace Shazzam
 					Properties.Settings.Default.LastFxFile = string.Empty;
 					Properties.Settings.Default.Save();
 				}
+			}
+			if (string.IsNullOrEmpty(Properties.Settings.Default.FolderOutput))
+			{
+				var dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + Constants.Paths.GeneratedShaders;
+				Properties.Settings.Default.FolderOutput = dirPath;
+				Properties.Settings.Default.Save();
 
 			}
 		}
@@ -96,6 +104,7 @@ namespace Shazzam
 		{
 			//codeTabView.NewShader();
 			var dialog = new SaveFileDialog();
+			dialog.Title = "New File Name";
 			if (Properties.Settings.Default.FolderFX != string.Empty)
 			{
 				dialog.InitialDirectory = Properties.Settings.Default.FolderFX;
@@ -216,7 +225,7 @@ namespace Shazzam
 
 		private void ExploreCompiledShaders_Executed(object sender, System.Windows.RoutedEventArgs e)
 		{
-			string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + Constants.Paths.GeneratedShaders;
+			string path = Properties.Settings.Default.FolderOutput;
 			System.Diagnostics.Process.Start(path);
 		}
 

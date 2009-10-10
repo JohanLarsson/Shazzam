@@ -12,16 +12,20 @@ using Microsoft.CSharp;
 using Shazzam.Converters;
 using Shazzam.Properties;
 
-namespace Shazzam.CodeGen {
-	static class CreatePixelShaderClass {
+namespace Shazzam.CodeGen
+{
+	static class CreatePixelShaderClass
+	{
 
-		public static string GetSourceText(CodeDomProvider currentProvider, ShaderModel shaderModel, bool includePixelShaderConstructor) {
+		public static string GetSourceText(CodeDomProvider currentProvider, ShaderModel shaderModel, bool includePixelShaderConstructor)
+		{
 			return GenerateCode(currentProvider, BuildPixelShaderGraph(shaderModel, includePixelShaderConstructor));
 		}
 
 		public static Assembly CompileInMemory(string code)
 		{
 			var provider = new CSharpCodeProvider(new Dictionary<string, string>() { { "CompilerVersion", "v3.5" } });
+
 
 			CompilerParameters options = new CompilerParameters();
 			options.ReferencedAssemblies.Add("System.dll");
@@ -32,18 +36,16 @@ namespace Shazzam.CodeGen {
 			options.IncludeDebugInformation = false;
 			options.GenerateExecutable = false;
 			options.GenerateInMemory = true;
-			CompilerResults results =
-				 provider.CompileAssemblyFromSource(options, code);
+			CompilerResults results = provider.CompileAssemblyFromSource(options, code);
 			provider.Dispose();
-			Assembly generatedAssembly = null;
 			if (results.Errors.Count == 0)
-			{
-				generatedAssembly = results.CompiledAssembly;
-			}
-			return generatedAssembly;
+				return results.CompiledAssembly;
+			else
+				return null;
 		}
 
-		private static CodeCompileUnit BuildPixelShaderGraph(ShaderModel shaderModel, bool includePixelShaderConstructor) {
+		private static CodeCompileUnit BuildPixelShaderGraph(ShaderModel shaderModel, bool includePixelShaderConstructor)
+		{
 			// Create a new CodeCompileUnit to contain
 			// the program graph.
 			CodeCompileUnit codeGraph = new CodeCompileUnit();
@@ -66,12 +68,12 @@ namespace Shazzam.CodeGen {
 				{
 					constructor,
 					CreateSamplerDependencyProperty(shaderModel.GeneratedClassName, "Input"),
-					CreateCLRProperty("Input", typeof(System.Windows.Media.Brush), null)
+					CreateCLRProperty("Input", typeof(Brush), null)
 				},
 			};
 			if (!String.IsNullOrEmpty(shaderModel.Description))
 			{
-				shader.Comments.Add(new CodeCommentStatement("<summary>" + shaderModel.Description + "</summary>"));
+				shader.Comments.Add(new CodeCommentStatement(String.Format("<summary>{0}</summary>", shaderModel.Description)));
 			}
 
 			// Add a dependency property and a CLR property for each of the shader's register variables.
@@ -87,11 +89,12 @@ namespace Shazzam.CodeGen {
 			return codeGraph;
 		}
 
-		private static CodeMemberField CreateSamplerDependencyProperty(string className, string propertyName) {
+		private static CodeMemberField CreateSamplerDependencyProperty(string className, string propertyName)
+		{
 			return new CodeMemberField
 			{
 				Type = new CodeTypeReference("DependencyProperty"),
-				Name = propertyName + "Property",
+				Name = String.Format("{0}Property", propertyName),
 				Attributes = MemberAttributes.Public | MemberAttributes.Static,
 				InitExpression = new CodeMethodInvokeExpression
 				{
@@ -110,11 +113,12 @@ namespace Shazzam.CodeGen {
 			};
 		}
 
-		private static CodeMemberField CreateShaderRegisterDependencyProperty(ShaderModel shaderModel, ShaderModelConstantRegister register) {
+		private static CodeMemberField CreateShaderRegisterDependencyProperty(ShaderModel shaderModel, ShaderModelConstantRegister register)
+		{
 			return new CodeMemberField
 			{
 				Type = new CodeTypeReference("DependencyProperty"),
-				Name = register.RegisterName + "Property",
+				Name = String.Format("{0}Property", register.RegisterName),
 				Attributes = MemberAttributes.Public | MemberAttributes.Static,
 				InitExpression = new CodeMethodInvokeExpression
 				{
@@ -204,7 +208,8 @@ namespace Shazzam.CodeGen {
 			}
 		}
 
-		private static CodeMemberProperty CreateCLRProperty(string propertyName, Type type, string description) {
+		private static CodeMemberProperty CreateCLRProperty(string propertyName, Type type, string description)
+		{
 			CodeMemberProperty property = new CodeMemberProperty
 			{
 				Name = propertyName,
@@ -221,7 +226,7 @@ namespace Shazzam.CodeGen {
 							Expression = new CodeMethodInvokeExpression
 							{
 								Method = new CodeMethodReferenceExpression(new CodeThisReferenceExpression(), "GetValue"),
-								Parameters = { new CodeVariableReferenceExpression(propertyName + "Property") }
+								Parameters = { new CodeVariableReferenceExpression(String.Format("{0}Property", propertyName)) }
 							}
 						}
 					}
@@ -242,7 +247,7 @@ namespace Shazzam.CodeGen {
 			};
 			if (!String.IsNullOrEmpty(description))
 			{
-				property.Comments.Add(new CodeCommentStatement("<summary>" + description + "</summary>"));
+				property.Comments.Add(new CodeCommentStatement(String.Format("<summary>{0}</summary>", description)));
 			}
 			return property;
 		}
@@ -283,7 +288,7 @@ namespace Shazzam.CodeGen {
 		private static CodeConstructor CreateDefaultConstructor(ShaderModel shaderModel)
 		{
 			// Create a default constructor.
-			string shaderRelativeUri = "/" + shaderModel.GeneratedNamespace + ";component/" + Path.GetFileNameWithoutExtension(shaderModel.ShaderFileName) + ".ps";
+			string shaderRelativeUri = String.Format("/{0};component/{1}.ps", shaderModel.GeneratedNamespace, Path.GetFileNameWithoutExtension(shaderModel.ShaderFileName));
 			CodeConstructor constructor = new CodeConstructor
 			{
 				Attributes = MemberAttributes.Public,
@@ -324,7 +329,8 @@ namespace Shazzam.CodeGen {
 			return constructor;
 		}
 
-		private static CodeMethodInvokeExpression CreateUpdateMethod(string propertyName) {
+		private static CodeMethodInvokeExpression CreateUpdateMethod(string propertyName)
+		{
 
 			return new CodeMethodInvokeExpression
 			{
@@ -336,7 +342,8 @@ namespace Shazzam.CodeGen {
 			};
 		}
 
-		private static CodeNamespace AssignNamespacesToGraph(CodeCompileUnit codeGraph, string namespaceName) {
+		private static CodeNamespace AssignNamespacesToGraph(CodeCompileUnit codeGraph, string namespaceName)
+		{
 			// Add imports to the global (unnamed) namespace.
 			CodeNamespace globalNamespace = new CodeNamespace
 			{
@@ -357,26 +364,29 @@ namespace Shazzam.CodeGen {
 			return ns;
 		}
 
-		private static string GenerateCode(CodeDomProvider provider, CodeCompileUnit compileUnit) {
+		private static string GenerateCode(CodeDomProvider provider, CodeCompileUnit compileUnit)
+		{
 			// Generate source code using the code generator.
-			StringWriter writer = new StringWriter();
-			string indentString = Settings.Default.IndentUsingTabs ? "\t" : String.Format("{0," + Settings.Default.IndentSpaces.ToString() + "}", " ");
-			CodeGeneratorOptions options = new CodeGeneratorOptions { IndentString = indentString };
-			provider.GenerateCodeFromCompileUnit(compileUnit, writer, options);
-			string text = writer.ToString();
-
-			// Fix up code: make static DP fields readonly, and use triple-slash or triple-quote comments for XML doc comments.
-			if (provider.FileExtension == "cs")
+			using (StringWriter writer = new StringWriter())
 			{
-				text = text.Replace("public static DependencyProperty", "public static readonly DependencyProperty");
-				text = Regex.Replace(text, @"// <(?!/?auto-generated)", @"/// <");
+				string indentString = Settings.Default.IndentUsingTabs ? "\t" : String.Format("{0," + Settings.Default.IndentSpaces.ToString() + "}", " ");
+				CodeGeneratorOptions options = new CodeGeneratorOptions { IndentString = indentString, BlankLinesBetweenMembers = false };
+				provider.GenerateCodeFromCompileUnit(compileUnit, writer, options);
+				string text = writer.ToString();
+				// Fix up code: make static DP fields readonly, and use triple-slash or triple-quote comments for XML doc comments.
+				if (provider.FileExtension == "cs")
+				{
+					text = text.Replace("public static DependencyProperty", "public static readonly DependencyProperty");
+					text = Regex.Replace(text, @"// <(?!/?auto-generated)", @"/// <");
+				}
+				else
+					if (provider.FileExtension == "vb")
+					{
+						text = text.Replace("Public Shared ", "Public Shared ReadOnly ");
+						text = text.Replace("'<", "'''<");
+					}
+				return text;
 			}
-			else if (provider.FileExtension == "vb")
-			{
-				text = text.Replace("Public Shared ", "Public Shared ReadOnly ");
-				text = text.Replace("'<", "'''<");
-			}
-			return text;
 		}
 	}
 }

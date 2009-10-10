@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
@@ -32,7 +33,6 @@ namespace Shazzam.Views
 		private ShaderCompiler _compiler;
 		private ShaderEffect _currentShaderEffect;
 		private DispatcherTimer timer;
-		
 
 		public CodeTabView()
 		{
@@ -42,11 +42,12 @@ namespace Shazzam.Views
 			_shaderTextEditor.Encoding = System.Text.Encoding.ASCII;
 			using (var stream = typeof(CodeTabView).Assembly.GetManifestResourceStream("Shazzam.Resources.HLSLSyntax.xshd"))
 			{
-				var reader = new XmlTextReader(stream);
+				using (var reader = new XmlTextReader(stream)){
 				var sm = new SyntaxMode("HLSL.xshd", "HLSL", ".fx");
 				_hlslHS = HighlightingDefinitionParser.Parse(sm, reader);
 				_hlslHS.ResolveReferences(); // don't forget this!
 				reader.Close();
+			}
 			}
 			_shaderTextEditor.Document.HighlightingStrategy = _hlslHS;
 			this.formsHost.Child = _shaderTextEditor;
@@ -60,32 +61,66 @@ namespace Shazzam.Views
 			_compiler = new ShaderCompiler();
 			_compiler.Reset();
 			outputTextBox.DataContext = _compiler;
+			this.Loaded += CodeTabView_Loaded;
+		}
+
+		void CodeTabView_Loaded(object sender, RoutedEventArgs e)
+		{
+			SetupBlurAnimation();
+			//messagePopup.PlacementTarget = ShazzamSwitchboard.MainWindow;
+			
 		}
 
 		private void ClosePopup(object o, EventArgs e)
 		{
-			this.messagePopup.IsOpen = false;
-			timer.Stop();
+		//	this.messagePopup.IsOpen = false;
+		//	timer.Stop();
+			//blurStoryBoard.Stop;
+
 			ShazzamSwitchboard.MainWindow.Effect = null;
 			ShazzamSwitchboard.MainWindow.Opacity = 1;
 		}
+		private Storyboard blurStoryBoard = new Storyboard();
+		private DoubleAnimation blurAnimation = new DoubleAnimation();
+		private DoubleAnimation opacityAnimation = new DoubleAnimation();
+		private BlurEffect blur = new BlurEffect { Radius = 0, RenderingBias = RenderingBias.Performance };
+		public void SetupBlurAnimation()
+		{
+			blurAnimation.Duration = opacityAnimation.Duration = new Duration(TimeSpan.FromSeconds(2));
+			blurAnimation.From = 0;
+			blurAnimation.To = 6;
 
+			opacityAnimation.From = .3;
+			opacityAnimation.To = 1;
+			opacityAnimation.FillBehavior = blurAnimation.FillBehavior = FillBehavior.Stop;
+
+			Storyboard.SetTarget(this.blurAnimation, ShazzamSwitchboard.MainWindow);
+			Storyboard.SetTargetProperty(this.blurAnimation, new PropertyPath("(UIElement.Effect).(BlurEffect.Radius)"));
+			//this.blurStoryBoard.Children.Add(this.blurAnimation);
+
+			Storyboard.SetTarget(this.opacityAnimation, ShazzamSwitchboard.MainWindow);
+			Storyboard.SetTargetProperty(this.opacityAnimation, new PropertyPath(UIElement.OpacityProperty));
+			this.blurStoryBoard.Children.Add(this.opacityAnimation);
+
+		}
 		public void CompileShader()
 		{
 			try
 			{
-				 var blur = new BlurEffect();
-				 blur.Radius = 6;
-				 blur.RenderingBias = RenderingBias.Performance;
-				
-				 ShazzamSwitchboard.MainWindow.Effect = blur;
-				 ShazzamSwitchboard.MainWindow.Opacity = .3;
-			
+
+				ShazzamSwitchboard.MainWindow.Effect = blur;
+
+
+				blurStoryBoard.Begin(this, true);
+
 				_compiler.Compile(this.CodeText);
-				this.messagePopup.IsOpen = true;
-				this.messagePopup.StaysOpen = false;
-				timer = new DispatcherTimer(new TimeSpan(0, 0, 0, 0, 2000), DispatcherPriority.Background, ClosePopup, this.Dispatcher);
-				timer.Start();
+				
+				//	this.messagePopup.IsOpen = true;
+					compileStatusText.Text = String.Format("Last Compiled at: {0}", DateTime.Now.ToLongTimeString());
+				
+			//	timer = new DispatcherTimer(new TimeSpan(0, 0, 0, 0, 2000), DispatcherPriority.Background, ClosePopup, this.Dispatcher);
+			//	timer.Start();
+
 			}
 			catch (CompilerException ex)
 			{
@@ -98,7 +133,7 @@ namespace Shazzam.Views
 
 			var currentEditor = new ICSharpCode.TextEditor.TextEditorControl();
 			currentEditor.ShowLineNumbers = true;
-			currentEditor.ShowInvalidLines = false; // dont show error squiggle on empty lines
+			currentEditor.ShowInvalidLines = false; // don't show error squiggle on empty lines
 			currentEditor.ShowEOLMarkers = false;
 			currentEditor.ShowSpaces = false;
 			currentEditor.ShowTabs = false;
@@ -136,7 +171,7 @@ namespace Shazzam.Views
 				Inlines =
 				{
 					new Run { Foreground = (Brush)Application.Current.FindResource("HighlightBrush"), Text = register.RegisterName },
-					new Run { Text = " : " + register.RegisterType.Name },
+					new Run { Text = String.Format(" : {0}", register.RegisterType.Name) },
 				},
 				ToolTip = String.IsNullOrEmpty(register.Description) ? null : register.Description
 			};
@@ -220,7 +255,7 @@ namespace Shazzam.Views
 				{
 					if (register.AffiliatedControl != null)
 					{
-						FieldInfo fieldInfo = shaderEffect.GetType().GetField(register.RegisterName + "Property", BindingFlags.Public | BindingFlags.Static);
+						FieldInfo fieldInfo = shaderEffect.GetType().GetField(String.Format("{0}Property", register.RegisterName), BindingFlags.Public | BindingFlags.Static);
 						if (fieldInfo != null)
 						{
 							DependencyProperty dependencyProperty = fieldInfo.GetValue(null) as DependencyProperty;
@@ -271,13 +306,12 @@ namespace Shazzam.Views
 			try
 			{
 				this.InputControlsTab.IsEnabled = false;
-				string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + Constants.Paths.GeneratedShaders;
+				string path = Properties.Settings.Default.FolderOutput;
 				if (!File.Exists(path + Constants.FileNames.TempShaderPs))
 				{
 					return;
 				}
-				var ps = new PixelShader();
-				ps.UriSource = new Uri(path + Constants.FileNames.TempShaderPs);
+				var ps = new PixelShader { UriSource = new Uri(path + Constants.FileNames.TempShaderPs) };
 
 				this._shaderModel = Shazzam.CodeGen.CodeParser.ParseShader(this._shaderTextEditor.FileName, this.CodeText);
 				string codeString = CreatePixelShaderClass.GetSourceText(new CSharpCodeProvider(), this._shaderModel, true);
@@ -287,7 +321,7 @@ namespace Shazzam.Views
 					MessageBox.Show(ShazzamSwitchboard.MainWindow, "Cannot compile the generated C# code.", "Compile error", MessageBoxButton.OK, MessageBoxImage.Error);
 					return;
 				}
-				Type t = autoAssembly.GetType(_shaderModel.GeneratedNamespace + "." + _shaderModel.GeneratedClassName);
+				Type t = autoAssembly.GetType(String.Format("{0}.{1}", _shaderModel.GeneratedNamespace, _shaderModel.GeneratedClassName));
 
 				this.FillEditControls();
 				this.CurrentShaderEffect = (ShaderEffect)Activator.CreateInstance(t, new object[] { ps });

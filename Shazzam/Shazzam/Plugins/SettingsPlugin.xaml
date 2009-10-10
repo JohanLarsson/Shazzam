@@ -31,6 +31,8 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="12" />
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="12" />
+			<RowDefinition Height="Auto" />
 
 		</Grid.RowDefinitions>
 		<StackPanel>

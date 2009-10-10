@@ -1,166 +1,275 @@
-﻿<UserControl x:Class="Shazzam.Views.CodeTabView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters='clr-namespace:Shazzam.Converters'
-             xmlns:commands='clr-namespace:Shazzam.Commands'>
+﻿<UserControl
+	x:Class="Shazzam.Views.CodeTabView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:converters='clr-namespace:Shazzam.Converters'
+	xmlns:commands='clr-namespace:Shazzam.Commands'>
 	<UserControl.Resources>
-		<converters:StringToVisibilityConverter x:Key='visConverter' />
-		<converters:VisibiltyToVisibilityConverter x:Key='visvisConverter' />
+		<converters:StringToVisibilityConverter
+			x:Key='visConverter' />
+		<converters:VisibiltyToVisibilityConverter
+			x:Key='visvisConverter' />
 	</UserControl.Resources>
-	<TabControl x:Name='codeTabControl' SnapsToDevicePixels='True'>
-		<TabItem x:Name='codeTab' Header="HLSL">
-			<Border BorderBrush='{DynamicResource NeutralDarkBrush}'
-					BorderThickness='9'>
-				<Border BorderBrush='White'
-						BorderThickness='1'>
-					<DockPanel MinWidth='330'
-							   LastChildFill='True'>
-						<Popup x:Name="messagePopup"
-							   Grid.Row="0"
-							   PopupAnimation="Fade"
-							   AllowsTransparency='True'
-							   PlacementTarget="{Binding ElementName=formsHost}"
-							   Placement="Center">
-							<Border BorderBrush='#44000000'
-									BorderThickness='3'>
-								<Grid Width='300'
-									  Height='80'
-									  Background="#4422FF22">
+	<TabControl
+		x:Name='codeTabControl'
+		SnapsToDevicePixels='True'>
+		<TabItem
+			x:Name='codeTab'
+			Header="HLSL">
+			<Border
+				BorderBrush='{DynamicResource NeutralDarkBrush}'
+				BorderThickness='9'>
+				<Border
+					BorderBrush='White'
+					BorderThickness='1'>
+					<DockPanel
+						MinWidth='330'
+						LastChildFill='True'>
+						<!--<Popup
+							x:Name="messagePopup"
+							Grid.Row="0"
+							PopupAnimation="Slide"
+							StaysOpen='False'
+							AllowsTransparency="True"
+							PlacementTarget="{Binding ElementName=formsHost}"
+							Placement="Top">
+							<Border
+								BorderBrush='#44000000'
+								BorderThickness='3'>
+								<Grid
+									Width='300'
+									Height='80'
+									Background="#4422FF22">
 									<Grid.RowDefinitions>
-										<RowDefinition Height="80" />
+										<RowDefinition
+											Height="80" />
 									</Grid.RowDefinitions>
-									<TextBlock Text="Stage 1 - DirectX FXC compile completed. "
-											   HorizontalAlignment='Center'
-											   VerticalAlignment='Center'
-											   FontWeight="Bold"
-											   Margin="5" />
+									<TextBlock
+										Text="Stage 1 - DirectX FXC compile completed. "
+										HorizontalAlignment='Center'
+										VerticalAlignment='Center'
+										FontWeight="Bold"
+										Margin="5" />
 								</Grid>
 							</Border>
-						</Popup>
-						<TextBlock x:Name='outputTextBox'
-								   DockPanel.Dock='Bottom'
-								   Margin='0,5,0,5'
-								   Padding='8,5'
-								   Background='{StaticResource ErrorBrush}'
-								   Foreground='White'
-								   Visibility='{Binding Path=Text, Converter={StaticResource visConverter}, RelativeSource={RelativeSource Self}}'
-								   Text='{Binding Path=ErrorText}'
-								   MouseLeftButtonDown='OutputTextBox_MouseLeftButtonDown'/>
-						<DockPanel LastChildFill='True'>
-							<WindowsFormsHost x:Name='formsHost'
-											  Margin='2,2,2,2' />
+						</Popup>-->
+						<StackPanel
+							Orientation="Horizontal"
+							DockPanel.Dock="Bottom"
+							Background="White">
+
+							<TextBlock
+								x:Name='outputTextBox'
+								DockPanel.Dock='Bottom'
+								Margin='5,3,5,8'
+								Padding='8,4'
+								Background='DarkRed'
+								Foreground='White'
+								Visibility='{Binding Path=Text, Converter={StaticResource visConverter}, RelativeSource={RelativeSource Self}}'
+								Text='{Binding Path=ErrorText}'
+								MouseLeftButtonDown='OutputTextBox_MouseLeftButtonDown' ToolTip='Double-click here to goto error.'>
+								
+								<TextBlock.Effect>
+									<DropShadowEffect
+										BlurRadius='9'
+										Color='Black'
+										Direction="335" Opacity="0.63" />
+ 								</TextBlock.Effect>
+							</TextBlock>
+							<TextBlock
+								x:Name='compileStatusText'
+								DockPanel.Dock='Bottom'
+								Background='#FFC4FFC4'
+								Margin='5,3,5,8'
+								Padding='8,4'>
+								<TextBlock.Effect>
+									<DropShadowEffect
+										BlurRadius='9'
+										Color='Black'
+										Direction="335" Opacity="0.63" />
+ 								</TextBlock.Effect>
+							</TextBlock>
+						</StackPanel>
+						<DockPanel
+							LastChildFill='True'>
+							<WindowsFormsHost
+								x:Name='formsHost'
+								Margin='2,2,2,2' />
 						</DockPanel>
 					</DockPanel>
 				</Border>
 			</Border>
 		</TabItem>
-		<TabItem x:Name='csharpTab'
-				 Header='Generated Shader - C#'
-				 Visibility='{Binding ElementName=outputTextBox,Path=Visibility, Converter={StaticResource visvisConverter}}'>
-			<Border BorderBrush='{DynamicResource NeutralDarkBrush}'
-					BorderThickness='9'>
-				<Border BorderBrush='White'
-						BorderThickness='1'>
-					<DockPanel MinWidth='330'
-							   LastChildFill='True'>
-						<WindowsFormsHost x:Name='formsHostCs'
-										  Margin='2,2,2,2' />
+		<TabItem
+			x:Name='csharpTab'
+			Header='Generated Shader - C#'
+			Visibility='{Binding ElementName=outputTextBox,Path=Visibility, Converter={StaticResource visvisConverter}}'>
+			<Border
+				BorderBrush='{DynamicResource NeutralDarkBrush}'
+				BorderThickness='9'>
+				<Border
+					BorderBrush='White'
+					BorderThickness='1'>
+					<DockPanel
+						MinWidth='330'
+						LastChildFill='True'>
+						<WindowsFormsHost
+							x:Name='formsHostCs'
+							Margin='2,2,2,2' />
 					</DockPanel>
 				</Border>
 			</Border>
 		</TabItem>
-		<TabItem x:Name='vbTab'
-				 Header='Generated Shader - Visual Basic'
-				 Visibility='{Binding ElementName=outputTextBox,Path=Visibility, Converter={StaticResource visvisConverter}}'>
-			<Border BorderBrush='{DynamicResource NeutralDarkBrush}'
-					BorderThickness='9'>
-				<Border BorderBrush='White'
-						BorderThickness='1'>
-					<DockPanel MinWidth='330'
-							   LastChildFill='True'>
-						<WindowsFormsHost x:Name='formsHostVb'
-										  Margin='2,2,2,2' />
+		<TabItem
+			x:Name='vbTab'
+			Header='Generated Shader - Visual Basic'
+			Visibility='{Binding ElementName=outputTextBox,Path=Visibility, Converter={StaticResource visvisConverter}}'>
+			<Border
+				BorderBrush='{DynamicResource NeutralDarkBrush}'
+				BorderThickness='9'>
+				<Border
+					BorderBrush='White'
+					BorderThickness='1'>
+					<DockPanel
+						MinWidth='330'
+						LastChildFill='True'>
+						<WindowsFormsHost
+							x:Name='formsHostVb'
+							Margin='2,2,2,2' />
 					</DockPanel>
 				</Border>
 			</Border>
 		</TabItem>
-		<TabItem x:Name='InputControlsTab'
-				 Header='Change Shader Settings'
-				 Visibility='{Binding ElementName=outputTextBox,Path=Visibility, Converter={StaticResource visvisConverter}}'>
-			<Border BorderBrush='{DynamicResource NeutralDarkBrush}'
-					BorderThickness='9'>
-				<Border BorderBrush='White'
-						BorderThickness='1'>
-					<DockPanel MinWidth='330'
-							   LastChildFill='True'
-							   Background='{StaticResource NeutralDarkBrush}'>
-						<Expander IsExpanded='True'
-								  ExpandDirection='Left'
-								  DockPanel.Dock='Right'
-								  BorderThickness='0'>
-							<FlowDocumentScrollViewer Width="300"
-													  BorderThickness="0"
-													  VerticalScrollBarVisibility="Auto"
-													  Background="{StaticResource NeutralDarkBrush}"
-													  Foreground="{StaticResource NeutralWhiteBrush}">
-								<FlowDocument FontFamily="Segoe UI" FontSize="12" TextAlignment="Left">
+		<TabItem
+			x:Name='InputControlsTab'
+			Header='Change Shader Settings'
+			Visibility='{Binding ElementName=outputTextBox,Path=Visibility, Converter={StaticResource visvisConverter}}'>
+			<Border
+				BorderBrush='{DynamicResource NeutralDarkBrush}'
+				BorderThickness='9'>
+				<Border
+					BorderBrush='White'
+					BorderThickness='1'>
+					<DockPanel
+						MinWidth='330'
+						LastChildFill='True'
+						Background='{StaticResource NeutralDarkBrush}'>
+						<Expander
+							IsExpanded='True'
+							ExpandDirection='Left'
+							DockPanel.Dock='Right'
+							BorderThickness='0'>
+							<FlowDocumentScrollViewer
+								Width="300"
+								BorderThickness="0"
+								VerticalScrollBarVisibility="Auto"
+								Background="{StaticResource NeutralDarkBrush}"
+								Foreground="{StaticResource NeutralWhiteBrush}">
+								<FlowDocument
+									FontFamily="Segoe UI"
+									FontSize="12"
+									TextAlignment="Left">
 									<Paragraph>
-										<Image Source="info.png" Width="24" Height="24"/>
-										<Bold BaselineAlignment="Center">Auto-Generated Control Information</Bold>
+										<Image
+											Source="info.png"
+											Width="24"
+											Height="24" />
+										<Bold
+											BaselineAlignment="Center">Auto-Generated Control Information</Bold>
 									</Paragraph>
 									<Paragraph>
 										Each register declared in HLSL is mapped to a DependencyProperty with a
 										compatible .NET type, as shown in the table below.
 									</Paragraph>
-									<Table CellSpacing="0" BorderBrush="{StaticResource NeutralWhiteBrush}" BorderThickness="1" Margin="0">
+									<Table
+										CellSpacing="0"
+										BorderBrush="{StaticResource NeutralWhiteBrush}"
+										BorderThickness="1"
+										Margin="0">
 										<Table.Columns>
-											<TableColumn Width="2*"/>
-											<TableColumn Width="3*"/>
+											<TableColumn
+												Width="2*" />
+											<TableColumn
+												Width="3*" />
 										</Table.Columns>
 										<TableRowGroup>
-											<TableRow Background="{StaticResource NeutralDarkBrush}" Foreground="{StaticResource HighlightBrush}">
-												<TableCell Padding="2,1,2,1" BorderBrush="{StaticResource NeutralWhiteBrush}" BorderThickness="0,0,0,1">
+											<TableRow
+												Background="{StaticResource NeutralDarkBrush}"
+												Foreground="{StaticResource HighlightBrush}">
+												<TableCell
+													Padding="2,1,2,1"
+													BorderBrush="{StaticResource NeutralWhiteBrush}"
+													BorderThickness="0,0,0,1">
 													<Paragraph>HLSL type</Paragraph>
 												</TableCell>
-												<TableCell Padding="2,1,2,1" BorderBrush="{StaticResource NeutralWhiteBrush}" BorderThickness="0,0,0,1">
+												<TableCell
+													Padding="2,1,2,1"
+													BorderBrush="{StaticResource NeutralWhiteBrush}"
+													BorderThickness="0,0,0,1">
 													<Paragraph>.NET type</Paragraph>
 												</TableCell>
 											</TableRow>
-											<TableRow Background="{StaticResource VeryDarkBrush}">
-												<TableCell Padding="2,1,2,1">
+											<TableRow
+												Background="{StaticResource VeryDarkBrush}">
+												<TableCell
+													Padding="2,1,2,1">
 													<Paragraph>float</Paragraph>
 												</TableCell>
-												<TableCell Padding="2,1,2,1">
-													<Paragraph><Span Foreground="{StaticResource HighlightBrush}">Double</Span> or Single</Paragraph>
+												<TableCell
+													Padding="2,1,2,1">
+													<Paragraph>
+														<Span
+															Foreground="{StaticResource HighlightBrush}">Double</Span> or Single
+													</Paragraph>
 												</TableCell>
 											</TableRow>
-											<TableRow Background="{StaticResource NeutralDarkBrush}">
-												<TableCell Padding="2,1,2,1">
+											<TableRow
+												Background="{StaticResource NeutralDarkBrush}">
+												<TableCell
+													Padding="2,1,2,1">
 													<Paragraph>float2</Paragraph>
 												</TableCell>
-												<TableCell Padding="2,1,2,1">
-													<Paragraph><Span Foreground="{StaticResource HighlightBrush}">Point</Span> or Size or Vector</Paragraph>
+												<TableCell
+													Padding="2,1,2,1">
+													<Paragraph>
+														<Span
+															Foreground="{StaticResource HighlightBrush}">Point</Span> or Size or Vector
+													</Paragraph>
 												</TableCell>
 											</TableRow>
-											<TableRow Background="{StaticResource VeryDarkBrush}">
-												<TableCell Padding="2,1,2,1">
+											<TableRow
+												Background="{StaticResource VeryDarkBrush}">
+												<TableCell
+													Padding="2,1,2,1">
 													<Paragraph>float3</Paragraph>
 												</TableCell>
-												<TableCell Padding="2,1,2,1">
-													<Paragraph><Span Foreground="{StaticResource HighlightBrush}">Point3D</Span>* or Vector3D*</Paragraph>
+												<TableCell
+													Padding="2,1,2,1">
+													<Paragraph>
+														<Span
+															Foreground="{StaticResource HighlightBrush}">Point3D</Span> * or Vector3D*
+													</Paragraph>
 												</TableCell>
 											</TableRow>
-											<TableRow Background="{StaticResource NeutralDarkBrush}">
-												<TableCell Padding="2,1,2,1">
+											<TableRow
+												Background="{StaticResource NeutralDarkBrush}">
+												<TableCell
+													Padding="2,1,2,1">
 													<Paragraph>float4</Paragraph>
 												</TableCell>
-												<TableCell Padding="2,1,2,1">
-													<Paragraph><Span Foreground="{StaticResource HighlightBrush}">Color</Span> or Point4D*</Paragraph>
+												<TableCell
+													Padding="2,1,2,1">
+													<Paragraph>
+														<Span
+															Foreground="{StaticResource HighlightBrush}">Color</Span> or Point4D*
+													</Paragraph>
 												</TableCell>
 											</TableRow>
 										</TableRowGroup>
 									</Table>
-									<Paragraph Margin="0,2,0,0" FontSize="11">
+									<Paragraph
+										Margin="0,2,0,0"
+										FontSize="11">
 										* Available in WPF but not in Silverlight.
 									</Paragraph>
 									<Paragraph>
@@ -168,27 +277,45 @@
 										types can be selected in the comments before an HLSL register
 										declaration:
 									</Paragraph>
-									<Paragraph Padding="2" Background="White" Foreground="Black" FontFamily="Consolas">
-										<Span Foreground="Green">
-											/// &lt;summary&gt;Input size&lt;/summary&gt;<LineBreak/>
-											/// <Run Background="#60FFC000">&lt;type&gt;Size&lt;/type&gt;</Run><LineBreak/>
-											/// &lt;minValue&gt;10,10&lt;/minValue&gt;<LineBreak/>
-											/// &lt;maxValue&gt;100,100&lt;/maxValue&gt;<LineBreak/>
-											/// &lt;defaultValue&gt;3,3&lt;/defaultValue&gt;</Span>
-										<LineBreak/>
-										<Run Foreground="Maroon" FontWeight="Bold">float2</Run> InputSize :
-										<Run Foreground="Blue" FontWeight="Bold">register</Run>(C0);
+									<Paragraph
+										Padding="2"
+										Background="White"
+										Foreground="Black"
+										FontFamily="Consolas">
+										<Span
+											Foreground="Green">
+											/// &lt;summary&gt;Input size&lt;/summary&gt;
+											<LineBreak />
+											///
+											<Run
+												Background="#60FFC000">&lt;type&gt;Size&lt;/type&gt;</Run>
+											<LineBreak />
+											/// &lt;minValue&gt;10,10&lt;/minValue&gt;
+											<LineBreak />
+											/// &lt;maxValue&gt;100,100&lt;/maxValue&gt;
+											<LineBreak />
+											/// &lt;defaultValue&gt;3,3&lt;/defaultValue&gt;
+										</Span>
+										<LineBreak />
+										<Run
+											Foreground="Maroon"
+											FontWeight="Bold">float2</Run> InputSize :
+										<Run
+											Foreground="Blue"
+											FontWeight="Bold">register</Run> (C0);
 									</Paragraph>
 								</FlowDocument>
 							</FlowDocumentScrollViewer>
 						</Expander>
-						<ScrollViewer HorizontalScrollBarVisibility='Disabled'
-									  VerticalScrollBarVisibility='Visible'>
-							<StackPanel x:Name='inputControlPanel'
-										VerticalAlignment='Top'
-										HorizontalAlignment='Left'
-										Margin='2,2,2,2'
-										Background='{StaticResource NeutralDarkBrush}' />
+						<ScrollViewer
+							HorizontalScrollBarVisibility='Disabled'
+							VerticalScrollBarVisibility='Visible'>
+							<StackPanel
+								x:Name='inputControlPanel'
+								VerticalAlignment='Top'
+								HorizontalAlignment='Left'
+								Margin='2,2,2,2'
+								Background='{StaticResource NeutralDarkBrush}' />
 						</ScrollViewer>
 					</DockPanel>
 				</Border>
