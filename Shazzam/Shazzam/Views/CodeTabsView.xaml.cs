@@ -86,7 +86,7 @@ namespace Shazzam.Views
 		private BlurEffect blur = new BlurEffect { Radius = 0, RenderingBias = RenderingBias.Performance };
 		public void SetupBlurAnimation()
 		{
-			blurAnimation.Duration = opacityAnimation.Duration = new Duration(TimeSpan.FromSeconds(2));
+			blurAnimation.Duration = opacityAnimation.Duration = new Duration(TimeSpan.FromSeconds(1.2));
 			blurAnimation.From = 0;
 			blurAnimation.To = 6;
 
@@ -278,7 +278,7 @@ namespace Shazzam.Views
 				}
 			}
 		}
-
+		string csFolder, vbFolder;
 		private void FillEditControls()
 		{
 			inputControlPanel.Children.Clear();
@@ -290,9 +290,12 @@ namespace Shazzam.Views
 
 			_csTextEditor.Text = CreatePixelShaderClass.GetSourceText(CodeDomProvider.CreateProvider("CSharp"), _shaderModel, false);
 			_csTextEditor.Document.HighlightingStrategy = HighlightingManager.Manager.FindHighlighterForFile(".cs");
+
+			
 			_vbTextEditor.Text = CreatePixelShaderClass.GetSourceText(CodeDomProvider.CreateProvider("VisualBasic"), _shaderModel, false);
 			_vbTextEditor.Document.HighlightingStrategy = HighlightingManager.Manager.FindHighlighterForFile(".vb");
 
+			
 		}
 
 		public void RenderShader()
@@ -316,14 +319,29 @@ namespace Shazzam.Views
 				this._shaderModel = Shazzam.CodeGen.CodeParser.ParseShader(this._shaderTextEditor.FileName, this.CodeText);
 				string codeString = CreatePixelShaderClass.GetSourceText(new CSharpCodeProvider(), this._shaderModel, true);
 				Assembly autoAssembly = CreatePixelShaderClass.CompileInMemory(codeString);
+
 				if (autoAssembly == null)
 				{
 					MessageBox.Show(ShazzamSwitchboard.MainWindow, "Cannot compile the generated C# code.", "Compile error", MessageBoxButton.OK, MessageBoxImage.Error);
 					return;
 				}
-				Type t = autoAssembly.GetType(String.Format("{0}.{1}", _shaderModel.GeneratedNamespace, _shaderModel.GeneratedClassName));
 
+				Type t = autoAssembly.GetType(String.Format("{0}.{1}", _shaderModel.GeneratedNamespace, _shaderModel.GeneratedClassName));
 				this.FillEditControls();
+				csFolder = String.Format("{0}CS", Properties.Settings.Default.FolderOutput);
+				if (!Directory.Exists(csFolder))
+				{
+					Directory.CreateDirectory(csFolder);
+				}
+				_csTextEditor.SaveFile(String.Format("{0}\\{1}.cs", csFolder, _shaderModel.GeneratedClassName));
+				vbFolder = String.Format("{0}VB", Properties.Settings.Default.FolderOutput);
+				if (!Directory.Exists(vbFolder))
+				{
+					Directory.CreateDirectory(vbFolder);
+				}
+				_vbTextEditor.SaveFile(String.Format("{0}\\{1}.vb", vbFolder, _shaderModel.GeneratedClassName));
+			
+
 				this.CurrentShaderEffect = (ShaderEffect)Activator.CreateInstance(t, new object[] { ps });
 				this.InputControlsTab.IsEnabled = true;
 			}
