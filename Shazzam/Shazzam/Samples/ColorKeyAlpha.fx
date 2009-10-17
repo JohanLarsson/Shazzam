@@ -1,5 +1,5 @@
 /// <class>ColorKeyAlphaEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that makes pixels of a particular color transparent.</description>
 
 //-----------------------------------------------------------------------------------------

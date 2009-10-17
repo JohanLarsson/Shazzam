@@ -1,5 +1,5 @@
 /// <class>SmoothMagnifyEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that magnifies a circular region with a smooth boundary.</description>
 
 //-----------------------------------------------------------------------------------------

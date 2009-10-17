@@ -1,5 +1,5 @@
 /// <class>PinchEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that pinches a circular region.</description>
 
 //-----------------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 /// <class>PixelateEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that turns the input into blocky pixels.</description>
 
 //-----------------------------------------------------------------------------------------

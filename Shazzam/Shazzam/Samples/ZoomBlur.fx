@@ -1,5 +1,5 @@
 /// <class>ZoomBlurEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that applies a radial blur to the input.</description>
 
 //-----------------------------------------------------------------------------------------

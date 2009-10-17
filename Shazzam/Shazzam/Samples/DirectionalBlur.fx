@@ -1,5 +1,5 @@
 /// <class>DirectionalBlurEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that blurs in a single direction.</description>
 
 //-----------------------------------------------------------------------------------------

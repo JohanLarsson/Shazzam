@@ -95,7 +95,7 @@
       <LineBreak />
      
       <LineBreak />
-      A big thanks to Robby Ingrebretson for sharing his excellent Kaxaml code, especially his WPF plugin modules. Also, I'd like to point out the <Hyperlink NavigateUri="http://groups.google.com/group/wpf-disciples">the WPF Disciples</Hyperlink> for being a wonderful community and a great WPF resource.
+      A big thanks to Robby Ingebretsen for sharing his excellent Kaxaml code, especially his WPF plugin modules. Also, I'd like to point out the <Hyperlink NavigateUri="http://groups.google.com/group/wpf-disciples">the WPF Disciples</Hyperlink> for being a wonderful community and a great WPF resource.
 
 			</TextBlock>
 			<StackPanel Orientation='Horizontal'

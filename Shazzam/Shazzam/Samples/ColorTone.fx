@@ -1,5 +1,5 @@
 /// <class>ColorToneEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that blends between partial desaturation and a two-color ramp.</description>
 
 //-----------------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 /// <class>MonochromeEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that turns the input into shades of a single color.</description>
 
 //-----------------------------------------------------------------------------------------

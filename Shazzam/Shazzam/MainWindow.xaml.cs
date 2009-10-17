@@ -8,6 +8,8 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.Reflection;
+using Shazzam.Properties;
+using System.Configuration;
 
 namespace Shazzam
 {
@@ -23,6 +25,7 @@ namespace Shazzam
 		{
 			Commands.AppCommands.Initialize();
 			InitializeComponent();
+			
 			ShazzamSwitchboard.MainWindow = this;
 			ShazzamSwitchboard.CodeTabView = this.codeTabView;
 			codeTabView.ShaderEffectChanged += new RoutedPropertyChangedEventHandler<object>(codeTabView_ShaderEffectChanged);
@@ -62,13 +65,7 @@ namespace Shazzam
 					Properties.Settings.Default.Save();
 				}
 			}
-			if (string.IsNullOrEmpty(Properties.Settings.Default.FolderOutput))
-			{
-				var dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + Constants.Paths.GeneratedShaders;
-				Properties.Settings.Default.FolderOutput = dirPath;
-				Properties.Settings.Default.Save();
-
-			}
+			
 		}
 
 		void codeTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

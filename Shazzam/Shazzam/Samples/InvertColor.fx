@@ -1,5 +1,5 @@
 ﻿/// <class>InvertColorEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that inverts all colors.</description>
 
 //--------------------------------------------------------------------------------------

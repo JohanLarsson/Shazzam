@@ -1,5 +1,5 @@
 /// <class>BloomEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that intensifies bright regions.</description>
 
 //-----------------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 /// <class>EmbossedEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that embosses the input.</description>
 
 //-----------------------------------------------------------------------------------------

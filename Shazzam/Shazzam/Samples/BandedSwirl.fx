@@ -1,15 +1,15 @@
 /// <class>BandedSwirlEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that swirls the input in alternating clockwise and counterclockwise bands.</description>
 
 //-----------------------------------------------------------------------------------------
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
 //-----------------------------------------------------------------------------------------
 
-/// <summary>The center of the swirl.</summary>
+/// <summary>The center of the swirl. (100,100) is lower right corner </summary>
 /// <minValue>0,0</minValue>
-/// <maxValue>1,1</maxValue>
-/// <defaultValue>0.5,0.5</defaultValue>
+/// <maxValue>100,100</maxValue>
+/// <defaultValue>50,50</defaultValue>
 float2 Center : register(C0);
 
 /// <summary>The number of bands.</summary>
@@ -42,7 +42,14 @@ sampler2D implicitInputSampler : register(S0);
 
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
-	float2 dir = uv - Center;
+   // normalize
+   // ================================
+   float2 centerNormalized ;
+   centerNormalized.x = Center.x/100;
+   centerNormalized.y = Center.y/100;
+   
+   // ================================
+	float2 dir = uv - centerNormalized;
 	dir.y /= AspectRatio;
 	float dist = length(dir);
 	float angle = atan2(dir.y, dir.x);
@@ -73,6 +80,6 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 	sincos(newAngle, newDir.y, newDir.x);
 	newDir.y *= AspectRatio;
 
-	float2 samplePoint = Center + dist * newDir;
+	float2 samplePoint = centerNormalized + dist * newDir;
 	return tex2D(implicitInputSampler, samplePoint);
 }

@@ -1,5 +1,5 @@
 /// <class>SwirlEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that swirls the input in a spiral.</description>
 
 //-----------------------------------------------------------------------------------------

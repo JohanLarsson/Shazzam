@@ -1,5 +1,5 @@
 /// <class>MagnifyEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that magnifies a circular region.</description>
 
 //-----------------------------------------------------------------------------------------

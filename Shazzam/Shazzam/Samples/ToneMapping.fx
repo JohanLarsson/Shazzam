@@ -1,5 +1,5 @@
 /// <class>ToneMappingEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that applies defogging, exposure, gamma, vignette, and blue shift corrections.</description>
 
 //-----------------------------------------------------------------------------------------

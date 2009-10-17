@@ -1,5 +1,5 @@
 /// <class>SharpenEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that sharpens the input.</description>
 
 //-----------------------------------------------------------------------------------------

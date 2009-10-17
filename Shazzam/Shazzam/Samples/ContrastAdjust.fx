@@ -1,5 +1,5 @@
 /// <class>ContrastAdjustEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that controls brightness and contrast.</description>
 
 //-----------------------------------------------------------------------------------------

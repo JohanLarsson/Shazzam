@@ -1,5 +1,5 @@
 /// <class>GrowablePoissonDiskEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that blurs the input using Poisson disk sampling.</description>
 
 //-----------------------------------------------------------------------------------------

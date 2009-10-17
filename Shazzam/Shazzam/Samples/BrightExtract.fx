@@ -1,5 +1,5 @@
 /// <class>BrightExtractEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that dims all but the brightest pixels.</description>
 
 //-----------------------------------------------------------------------------------------

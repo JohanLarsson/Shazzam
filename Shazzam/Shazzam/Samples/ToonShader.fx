@@ -1,5 +1,5 @@
 /// <class>ToonShaderEffect</class>
-/// <namespace>Shazzam.Shaders</namespace>
+
 /// <description>An effect that applies cartoon-like shading (posterization).</description>
 
 //-----------------------------------------------------------------------------------------
