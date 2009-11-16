@@ -65,7 +65,12 @@ namespace Shazzam
 					Properties.Settings.Default.Save();
 				}
 			}
-			
+			this.Closing += new System.ComponentModel.CancelEventHandler(MainWindow_Closing);
+		}
+
+		void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			ShazzamSwitchboard.CodeTabView.SaveFileFirst();
 		}
 
 		void codeTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

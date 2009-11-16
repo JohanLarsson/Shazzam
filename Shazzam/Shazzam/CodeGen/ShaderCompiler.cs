@@ -38,7 +38,7 @@ namespace Shazzam.CodeGen {
 			psi.UseShellExecute = false;
 
 			psi.RedirectStandardError = true;
-			// call fxc with these argurments
+			// call fxc with these arguments
 			// this will create the *.ps file 
 			// the ps file is use  by the WPF framework when working with shaders
 			psi.Arguments = string.Format("/T ps_2_0 /E main /Fo\"{0}\" \"{1}\"", path + Constants.FileNames.TempShaderPs, path+ Constants.FileNames.TempShaderFx);

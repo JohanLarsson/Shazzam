@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Media3D;
-using System.Windows.Threading;
 using System.Xml;
 using ICSharpCode.TextEditor.Document;
 using Microsoft.CSharp;
@@ -32,7 +31,8 @@ namespace Shazzam.Views
 		private DefaultHighlightingStrategy _hlslHS;
 		private ShaderCompiler _compiler;
 		private ShaderEffect _currentShaderEffect;
-		private DispatcherTimer timer;
+		private int _dirtyCounter;
+		private int _storedDocHash;
 
 		public CodeTabView()
 		{
@@ -40,14 +40,18 @@ namespace Shazzam.Views
 
 			_shaderTextEditor = CreateTextEditor();
 			_shaderTextEditor.Encoding = System.Text.Encoding.ASCII;
+			//	_shaderTextEditor.TextChanged += new EventHandler(_shaderTextEditor_TextChanged);
+			//	_shaderTextEditor.Document.TextContentChanged += new EventHandler(Document_TextContentChanged);
+			_shaderTextEditor.Document.DocumentChanged += new DocumentEventHandler(Document_DocumentChanged);
 			using (var stream = typeof(CodeTabView).Assembly.GetManifestResourceStream("Shazzam.Resources.HLSLSyntax.xshd"))
 			{
-				using (var reader = new XmlTextReader(stream)){
-				var sm = new SyntaxMode("HLSL.xshd", "HLSL", ".fx");
-				_hlslHS = HighlightingDefinitionParser.Parse(sm, reader);
-				_hlslHS.ResolveReferences(); // don't forget this!
-				reader.Close();
-			}
+				using (var reader = new XmlTextReader(stream))
+				{
+					var sm = new SyntaxMode("HLSL.xshd", "HLSL", ".fx");
+					_hlslHS = HighlightingDefinitionParser.Parse(sm, reader);
+					_hlslHS.ResolveReferences(); // don't forget this!
+					reader.Close();
+				}
 			}
 			_shaderTextEditor.Document.HighlightingStrategy = _hlslHS;
 			this.formsHost.Child = _shaderTextEditor;
@@ -64,22 +68,37 @@ namespace Shazzam.Views
 			this.Loaded += CodeTabView_Loaded;
 		}
 
+		void Document_DocumentChanged(object sender, DocumentEventArgs e)
+		{
+			// this smells bad, but the TextEditor doesn't have a isDirty flag
+			// the DocumentChanged event fires twice when a document is loaded.
+
+			_dirtyCounter += 1;
+			if (_dirtyCounter== 2)
+			{
+				_storedDocHash = _shaderTextEditor.Document.TextContent.GetHashCode();
+
+			}
+			
+
+			if (_shaderTextEditor.Document.TextContent.GetHashCode() == _storedDocHash)
+			{
+				ShazzamSwitchboard.CodeTabView.dirtyStatusText.Visibility = Visibility.Hidden;
+			}
+			else
+			{
+				ShazzamSwitchboard.CodeTabView.dirtyStatusText.Visibility = Visibility.Visible;
+			}
+
+
+		}
+
 		void CodeTabView_Loaded(object sender, RoutedEventArgs e)
 		{
 			SetupBlurAnimation();
-			//messagePopup.PlacementTarget = ShazzamSwitchboard.MainWindow;
-			
+
 		}
 
-		private void ClosePopup(object o, EventArgs e)
-		{
-		//	this.messagePopup.IsOpen = false;
-		//	timer.Stop();
-			//blurStoryBoard.Stop;
-
-			ShazzamSwitchboard.MainWindow.Effect = null;
-			ShazzamSwitchboard.MainWindow.Opacity = 1;
-		}
 		private Storyboard blurStoryBoard = new Storyboard();
 		private DoubleAnimation blurAnimation = new DoubleAnimation();
 		private DoubleAnimation opacityAnimation = new DoubleAnimation();
@@ -110,16 +129,11 @@ namespace Shazzam.Views
 
 				ShazzamSwitchboard.MainWindow.Effect = blur;
 
-
 				blurStoryBoard.Begin(this, true);
 
 				_compiler.Compile(this.CodeText);
-				
-				//	this.messagePopup.IsOpen = true;
-					compileStatusText.Text = String.Format("Last Compiled at: {0}", DateTime.Now.ToLongTimeString());
-				
-			//	timer = new DispatcherTimer(new TimeSpan(0, 0, 0, 0, 2000), DispatcherPriority.Background, ClosePopup, this.Dispatcher);
-			//	timer.Start();
+
+				compileStatusText.Text = String.Format("Last Compiled at: {0}", DateTime.Now.ToLongTimeString());
 
 			}
 			catch (CompilerException ex)
@@ -291,11 +305,9 @@ namespace Shazzam.Views
 			_csTextEditor.Text = CreatePixelShaderClass.GetSourceText(CodeDomProvider.CreateProvider("CSharp"), _shaderModel, false);
 			_csTextEditor.Document.HighlightingStrategy = HighlightingManager.Manager.FindHighlighterForFile(".cs");
 
-			
 			_vbTextEditor.Text = CreatePixelShaderClass.GetSourceText(CodeDomProvider.CreateProvider("VisualBasic"), _shaderModel, false);
 			_vbTextEditor.Document.HighlightingStrategy = HighlightingManager.Manager.FindHighlighterForFile(".vb");
 
-			
 		}
 
 		public void RenderShader()
@@ -340,7 +352,6 @@ namespace Shazzam.Views
 					Directory.CreateDirectory(vbFolder);
 				}
 				_vbTextEditor.SaveFile(String.Format("{0}\\{1}.vb", vbFolder, _shaderModel.GeneratedClassName));
-			
 
 				this.CurrentShaderEffect = (ShaderEffect)Activator.CreateInstance(t, new object[] { ps });
 				this.InputControlsTab.IsEnabled = true;
@@ -445,22 +456,52 @@ namespace Shazzam.Views
 
 		public void SaveFile()
 		{
+			ResetDirty();
+			//_dirtyCounter = 2;
+			_storedDocHash = _shaderTextEditor.Document.TextContent.GetHashCode();
 			_shaderTextEditor.SaveFile(_shaderTextEditor.FileName);
 		}
 
 		public void SaveFile(string fileName)
 		{
-			this._shaderTextEditor.SaveFile(fileName);
+			ResetDirty();
+		//	_dirtyCounter = 2;
+			_storedDocHash = _shaderTextEditor.Document.TextContent.GetHashCode();
+			_shaderTextEditor.SaveFile(fileName);
 			this.codeTab.Header = Path.GetFileName(fileName);
 		}
 
 		public void OpenFile(string fileName)
 		{
+			SaveFileFirst();
+			ResetDirty();
+			_dirtyCounter = 0;
 			this.codeTab.Focus();
 			this.codeTab.Header = Path.GetFileName(fileName);
 			this._shaderTextEditor.LoadFile(fileName);
 			this._shaderTextEditor.Document.HighlightingStrategy = _hlslHS;
+			Shazzam.Properties.Settings.Default.LastFxFile = fileName;
+			Shazzam.Properties.Settings.Default.Save();
 			this.RenderShader();
+		}
+
+		public void SaveFileFirst()
+		{
+			if (dirtyStatusText.Visibility == Visibility.Visible) 
+			{
+				string message = "The fx file has unsaved changes.  Would you like to save your work?";
+				if (MessageBox.Show(message, "Save file", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+				{
+					SaveFile();
+				}
+			}
+		
+		}
+		private void ResetDirty()
+		{
+			
+			_storedDocHash = 0;
+			dirtyStatusText.Visibility = Visibility.Hidden;
 		}
 	}
 }

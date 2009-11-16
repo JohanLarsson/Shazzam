@@ -248,6 +248,9 @@
     </Compile>
     <Compile Include="Reveal.cs" />
     <Compile Include="RoutedEventHelper.cs" />
+    <None Include="Samples\Granite.fx" />
+    <None Include="Samples\WaveWarper.fx" />
+    <Compile Include="Samples\Stroke.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ShaderModel.cs" />
     <Compile Include="ShaderModelConstantRegister.cs" />
