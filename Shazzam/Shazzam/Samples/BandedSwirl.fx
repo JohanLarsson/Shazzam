@@ -12,7 +12,7 @@
 /// <defaultValue>50,50</defaultValue>
 float2 Center : register(C0);
 
-/// <summary>The number of bands.</summary>
+/// <summary>The number of bands in the swirl.</summary>
 /// <minValue>0</minValue>
 /// <maxValue>20</maxValue>
 /// <defaultValue>10</defaultValue>

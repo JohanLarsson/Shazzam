@@ -18,11 +18,11 @@ float Desaturation : register(C0);
 /// <defaultValue>0.5</defaultValue>
 float Toned : register(C1);
 
-/// <summary>The light color.</summary>
+/// <summary>The first color to apply to input. This is usually a light tone.</summary>
 /// <defaultValue>Yellow</defaultValue>
 float4 LightColor : register(C2);
 
-/// <summary>The dark color.</summary>
+/// <summary>The second color to apply to the input. This is usuall a dark tone.</summary>
 /// <defaultValue>Navy</defaultValue>
 float4 DarkColor : register(C3);
 

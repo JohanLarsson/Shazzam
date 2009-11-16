@@ -6,7 +6,7 @@
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
 //-----------------------------------------------------------------------------------------
 
-/// <summary>The center of the magnified region.</summary>
+/// <summary>The center point of the magnified region.</summary>
 /// <minValue>0,0</minValue>
 /// <maxValue>1,1</maxValue>
 /// <defaultValue>0.5,0.5</defaultValue>

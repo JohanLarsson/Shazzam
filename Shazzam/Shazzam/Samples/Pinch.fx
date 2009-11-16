@@ -6,7 +6,7 @@
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
 //-----------------------------------------------------------------------------------------
 
-/// <summary>The center of the pinched region.</summary>
+/// <summary>The center point of the pinched region.</summary>
 /// <minValue>0,0</minValue>
 /// <maxValue>1,1</maxValue>
 /// <defaultValue>0.5,0.5</defaultValue>
@@ -18,7 +18,7 @@ float2 Center : register(C0);
 /// <defaultValue>0.25</defaultValue>
 float Radius : register(C1);
 
-/// <summary>The strength of the effect.</summary>
+/// <summary>The strength of the pinch effect.</summary>
 /// <minValue>0</minValue>
 /// <maxValue>2</maxValue>
 /// <defaultValue>1</defaultValue>

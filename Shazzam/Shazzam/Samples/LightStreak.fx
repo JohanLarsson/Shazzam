@@ -24,7 +24,7 @@ float Scale : register(C1);
 /// <defaultValue>0.25</defaultValue>
 float Attenuation : register(C2);
 
-/// <summary>Direction of light streaks.</summary>
+/// <summary>Direction of light streaks (as a vector).</summary>
 /// <type>Vector</type>
 /// <minValue>-1,-1</minValue>
 /// <maxValue>1,1</maxValue>

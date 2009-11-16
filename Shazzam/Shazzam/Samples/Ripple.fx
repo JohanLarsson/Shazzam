@@ -1,12 +1,12 @@
 /// <class>RippleEffect</class>
 
-/// <description>An effect that superimposes rippling waves on the input.</description>
+/// <description>An effect that superimposes rippling waves upon the input.</description>
 
 //-----------------------------------------------------------------------------------------
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
 //-----------------------------------------------------------------------------------------
 
-/// <summary>The center of the ripples.</summary>
+/// <summary>The center point of the ripples.</summary>
 /// <minValue>0,0</minValue>
 /// <maxValue>1,1</maxValue>
 /// <defaultValue>0.5,0.5</defaultValue>
