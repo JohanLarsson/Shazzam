@@ -7,6 +7,9 @@ namespace Shazzam.Commands {
 
 		public static readonly RoutedUICommand OpenImage = new RoutedUICommand("Open Image", "OpenImage",
 			typeof(AppCommands), new InputGestureCollection { new KeyGesture(Key.I, ModifierKeys.Control) });
+	
+		public static readonly RoutedUICommand OpenMedia = new RoutedUICommand("Open Media", "OpenMedia",
+		typeof(AppCommands), new InputGestureCollection { new KeyGesture(Key.M, ModifierKeys.Control) });
 
 		public static readonly RoutedUICommand RemoveShader = new RoutedUICommand("Remove Shader", "RemoveShader",
 			typeof(AppCommands), new InputGestureCollection { new KeyGesture(Key.F6) });

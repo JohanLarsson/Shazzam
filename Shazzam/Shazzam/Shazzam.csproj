@@ -248,9 +248,18 @@
     </Compile>
     <Compile Include="Reveal.cs" />
     <Compile Include="RoutedEventHelper.cs" />
-    <None Include="Samples\Granite.fx" />
-    <None Include="Samples\WaveWarper.fx" />
-    <Compile Include="Samples\Stroke.cs" />
+    <Content Include="Samples\SketchGranite.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\plasma.wmv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\WaveWarper.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\SketchPencilStroke.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="Settings.cs" />
     <Compile Include="ShaderModel.cs" />
     <Compile Include="ShaderModelConstantRegister.cs" />
@@ -364,6 +373,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Shazzam_TemporaryKey.pfx" />
+    <Content Include="Tutorials\03_ChangeColor.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tutorials\01_WhatIsAShader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tutorials\02_PartsOfAShader.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

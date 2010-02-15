@@ -178,5 +178,17 @@ namespace Shazzam.Properties {
                 this["FolderOutput"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastMediaFile {
+            get {
+                return ((string)(this["LastMediaFile"]));
+            }
+            set {
+                this["LastMediaFile"] = value;
+            }
+        }
     }
 }

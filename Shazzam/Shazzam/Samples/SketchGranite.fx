@@ -1,4 +1,4 @@
-﻿/// <class>Granite Sketch</class>
+﻿/// <class>SketchGraniteEffect</class>
 
 /// <description>An paper sketch effect.</description>
 

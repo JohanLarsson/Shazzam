@@ -1,4 +1,4 @@
-﻿/// <class>Granite Sketch</class>
+﻿/// <class>SketchPencilStrokeEffect/class>
 
 /// <description>A pencil stroke effect.</description>
 

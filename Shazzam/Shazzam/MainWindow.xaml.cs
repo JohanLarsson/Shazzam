@@ -46,7 +46,22 @@ namespace Shazzam
 					userImage.Source = temp;
 				}
 			}
+			
+			if (Properties.Settings.Default.LastMediaFile != String.Empty)
+			{
+				if (File.Exists(Properties.Settings.Default.LastMediaFile))
+				{
+					LoadMedia(Properties.Settings.Default.LastMediaFile);
+				}
+				else
+				{
+					Uri resourceUri = new Uri("images/plasma.wmv", UriKind.Relative);
+					//System.Windows.Resources.StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
 
+					//BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+					mediaUI.Source = resourceUri;
+				}
+			}
 			
 			imageTabControl.SelectedIndex = Properties.Settings.Default.LastImageTabIndex;
 
@@ -91,6 +106,13 @@ namespace Shazzam
 			userImage.Source = new BitmapImage(new Uri(fileName));
 
 		}
+		private void LoadMedia(string fileName)
+		{
+			mediaUI.Source = null;
+			mediaUI.Source = new Uri(fileName);
+
+		}
+
 
 		private void ApplyEffect(ShaderEffect se)
 		{
@@ -100,6 +122,8 @@ namespace Shazzam
 			sampleImage3.Effect = se;
 			sampleImage4.Effect = se;
 			sampleImage5.Effect = se;
+			sampleUI.Effect = se;
+			mediaUI.Effect = se;
 		}
 
 		private void New_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -223,6 +247,8 @@ namespace Shazzam
 			sampleImage3.Effect = null;
 			sampleImage4.Effect = null;
 			sampleImage5.Effect = null;
+			sampleUI.Effect = null;
+			mediaUI.Effect = null;
 		}
 
 		private void ExploreCompiledShaders_Executed(object sender, System.Windows.RoutedEventArgs e)
@@ -284,6 +310,25 @@ namespace Shazzam
 			}
 		}
 
+		private void OpenMedia_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			OpenFileDialog ofd = new OpenFileDialog();
+			ofd.Filter = "Video|*.wmv;*.wma|All Files|*.*";
+
+			if (Properties.Settings.Default.FolderImages != string.Empty)
+			{
+				ofd.InitialDirectory = Properties.Settings.Default.FolderImages;
+			}
+			if (ofd.ShowDialog(this) == true)
+			{
+
+				LoadMedia(ofd.FileName);
+				Properties.Settings.Default.LastMediaFile = ofd.FileName;
+				Properties.Settings.Default.FolderImages = System.IO.Path.GetDirectoryName(ofd.FileName);
+				Properties.Settings.Default.Save();
+			}
+		}
+
 		private void ShaderCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			string fxcPath = Environment.ExpandEnvironmentVariables(Properties.Settings.Default.DirectX_FxcPath);
@@ -292,6 +337,12 @@ namespace Shazzam
 		private void WhatsNew_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			Process.Start("http://blog.shazzam-tool.com/");
+		}
+
+		private void mediaUI_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			mediaUI.Position = TimeSpan.Zero;
+			
 		}
 	}
 
