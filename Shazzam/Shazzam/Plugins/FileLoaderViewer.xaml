@@ -4,11 +4,13 @@
              Height="300">
   <Grid>
     <TabControl>
-      <TabItem Header='Shaders'>
+      <TabItem Header='Your folder'>
         <DockPanel LastChildFill='True' Margin='10'>
 
           <TextBlock DockPanel.Dock='Top'>
             <Hyperlink Foreground='{StaticResource HighlightBrush}'
+											 x:Name='locationHyperlink'
+											 MouseEnter='locationHyperlink_MouseEnter'
                        Click='Hyperlink_Click'>Change location</Hyperlink></TextBlock>
 
           <ListBox x:Name='fileListBox'
@@ -24,6 +26,17 @@
           <ListBox x:Name='sampleListBox'
                    Margin='0,5,0,0'
                    SelectionChanged='sampleListBox_SelectionChanged'/>
+
+        </DockPanel>
+      </TabItem>
+			      <TabItem Header='Tutorial'>
+
+        <DockPanel LastChildFill='True' Margin='10'>
+          <TextBlock DockPanel.Dock='Top'>
+          Learn more about HLSL</TextBlock>
+          <ListBox x:Name='tutorialListBox'
+                   Margin='0,5,0,0'
+                   SelectionChanged='tutorialListBox_SelectionChanged'/>
 
         </DockPanel>
       </TabItem>

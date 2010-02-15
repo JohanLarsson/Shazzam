@@ -44,7 +44,7 @@
 
 		<StackPanel VerticalAlignment='Center'>
 			<Image Width="230"
-						 Height="230"
+						 MinHeight="230"
 						 Canvas.Left="-70"
 						 Canvas.Top="-70"
 						 VerticalAlignment="Center"
@@ -86,7 +86,7 @@
 								Value="None" />
       </Style>
     </TextBlock.Resources>
-      Shazzam is free for personal or commercial use. Please use at your own risk.  No warranties are made or implied for Shazzam. Do no harm to any WPF code.   
+      Shazzam is free for personal or commercial use. Please use at your own risk.  No warranties are made or implied for Shazzam.    
       <LineBreak />
       <LineBreak />
       The  current version is located at <Hyperlink TextDecorations="None"
@@ -99,7 +99,7 @@
 
 			</TextBlock>
 			<StackPanel Orientation='Horizontal'
-									Margin='0,10'>
+									Margin='0,10' >
 				<TextBlock Foreground='{StaticResource NeutralWhiteBrush}'
 									 Text='Version:' />
 				<TextBlock  Foreground='White'

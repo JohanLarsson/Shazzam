@@ -13,6 +13,7 @@ namespace Shazzam.Views {
 			_exePath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 			FillList();
 			FillSampleList();
+			FillTutorialList();
 			ShazzamSwitchboard.FileLoaderPlugin = this;
 		}
 		public CodeTabView CodeTabView { get; set; }
@@ -23,6 +24,7 @@ namespace Shazzam.Views {
 			this.sampleListBox.SelectedItem = null;
 			FillList();
 			FillSampleList();
+			FillTutorialList();
 		}
 
 		private void FillList() {
@@ -61,11 +63,20 @@ namespace Shazzam.Views {
 		}
 		private void FillSampleList() {
 
-
 			string path = System.IO.Path.Combine(_exePath, "samples");
 			if (Directory.Exists(path))
 			{
 				sampleListBox.ItemsSource = Directory.GetFiles(path, "*.fx").Select(filename => System.IO.Path.GetFileName(filename));
+
+			}
+		}
+
+			private void FillTutorialList() {
+
+			string path = System.IO.Path.Combine(_exePath, "tutorials");
+			if (Directory.Exists(path))
+			{
+				tutorialListBox.ItemsSource = Directory.GetFiles(path, "*.fx").Select(filename => System.IO.Path.GetFileName(filename));
 
 			}
 		}
@@ -81,6 +92,24 @@ namespace Shazzam.Views {
 			ShazzamSwitchboard.CodeTabView.OpenFile(path);
 			Properties.Settings.Default.LastFxFile = path;
 			Properties.Settings.Default.Save();
+		}
+		
+		private void tutorialListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			string tutorialsPath = System.IO.Path.Combine(_exePath, "tutorials");
+			if (tutorialListBox.SelectedItem == null)
+			{
+				return;
+			}
+			string path = System.IO.Path.Combine(tutorialsPath, tutorialListBox.SelectedItem.ToString());
+
+			ShazzamSwitchboard.CodeTabView.OpenFile(path);
+			Properties.Settings.Default.LastFxFile = path;
+			Properties.Settings.Default.Save();
+		}
+		private void locationHyperlink_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			locationHyperlink.ToolTip = Properties.Settings.Default.FolderFX;
 		}
 	}
 }
