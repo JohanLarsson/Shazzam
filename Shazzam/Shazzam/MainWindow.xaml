@@ -147,6 +147,7 @@
 												Grid.Row='2' />
 			<TabControl Background='{DynamicResource NeutralDarkBrush}'
 									x:Name='imageTabControl'
+									SelectionChanged='imageTabControl_SelectionChanged'
 									Grid.Row='0'>
 				<TabItem Header='Custom Image'>
 					<Border Style='{DynamicResource ImageOutsideBorder}'>
@@ -231,30 +232,38 @@
 				</TabItem>
 				<TabItem Header='Sample UI'>
 
-					<Border Style='{DynamicResource ImageOutsideBorder}'>
-						<Border Style='{DynamicResource ImageInsideBorder}'>
-							<Border Background='{StaticResource AlphaGrid}'>
-								<DockPanel TextElement.FontSize='12'
-													 x:Name='sampleUI'
-													 VerticalAlignment='Stretch'
-													 HorizontalAlignment='Stretch'
-													 MinHeight='200'
-													 MinWidth='200'
-													 Background='White'>
-									<TextBlock Text='Sample UI'
-														 DockPanel.Dock='Top' />
-									<ListBox DockPanel.Dock='Top'>
-										<TextBlock Text='Sample 1' />
-										<TextBlock Text='Sample 2' />
-										<TextBlock Text='Sample 3' />
-										<TextBlock Text='Sample 4' />
-										<TextBlock Text='Sample 5' />
-									</ListBox>
-								</DockPanel>
-							</Border>
-
-						</Border>
+					<Border Background='{StaticResource AlphaGrid}'>
+						<DockPanel TextElement.FontSize='14'
+											 x:Name='sampleUI'
+											 VerticalAlignment='Stretch'
+											 HorizontalAlignment='Stretch'
+											 MinHeight='200'
+											 MinWidth='200' LastChildFill="False">
+							<DockPanel.Background>
+								<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+									<GradientStop Color="#FFBCF3F1" Offset="0"/>
+									<GradientStop Color="#FF6558E0" Offset="1"/>
+								</LinearGradientBrush>
+							</DockPanel.Background>
+							<TextBlock Text='Sample UI'
+												 FontSize='18'
+												 DockPanel.Dock='Top'
+												 Margin='8' HorizontalAlignment="Center" />
+							<ListBox DockPanel.Dock='Top' Width='140' x:Name='fruitListBox'
+											 Margin='8' HorizontalAlignment='Center'>
+								<TextBlock Text='Apple' />
+								<TextBlock Text='Banana' />
+								<TextBlock Text='Grapes' />
+								<TextBlock Text='Peach' />
+								<TextBlock Text='Strawberry' />
+							</ListBox>
+							<StackPanel Orientation='Horizontal' Margin='8' DockPanel.Dock='Top' HorizontalAlignment="Center" Height="42.5">
+								<Button Content='Sample 1' Margin='4' HorizontalAlignment='Left' Click='Button1_Click'/>
+								<Button Content='Sample 2' Margin='4' HorizontalAlignment='Left' Click='Button2_Click'/>
+							</StackPanel>
+						</DockPanel>
 					</Border>
+
 				</TabItem>
 				<TabItem Header='Media'
 								 x:Name='mediaTab'>
@@ -276,22 +285,27 @@
 										<CheckBox IsChecked='True'
 															Margin='5,0'
 															x:Name='autoPlayCheckBox'
-															Content='Auto replay the video.' Checked='autoPlayCheckBox_Checked'></CheckBox>
+															Content='Auto replay the video.'
+															Checked='autoPlayCheckBox_Checked'></CheckBox>
 									</StackPanel>
 									<TextBlock Margin='10'
 														 DockPanel.Dock='Top'
 														 x:Name='videoMessage' />
-									<MediaElement Source='Images/plasma.wmv'
-																DockPanel.Dock='Top'
-																Stretch='Uniform'
-																x:Name='mediaUI'
-																ToolTip='Click video to replay.'
-																MouseLeftButtonUp='mediaUI_MouseLeftButtonUp'
-																MediaEnded='mediaUI_MediaEnded'
-																MediaFailed='mediaUI_MediaFailed'
-																>
+									<Border Style='{DynamicResource ImageOutsideBorder}'>
+										<Border Style='{DynamicResource ImageInsideBorder}'>
+											<MediaElement Source='Images/plasma.wmv'
+																		DockPanel.Dock='Top'
+																		Stretch='Uniform'
+																		x:Name='mediaUI'
+																		LoadedBehavior='Manual'
+																		ToolTip='Click video to replay.'
+																		MouseLeftButtonUp='mediaUI_MouseLeftButtonUp'
+																		MediaEnded='mediaUI_MediaEnded'
+																		MediaFailed='mediaUI_MediaFailed'>
 
-									</MediaElement>
+											</MediaElement>
+										</Border>
+									</Border>
 								</DockPanel>
 							</Border>
 

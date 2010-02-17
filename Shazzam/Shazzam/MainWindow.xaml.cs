@@ -369,6 +369,27 @@ namespace Shazzam
 			
 		}
 
+		private void imageTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (imageTabControl.SelectedItem == mediaTab)
+			{
+				mediaUI.Play();
+			}
+			else {
+				mediaUI.Stop();
+			}
+		}
+
+		private void Button1_Click(object sender, RoutedEventArgs e)
+		{
+			fruitListBox.SelectedIndex = 1;
+		}
+
+		private void Button2_Click(object sender, RoutedEventArgs e)
+		{
+			fruitListBox.SelectedIndex = 2;
+		}
+
 	}
 
 }
