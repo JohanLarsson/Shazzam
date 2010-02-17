@@ -106,6 +106,8 @@
 										Executed='FullScreenCode_Executed' />
 		<CommandBinding Command='commands:AppCommands.WhatsNew'
 										Executed='WhatsNew_Executed' />
+		<CommandBinding Command='commands:AppCommands.ReportBug'
+										Executed='ReportBug_Executed' />
 	</Window.CommandBindings>
 
 	<Grid Background="#101010">
@@ -254,7 +256,8 @@
 						</Border>
 					</Border>
 				</TabItem>
-				<TabItem Header='Media'>
+				<TabItem Header='Media'
+								 x:Name='mediaTab'>
 
 					<Border Style='{DynamicResource ImageOutsideBorder}'>
 						<Border Style='{DynamicResource ImageInsideBorder}'>
@@ -265,15 +268,28 @@
 													 MinHeight='200'
 													 MinWidth='200'
 													 Background='White'>
-									<TextBlock Text='Apply shader to video'
-														 Margin='10'
-														 DockPanel.Dock='Top' />
+									<StackPanel Orientation='Horizontal'
+															DockPanel.Dock='Top'
+															Margin='10'>
+										<!--<TextBlock Text='Click the video to replay.'
+															 Margin='5,0' />-->
+										<CheckBox IsChecked='True'
+															Margin='5,0'
+															x:Name='autoPlayCheckBox'
+															Content='Auto replay the video.' Checked='autoPlayCheckBox_Checked'></CheckBox>
+									</StackPanel>
+									<TextBlock Margin='10'
+														 DockPanel.Dock='Top'
+														 x:Name='videoMessage' />
 									<MediaElement Source='Images/plasma.wmv'
 																DockPanel.Dock='Top'
 																Stretch='Uniform'
 																x:Name='mediaUI'
 																ToolTip='Click video to replay.'
-																MouseLeftButtonUp='mediaUI_MouseLeftButtonUp'>
+																MouseLeftButtonUp='mediaUI_MouseLeftButtonUp'
+																MediaEnded='mediaUI_MediaEnded'
+																MediaFailed='mediaUI_MediaFailed'
+																>
 
 									</MediaElement>
 								</DockPanel>

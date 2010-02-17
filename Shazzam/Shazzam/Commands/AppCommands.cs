@@ -32,6 +32,9 @@ namespace Shazzam.Commands {
 		public static readonly RoutedUICommand WhatsNew = new RoutedUICommand("What's New and User Guide", "WhatsNew",
 			typeof(AppCommands), new InputGestureCollection { new KeyGesture(Key.F1) });
 
+		public static readonly RoutedUICommand ReportBug = new RoutedUICommand("Submit a bug report.", "ReportBug",
+		typeof(AppCommands));
+
 
 		public static void Initialize() {
 			// Add a keyboard shortcut (Ctrl+Shift+S) to the "Save As" command.

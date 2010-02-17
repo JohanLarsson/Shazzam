@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,10 +7,6 @@ using System.Windows.Input;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-using System.Diagnostics;
-using System.Reflection;
-using Shazzam.Properties;
-using System.Configuration;
 
 namespace Shazzam
 {
@@ -25,7 +22,7 @@ namespace Shazzam
 		{
 			Commands.AppCommands.Initialize();
 			InitializeComponent();
-			
+
 			ShazzamSwitchboard.MainWindow = this;
 			ShazzamSwitchboard.CodeTabView = this.codeTabView;
 			codeTabView.ShaderEffectChanged += new RoutedPropertyChangedEventHandler<object>(codeTabView_ShaderEffectChanged);
@@ -46,7 +43,7 @@ namespace Shazzam
 					userImage.Source = temp;
 				}
 			}
-			
+
 			if (Properties.Settings.Default.LastMediaFile != String.Empty)
 			{
 				if (File.Exists(Properties.Settings.Default.LastMediaFile))
@@ -62,7 +59,7 @@ namespace Shazzam
 					mediaUI.Source = resourceUri;
 				}
 			}
-			
+
 			imageTabControl.SelectedIndex = Properties.Settings.Default.LastImageTabIndex;
 
 			if (!String.IsNullOrEmpty(Properties.Settings.Default.LastFxFile))
@@ -112,7 +109,6 @@ namespace Shazzam
 			mediaUI.Source = new Uri(fileName);
 
 		}
-
 
 		private void ApplyEffect(ShaderEffect se)
 		{
@@ -338,12 +334,41 @@ namespace Shazzam
 		{
 			Process.Start("http://blog.shazzam-tool.com/");
 		}
+		private void ReportBug_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			Process.Start("http://shazzam.codeplex.com/WorkItem/List.aspx");
+		}
 
 		private void mediaUI_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			mediaUI.Position = TimeSpan.Zero;
+
+		}
+
+		private void mediaUI_MediaEnded(object sender, RoutedEventArgs e)
+		{
+			if (autoPlayCheckBox.IsChecked == true)
+			{
+				mediaUI.Position = TimeSpan.Zero;
+
+			}
+
+		}
+
+		private void mediaUI_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+		{
+			videoMessage.Text = "Cannot play the specified media.";
+		}
+
+		private void autoPlayCheckBox_Checked(object sender, RoutedEventArgs e)
+		{
+			if (mediaUI!=null)
+			{
+				mediaUI.Position = TimeSpan.Zero;
+			}
 			
 		}
+
 	}
 
 }

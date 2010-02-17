@@ -133,6 +133,8 @@
 					Header='Website' />-->
 				<MenuItem Header="What's New"
 									Command='commands:AppCommands.WhatsNew' />
+					<MenuItem Header="Report a bug"
+									Command='commands:AppCommands.ReportBug' />
 			</MenuItem>
 
 		</Menu>
