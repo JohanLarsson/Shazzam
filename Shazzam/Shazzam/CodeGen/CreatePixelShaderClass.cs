@@ -26,7 +26,6 @@ namespace Shazzam.CodeGen
 		{
 			var provider = new CSharpCodeProvider(new Dictionary<string, string>() { { "CompilerVersion", "v3.5" } });
 
-
 			CompilerParameters options = new CompilerParameters();
 			options.ReferencedAssemblies.Add("System.dll");
 			options.ReferencedAssemblies.Add("System.Core.dll");
@@ -115,6 +114,30 @@ namespace Shazzam.CodeGen
 
 		private static CodeMemberField CreateShaderRegisterDependencyProperty(ShaderModel shaderModel, ShaderModelConstantRegister register)
 		{
+			if (typeof(Brush).IsAssignableFrom(register.RegisterType))
+			{
+				return new CodeMemberField
+				{
+					Type = new CodeTypeReference("DependencyProperty"),
+					Name = String.Format("{0}Property", register.RegisterName),
+					Attributes = MemberAttributes.Public | MemberAttributes.Static,
+					InitExpression = new CodeMethodInvokeExpression
+					{
+						Method = new CodeMethodReferenceExpression
+						{
+							TargetObject = new CodeTypeReferenceExpression("ShaderEffect"),
+							MethodName = "RegisterPixelShaderSamplerProperty"
+						},
+						Parameters =
+					    {
+                            new CodePrimitiveExpression(register.RegisterName),
+						    new CodeTypeOfExpression(shaderModel.GeneratedClassName),
+        				    new CodePrimitiveExpression(register.RegisterNumber)
+					    }
+					}
+				};
+			}
+
 			return new CodeMemberField
 			{
 				Type = new CodeTypeReference("DependencyProperty"),
@@ -171,35 +194,35 @@ namespace Shazzam.CodeGen
 				{
 					Point point = (Point)RegisterValueConverter.ConvertToUsualType(defaultValue);
 					return new CodeObjectCreateExpression(codeTypeReference,
-						new CodePrimitiveExpression(point.X),
-						new CodePrimitiveExpression(point.Y));
+							new CodePrimitiveExpression(point.X),
+							new CodePrimitiveExpression(point.Y));
 				}
 				else if (defaultValue is Point3D || defaultValue is Vector3D)
 				{
 					Point3D point3D = (Point3D)RegisterValueConverter.ConvertToUsualType(defaultValue);
 					return new CodeObjectCreateExpression(codeTypeReference,
-						new CodePrimitiveExpression(point3D.X),
-						new CodePrimitiveExpression(point3D.Y),
-						new CodePrimitiveExpression(point3D.Z));
+							new CodePrimitiveExpression(point3D.X),
+							new CodePrimitiveExpression(point3D.Y),
+							new CodePrimitiveExpression(point3D.Z));
 				}
 				else if (defaultValue is Point4D)
 				{
 					Point4D point4D = (Point4D)defaultValue;
 					return new CodeObjectCreateExpression(codeTypeReference,
-						new CodePrimitiveExpression(point4D.X),
-						new CodePrimitiveExpression(point4D.Y),
-						new CodePrimitiveExpression(point4D.Z),
-						new CodePrimitiveExpression(point4D.W));
+							new CodePrimitiveExpression(point4D.X),
+							new CodePrimitiveExpression(point4D.Y),
+							new CodePrimitiveExpression(point4D.Z),
+							new CodePrimitiveExpression(point4D.W));
 				}
 				else if (defaultValue is Color)
 				{
 					Color color = (Color)defaultValue;
 					return new CodeMethodInvokeExpression(new CodeTypeReferenceExpression(codeTypeReference),
-						"FromArgb",
-						new CodePrimitiveExpression(color.A),
-						new CodePrimitiveExpression(color.R),
-						new CodePrimitiveExpression(color.G),
-						new CodePrimitiveExpression(color.B));
+							"FromArgb",
+							new CodePrimitiveExpression(color.A),
+							new CodePrimitiveExpression(color.R),
+							new CodePrimitiveExpression(color.G),
+							new CodePrimitiveExpression(color.B));
 				}
 				else
 				{

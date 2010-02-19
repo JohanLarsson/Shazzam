@@ -15,7 +15,8 @@ namespace Shazzam
 	//  StuffEyeSee  http://www.flickr.com/photos/rcsaxon/689732379/
 	//  http://www.flickr.com/photos/glockenblume/2228713567/sizes/l/
 	//  http://www.flickr.com/photos/96dpi/2329024258/
-	//
+	// http://www.flickr.com/photos/pachytime/2554307339/
+	// http://www.flickr.com/photos/madram/492839665/
 	public partial class MainWindow : Window
 	{
 		public MainWindow()
@@ -362,11 +363,11 @@ namespace Shazzam
 
 		private void autoPlayCheckBox_Checked(object sender, RoutedEventArgs e)
 		{
-			if (mediaUI!=null)
+			if (mediaUI != null)
 			{
 				mediaUI.Position = TimeSpan.Zero;
 			}
-			
+
 		}
 
 		private void imageTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -375,7 +376,8 @@ namespace Shazzam
 			{
 				mediaUI.Play();
 			}
-			else {
+			else
+			{
 				mediaUI.Stop();
 			}
 		}

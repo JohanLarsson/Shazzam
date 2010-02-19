@@ -192,7 +192,10 @@ namespace Shazzam.Views
 			inputControlPanel.Children.Add(textBlock);
 
 			Control control = null;
-			if (register.RegisterType == typeof(double) || register.RegisterType == typeof(float))
+            if (register.RegisterType == typeof(Brush)) {
+				control = new TexturePicker(register);
+            }
+            else if (register.RegisterType == typeof(double) || register.RegisterType == typeof(float))
 			{
 				double minValue = Convert.ToDouble(register.MinValue);
 				double maxValue = Convert.ToDouble(register.MaxValue);

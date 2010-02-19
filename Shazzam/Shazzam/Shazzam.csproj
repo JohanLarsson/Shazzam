@@ -145,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\TexturePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -258,6 +262,9 @@
     <Compile Include="Controls\Icons.xaml.cs">
       <DependentUpon>Icons.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TexturePicker.xaml.cs">
+      <DependentUpon>TexturePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\EqualityConverter.cs" />
     <Compile Include="Converters\RegisterValueConverter.cs" />
     <Compile Include="Converters\InvertBooleanConverter.cs" />
@@ -294,6 +301,10 @@
     </Compile>
     <Compile Include="Reveal.cs" />
     <Compile Include="RoutedEventHelper.cs" />
+    <Resource Include="Images\cactus.jpg" />
+    <Content Include="Samples\MultiInput_MergeImages.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Samples\SketchGranite.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -418,6 +429,15 @@
     <Content Include="Samples\1_SampleSyntax.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Samples\MultiInput_ColorChannels.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\MultiInput_Shift.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\Bands.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Shazzam_TemporaryKey.pfx" />
     <Content Include="Tutorials\03_ChangeColor.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -497,12 +517,12 @@
   <ItemGroup>
     <PublishFile Include="ICSharpCode.TextEditor">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
   </ItemGroup>

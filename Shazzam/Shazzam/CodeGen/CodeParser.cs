@@ -35,11 +35,11 @@ namespace Shazzam.CodeGen {
 		private const string SpecialCommentsPattern = @"(" + SpecialCommentPattern + @")*";
 
 		// Patterns used in a constant register declaration in HLSL:
-		private const string RegisterTypePattern = @"(?<registerType>float[234]?)";
+		private const string RegisterTypePattern = @"(?<registerType>\w+?)";
 		private const string RegisterNamePattern = @"(?<registerName>\w+)";
 		private const string RequiredWhitespacePattern = @"\s+";
 		private const string OptionalWhitespacePattern = @"\s*";
-		private const string RegisterConstantNumberPattern = @"[Cc](?<registerNumber>\d+)";
+		private const string RegisterConstantNumberPattern = @"[CcSs](?<registerNumber>\d+)";
 		private const string InitializerValuePattern = @"(?<initializerValue>[^;]+)";
 		private const string OptionalInitializerPattern = @"(?<initializer>=" + OptionalWhitespacePattern + InitializerValuePattern + OptionalWhitespacePattern + @")?";
 
@@ -123,6 +123,7 @@ namespace Shazzam.CodeGen {
 
 				// Get the register number and the optional summary comment.
 				int registerNumber = Int32.Parse(match.Groups["registerNumber"].Value);
+                if (typeof(Brush).IsAssignableFrom(registerType) && (registerNumber == 0)) return null; // ignore the implicit input sampler
 				string summary = match.Groups["summary"].Value;
 
 				// Get the standard min, max, and default value for the register type.
@@ -155,7 +156,7 @@ namespace Shazzam.CodeGen {
 		/// </summary>
 		private static Type GetRegisterType(TargetFramework targetFramework, string registerTypeInHLSL)
 		{
-			switch (registerTypeInHLSL)
+			switch (registerTypeInHLSL.ToLower())
 			{
 				case "float":
 				case "float1":
@@ -167,7 +168,13 @@ namespace Shazzam.CodeGen {
 					return targetFramework == TargetFramework.WPF ? typeof(Point3D) : null;
 				case "float4":
 					return typeof(Color);
-			}
+
+                case "sampler1d":
+                    return typeof(Brush);
+
+                case "sampler2d":
+                    return typeof(Brush);
+            }
 			return null;
 		}
 
