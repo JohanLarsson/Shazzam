@@ -910,10 +910,10 @@
         <ControlTemplate TargetType="{x:Type Thumb}">
           <Grid Background="Transparent">
             <Border
-                Height="8"
-                Background="#FFF"
-                BorderThickness="0.5,1"
-                CornerRadius="3"/>
+                Height="10"
+                Background="#888888"
+                BorderThickness="1,1"
+                CornerRadius="2"/>
           </Grid>
         </ControlTemplate>
       </Setter.Value>
@@ -929,19 +929,19 @@
         <ControlTemplate TargetType="{x:Type Thumb}">
           <Grid Background="Transparent">
             <Border
-                Width="8"
-                Background="#FFF"
-                BorderThickness="1,0.5"
-                CornerRadius="3"/>
+                Width="10"
+                Background="#888888"
+                BorderThickness="1,1"
+                CornerRadius="2"/>
           </Grid>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
   <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
-    <Grid Width="8">
+    <Grid Width="10">
       <Border
-          Width="8"
+          Width="10"
           Background="#18000000"
           CornerRadius="3"/>
       <Track
@@ -951,7 +951,7 @@
           <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource ScrollBarPageButton}"/>
         </Track.DecreaseRepeatButton>
         <Track.Thumb>
-          <Thumb x:Name="Thumb" Opacity="0.25" Style="{StaticResource VerticalScrollBarThumb}"/>
+          <Thumb x:Name="Thumb" Opacity="0.75" Style="{StaticResource VerticalScrollBarThumb}"/>
         </Track.Thumb>
         <Track.IncreaseRepeatButton>
           <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource ScrollBarPageButton}"/>
@@ -982,9 +982,9 @@
     </ControlTemplate.Triggers>
   </ControlTemplate>
   <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
-    <Grid Height="8">
+    <Grid Height="10">
       <Border
-          Height="8"
+          Height="10"
           Background="#18000000"
           CornerRadius="3"/>
       <Track
@@ -994,7 +994,7 @@
           <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource ScrollBarPageButton}"/>
         </Track.DecreaseRepeatButton>
         <Track.Thumb>
-          <Thumb x:Name="Thumb" Opacity="0.25" Style="{StaticResource HorizontalScrollBarThumb}"/>
+          <Thumb x:Name="Thumb" Opacity="0.75" Style="{StaticResource HorizontalScrollBarThumb}"/>
         </Track.Thumb>
         <Track.IncreaseRepeatButton>
           <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource ScrollBarPageButton}"/>
