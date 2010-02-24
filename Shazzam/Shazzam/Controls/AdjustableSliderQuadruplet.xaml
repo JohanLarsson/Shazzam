@@ -1,8 +1,7 @@
 ﻿<UserControl x:Class="Shazzam.Controls.AdjustableSliderQuadruplet"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters='clr-namespace:Shazzam.Converters'
-             xmlns:my="clr-namespace:Kaxaml.Plugins.Controls;assembly=KaxamlPlugins">
+             xmlns:converters='clr-namespace:Shazzam.Converters'>
     <UserControl.Resources>
         <converters:DoubleToStringConverter x:Key='doubleConverter' />
     </UserControl.Resources>
@@ -254,8 +253,6 @@
                            Text='seconds' />
             </StackPanel>
         </StackPanel>
-        <my:AlphaChooser Height="108"
-                         Name="alphaChooser1"
-                         Width="284" />
+
     </WrapPanel>
 </UserControl>

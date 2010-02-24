@@ -74,12 +74,11 @@ namespace Shazzam.Views
 			// the DocumentChanged event fires twice when a document is loaded.
 
 			_dirtyCounter += 1;
-			if (_dirtyCounter== 2)
+			if (_dirtyCounter == 2)
 			{
 				_storedDocHash = _shaderTextEditor.Document.TextContent.GetHashCode();
 
 			}
-			
 
 			if (_shaderTextEditor.Document.TextContent.GetHashCode() == _storedDocHash)
 			{
@@ -89,7 +88,6 @@ namespace Shazzam.Views
 			{
 				ShazzamSwitchboard.CodeTabView.dirtyStatusText.Visibility = Visibility.Visible;
 			}
-
 
 		}
 
@@ -178,6 +176,8 @@ namespace Shazzam.Views
 
 		private void GenerateShaderInputControl(ShaderModelConstantRegister register)
 		{
+			string toolTipText=  String.IsNullOrEmpty(register.Description) ? null : register.Description;
+		
 			TextBlock textBlock = new TextBlock
 			{
 				Foreground = Brushes.White,
@@ -187,15 +187,17 @@ namespace Shazzam.Views
 					new Run { Foreground = (Brush)Application.Current.FindResource("HighlightBrush"), Text = register.RegisterName },
 					new Run { Text = String.Format(" : {0}", register.RegisterType.Name) },
 				},
-				ToolTip = String.IsNullOrEmpty(register.Description) ? null : register.Description
+				ToolTip = toolTipText
 			};
 			inputControlPanel.Children.Add(textBlock);
 
 			Control control = null;
-            if (register.RegisterType == typeof(Brush)) {
+			if (register.RegisterType == typeof(Brush))
+			{
 				control = new TexturePicker(register);
-            }
-            else if (register.RegisterType == typeof(double) || register.RegisterType == typeof(float))
+			
+			}
+			else if (register.RegisterType == typeof(double) || register.RegisterType == typeof(float))
 			{
 				double minValue = Convert.ToDouble(register.MinValue);
 				double maxValue = Convert.ToDouble(register.MaxValue);
@@ -258,6 +260,7 @@ namespace Shazzam.Views
 			if (control != null)
 			{
 				control.Margin = new Thickness(15, 2, 25, 5);
+				control.ToolTip = toolTipText;
 				this.inputControlPanel.Children.Add(control);
 				register.AffiliatedControl = control;
 			}
@@ -468,7 +471,7 @@ namespace Shazzam.Views
 		public void SaveFile(string fileName)
 		{
 			ResetDirty();
-		//	_dirtyCounter = 2;
+			//	_dirtyCounter = 2;
 			_storedDocHash = _shaderTextEditor.Document.TextContent.GetHashCode();
 			_shaderTextEditor.SaveFile(fileName);
 			this.codeTab.Header = Path.GetFileName(fileName);
@@ -490,7 +493,7 @@ namespace Shazzam.Views
 
 		public void SaveFileFirst()
 		{
-			if (dirtyStatusText.Visibility == Visibility.Visible) 
+			if (dirtyStatusText.Visibility == Visibility.Visible)
 			{
 				string message = "The fx file has unsaved changes.  Would you like to save your work?";
 				if (MessageBox.Show(message, "Save file", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -498,11 +501,11 @@ namespace Shazzam.Views
 					SaveFile();
 				}
 			}
-		
+
 		}
 		private void ResetDirty()
 		{
-			
+
 			_storedDocHash = 0;
 			dirtyStatusText.Visibility = Visibility.Hidden;
 		}
