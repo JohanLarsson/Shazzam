@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
+using Shazzam.Commands;
 
 namespace Shazzam
 {
@@ -79,8 +80,28 @@ namespace Shazzam
 				}
 			}
 			this.Closing += new System.ComponentModel.CancelEventHandler(MainWindow_Closing);
+			SetupMenuBindings();
 		}
 
+		private void SetupMenuBindings()
+		{
+			var kb = new KeyBinding(AppCommands.ImageStretch,Key.F5,ModifierKeys.Control);
+			kb.CommandParameter = "none";
+			this.InputBindings.Add(kb);
+
+
+			kb = new KeyBinding(AppCommands.ImageStretch, Key.F6, ModifierKeys.Control);
+			kb.CommandParameter = "fill";
+			this.InputBindings.Add(kb);
+
+			kb = new KeyBinding(AppCommands.ImageStretch, Key.F7, ModifierKeys.Control);
+			kb.CommandParameter = "uniform";
+			this.InputBindings.Add(kb);
+
+			kb = new KeyBinding(AppCommands.ImageStretch, Key.F8, ModifierKeys.Control);
+			kb.CommandParameter = "uniformtofill";
+			this.InputBindings.Add(kb);
+		}
 		void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			ShazzamSwitchboard.CodeTabView.SaveFileFirst();
@@ -340,6 +361,39 @@ namespace Shazzam
 			Process.Start("http://shazzam.codeplex.com/WorkItem/List.aspx");
 		}
 
+		private void ImageStretch_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			switch (e.Parameter.ToString())
+			{
+				case "none":
+					SetStretchMode(System.Windows.Media.Stretch.None);
+					break;
+				case "fill":
+					SetStretchMode(System.Windows.Media.Stretch.Fill);
+					break;
+				case "uniform":
+					SetStretchMode(System.Windows.Media.Stretch.Uniform);
+					break;
+				case "uniformtofill":
+					SetStretchMode(System.Windows.Media.Stretch.UniformToFill);
+					break;
+				default:
+					SetStretchMode(System.Windows.Media.Stretch.Uniform);
+
+					break;
+			}
+		}
+		private void SetStretchMode(System.Windows.Media.Stretch stretchMode)
+		{
+			userImage.Stretch = stretchMode;
+			sampleImage1.Stretch = stretchMode;
+			sampleImage2.Stretch = stretchMode;
+			sampleImage3.Stretch = stretchMode;
+			sampleImage4.Stretch = stretchMode;
+			sampleImage5.Stretch = stretchMode;
+			mediaUI.Stretch = stretchMode;
+
+		}
 		private void mediaUI_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			mediaUI.Position = TimeSpan.Zero;
@@ -390,6 +444,11 @@ namespace Shazzam
 		private void Button2_Click(object sender, RoutedEventArgs e)
 		{
 			fruitListBox.SelectedIndex = 2;
+		}
+
+		private void MenuItem_Click(object sender, RoutedEventArgs e)
+		{
+
 		}
 
 	}

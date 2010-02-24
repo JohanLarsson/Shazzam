@@ -4,7 +4,7 @@
 				xmlns:converters='clr-namespace:Shazzam.Converters'
 				xmlns:commands='clr-namespace:Shazzam.Commands'
 				xmlns:view='clr-namespace:Shazzam.Views'
-				Title='Shazzam - 1.0 Shader Effect Tester'
+				Title='Shazzam - 1.2 Shader Effect Tester'
 				WindowState='Maximized'
 				Background='Black'
 				xmlns:d='http://schemas.microsoft.com/expression/blend/2008'
@@ -68,7 +68,9 @@
 										Executed='FullScreenImage_Executed' />
 		<CommandBinding Command='commands:AppCommands.FullScreenCode'
 										Executed='FullScreenCode_Executed' />
-		<CommandBinding Command='commands:AppCommands.WhatsNew'
+        <CommandBinding Command='commands:AppCommands.ImageStretch'
+                        Executed='ImageStretch_Executed' />
+        <CommandBinding Command='commands:AppCommands.WhatsNew'
 										Executed='WhatsNew_Executed' />
 		<CommandBinding Command='commands:AppCommands.ReportBug'
 										Executed='ReportBug_Executed' />
@@ -92,27 +94,27 @@
 					Margin='3,6,0,0'>
 			<Grid.RowDefinitions>
 				<RowDefinition Height='5*'
-											 x:Name='imageRow' />
+							   x:Name='imageRow' />
 				<RowDefinition Height='4'
-											 x:Name='splitterRow' />
+							   x:Name='splitterRow' />
 				<RowDefinition Height='5*'
-											 x:Name='codeRow' />
+							   x:Name='codeRow'  />
 			</Grid.RowDefinitions>
-			<!--<StackPanel DockPanel.Dock='Bottom'>
-      <Button HorizontalAlignment='Center'
-              Content='Execute'
-              Click='Button_Click' />
-    </StackPanel>-->
-			<GridSplitter Grid.Row='1'
-										Grid.ColumnSpan='1' />
-
+		
+			<GridSplitter Grid.Row='1'  
+                          ResizeDirection="Rows"
+                          HorizontalAlignment="Stretch"
+                          Width="Auto"
+                        Grid.ColumnSpan='1' />
+            
 			<view:CodeTabView x:Name='codeTabView'
 												DockPanel.Dock='Bottom'
 												Grid.Row='2' />
-			<TabControl Background='{DynamicResource NeutralDarkBrush}'
+			<TabControl Background='{DynamicResource NeutralDarkBrush}' 
 									x:Name='imageTabControl'
 									SelectionChanged='imageTabControl_SelectionChanged'
 									Grid.Row='0'>
+               
 				<TabItem Header='Custom Image'>
 					<Border Style='{DynamicResource ImageOutsideBorder}'>
 						<Border Style='{DynamicResource ImageInsideBorder}'>
@@ -120,8 +122,9 @@
 							<Border Background='{StaticResource AlphaGrid}'>
 
 								<Image x:Name='userImage'
-											 Source='Images/ColorRange.png'
-											 HorizontalAlignment='Center'
+                                       Source='Images/ColorRange.png'
+                                      
+                                       HorizontalAlignment='Center'
 											 VerticalAlignment='Center' />
 							</Border>
 						</Border>
@@ -132,11 +135,13 @@
 					<Border Style='{DynamicResource ImageOutsideBorder}'>
 						<Border Style='{DynamicResource ImageInsideBorder}'>
 							<Border Background='{StaticResource AlphaGrid}'>
-								<Image x:Name='sampleImage1'
-											 Source='Images/Fire1.jpg'
-											 HorizontalAlignment='Center'
-											 VerticalAlignment='Center' />
-							</Border>
+                                <Image x:Name='sampleImage1'
+                                       Source='Images/Fire1.jpg'
+                                       HorizontalAlignment='Center'
+                                       VerticalAlignment='Center'>
+                                   
+                                </Image>
+                            </Border>
 						</Border>
 					</Border>
 				</TabItem>
@@ -259,7 +264,7 @@
 										<Border Style='{DynamicResource ImageInsideBorder}'>
 											<MediaElement Source='Images/plasma.wmv'
 																		DockPanel.Dock='Top'
-																		Stretch='Uniform'
+																		Stretch='UniformToFill'
 																		x:Name='mediaUI'
 																		LoadedBehavior='Manual'
 																		ToolTip='Click video to replay.'
