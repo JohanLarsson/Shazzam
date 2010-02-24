@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Globalization;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 
 namespace Shazzam.Controls
@@ -29,31 +32,46 @@ namespace Shazzam.Controls
 			Storyboard.SetTarget(this.sliderValueAnimation, this.slider);
 			Storyboard.SetTargetProperty(this.sliderValueAnimation, new PropertyPath(Slider.ValueProperty));
 			this.storyboard.Children.Add(this.sliderValueAnimation);
-
-			this.minTextBox.TextChanged += this.MinTextBox_TextChanged;
-			this.maxTextBox.TextChanged += this.MaxTextBox_TextChanged;
+			this.mainPanel.PreviewKeyDown += new System.Windows.Input.KeyEventHandler(mainStackPanel_PreviewKeyDown);
+			//	this.minTextBox.TextChanged += this.MinTextBox_TextChanged;
+			this.minTextBox.LostFocus += new RoutedEventHandler(minTextBox_LostFocus);
+			this.maxTextBox.LostFocus += new RoutedEventHandler(maxTextBox_LostFocus);
+			//	this.maxTextBox.TextChanged += this.MaxTextBox_TextChanged;
 			this.slider.ValueChanged += this.Slider_ValueChanged;
 
 			this.noAnimationToggleButton.Click += this.AnimationToggleButton_Click;
 			this.linearAnimationToggleButton.Click += this.AnimationToggleButton_Click;
-			
+
 			this.durationTextBox.TextChanged += this.DurationTextBox_TextChanged;
 			durationTextBox.Text = Properties.Settings.Default.AnimationLengthDefault.ToString();
 		}
 
-		private void MinTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		void mainStackPanel_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+		{
+			// pressing the enter key will move focus to next control
+			var uie = e.OriginalSource as UIElement;
+			if (e.Key == Key.Enter)
+			{
+				e.Handled = true;
+				uie.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+			}
+		}
+
+		void minTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.minTextBox.Text, out number))
+			if (Double.TryParse(this.minTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Minimum = number;
 			}
 		}
 
-		private void MaxTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		void maxTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.maxTextBox.Text, out number))
+			var separator = Thread.CurrentThread.CurrentCulture.NumberFormat.CurrencyGroupSeparator;
+
+			if (Double.TryParse(this.maxTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Maximum = number;
 			}
@@ -78,7 +96,7 @@ namespace Shazzam.Controls
 			{
 				TimeSpan duration = TimeSpan.FromSeconds(Math.Max(0, number));
 				this.sliderValueAnimation.Duration = duration;
-			
+
 				this.UpdateAnimation();
 			}
 		}
@@ -93,17 +111,16 @@ namespace Shazzam.Controls
 			{
 				this.storyboard.Stop(this);
 
-					slider.Visibility = Visibility.Visible;
-					sliderText.Visibility = Visibility.Collapsed;
+				slider.Visibility = Visibility.Visible;
+				sliderText.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
 				this.storyboard.Begin(this, true);
-				// moving the slider is distracting 
-					slider.Visibility = Visibility.Collapsed;
-					sliderText.Visibility = Visibility.Visible;
+				// moving the slider is distracting
+				slider.Visibility = Visibility.Collapsed;
+				sliderText.Visibility = Visibility.Visible;
 
-			
 				// get binding for reuse
 
 				//if (this.sliderValueAnimation.Duration< new TimeSpan(0, 0, 1))

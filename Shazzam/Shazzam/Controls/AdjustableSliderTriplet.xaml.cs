@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 
@@ -55,16 +57,18 @@ namespace Shazzam.Controls
 			Storyboard.SetTargetProperty(this.zSliderValueAnimation, new PropertyPath(Slider.ValueProperty));
 			this.storyboard.Children.Add(this.zSliderValueAnimation);
 
-			this.xMinTextBox.TextChanged += this.XMinTextBox_TextChanged;
-			this.xMaxTextBox.TextChanged += this.XMaxTextBox_TextChanged;
+			this.mainPanel.PreviewKeyDown += new System.Windows.Input.KeyEventHandler(mainStackPanel_PreviewKeyDown);
+
+			this.xMinTextBox.LostFocus += new RoutedEventHandler(xMinTextBox_LostFocus);
+			this.xMaxTextBox.LostFocus += new RoutedEventHandler(xMaxTextBox_LostFocus);
 			this.xSlider.ValueChanged += this.XSlider_ValueChanged;
 
-			this.yMinTextBox.TextChanged += this.YMinTextBox_TextChanged;
-			this.yMaxTextBox.TextChanged += this.YMaxTextBox_TextChanged;
+			this.yMinTextBox.LostFocus += new RoutedEventHandler(yMinTextBox_LostFocus);
+			this.yMaxTextBox.LostFocus += new RoutedEventHandler(yMaxTextBox_LostFocus);
 			this.ySlider.ValueChanged += this.YSlider_ValueChanged;
 
-			this.zMinTextBox.TextChanged += this.ZMinTextBox_TextChanged;
-			this.zMaxTextBox.TextChanged += this.ZMaxTextBox_TextChanged;
+			this.zMinTextBox.LostFocus += new RoutedEventHandler(zMinTextBox_LostFocus);
+			this.zMaxTextBox.LostFocus += new RoutedEventHandler(zMaxTextBox_LostFocus);
 			this.zSlider.ValueChanged += this.ZSlider_ValueChanged;
 
 			this.noAnimationToggleButton.Click += this.AnimationToggleButton_Click;
@@ -75,19 +79,30 @@ namespace Shazzam.Controls
 
 		}
 
-		private void XMinTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		void mainStackPanel_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+		{
+			// pressing the enter key will move focus to next control
+			var uie = e.OriginalSource as UIElement;
+			if (e.Key == Key.Enter)
+			{
+				e.Handled = true;
+				uie.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+			}
+		}
+
+		void xMinTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.xMinTextBox.Text, out number))
+			if (Double.TryParse(this.xMinTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Minimum = new Point3D(number, this.Minimum.Y, this.Minimum.Z);
 			}
 		}
 
-		private void XMaxTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		void xMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.xMaxTextBox.Text, out number))
+			if (Double.TryParse(this.xMaxTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Maximum = new Point3D(number, this.Maximum.Y, this.Maximum.Z);
 			}
@@ -98,19 +113,19 @@ namespace Shazzam.Controls
 			this.Value = new Point3D(e.NewValue, this.Value.Y, this.Value.Z);
 		}
 
-		private void YMinTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		void yMinTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.yMinTextBox.Text, out number))
+			if (Double.TryParse(this.yMinTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Minimum = new Point3D(this.Minimum.X, number, this.Minimum.Z);
 			}
 		}
 
-		private void YMaxTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		void yMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.yMaxTextBox.Text, out number))
+			if (Double.TryParse(this.yMaxTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Maximum = new Point3D(this.Maximum.X, number, this.Maximum.Z);
 			}
@@ -121,19 +136,19 @@ namespace Shazzam.Controls
 			this.Value = new Point3D(this.Value.X, e.NewValue, this.Value.Z);
 		}
 
-		private void ZMinTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		void zMinTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.zMinTextBox.Text, out number))
+			if (Double.TryParse(this.zMinTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Minimum = new Point3D(this.Minimum.X, this.Minimum.Y, number);
 			}
 		}
 
-		private void ZMaxTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		void zMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.zMaxTextBox.Text, out number))
+			if (Double.TryParse(this.zMaxTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Maximum = new Point3D(this.Maximum.X, this.Maximum.Y, number);
 			}

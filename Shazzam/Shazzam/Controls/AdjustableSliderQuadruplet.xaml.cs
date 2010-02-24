@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 
@@ -67,20 +69,24 @@ namespace Shazzam.Controls
 			Storyboard.SetTargetProperty(this.wSliderValueAnimation, new PropertyPath(Slider.ValueProperty));
 			this.storyboard.Children.Add(this.wSliderValueAnimation);
 
-			this.xMinTextBox.TextChanged += this.XMinTextBox_TextChanged;
-			this.xMaxTextBox.TextChanged += this.XMaxTextBox_TextChanged;
+			this.mainPanel.PreviewKeyDown += new System.Windows.Input.KeyEventHandler(mainStackPanel_PreviewKeyDown);
+
+			this.xMinTextBox.LostFocus += new RoutedEventHandler(xMinTextBox_LostFocus);
+			this.xMaxTextBox.LostFocus += new RoutedEventHandler(xMaxTextBox_LostFocus);
 			this.xSlider.ValueChanged += this.XSlider_ValueChanged;
 
-			this.yMinTextBox.TextChanged += this.YMinTextBox_TextChanged;
-			this.yMaxTextBox.TextChanged += this.YMaxTextBox_TextChanged;
+			this.yMinTextBox.LostFocus += new RoutedEventHandler(yMinTextBox_LostFocus);
+			this.yMaxTextBox.LostFocus += new RoutedEventHandler(yMaxTextBox_LostFocus);
 			this.ySlider.ValueChanged += this.YSlider_ValueChanged;
 
-			this.zMinTextBox.TextChanged += this.ZMinTextBox_TextChanged;
-			this.zMaxTextBox.TextChanged += this.ZMaxTextBox_TextChanged;
+			this.zMinTextBox.LostFocus += new RoutedEventHandler(zMinTextBox_LostFocus);
+			this.zMaxTextBox.LostFocus += new RoutedEventHandler(zMaxTextBox_LostFocus);
 			this.zSlider.ValueChanged += this.ZSlider_ValueChanged;
 
-			this.wMinTextBox.TextChanged += this.WMinTextBox_TextChanged;
-			this.wMaxTextBox.TextChanged += this.WMaxTextBox_TextChanged;
+			//	this.wMinTextBox.TextChanged += this.WMinTextBox_TextChanged;
+			//	this.wMaxTextBox.TextChanged += this.WMaxTextBox_TextChanged;
+			this.wMinTextBox.LostFocus += new RoutedEventHandler(wMinTextBox_LostFocus);
+			this.wMaxTextBox.LostFocus += new RoutedEventHandler(wMaxTextBox_LostFocus);
 			this.wSlider.ValueChanged += this.WSlider_ValueChanged;
 
 			this.noAnimationToggleButton.Click += this.AnimationToggleButton_Click;
@@ -91,19 +97,31 @@ namespace Shazzam.Controls
 
 		}
 
-		private void XMinTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		void mainStackPanel_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+		{
+			// pressing the enter key will move focus to next control
+			var uie = e.OriginalSource as UIElement;
+			if (e.Key == Key.Enter)
+			{
+				e.Handled = true;
+				uie.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+			}
+		}
+		#region XControls
+
+		void xMinTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.xMinTextBox.Text, out number))
+			if (Double.TryParse(this.xMinTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Minimum = new Point4D(number, this.Minimum.Y, this.Minimum.Z, this.Minimum.W);
 			}
 		}
 
-		private void XMaxTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		void xMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.xMaxTextBox.Text, out number))
+			if (Double.TryParse(this.xMaxTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Maximum = new Point4D(number, this.Maximum.Y, this.Maximum.Z, this.Maximum.W);
 			}
@@ -113,20 +131,23 @@ namespace Shazzam.Controls
 		{
 			this.Value = new Point4D(e.NewValue, this.Value.Y, this.Value.Z, this.Value.W);
 		}
+		#endregion
 
-		private void YMinTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		#region YControls
+
+		void yMinTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.yMinTextBox.Text, out number))
+			if (Double.TryParse(this.yMinTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Minimum = new Point4D(this.Minimum.X, number, this.Minimum.Z, this.Minimum.W);
 			}
 		}
 
-		private void YMaxTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		void yMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.yMaxTextBox.Text, out number))
+			if (Double.TryParse(this.yMaxTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Maximum = new Point4D(this.Maximum.X, number, this.Maximum.Z, this.Maximum.W);
 			}
@@ -136,20 +157,23 @@ namespace Shazzam.Controls
 		{
 			this.Value = new Point4D(this.Value.X, e.NewValue, this.Value.Z, this.Value.W);
 		}
+		#endregion
 
-		private void ZMinTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		#region ZControls
+
+		void zMinTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.zMinTextBox.Text, out number))
+			if (Double.TryParse(this.zMinTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Minimum = new Point4D(this.Minimum.X, this.Minimum.Y, number, this.Minimum.W);
 			}
 		}
 
-		private void ZMaxTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		void zMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.zMaxTextBox.Text, out number))
+			if (Double.TryParse(this.zMaxTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Maximum = new Point4D(this.Maximum.X, this.Maximum.Y, number, this.Maximum.W);
 			}
@@ -159,20 +183,22 @@ namespace Shazzam.Controls
 		{
 			this.Value = new Point4D(this.Value.X, this.Value.Y, e.NewValue, this.Value.W);
 		}
+		#endregion
 
-		private void WMinTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		#region WControls
+
+		void wMinTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.wMinTextBox.Text, out number))
+			if (Double.TryParse(this.wMinTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Minimum = new Point4D(this.Minimum.X, this.Minimum.Y, this.Minimum.Z, number);
 			}
 		}
-
-		private void WMaxTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		void wMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.wMaxTextBox.Text, out number))
+			if (Double.TryParse(this.wMaxTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Maximum = new Point4D(this.Maximum.X, this.Maximum.Y, this.Maximum.Z, number);
 			}
@@ -182,6 +208,7 @@ namespace Shazzam.Controls
 		{
 			this.Value = new Point4D(this.Value.X, this.Value.Y, this.Value.Z, e.NewValue);
 		}
+		#endregion
 
 		private void AnimationToggleButton_Click(object sender, RoutedEventArgs e)
 		{

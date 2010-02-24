@@ -4,13 +4,15 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Media.Media3D;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using Shazzam.Properties;
 
-namespace Shazzam.CodeGen {
+namespace Shazzam.CodeGen
+{
 
-	static class CodeParser {
+	static class CodeParser
+	{
 		// Regular expression that matches a comment from double-slash to end-of-line (but not a triple-slash comment):
 		private static readonly Regex CommentRegex = new Regex(@"(?<!/)//$|(?<!/)//[^/].*?$", RegexOptions.Compiled | RegexOptions.Multiline);
 
@@ -31,7 +33,7 @@ namespace Shazzam.CodeGen {
 		private const string MaxValuePattern = @"<maxValue>(?<maxValue>.*)</maxValue>";
 		private const string DefaultValuePattern = @"<defaultValue>(?<defaultValue>.*)</defaultValue>";
 		private const string SpecialCommentPattern = @"^///\s*(" + SummaryPattern + @"|" + TypePattern + @"|" +
-		    MinValuePattern + @"|" + MaxValuePattern + @"|" + DefaultValuePattern + @")\s*?$\s*";
+				MinValuePattern + @"|" + MaxValuePattern + @"|" + DefaultValuePattern + @")\s*?$\s*";
 		private const string SpecialCommentsPattern = @"(" + SpecialCommentPattern + @")*";
 
 		// Patterns used in a constant register declaration in HLSL:
@@ -123,7 +125,7 @@ namespace Shazzam.CodeGen {
 
 				// Get the register number and the optional summary comment.
 				int registerNumber = Int32.Parse(match.Groups["registerNumber"].Value);
-                if (typeof(Brush).IsAssignableFrom(registerType) && (registerNumber == 0)) return null; // ignore the implicit input sampler
+				if (typeof(Brush).IsAssignableFrom(registerType) && (registerNumber == 0)) return null; // ignore the implicit input sampler
 				string summary = match.Groups["summary"].Value;
 
 				// Get the standard min, max, and default value for the register type.
@@ -169,12 +171,12 @@ namespace Shazzam.CodeGen {
 				case "float4":
 					return typeof(Color);
 
-                case "sampler1d":
-                    return typeof(Brush);
+				case "sampler1d":
+					return typeof(Brush);
 
-                case "sampler2d":
-                    return typeof(Brush);
-            }
+				case "sampler2d":
+					return typeof(Brush);
+			}
 			return null;
 		}
 
@@ -369,7 +371,7 @@ namespace Shazzam.CodeGen {
 				initializerValue = Color.FromArgb(ConvertToByte(numbers[3]), ConvertToByte(numbers[0]), ConvertToByte(numbers[1]), ConvertToByte(numbers[2]));
 			}
 		}
-		
+
 		/// <summary>
 		/// Parses the string representation of an HLSL float, float2, float3, or float4 value,
 		/// returning an array of doubles (possibly empty).

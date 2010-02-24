@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 
 namespace Shazzam.Controls
@@ -41,13 +43,18 @@ namespace Shazzam.Controls
 			Storyboard.SetTarget(this.ySliderValueAnimation, this.ySlider);
 			Storyboard.SetTargetProperty(this.ySliderValueAnimation, new PropertyPath(Slider.ValueProperty));
 			this.storyboard.Children.Add(this.ySliderValueAnimation);
+			this.mainPanel.PreviewKeyDown += new System.Windows.Input.KeyEventHandler(mainStackPanel_PreviewKeyDown);
 
-			this.xMinTextBox.TextChanged += this.XMinTextBox_TextChanged;
-			this.xMaxTextBox.TextChanged += this.XMaxTextBox_TextChanged;
+			//this.xMinTextBox.TextChanged += this.XMinTextBox_TextChanged;
+			//this.xMaxTextBox.TextChanged += this.XMaxTextBox_TextChanged;
+			this.xMinTextBox.LostFocus += new RoutedEventHandler(xMinTextBox_LostFocus);
+			this.xMaxTextBox.LostFocus += new RoutedEventHandler(xMaxTextBox_LostFocus);
 			this.xSlider.ValueChanged += this.XSlider_ValueChanged;
 
-			this.yMinTextBox.TextChanged += this.YMinTextBox_TextChanged;
-			this.yMaxTextBox.TextChanged += this.YMaxTextBox_TextChanged;
+			//this.yMinTextBox.TextChanged += this.YMinTextBox_TextChanged;
+			//this.yMaxTextBox.TextChanged += this.YMaxTextBox_TextChanged;
+			this.yMinTextBox.LostFocus += new RoutedEventHandler(yMinTextBox_LostFocus);
+			this.yMaxTextBox.LostFocus += new RoutedEventHandler(yMaxTextBox_LostFocus);
 			this.ySlider.ValueChanged += this.YSlider_ValueChanged;
 
 			this.noAnimationToggleButton.Click += this.AnimationToggleButton_Click;
@@ -58,45 +65,72 @@ namespace Shazzam.Controls
 
 		}
 
-		private void XMinTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		//private void YMaxTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		//{
+		//  double number;
+		//  if (Double.TryParse(this.yMaxTextBox.Text, out number))
+		//  {
+		//    this.Maximum = new Point(this.Maximum.X, number);
+		//  }
+		//}
+
+		void yMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
 		{
 			double number;
-			if (Double.TryParse(this.xMinTextBox.Text, out number))
+			if (Double.TryParse(this.yMaxTextBox.Text, NumberStyles.Any, null, out number))
+			{
+				this.Maximum = new Point(this.Maximum.X, number);
+			}
+		}
+		//private void YMinTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		//{
+		//  double number;
+		//  if (Double.TryParse(this.yMinTextBox.Text, out number))
+		//  {
+		//    this.Minimum = new Point(this.Minimum.X, number);
+		//  }
+		//}
+
+		void yMinTextBox_LostFocus(object sender, RoutedEventArgs e)
+		{
+			double number;
+			if (Double.TryParse(this.yMinTextBox.Text, NumberStyles.Any, null, out number))
+			{
+				this.Minimum = new Point(this.Minimum.X, number);
+			}
+		}
+
+		void xMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
+		{
+			double number;
+			if (Double.TryParse(this.xMaxTextBox.Text, NumberStyles.Any, null, out number))
+			{
+				this.Maximum = new Point(number, this.Maximum.Y);
+			}
+		}
+
+		void xMinTextBox_LostFocus(object sender, RoutedEventArgs e)
+		{
+			double number;
+			if (Double.TryParse(this.xMinTextBox.Text, NumberStyles.Any, null, out number))
 			{
 				this.Minimum = new Point(number, this.Minimum.Y);
 			}
 		}
-
-		private void XMaxTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		void mainStackPanel_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
 		{
-			double number;
-			if (Double.TryParse(this.xMaxTextBox.Text, out number))
+			// pressing the enter key will move focus to next control
+			var uie = e.OriginalSource as UIElement;
+			if (e.Key == Key.Enter)
 			{
-				this.Maximum = new Point(number, this.Maximum.Y);
+				e.Handled = true;
+				uie.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
 			}
 		}
 
 		private void XSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
 			this.Value = new Point(e.NewValue, this.Value.Y);
-		}
-
-		private void YMinTextBox_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			double number;
-			if (Double.TryParse(this.yMinTextBox.Text, out number))
-			{
-				this.Minimum = new Point(this.Minimum.X, number);
-			}
-		}
-
-		private void YMaxTextBox_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			double number;
-			if (Double.TryParse(this.yMaxTextBox.Text, out number))
-			{
-				this.Maximum = new Point(this.Maximum.X, number);
-			}
 		}
 
 		private void YSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
