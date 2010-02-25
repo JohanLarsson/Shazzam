@@ -1,12 +1,9 @@
 ﻿sampler2D input : register(s0);
 
 
-// new HLSL shader
-/// <summary>Explain the purpose of this variable.</summary>
-
-/// <defaultValue>c:\something\something.jpg</defaultValue> e.g. "c:\something\something.jpg" or "shazzam:sample1" "shazzam:noise", etc
+/// <summary>The second input texture.</summary>
+/// <defaultValue>c:\examplefolder\examplefile.jpg</defaultValue> 
 sampler2D Texture1 : register(s1);
-
 
 /// <summary>Change the ratio between the two Textures.  0 is 100% input source, 1 is 100</summary>
 /// <minValue>0/minValue>

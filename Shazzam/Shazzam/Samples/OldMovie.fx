@@ -1,7 +1,7 @@
 ﻿/// <class>OldMovie</class>
-
 /// <description>Pixel shader which produces random scratches, noise and other FX like an old projector</description>
 /// 
+
 //   Contributed by Rene Schulte
 //   Copyright (c) 2009 Rene Schulte
 
