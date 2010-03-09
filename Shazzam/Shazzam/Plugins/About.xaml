@@ -61,7 +61,7 @@
 					 FontFamily="\Fonts\#Pericles">
         Shazzam   
       </Run>
-      <Run FontSize="24"
+      <Run FontSize="24" x:Name="versionRun"
 					 FontFamily="\Fonts\#Miramonte"
 					 Foreground="LimeGreen">
         v1.1
