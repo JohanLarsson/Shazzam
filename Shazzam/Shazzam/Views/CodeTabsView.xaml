@@ -10,7 +10,7 @@
     <TabControl x:Name='codeTabControl'
                 SnapsToDevicePixels='True'>
         <TabItem x:Name='codeTab'
-                 Header="HLSL">
+                 Header="HLSL" ToolTip="Use Ctrl-F9 to move focus to this tab.">
             <Border BorderBrush='{DynamicResource NeutralDarkBrush}'
                     BorderThickness='9'>
                 <Border BorderBrush='White'
@@ -107,6 +107,7 @@
         </TabItem>
         <TabItem x:Name='InputControlsTab'
                  Header='Change Shader Settings'
+                 ToolTip="Use Ctrl-F10 to move focus to this tab."
                  Visibility='{Binding ElementName=outputTextBox,Path=Visibility, Converter={StaticResource visvisConverter}}'>
             <Border BorderBrush='{DynamicResource NeutralDarkBrush}'
                     BorderThickness='9'>

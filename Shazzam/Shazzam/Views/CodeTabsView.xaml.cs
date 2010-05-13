@@ -18,6 +18,7 @@ using Microsoft.CSharp;
 using Shazzam.CodeGen;
 using Shazzam.Controls;
 using Shazzam.Converters;
+using Shazzam.Commands;
 
 namespace Shazzam.Views
 {
@@ -53,6 +54,7 @@ namespace Shazzam.Views
 					reader.Close();
 				}
 			}
+		
 			_shaderTextEditor.Document.HighlightingStrategy = _hlslHS;
 			this.formsHost.Child = _shaderTextEditor;
 
@@ -66,6 +68,36 @@ namespace Shazzam.Views
 			_compiler.Reset();
 			outputTextBox.DataContext = _compiler;
 			this.Loaded += CodeTabView_Loaded;
+			
+
+		}
+		
+
+		private void SetupInputBindings()
+		{
+			KeyBinding kb;
+			
+			RoutedUICommand ChangeToCodeTab= new RoutedUICommand("Change To Code Tab", "ChangeToCodeTab",		typeof(CodeTabView));
+			RoutedUICommand ChangeToEditTab = new RoutedUICommand("Change To Edit Tab", "ChangeToEditTab", typeof(CodeTabView));
+
+			CommandBinding cb = new CommandBinding(ChangeToCodeTab, (s, e) => this.codeTabControl.SelectedItem = codeTab);
+			kb = new KeyBinding(ChangeToCodeTab, Key.F9, ModifierKeys.Control);
+
+			ShazzamSwitchboard.MainWindow.CommandBindings.Add(cb);
+		//	this.CommandBindings.Add(cb);
+			ShazzamSwitchboard.MainWindow.InputBindings.Add(kb);
+		//	this.InputBindings.Add(kb);
+
+			CommandBinding cb2 = new CommandBinding(ChangeToEditTab, (s, e) => this.codeTabControl.SelectedItem = InputControlsTab);
+			kb = new KeyBinding(ChangeToEditTab, Key.F10, ModifierKeys.Control);
+ 			
+		
+
+			ShazzamSwitchboard.MainWindow.CommandBindings.Add(cb2);
+			ShazzamSwitchboard.MainWindow.InputBindings.Add(kb);
+		//	this.CommandBindings.Add(cb2);
+		//	this.InputBindings.Add(kb);
+	
 		}
 
 		void Document_DocumentChanged(object sender, DocumentEventArgs e)
@@ -94,6 +126,7 @@ namespace Shazzam.Views
 		void CodeTabView_Loaded(object sender, RoutedEventArgs e)
 		{
 			SetupBlurAnimation();
+			SetupInputBindings();
 
 		}
 
