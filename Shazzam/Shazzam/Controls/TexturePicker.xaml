@@ -39,7 +39,9 @@
                 </Image.ToolTip>
             </Image>
         </Border>
-        <Button Content='Open Image'
+        <StackPanel>
+            
+            <Button Content='Open Image'
                 Height='23'
                 HorizontalAlignment='Left'
                 Margin="12"
@@ -48,6 +50,17 @@
                 Width='75'
                 Click='btnOpenImage_Click'
                 Grid.Column="0" />
+            <ComboBox 
+                    Height='23'
+                    HorizontalAlignment='Left'
+                    Margin="12,0"
+                    Name='cboIncludedTextures'
+                    VerticalAlignment='Top'
+                    Width='75'
+                    SelectionChanged="cboIncludedTextures_SelectionChanged"
+                    Grid.Column="0" />
+        </StackPanel>
+
         <Grid.Background>
             <LinearGradientBrush EndPoint="1,0.5"
                                  StartPoint="0,0.5">
