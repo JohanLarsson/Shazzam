@@ -25,10 +25,10 @@ float SpiralStrength : register(C1);
 float AspectRatio : register(C2);
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -48,7 +48,7 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 	
 	float2 samplePoint = Center + newDir * dist;
 	bool isValid = all(samplePoint >= 0 && samplePoint <= 1);
-	return isValid ? tex2D(implicitInputSampler, samplePoint) : float4(0, 0, 0, 0);
+	return isValid ? tex2D(Texture1Sampler, samplePoint) : float4(0, 0, 0, 0);
 }
 
 

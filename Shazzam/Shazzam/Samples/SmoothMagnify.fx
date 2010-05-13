@@ -37,10 +37,10 @@ float Magnification : register(C3);
 float AspectRatio : register(C4);
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -52,5 +52,5 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 	float dist = length(centerToPixel / float2(1, AspectRatio));
 	float ratio = smoothstep(InnerRadius, max(InnerRadius, OuterRadius), dist);
 	float2 samplePoint = lerp(Center + centerToPixel / Magnification, uv, ratio);
-	return tex2D(implicitInputSampler, samplePoint);
+	return tex2D(Texture1Sampler, samplePoint);
 }

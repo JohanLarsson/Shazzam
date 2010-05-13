@@ -36,10 +36,10 @@ static const float2 poisson[12] =
 };
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -50,12 +50,12 @@ float4 main(float2 uv : TEXCOORD) : COLOR
     float4 cOut;
 
     // Center tap
-    cOut = tex2D(implicitInputSampler, uv);
+    cOut = tex2D(Texture1Sampler, uv);
     for(int tap = 0; tap < 12; tap++)
     {
         float2 coord= uv.xy + (poisson[tap] / InputSize * DiskRadius);
         // Sample pixel
-        cOut += tex2D(implicitInputSampler, coord);
+        cOut += tex2D(Texture1Sampler, coord);
     }
 
     return(cOut / 13.0f);

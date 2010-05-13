@@ -32,11 +32,11 @@ float HorizontalOffset : register(C3);
 float VerticalOffset : register(C4);
 
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
 	float2 newUv = float2((uv.x * HorizontalTileCount % 1) + HorizontalOffset , (uv.y * VerticalTileCount % 1)+VerticalOffset) ;
-	return tex2D( implicitInputSampler, newUv );
+	return tex2D( Texture1Sampler, newUv );
 
 }

@@ -37,10 +37,10 @@ float Phase: register(C3);
 float AspectRatio : register(C4);
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -63,7 +63,7 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 		
 	dist += Amplitude * wave.x * falloff;
 	float2 samplePoint = Center + dist * dir;
-	float4 color = tex2D(implicitInputSampler, samplePoint);
+	float4 color = tex2D(Texture1Sampler, samplePoint);
 
 	float lighting = 1 - Amplitude * 0.2 * (1 - saturate(wave.y * falloff));
 	color.rgb *= lighting;

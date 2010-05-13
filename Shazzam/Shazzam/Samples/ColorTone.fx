@@ -27,10 +27,10 @@ float4 LightColor : register(C2);
 float4 DarkColor : register(C3);
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -38,7 +38,7 @@ sampler2D implicitInputSampler : register(S0);
 
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
-    float4 color = tex2D(implicitInputSampler, uv);
+    float4 color = tex2D(Texture1Sampler, uv);
     float3 scnColor = LightColor * (color.rgb / color.a);
     float gray = dot(float3(0.3, 0.59, 0.11), scnColor);
     

@@ -17,10 +17,10 @@ float4 ColorKey : register(C0);
 float Tolerance : register(C1);
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -28,7 +28,7 @@ sampler2D implicitInputSampler : register(S0);
 
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
-   float4 color = tex2D( implicitInputSampler, uv );
+   float4 color = tex2D( Texture1Sampler, uv );
    
    if (all(abs(color.rgb - ColorKey.rgb) < Tolerance)) {
       color.rgba = 0;

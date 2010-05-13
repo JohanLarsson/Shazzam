@@ -20,10 +20,10 @@ float2 PixelCounts : register(C0);
 float BrickOffset : register(C1);
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -43,7 +43,7 @@ float4 main(float2 uv : TEXCOORD) : COLOR
    
    float2 brickNum = floor(offsetuv / brickSize);
    float2 centerOfBrick = brickNum * brickSize + brickSize / 2;
-   float4 color = tex2D(implicitInputSampler, centerOfBrick);
+   float4 color = tex2D(Texture1Sampler, centerOfBrick);
 
    return color;
 }

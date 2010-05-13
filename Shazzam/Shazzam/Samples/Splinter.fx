@@ -25,13 +25,13 @@ float Push : register(C4);
 
 
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
 	//float2 locator = float2(uv.x * uv.y % SplinterIntensity , uv.y /   uv.x % Multiplier) ;
 	
 	float2 locator = float2(((uv.x *Push) +  SplinterIntensity % uv.y) * sin (Multiplier) , sin( uv.y  % uv.x) );
-	return tex2D( implicitInputSampler, locator );
+	return tex2D( Texture1Sampler, locator );
 
 }

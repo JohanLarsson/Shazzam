@@ -53,10 +53,10 @@ float VignetteAmount : register(C6);
 float BlueShift : register(C7);
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 
 //--------------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ sampler2D implicitInputSampler : register(S0);
 
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
-    float4 c = tex2D(implicitInputSampler, uv);
+    float4 c = tex2D(Texture1Sampler, uv);
     c.rgb = max(0, c.rgb - Defog * FogColor.rgb);
     c.rgb *= pow(2.0f, Exposure);
     c.rgb = pow(c.rgb, Gamma);

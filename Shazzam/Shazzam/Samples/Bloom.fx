@@ -31,10 +31,10 @@ float BloomSaturation : register(C2);
 float BaseSaturation : register(C3);
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 
 //--------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 {
     float BloomThreshold = 0.25f;
 
-    float4 color = tex2D(implicitInputSampler, uv);
+    float4 color = tex2D(Texture1Sampler, uv);
     float3 base = color.rgb / color.a;
     float3 bloom = saturate((base - BloomThreshold) / (1 - BloomThreshold));
     

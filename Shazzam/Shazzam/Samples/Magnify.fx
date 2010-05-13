@@ -31,10 +31,10 @@ float Magnification : register(C2);
 float AspectRatio : register(C4);
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D  implicitInputSampler : register(S0);
+sampler2D  Texture1Sampler : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -48,6 +48,6 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 	if (dist < Radius) {
 		samplePoint = Center + centerToPixel / Magnification;
 	}
-	return tex2D(implicitInputSampler, samplePoint);
+	return tex2D(Texture1Sampler, samplePoint);
 }
 

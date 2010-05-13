@@ -20,10 +20,10 @@ float Amount : register(C0);
 float2 InputSize : register(C1);
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 
 //--------------------------------------------------------------------------------------
@@ -33,9 +33,9 @@ sampler2D implicitInputSampler : register(S0);
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
 	float2 offset = 1 / InputSize;
-    float4 color = tex2D(implicitInputSampler, uv);
-    color.rgb += tex2D(implicitInputSampler, uv - offset) * Amount;
-    color.rgb -= tex2D(implicitInputSampler, uv + offset) * Amount;
+    float4 color = tex2D(Texture1Sampler, uv);
+    color.rgb += tex2D(Texture1Sampler, uv - offset) * Amount;
+    color.rgb -= tex2D(Texture1Sampler, uv + offset) * Amount;
     return color;
 }
 

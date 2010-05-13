@@ -13,10 +13,10 @@
 float Threshold : register(C0);
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 
 //--------------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ sampler2D implicitInputSampler : register(S0);
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
     // Look up the original image color.
-    float4 originalColor = tex2D(implicitInputSampler, uv);
+    float4 originalColor = tex2D(Texture1Sampler, uv);
     
     // Undo pre-multiplied alpha.
 	float3 rgb = originalColor.rgb / originalColor.a;

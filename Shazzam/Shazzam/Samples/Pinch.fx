@@ -31,10 +31,10 @@ float Strength : register(C2);
 float AspectRatio : register(C3);
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 
 //--------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ float4 main(float2 uv : TEXCOORD) : COLOR
     float dist = length(scaledDir);
     float range = saturate(1 - (dist / (abs(-sin(Radius * 8) * Radius) + 0.00000001F)));
     float2 samplePoint = uv + dir * range * Strength;
-    return tex2D(implicitInputSampler, samplePoint);
+    return tex2D(Texture1Sampler, samplePoint);
 }
 
 

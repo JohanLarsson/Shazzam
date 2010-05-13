@@ -1,4 +1,4 @@
-﻿/// <class>SketchPencilStrokeEffect/class>
+﻿ /// <class>SketchPencilStrokeEffect/class>
 
 /// <description>A pencil stroke effect.</description>
 
@@ -13,7 +13,7 @@
 float brushSize : register(C0);
 
 sampler Image : register(s0);
-float4 main(float2 texCoord: TEXCOORD0,uniform float scale,uniform float pixelSize) : COLOR
+float4 main(float2 texCoord: TEXCOORD,uniform float scale,uniform float pixelSize) : COLOR
 {
     float4 color = tex2D( Image, texCoord );  
 	float2 samples[4] = {0, -1,	-1,  0, 1, 0, 0, 1 };

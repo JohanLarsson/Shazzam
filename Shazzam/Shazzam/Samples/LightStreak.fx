@@ -39,10 +39,10 @@ float2 Direction : register(C3);
 float2 InputSize : register(C4);
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -53,7 +53,7 @@ float4 main(float2 uv : TEXCOORD) : COLOR
     const static int numSamples = 2;
     int Iteration = 1;
 
-    float4 pixelColor = tex2D(implicitInputSampler, uv);
+    float4 pixelColor = tex2D(Texture1Sampler, uv);
     float3 rgb = pixelColor.rgb / pixelColor.a;
     float3 bright = saturate((rgb - BrightThreshold) / (1 - BrightThreshold));
 
@@ -65,7 +65,7 @@ float4 main(float2 uv : TEXCOORD) : COLOR
     {
         float weight = pow(Attenuation, weightIter * sample);
         float2 texCoord = uv + (Direction * weightIter * float2(sample, sample) / InputSize);
-        float4 sampleColor = tex2D(implicitInputSampler, texCoord);
+        float4 sampleColor = tex2D(Texture1Sampler, texCoord);
         rgb += saturate(weight) * sampleColor.rgb / sampleColor.a;
     }
       
