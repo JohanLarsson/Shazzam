@@ -120,6 +120,8 @@
                 <Separator />
                 <MenuItem Header='_Explore Compiled Shaders (*.ps)'
                           Command='commands:AppCommands.ExploreCompiledShaders' />
+                <MenuItem Header='_Explore Texture Maps'
+                          Command='commands:AppCommands.ExploreTextureMaps' />
             </MenuItem>
 
             <MenuItem Header='_View'>
