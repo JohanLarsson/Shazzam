@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shazzam", "Shazzam\Shazzam.csproj", "{EB76EF00-42DE-4715-9675-CFBB2C073F8F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KaxamlPlugins", "KaxamlPlugins\KaxamlPlugins.csproj", "{F6B1B201-8293-4729-842C-0BB54F89FFA7}"

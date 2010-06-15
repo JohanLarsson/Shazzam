@@ -28,7 +28,7 @@ float4 Crumple(float2 uv, float progress)
 		p = 1.0 - (p - 1.0);
 	}
 	float4 c1 = tex2D(Texture2, frac(uv + offset * p));
-    float4 c2 = tex2D(Texture1, frac(uv + offset * p));
+  float4 c2 = tex2D(Texture1, frac(uv + offset * p));
 
 	return lerp(c1, c2, progress);
 }

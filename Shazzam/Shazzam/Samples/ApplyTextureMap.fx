@@ -7,7 +7,7 @@
 /// <defaultValue>1</defaultValue>
 float HorizontalSize : register(c0);
 
-/// <summary>Horizontal size of the map.  1= normal size</summary>
+/// <summary>Vertical size of the map.  1= normal size</summary>
 /// <minValue>1</minValue>
 /// <maxValue>5</maxValue>
 /// <defaultValue>1</defaultValue>
@@ -17,6 +17,11 @@ float VerticalSize : register(c3);
 
 float verticalOffset: register(C1);
 float horizontalOffset: register(C4);
+
+/// <summary>The Strength of the applied map size of the map.  0 = no map</summary>
+/// <minValue>0</minValue>
+/// <maxValue>5</maxValue>
+/// <defaultValue>1</defaultValue>
 float strength :register(c5);
 
 sampler2D Texture1 : register(s0);

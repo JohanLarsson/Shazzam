@@ -8,6 +8,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Shazzam.Commands;
+using System.Reflection;
 
 namespace Shazzam
 {
@@ -16,8 +17,8 @@ namespace Shazzam
 	//  StuffEyeSee  http://www.flickr.com/photos/rcsaxon/689732379/
 	//  http://www.flickr.com/photos/glockenblume/2228713567/sizes/l/
 	//  http://www.flickr.com/photos/96dpi/2329024258/
-	// http://www.flickr.com/photos/pachytime/2554307339/
-	// http://www.flickr.com/photos/madram/492839665/
+	//  http://www.flickr.com/photos/pachytime/2554307339/
+	//  http://www.flickr.com/photos/madram/492839665/
 	public partial class MainWindow : Window
 	{
 		public MainWindow()
@@ -79,8 +80,15 @@ namespace Shazzam
 					Properties.Settings.Default.Save();
 				}
 			}
+			this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
 			this.Closing += new System.ComponentModel.CancelEventHandler(MainWindow_Closing);
 			SetupMenuBindings();
+			
+		}
+
+		void MainWindow_Loaded(object sender, RoutedEventArgs e)
+		{
+			this.plugin1.SelectedIndex = 0;
 		}
 
 		private void SetupMenuBindings()
@@ -101,6 +109,8 @@ namespace Shazzam
 			kb = new KeyBinding(AppCommands.ImageStretch, Key.F8, ModifierKeys.Control);
 			kb.CommandParameter = "uniformtofill";
 			this.InputBindings.Add(kb);
+
+			
 		}
 		void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
@@ -244,7 +254,7 @@ namespace Shazzam
 
 		private void Exit_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			Application.Current.Shutdown();
+			Application.Current.Shutdown(); 
 		}
 
 		private void ApplyShader_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -274,20 +284,23 @@ namespace Shazzam
 			string path = Properties.Settings.Default.FolderOutput;
 			System.Diagnostics.Process.Start(path);
 		}
+		private void ExploreTextureMaps_Executed(object sender, System.Windows.RoutedEventArgs e)
+		{
+			string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			System.Diagnostics.Process.Start(path +"\\Images\\TextureMaps");
+		}
 
 		private void FullScreenImage_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			if (codeRow.Height != new GridLength(0, GridUnitType.Pixel))
 			{
-				//	codeTabView.Visibility = Visibility.Collapsed;
-				//imageTabControl.Visibility = Visibility.Visible;
+			
 				codeRow.Height = new GridLength(0, GridUnitType.Pixel);
 				imageRow.Height = new GridLength(5, GridUnitType.Star);
 			}
 			else
 			{
-				//	codeTabView.Visibility = Visibility.Visible;
-				//imageTabControl.Visibility = Visibility.Visible;
+			
 				codeRow.Height = new GridLength(5, GridUnitType.Star);
 				imageRow.Height = new GridLength(5, GridUnitType.Star);
 			}
@@ -295,7 +308,7 @@ namespace Shazzam
 
 		private void FullScreenCode_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			//codeTabView.Visibility = Visibility;
+			
 			if (imageRow.Height != new GridLength(0, GridUnitType.Pixel))
 			{
 				imageRow.Height = new GridLength(0, GridUnitType.Pixel);
@@ -307,7 +320,7 @@ namespace Shazzam
 
 			}
 
-			//	DockPanel.SetDock(codeTabView, Dock.Bottom);
+		
 		}
 		private void OpenImage_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
@@ -349,8 +362,10 @@ namespace Shazzam
 
 		private void ShaderCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			string fxcPath = Environment.ExpandEnvironmentVariables(Properties.Settings.Default.DirectX_FxcPath);
-			e.CanExecute = File.Exists(fxcPath);
+			e.CanExecute = true;
+			//string fxcPath = Environment.ExpandEnvironmentVariables(Properties.Settings.Default.DirectX_FxcPath);
+			//e.CanExecute = File.Exists(fxcPath);
+
 		}
 		private void WhatsNew_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
@@ -383,6 +398,7 @@ namespace Shazzam
 					break;
 			}
 		}
+
 		private void SetStretchMode(System.Windows.Media.Stretch stretchMode)
 		{
 			userImage.Stretch = stretchMode;
@@ -393,6 +409,24 @@ namespace Shazzam
 			sampleImage5.Stretch = stretchMode;
 			mediaUI.Stretch = stretchMode;
 
+		}
+
+		private void ChangeTab_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			switch (e.Parameter.ToString())
+			{
+				case "codetab":
+					
+					break;
+				case "edittab":
+					SetStretchMode(System.Windows.Media.Stretch.Fill);
+					break;
+
+				default:
+					SetStretchMode(System.Windows.Media.Stretch.Uniform);
+
+					break;
+			}
 		}
 		private void mediaUI_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{

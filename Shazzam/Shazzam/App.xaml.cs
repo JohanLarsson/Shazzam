@@ -7,6 +7,7 @@ using System.Windows;
 using System.Diagnostics;
 using Shazzam.Properties;
 using System.IO;
+using System.IO.IsolatedStorage;
 
 namespace Shazzam
 {
@@ -15,23 +16,28 @@ namespace Shazzam
 	/// </summary>
 	public partial class App : Application
 	{
+
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			base.OnStartup(e);
 			Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+			AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+	
 
 			try
 			{
 				Settings.Default.Reload();
 				// attempt to load from config
-				string result = Shazzam.Properties.Settings.Default.FolderFX;
-
+				//string result = Shazzam.Properties.Settings.Default.FolderFX;
 				if (string.IsNullOrEmpty(Settings.Default.FolderOutput))
 				{
 					var dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + Constants.Paths.GeneratedShaders;
 					Settings.Default.FolderOutput = dirPath;
 					Settings.Default.Save();
-
+				}
+				if (Directory.Exists(Settings.Default.FolderOutput) == false)
+				{
+					Directory.CreateDirectory(Settings.Default.FolderOutput);
 				}
 			}
 			catch (ConfigurationErrorsException ex)
@@ -60,10 +66,40 @@ namespace Shazzam
 					Process.GetCurrentProcess().Kill();
 					// avoid the inevitable crash
 				}
+				
 
 			}
-			var win = new MainWindow();
-			win.Show();
+			catch (Exception ex)
+			{
+				throw;
+			}
+			try
+			{
+				var win = new MainWindow();
+				win.Show();
+			}
+			catch (Exception ex)
+			{
+				using (var isoStore = IsolatedStorageFile.GetUserStoreForAssembly())
+				{
+					using (var isoStream = new IsolatedStorageFileStream(
+									"starupError.txt", FileMode.Create, FileAccess.Write, isoStore))
+					{
+						using (var writer = new StreamWriter(isoStream))
+						{
+						
+
+							writer.WriteLine(ex.Message);
+							writer.WriteLine(ex.StackTrace);
+						}
+					}
+				}
+			}
+		}
+
+		void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+		
 		}
 
 		void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
@@ -99,9 +135,25 @@ namespace Shazzam
 					Process.GetCurrentProcess().Kill();
 				// avoid the inevitable crash
 			}
+			EventLog log = new EventLog();
 
 			MessageBox.Show(e.Exception.Message);
-
+			using (var isoStore = IsolatedStorageFile.GetUserStoreForAssembly())
+			{
+				//IsolatedStorageFileStream represents the stream
+				// write data to the stream
+				using (var isoStream = new IsolatedStorageFileStream(
+							"ErrorLog.txt", FileMode.OpenOrCreate, FileAccess.Write, isoStore))
+				{
+					using (var writer = new StreamWriter(isoStream))
+					{
+						writer.WriteLine(e.Exception.Message);
+						writer.WriteLine(e.Exception.StackTrace);
+					}
+				}
+			}
+			Shazzam.Properties.Settings.Default.LastFxFile = String.Empty;
+			Shazzam.Properties.Settings.Default.Save();
 		}
 	}
 }

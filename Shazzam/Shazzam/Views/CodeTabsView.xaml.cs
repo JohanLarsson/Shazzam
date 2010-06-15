@@ -54,7 +54,7 @@ namespace Shazzam.Views
 					reader.Close();
 				}
 			}
-		
+
 			_shaderTextEditor.Document.HighlightingStrategy = _hlslHS;
 			this.formsHost.Child = _shaderTextEditor;
 
@@ -71,33 +71,33 @@ namespace Shazzam.Views
 			
 
 		}
-		
+
 
 		private void SetupInputBindings()
 		{
 			KeyBinding kb;
-			
-			RoutedUICommand ChangeToCodeTab= new RoutedUICommand("Change To Code Tab", "ChangeToCodeTab",		typeof(CodeTabView));
+
+			RoutedUICommand ChangeToCodeTab = new RoutedUICommand("Change To Code Tab", "ChangeToCodeTab", typeof(CodeTabView));
 			RoutedUICommand ChangeToEditTab = new RoutedUICommand("Change To Edit Tab", "ChangeToEditTab", typeof(CodeTabView));
 
 			CommandBinding cb = new CommandBinding(ChangeToCodeTab, (s, e) => this.codeTabControl.SelectedItem = codeTab);
 			kb = new KeyBinding(ChangeToCodeTab, Key.F9, ModifierKeys.Control);
 
 			ShazzamSwitchboard.MainWindow.CommandBindings.Add(cb);
-		//	this.CommandBindings.Add(cb);
+			//	this.CommandBindings.Add(cb);
 			ShazzamSwitchboard.MainWindow.InputBindings.Add(kb);
-		//	this.InputBindings.Add(kb);
+			//	this.InputBindings.Add(kb);
 
 			CommandBinding cb2 = new CommandBinding(ChangeToEditTab, (s, e) => this.codeTabControl.SelectedItem = InputControlsTab);
 			kb = new KeyBinding(ChangeToEditTab, Key.F10, ModifierKeys.Control);
- 			
-		
+
+
 
 			ShazzamSwitchboard.MainWindow.CommandBindings.Add(cb2);
 			ShazzamSwitchboard.MainWindow.InputBindings.Add(kb);
-		//	this.CommandBindings.Add(cb2);
-		//	this.InputBindings.Add(kb);
-	
+			//	this.CommandBindings.Add(cb2);
+			//	this.InputBindings.Add(kb);
+
 		}
 
 		void Document_DocumentChanged(object sender, DocumentEventArgs e)
@@ -114,7 +114,7 @@ namespace Shazzam.Views
 
 			if (_shaderTextEditor.Document.TextContent.GetHashCode() == _storedDocHash)
 			{
-				ShazzamSwitchboard.CodeTabView.dirtyStatusText.Visibility = Visibility.Hidden;
+				ShazzamSwitchboard.CodeTabView.dirtyStatusText.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
@@ -159,10 +159,30 @@ namespace Shazzam.Views
 			{
 
 				ShazzamSwitchboard.MainWindow.Effect = blur;
+				versionNotSupported.Visibility = Visibility.Hidden;
 
 				blurStoryBoard.Begin(this, true);
 
-				_compiler.Compile(this.CodeText);
+				if (Shazzam.Properties.Settings.Default.TargetFramework == "WPF_PS3")
+				{
+					if (RenderCapability.IsPixelShaderVersionSupported(3, 0))
+					{
+						versionNotSupported.Visibility = Visibility.Hidden;
+					}
+					else
+					{
+						versionNotSupported.Visibility = Visibility.Visible;
+					}
+					_compiler.Compile(this.CodeText, ShaderProfile.PixelShader3);
+					//_compiler.Compile(this.CodeText);
+				}
+				else
+				{
+					_compiler.Compile(this.CodeText, ShaderProfile.PixelShader2);
+					//_compiler.Compile(this.CodeText);
+
+				}
+
 
 				compileStatusText.Text = String.Format("Last Compiled at: {0}", DateTime.Now.ToLongTimeString());
 
@@ -171,6 +191,8 @@ namespace Shazzam.Views
 			{
 				MessageBox.Show(ShazzamSwitchboard.MainWindow, ex.Message, "Could not compile", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
+			
+			
 		}
 
 		private ICSharpCode.TextEditor.TextEditorControl CreateTextEditor()
@@ -209,8 +231,8 @@ namespace Shazzam.Views
 
 		private void GenerateShaderInputControl(ShaderModelConstantRegister register)
 		{
-			string toolTipText=  String.IsNullOrEmpty(register.Description) ? null : register.Description;
-		
+			string toolTipText = String.IsNullOrEmpty(register.Description) ? null : register.Description;
+
 			TextBlock textBlock = new TextBlock
 			{
 				Foreground = Brushes.White,
@@ -228,7 +250,7 @@ namespace Shazzam.Views
 			if (register.RegisterType == typeof(Brush))
 			{
 				control = new TexturePicker(register);
-			
+
 			}
 			else if (register.RegisterType == typeof(double) || register.RegisterType == typeof(float))
 			{
@@ -540,7 +562,7 @@ namespace Shazzam.Views
 		{
 
 			_storedDocHash = 0;
-			dirtyStatusText.Visibility = Visibility.Hidden;
+			dirtyStatusText.Visibility = Visibility.Collapsed;
 		}
 	}
 }

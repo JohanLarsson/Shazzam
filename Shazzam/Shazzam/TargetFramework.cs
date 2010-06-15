@@ -3,6 +3,7 @@
 	public enum TargetFramework
 	{
 		WPF,
-		Silverlight
+		Silverlight,
+		WPF_PS3
 	}
 }

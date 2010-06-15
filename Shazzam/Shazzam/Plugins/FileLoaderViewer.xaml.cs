@@ -11,10 +11,45 @@ namespace Shazzam.Views {
 		public FileLoaderPlugin() {
 			InitializeComponent();
 			_exePath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+			
 			FillList();
 			FillSampleList();
 			FillTutorialList();
 			ShazzamSwitchboard.FileLoaderPlugin = this;
+			this.loaderTab.SelectedIndex = Shazzam.Properties.Settings.Default.LastLoaderTab;
+
+			// this is fragile as it depends the tab order not changing
+			// rewrite to use references instead
+			switch (Shazzam.Properties.Settings.Default.LastLoaderTab)
+			{
+				case 0:
+					fileListBox.SelectedItem = System.IO.Path.GetFileName(Shazzam.Properties.Settings.Default.LastFxFile);
+					fileListBox.ScrollIntoView(fileListBox.SelectedItem);
+					break;
+				case 1:
+					sampleListBox.SelectedItem = System.IO.Path.GetFileName(Shazzam.Properties.Settings.Default.LastFxFile);
+					sampleListBox.ScrollIntoView(sampleListBox.SelectedItem);
+					break;
+			case 2:
+					tutorialListBox.SelectedItem = System.IO.Path.GetFileName(Shazzam.Properties.Settings.Default.LastFxFile);
+					tutorialListBox.ScrollIntoView(tutorialListBox.SelectedItem);
+					break;
+				default:
+					break;
+			}
+			
+			sampleListBox.SelectionChanged+=new SelectionChangedEventHandler(sampleListBox_SelectionChanged);
+			fileListBox.SelectionChanged+=new SelectionChangedEventHandler(fileListBox_SelectionChanged);
+			tutorialListBox.SelectionChanged+=new SelectionChangedEventHandler(tutorialListBox_SelectionChanged);
+			this.loaderTab.SelectionChanged += new SelectionChangedEventHandler(loaderTab_SelectionChanged);
+			
+			
+		}
+
+		void loaderTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			Shazzam.Properties.Settings.Default.LastLoaderTab = this.loaderTab.SelectedIndex;
+			Shazzam.Properties.Settings.Default.Save();
 		}
 		public CodeTabView CodeTabView { get; set; }
 

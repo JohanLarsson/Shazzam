@@ -63,8 +63,10 @@
 										CanExecute='ShaderCommand_CanExecute' />
 		<CommandBinding Command='commands:AppCommands.ExploreCompiledShaders'
 										Executed='ExploreCompiledShaders_Executed' />
+        <CommandBinding Command='commands:AppCommands.ExploreTextureMaps'
+                        Executed='ExploreTextureMaps_Executed' />
 
-		<CommandBinding Command='commands:AppCommands.FullScreenImage'
+        <CommandBinding Command='commands:AppCommands.FullScreenImage'
 										Executed='FullScreenImage_Executed' />
 		<CommandBinding Command='commands:AppCommands.FullScreenCode'
 										Executed='FullScreenCode_Executed' />
@@ -85,7 +87,7 @@
 		</Grid.ColumnDefinitions>
 		<StackPanel Grid.Column='0'>
 			<view:MenuView x:Name='menuView'></view:MenuView>
-			<view:PluginView Margin='10'></view:PluginView>
+			<view:PluginView Margin='10' x:Name='plugin1'></view:PluginView>
 
 			<!-- <view:DynamicInputView Margin='10' x:Name='dynamicView' />-->
 			<StackPanel x:Name='testStack' />

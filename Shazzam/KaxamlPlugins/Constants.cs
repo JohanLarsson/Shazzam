@@ -6,6 +6,7 @@ namespace Constants {
 	public class Paths {
 		public static String Application = "\\Shazzam\\";
 		public static String GeneratedShaders = "\\Shazzam\\GeneratedShaders\\";
+		public static String TextureMaps = "\\Shazzam\\TextureMaps\\";
 	}
 	public class FileNames {
 

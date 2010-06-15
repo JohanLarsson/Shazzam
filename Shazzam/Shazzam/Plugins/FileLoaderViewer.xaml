@@ -3,40 +3,40 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Height="300">
   <Grid>
-    <TabControl>
+    <TabControl x:Name="loaderTab">
       <TabItem Header='Your folder'>
-        <DockPanel LastChildFill='True' Margin='10'>
+        <DockPanel LastChildFill='True'
+                   Margin='10'>
 
           <TextBlock DockPanel.Dock='Top'>
             <Hyperlink Foreground='{StaticResource HighlightBrush}'
-											 x:Name='locationHyperlink'
-											 MouseEnter='locationHyperlink_MouseEnter'
+                       x:Name='locationHyperlink'
+                       MouseEnter='locationHyperlink_MouseEnter'
                        Click='Hyperlink_Click'>Change location</Hyperlink></TextBlock>
 
           <ListBox x:Name='fileListBox'
-                   Margin='0,5,0,0'
-                   SelectionChanged='fileListBox_SelectionChanged'/>
+                   Margin='0,5,0,0' />
         </DockPanel>
       </TabItem>
       <TabItem Header='Sample Shaders'>
 
-        <DockPanel LastChildFill='True' Margin='10'>
+        <DockPanel LastChildFill='True'
+                   Margin='10'>
           <TextBlock DockPanel.Dock='Top'>
           Pre-installed samples</TextBlock>
           <ListBox x:Name='sampleListBox'
-                   Margin='0,5,0,0'
-                   SelectionChanged='sampleListBox_SelectionChanged'/>
+                   Margin='0,5,0,0' />
 
         </DockPanel>
       </TabItem>
-			      <TabItem Header='Tutorial'>
+      <TabItem Header='Tutorial'>
 
-        <DockPanel LastChildFill='True' Margin='10'>
+        <DockPanel LastChildFill='True'
+                   Margin='10'>
           <TextBlock DockPanel.Dock='Top'>
           Learn more about HLSL</TextBlock>
           <ListBox x:Name='tutorialListBox'
-                   Margin='0,5,0,0'
-                   SelectionChanged='tutorialListBox_SelectionChanged'/>
+                   Margin='0,5,0,0' />
 
         </DockPanel>
       </TabItem>

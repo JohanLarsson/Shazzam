@@ -5,18 +5,31 @@ using System.Text;
 using System.IO;
 using System.Diagnostics;
 using System.ComponentModel;
+using System.Windows;
+using System.Reflection;
 
-namespace Shazzam.CodeGen {
-	class ShaderCompiler : INotifyPropertyChanged{
-		public void Compile(string codeText) {
+namespace Shazzam.CodeGen
+{
+	class ShaderCompilerx : INotifyPropertyChanged
+	{
+		public void Compile(string codeText)
+		{
+
 			IsCompiled = false;
-			// verify that the DirectX composer exe (fxc.exe) path is stored in settings
-			string fxcPath = Environment.ExpandEnvironmentVariables(Properties.Settings.Default.DirectX_FxcPath);
-			if (Path.GetFileName(fxcPath).ToLower() != "fxc.exe" || !File.Exists(fxcPath))
+			//// verify that the DirectX composer exe (fxc.exe) path is stored in settings
+			//string fxcPath = Environment.ExpandEnvironmentVariables(Properties.Settings.Default.DirectX_FxcPath);
+			//if (Path.GetFileName(fxcPath).ToLower() != "fxc.exe" || !File.Exists(fxcPath))
+			//{
+			//  throw new CompilerException("Could not find the effect compiler \"fxc.exe\". " +
+			//    "Ensure that the DirectX SDK is installed and the correct path is configured in the Settings pane.\n\n" +
+			//    "The current setting is \"" + Properties.Settings.Default.DirectX_FxcPath + "\".");
+			//}
+
+			// verify that we have a copy Of the Local DirectX fxc.exe File.
+			string fxcLocalPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Exes\\fxc.exe");
+			if (Path.GetFileName(fxcLocalPath) != "fxc.exe" || !File.Exists(fxcLocalPath))
 			{
-				throw new CompilerException("Could not find the effect compiler \"fxc.exe\". " +
-					"Ensure that the DirectX SDK is installed and the correct path is configured in the Settings pane.\n\n" +
-					"The current setting is \"" + Properties.Settings.Default.DirectX_FxcPath + "\".");
+				throw new CompilerException("Could not find the effect compiler \"fxc.exe\". ");
 			}
 
 			// create application folder
@@ -25,7 +38,7 @@ namespace Shazzam.CodeGen {
 			{
 				Directory.CreateDirectory(path);
 			}
-			
+
 			// create new file with fx extension
 			using (FileStream fs = new FileStream(path + Constants.FileNames.TempShaderFx, FileMode.Create))
 			{
@@ -33,7 +46,7 @@ namespace Shazzam.CodeGen {
 				fs.Write(data, 0, data.Length);
 			}
 
-			ProcessStartInfo psi = new ProcessStartInfo(fxcPath);
+			ProcessStartInfo psi = new ProcessStartInfo(fxcLocalPath);
 			psi.CreateNoWindow = true;
 			psi.UseShellExecute = false;
 
@@ -41,7 +54,7 @@ namespace Shazzam.CodeGen {
 			// call fxc with these arguments
 			// this will create the *.ps file 
 			// the ps file is use  by the WPF framework when working with shaders
-			psi.Arguments = string.Format("/T ps_2_0 /E main /Fo\"{0}\" \"{1}\"", path + Constants.FileNames.TempShaderPs, path+ Constants.FileNames.TempShaderFx);
+			psi.Arguments = string.Format("/T ps_3_0 /E main /Fo\"{0}\" \"{1}\"", path + Constants.FileNames.TempShaderPs, path + Constants.FileNames.TempShaderFx);
 
 			// launch the process
 			ErrorText = string.Empty;
@@ -63,7 +76,8 @@ namespace Shazzam.CodeGen {
 			}
 			CreateFileCopies(path);
 		}
-		private void CreateFileCopies(string path) {
+		private void CreateFileCopies(string path)
+		{
 			if (String.IsNullOrEmpty(Properties.Settings.Default.LastFxFile))
 			{
 				return;
@@ -71,42 +85,50 @@ namespace Shazzam.CodeGen {
 			string currentFileName = System.IO.Path.GetFileNameWithoutExtension(Properties.Settings.Default.LastFxFile);
 			if (File.Exists(path + Constants.FileNames.TempShaderPs))
 			{
-				
-				File.Copy(path + Constants.FileNames.TempShaderPs, path + currentFileName +".ps",true);
+
+				File.Copy(path + Constants.FileNames.TempShaderPs, path + currentFileName + ".ps", true);
 			}
 		}
-		public void Reset() {
-			ErrorText = "not compiled"; 
+		public void Reset()
+		{
+			ErrorText = "not compiled";
 		}
 		private string _errorText;
-		public String ErrorText {
-			get {
+		public String ErrorText
+		{
+			get
+			{
 				return _errorText;
 			}
-			set {
-			_errorText = value;
-			RaiseNotifyChanged("ErrorText");
+			set
+			{
+				_errorText = value;
+				RaiseNotifyChanged("ErrorText");
 			}
 		}
 
 		private bool _isCompiled;
-		public bool IsCompiled {
-			get {
+		public bool IsCompiled
+		{
+			get
+			{
 				return _isCompiled;
 			}
-			set {
+			set
+			{
 				_isCompiled = value;
 				RaiseNotifyChanged("IsCompiled");
 			}
 		}
 
-		private void RaiseNotifyChanged(string propName) {
+		private void RaiseNotifyChanged(string propName)
+		{
 			if (PropertyChanged != null)
 				PropertyChanged(this, new PropertyChangedEventArgs(propName));
 		}
-	
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		
+
 	}
 }

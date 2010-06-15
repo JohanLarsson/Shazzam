@@ -43,7 +43,7 @@ namespace Shazzam.Views {
 			about.Name = "About Shazzam";
 			about.Description = "About Shazzam";
 			Plugins.Add(about);
-
+			SelectedPlugin = colorLoader;
 		}
 
 		private void AddSettingsPlugin() {
@@ -131,7 +131,17 @@ namespace Shazzam.Views {
 		internal Plugin GetFindPlugin() {
 			return _findPlugin;
 		}
-
+		public int SelectedIndex
+		{
+			get
+			{
+				return (int)PluginTabControl.SelectedIndex;
+			}
+			set
+			{
+				PluginTabControl.SelectedIndex = (int)value;
+			}
+		}
 		public Plugin SelectedPlugin {
 			get {
 				return (Plugin)PluginTabControl.SelectedItem;
