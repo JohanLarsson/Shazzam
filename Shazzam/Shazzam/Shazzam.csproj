@@ -71,11 +71,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.TextEditor, Version=2.2.1.2648, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Assemblies\ICSharpCode.TextEditor.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="ICSharpCode.TextEditor, Version=3.2.0.5777, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a, processorArchitecture=MSIL" />
     <Reference Include="PresentationFramework.Aero">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -307,6 +303,7 @@
     </Compile>
     <Compile Include="Reveal.cs" />
     <Compile Include="RoutedEventHelper.cs" />
+    <Content Include="Assemblies\ICSharpCode.TextEditor.dll" />
     <Content Include="d3dx10_40.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -316,18 +313,57 @@
     <Content Include="D3DX9_40.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Original\cactus.jpg">
+    <Resource Include="Images\Default\cactus.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Original\ColorRange.png">
+    </Resource>
+    <Resource Include="Images\Default\ColorRange.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </Resource>
     <Content Include="Images\Noise.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\TextureMaps\bubbles.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\TextureMaps\clouds.png" />
+    <Resource Include="Images\TextureMaps\clover.png" />
+    <Resource Include="Images\TextureMaps\color_range.png" />
+    <Resource Include="Images\TextureMaps\curlique.png" />
+    <Resource Include="Images\TextureMaps\curlique_small.png" />
+    <Resource Include="Images\TextureMaps\flower.png" />
+    <Resource Include="Images\TextureMaps\fractal_bands.png" />
+    <Resource Include="Images\TextureMaps\fractal_butterfly.png" />
+    <Resource Include="Images\TextureMaps\fractal_centerband.png" />
+    <Resource Include="Images\TextureMaps\fractal_curls.png" />
+    <Resource Include="Images\TextureMaps\fractal_edge.png" />
+    <Resource Include="Images\TextureMaps\fractal_flame.png" />
+    <Resource Include="Images\TextureMaps\glassblocks_big.png" />
+    <Resource Include="Images\TextureMaps\glassblocks_medium.png" />
+    <Resource Include="Images\TextureMaps\glassblocks_simple.png" />
+    <Resource Include="Images\TextureMaps\koch_cubist.png" />
+    <Resource Include="Images\TextureMaps\koch_snowflake.png" />
+    <Resource Include="Images\TextureMaps\mawn.png" />
+    <Resource Include="Images\TextureMaps\moire.png" />
+    <Resource Include="Images\TextureMaps\noise.png" />
+    <Resource Include="Images\TextureMaps\noise_bumpy.png" />
+    <Resource Include="Images\TextureMaps\noise_weave.png" />
+    <Resource Include="Images\TextureMaps\oil_slick.png" />
+    <Resource Include="Images\TextureMaps\paise.png" />
+    <Resource Include="Images\TextureMaps\paise2.png" />
+    <Resource Include="Images\TextureMaps\peaks_horizontal.png" />
+    <Resource Include="Images\TextureMaps\peaks_vertical.png" />
+    <Resource Include="Images\TextureMaps\ring_center.png" />
+    <Resource Include="Images\TextureMaps\ripple.png" />
+    <Resource Include="Images\TextureMaps\rippled_glass.png" />
+    <Resource Include="Images\TextureMaps\river.png" />
+    <Resource Include="Images\TextureMaps\sand.png" />
+    <Resource Include="Images\TextureMaps\streaks_aurora.png" />
+    <Resource Include="Images\TextureMaps\streaks_grass.png" />
+    <Resource Include="Images\TextureMaps\streaks_vertical.png" />
+    <Resource Include="Images\TextureMaps\swirly.png" />
+    <Resource Include="Images\TextureMaps\waves_horizontal.png" />
+    <Resource Include="Images\TextureMaps\waves_vertical.png" />
+    <Resource Include="Images\TextureMaps\whirlpool.png" />
     <Content Include="Samples\Generative_Star.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -454,8 +490,29 @@
     <Content Include="Samples\GlassTiles.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tutorials\12_SwapPosition2.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Tutorials\04c_TexturesVia_S_Registers.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tutorials\01a_WhatIsAShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tutorials\01b_PartsOfAShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tutorials\02_ChangeColor.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tutorials\03a_Variables.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tutorials\04a_AddColorParameters.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tutorials\04b_AddColorParameters.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tutorials\08b_FlipPosition.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Samples\Warp.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -470,39 +527,42 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Tutorials\14_PS3.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Tutorials\04d_InputVia_C_Registers.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Samples\PaperFold.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Samples\PaperFoldModded.fx" />
-    <None Include="Tutorials\10_AddShazzamTags.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Tutorials\08_ChangePosition.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Include="Tutorials\03b_Swizzling.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tutorials\07c_AddShazzamTags.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tutorials\07a_ChangePosition.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Shazzam_TemporaryKey.pfx" />
-    <Content Include="Tutorials\07_SwapColors.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Tutorials\06_SwapColors.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tutorials\09_ChangePosition.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Tutorials\07b_ChangePosition.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tutorials\04_AddColorParameters.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Tutorials\05_AddShazzamTags.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tutorials\05_AddColorParameters2.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tutorials\06_AddShazzamTags.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tutorials\11_SwapPosition.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="Tutorials\08a_SwapPosition.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tutorials\13_UsingDXFunctions.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tutorials\09a_MorphNearbyPixels.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Images\cactus.jpg" />
     <Content Include="Samples\MultiInput_MergeImages.fx">
@@ -641,15 +701,6 @@
     <Content Include="Samples\Bands.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Tutorials\03_ChangeColor.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tutorials\01_WhatIsAShader.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tutorials\02_PartsOfAShader.fx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
@@ -733,10 +784,7 @@
       <FileType>Assembly</FileType>
     </PublishFile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assemblies\" />
-    <Folder Include="bin\Debug\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
