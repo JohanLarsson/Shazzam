@@ -1,6 +1,6 @@
-﻿//The following restrictions apply when using a PS 3.0 shader. 
+﻿// The following restrictions apply when using a PS 3.0 shader. 
 
-//When a PS 3.0 shader is assigned, the number of samplers increases to 8. Assign the PS 3.0 shader before other shaders to enable registering 8 samplers. 
+// When a PS 3.0 shader is assigned, the number of samplers increases to 8. Assign the PS 3.0 shader before other shaders to enable registering 8 samplers. 
 
 // The full shader constant register limit of 224 for floats is used. For more information, see ps_3_0. 
 
