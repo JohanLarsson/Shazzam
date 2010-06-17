@@ -18,14 +18,50 @@ namespace Shazzam.Controls
     {
       InitializeComponent();
       _register = register;
+      this.Loaded += new RoutedEventHandler(TexturePicker_Loaded);
+    }
+
+    void TexturePicker_Loaded(object sender, RoutedEventArgs e)
+    {
+
       ImageBrush result;
+      // attempt to get the already loaded value
       _images.TryGetValue(_register.RegisterNumber, out result);
       Value = result;
       if (Value == null)
       {
-        Value = new ImageBrush(image1.Source);
+
+        LoadTextureFromSettings();
+
+        //  Value = new ImageBrush(image1.Source);
+
       }
+
       SetupTextures();
+    }
+
+    private void LoadTextureFromSettings()
+    {
+      if (Properties.Settings.Default.FilePath_LastTextureMap != null)
+      {
+        if (Properties.Settings.Default.FilePath_LastTextureMap.IsAbsoluteUri)
+        {
+          Value = new ImageBrush(new BitmapImage(Properties.Settings.Default.FilePath_LastTextureMap));
+        }
+        else
+        {
+          StreamResourceInfo streamInfo = Application.GetContentStream(Properties.Settings.Default.FilePath_LastTextureMap);
+
+          BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+          ImageBrush brush = new ImageBrush(temp);
+          Value = brush;
+          if (brush == null)
+          {
+            Value = new ImageBrush(image1.Source);
+          }
+
+        }
+      }
     }
     public const string AssemblyPrefix = "images/texturemaps/";
 
@@ -93,8 +129,11 @@ namespace Shazzam.Controls
       if (dialog.ShowDialog() == true)
       {
         string filename = dialog.FileName;
-        ImageBrush brush = new ImageBrush(new BitmapImage(new Uri(filename)));
+        Uri uriLocation = new Uri(filename, UriKind.RelativeOrAbsolute);
+        ImageBrush brush = new ImageBrush(new BitmapImage(uriLocation));
         Value = brush;
+        Properties.Settings.Default.FilePath_LastTextureMap = uriLocation;
+        Properties.Settings.Default.Save();
       }
 
     }
@@ -111,6 +150,9 @@ namespace Shazzam.Controls
       BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
       ImageBrush brush = new ImageBrush(temp);
       Value = brush;
+
+      Properties.Settings.Default.FilePath_LastTextureMap = resourceUri;
+      Properties.Settings.Default.Save();
 
     }
   }
