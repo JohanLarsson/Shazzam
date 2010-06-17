@@ -4,71 +4,129 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight='128'
-             d:DesignWidth='603' MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="420*" />
-        </Grid.ColumnDefinitions>
+             d:DesignHeight='120'
+             d:DesignWidth='603'
+             VerticalAlignment="Top">
+  <UserControl.Resources>
+    <DataTemplate x:Key="TextureMapDataTemplate">
+      <StackPanel Orientation='Horizontal'
+                  Background="Black"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
         <Border  BorderBrush="{StaticResource VeryLightBrush}"
-                 BorderThickness="4" Margin="2,2,0,0"
-                 VerticalAlignment='Top'
-                 HorizontalAlignment="Left" Grid.Column="1">
+                 BorderThickness="4"
+                 Margin="2"
+                 VerticalAlignment='Center'
+                 Grid.Column="1"
+                 d:LayoutOverrides="Width"
+                 Padding="2"
+                 HorizontalAlignment="Center">
+          <Image Height='60'
+                 HorizontalAlignment='Center'
+                 Name='image1'
+                 Stretch='UniformToFill'
+                 VerticalAlignment='Center'
+                 Width='80'
+                 Source='{Binding LongFileName}'
+                 ToolTip='{Binding ShortFileName}'
+                 ToolTipService.Placement='Left'>
 
-            <Image Height='60'
+          </Image>
+        </Border>
+      </StackPanel>
+    </DataTemplate>
+  </UserControl.Resources>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="Auto"
+                        MinWidth="104.832" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Border  BorderBrush="{StaticResource VeryLightBrush}"
+             BorderThickness="4"
+             Margin="2,2,2,0"
+             VerticalAlignment='Top'
+             Grid.Column="1" HorizontalAlignment='Center'
+             d:LayoutOverrides="Width">
+
+      <Image Height='60'
+             HorizontalAlignment='Left'
+             Name='image1'
+             Stretch='UniformToFill'
+             VerticalAlignment='Top'
+             Width='80'
+             Source="/Shazzam;component/Images/cactus.jpg">
+        <Image.ToolTip>
+          <Grid Width="400"
+                Height="300"
+                Background="Black">
+            <Image Height='298'
                    HorizontalAlignment='Left'
-                   Name='image1'
+                   Name='image2'
                    Stretch='UniformToFill'
                    VerticalAlignment='Top'
-                   Width='80'
-                   Source="/Shazzam;component/Images/cactus.jpg">
-                <Image.ToolTip >
-                    <Grid Width="400"
-                          Height="300"
-                          Background="Black"
-                         >
-                        <Image Height='298'
-                               HorizontalAlignment='Left'
-                               Name='image2'
-                               Stretch='UniformToFill'
-                               VerticalAlignment='Top'
-                               Width='398'
-                               Source="/Shazzam;component/Images/cactus.jpg" />
-                    </Grid>
-                </Image.ToolTip>
-            </Image>
-        </Border>
-        <StackPanel>
-            
-            <Button Content='Open Image'
-                Height='23'
-                HorizontalAlignment='Left'
-                Margin="12"
-                Name='btnOpenImage'
-                VerticalAlignment='Top'
-                Width='75'
-                Click='btnOpenImage_Click'
-                Grid.Column="0" />
-            <ComboBox 
-                    Height='23'
-                    HorizontalAlignment='Left'
-                    Margin="12,0"
-                    Name='cboIncludedTextures'
-                    VerticalAlignment='Top'
-                    Width='75'
-                    SelectionChanged="cboIncludedTextures_SelectionChanged"
-                    Grid.Column="0" />
-        </StackPanel>
+                   Width='398'
+                   Source="/Shazzam;component/Images/cactus.jpg" />
+          </Grid>
+        </Image.ToolTip>
+      </Image>
+    </Border>
+    <StackPanel>
 
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="1,0.5"
-                                 StartPoint="0,0.5">
-                <GradientStop Color="{StaticResource VeryDark}"
-                              Offset=".5" />
-                <GradientStop Color="{StaticResource NeutralDark}"
-                              Offset="1" />
-            </LinearGradientBrush>
-        </Grid.Background>
-    </Grid>
+      <TextBlock TextWrapping="Wrap"
+                 Text="Choose Image"
+                 HorizontalAlignment="Center"
+                 Foreground="{DynamicResource NeutralWhiteBrush}"
+                 Margin="0,3,0,0">
+            	<TextBlock.Background>
+            		<ImageBrush />
+            	</TextBlock.Background>
+      </TextBlock>
+
+      <Button Content='Open File...'
+              Height='23'
+              HorizontalAlignment='Center'
+              Margin="12"
+              x:Name='OpenImageButton'
+              VerticalAlignment='Top'
+              Width='75'
+              Click='btnOpenImage_Click'
+              Grid.Column="0" />
+    </StackPanel>
+    <StackPanel Grid.Column="2"
+                HorizontalAlignment="Left"
+                Orientation="Vertical"
+                d:LayoutOverrides="Height">
+      <TextBlock TextWrapping="Wrap"
+                 Text="Choose Shazzam Texture Map"
+                 HorizontalAlignment="Center"
+                 Foreground="{DynamicResource NeutralWhiteBrush}"
+                 Margin="0,3,0,0">
+        		<TextBlock.Background>
+        			<ImageBrush />
+        		</TextBlock.Background>
+      </TextBlock>
+      <ComboBox Height='23'
+                HorizontalAlignment='Center'
+                x:Name='IncludedTexturesCombo'
+                VerticalAlignment='Top'
+                SelectionChanged="cboIncludedTextures_SelectionChanged"
+                Margin="12"
+                MinWidth="120"
+                ItemTemplate="{DynamicResource TextureMapDataTemplate}"
+                IsReadOnly="True" />
+
+    </StackPanel>
+
+    <Grid.Background>
+      <LinearGradientBrush EndPoint="1,0.5"
+                           StartPoint="0,0.5">
+        <GradientStop Color="{StaticResource VeryDark}"
+                      Offset=".5" />
+        <GradientStop Color="{StaticResource NeutralDark}"
+                      Offset="1" />
+      </LinearGradientBrush>
+    </Grid.Background>
+  </Grid>
 </UserControl>
