@@ -1,5 +1,8 @@
 /// <class>ApplyTexture</class>
 
+sampler2D Texture1 : register(s0);
+sampler2D TextureMap : register(s2);
+
 /// <description>Apply texture from Texturmap image to original image </description>
 /// <summary>Horizontal size of the map.  1= normal size</summary>
 /// <minValue>1</minValue>
@@ -24,8 +27,7 @@ float horizontalOffset: register(C4);
 /// <defaultValue>1</defaultValue>
 float strength :register(c5);
 
-sampler2D Texture1 : register(s0);
-sampler2D TextureMap : register(s2);
+
 
 struct VS_OUTPUT
 {

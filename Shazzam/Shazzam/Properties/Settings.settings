@@ -2,25 +2,25 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Shazzam.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="LastFxFile" Type="System.String" Scope="User">
+    <Setting Name="FilePath_LastFx" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="LastImageFile" Type="System.String" Scope="User">
+    <Setting Name="FilePath_LastImage" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="FolderFX" Type="System.String" Scope="User">
+    <Setting Name="FolderPath_FX" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="FolderImages" Type="System.String" Scope="User">
+    <Setting Name="FolderPath_Images" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DirectX_FxcPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">%DXSDK_DIR%\Utilities\bin\x86\fxc.exe</Value>
     </Setting>
-    <Setting Name="LastImageTabIndex" Type="System.Int32" Scope="User">
+    <Setting Name="TabIndex_SelectedImage" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="Colors" Type="System.String" Scope="User">
+    <Setting Name="ColorPickerColors" Type="System.String" Scope="User">
       <Value Profile="(Default)">Yellow,Green</Value>
     </Setting>
     <Setting Name="GeneratedNamespace" Type="System.String" Scope="User">
@@ -36,16 +36,19 @@
       <Value Profile="(Default)">WPF</Value>
     </Setting>
     <Setting Name="AnimationLengthDefault" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.8</Value>
+      <Value Profile="(Default)">1.5</Value>
     </Setting>
-    <Setting Name="FolderOutput" Type="System.String" Scope="User">
+    <Setting Name="FolderPath_Output" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="LastMediaFile" Type="System.String" Scope="User">
+    <Setting Name="FilePath_LastMedia" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="LastLoaderTab" Type="System.Int32" Scope="User">
+    <Setting Name="TabIndex_LastLoader" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="FilePath_LastTextureMap" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

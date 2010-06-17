@@ -33,7 +33,7 @@ namespace Shazzam.CodeGen
 			}
 
 			// create application folder
-			string path = Properties.Settings.Default.FolderOutput;
+			string path = Properties.Settings.Default.FolderPath_Output;
 			if (Directory.Exists(path) == false)
 			{
 				Directory.CreateDirectory(path);
@@ -89,11 +89,11 @@ namespace Shazzam.CodeGen
 		}
 		private void CreateFileCopies(string path)
 		{
-			if (String.IsNullOrEmpty(Properties.Settings.Default.LastFxFile))
+			if (String.IsNullOrEmpty(Properties.Settings.Default.FilePath_LastFx))
 			{
 				return;
 			}
-			string currentFileName = System.IO.Path.GetFileNameWithoutExtension(Properties.Settings.Default.LastFxFile);
+			string currentFileName = System.IO.Path.GetFileNameWithoutExtension(Properties.Settings.Default.FilePath_LastFx);
 			if (File.Exists(path + Constants.FileNames.TempShaderPs))
 			{
 

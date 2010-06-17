@@ -26,48 +26,48 @@ namespace Shazzam.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastFxFile {
+        public string FilePath_LastFx {
             get {
-                return ((string)(this["LastFxFile"]));
+                return ((string)(this["FilePath_LastFx"]));
             }
             set {
-                this["LastFxFile"] = value;
+                this["FilePath_LastFx"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastImageFile {
+        public string FilePath_LastImage {
             get {
-                return ((string)(this["LastImageFile"]));
+                return ((string)(this["FilePath_LastImage"]));
             }
             set {
-                this["LastImageFile"] = value;
+                this["FilePath_LastImage"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string FolderFX {
+        public string FolderPath_FX {
             get {
-                return ((string)(this["FolderFX"]));
+                return ((string)(this["FolderPath_FX"]));
             }
             set {
-                this["FolderFX"] = value;
+                this["FolderPath_FX"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string FolderImages {
+        public string FolderPath_Images {
             get {
-                return ((string)(this["FolderImages"]));
+                return ((string)(this["FolderPath_Images"]));
             }
             set {
-                this["FolderImages"] = value;
+                this["FolderPath_Images"] = value;
             }
         }
         
@@ -86,24 +86,24 @@ namespace Shazzam.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int LastImageTabIndex {
+        public int TabIndex_SelectedImage {
             get {
-                return ((int)(this["LastImageTabIndex"]));
+                return ((int)(this["TabIndex_SelectedImage"]));
             }
             set {
-                this["LastImageTabIndex"] = value;
+                this["TabIndex_SelectedImage"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Yellow,Green")]
-        public string Colors {
+        public string ColorPickerColors {
             get {
-                return ((string)(this["Colors"]));
+                return ((string)(this["ColorPickerColors"]));
             }
             set {
-                this["Colors"] = value;
+                this["ColorPickerColors"] = value;
             }
         }
         
@@ -157,7 +157,7 @@ namespace Shazzam.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.8")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.5")]
         public double AnimationLengthDefault {
             get {
                 return ((double)(this["AnimationLengthDefault"]));
@@ -170,36 +170,48 @@ namespace Shazzam.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string FolderOutput {
+        public string FolderPath_Output {
             get {
-                return ((string)(this["FolderOutput"]));
+                return ((string)(this["FolderPath_Output"]));
             }
             set {
-                this["FolderOutput"] = value;
+                this["FolderPath_Output"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastMediaFile {
+        public string FilePath_LastMedia {
             get {
-                return ((string)(this["LastMediaFile"]));
+                return ((string)(this["FilePath_LastMedia"]));
             }
             set {
-                this["LastMediaFile"] = value;
+                this["FilePath_LastMedia"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int LastLoaderTab {
+        public int TabIndex_LastLoader {
             get {
-                return ((int)(this["LastLoaderTab"]));
+                return ((int)(this["TabIndex_LastLoader"]));
             }
             set {
-                this["LastLoaderTab"] = value;
+                this["TabIndex_LastLoader"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FilePath_LastTextureMap {
+            get {
+                return ((string)(this["FilePath_LastTextureMap"]));
+            }
+            set {
+                this["FilePath_LastTextureMap"] = value;
             }
         }
     }

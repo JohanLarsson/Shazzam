@@ -382,7 +382,7 @@ namespace Shazzam.Views
 			try
 			{
 				this.InputControlsTab.IsEnabled = false;
-				string path = Properties.Settings.Default.FolderOutput;
+				string path = Properties.Settings.Default.FolderPath_Output;
 				if (!File.Exists(path + Constants.FileNames.TempShaderPs))
 				{
 					return;
@@ -401,13 +401,13 @@ namespace Shazzam.Views
 
 				Type t = autoAssembly.GetType(String.Format("{0}.{1}", _shaderModel.GeneratedNamespace, _shaderModel.GeneratedClassName));
 				this.FillEditControls();
-				csFolder = String.Format("{0}CS", Properties.Settings.Default.FolderOutput);
+				csFolder = String.Format("{0}CS", Properties.Settings.Default.FolderPath_Output);
 				if (!Directory.Exists(csFolder))
 				{
 					Directory.CreateDirectory(csFolder);
 				}
 				_csTextEditor.SaveFile(String.Format("{0}\\{1}.cs", csFolder, _shaderModel.GeneratedClassName));
-				vbFolder = String.Format("{0}VB", Properties.Settings.Default.FolderOutput);
+				vbFolder = String.Format("{0}VB", Properties.Settings.Default.FolderPath_Output);
 				if (!Directory.Exists(vbFolder))
 				{
 					Directory.CreateDirectory(vbFolder);
@@ -541,7 +541,7 @@ namespace Shazzam.Views
 			this.codeTab.Header = Path.GetFileName(fileName);
 			this._shaderTextEditor.LoadFile(fileName);
 			this._shaderTextEditor.Document.HighlightingStrategy = _hlslHS;
-			Shazzam.Properties.Settings.Default.LastFxFile = fileName;
+			Shazzam.Properties.Settings.Default.FilePath_LastFx = fileName;
 			Shazzam.Properties.Settings.Default.Save();
 			this.RenderShader();
 		}

@@ -111,7 +111,7 @@
                 HorizontalAlignment='Center'
                 x:Name='IncludedTexturesCombo'
                 VerticalAlignment='Top'
-                SelectionChanged="cboIncludedTextures_SelectionChanged"
+                SelectionChanged="IncludedTextures_SelectionChanged"
                 Margin="12"
                 MinWidth="120"
                 ItemTemplate="{DynamicResource TextureMapDataTemplate}"

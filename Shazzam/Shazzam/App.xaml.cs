@@ -29,15 +29,15 @@ namespace Shazzam
 				Settings.Default.Reload();
 				// attempt to load from config
 				//string result = Shazzam.Properties.Settings.Default.FolderFX;
-				if (string.IsNullOrEmpty(Settings.Default.FolderOutput))
+				if (string.IsNullOrEmpty(Settings.Default.FolderPath_Output))
 				{
 					var dirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + Constants.Paths.GeneratedShaders;
-					Settings.Default.FolderOutput = dirPath;
+					Settings.Default.FolderPath_Output = dirPath;
 					Settings.Default.Save();
 				}
-				if (Directory.Exists(Settings.Default.FolderOutput) == false)
+				if (Directory.Exists(Settings.Default.FolderPath_Output) == false)
 				{
-					Directory.CreateDirectory(Settings.Default.FolderOutput);
+					Directory.CreateDirectory(Settings.Default.FolderPath_Output);
 				}
 			}
 			catch (ConfigurationErrorsException ex)
@@ -152,7 +152,7 @@ namespace Shazzam
 					}
 				}
 			}
-			Shazzam.Properties.Settings.Default.LastFxFile = String.Empty;
+			Shazzam.Properties.Settings.Default.FilePath_LastFx = String.Empty;
 			Shazzam.Properties.Settings.Default.Save();
 		}
 	}

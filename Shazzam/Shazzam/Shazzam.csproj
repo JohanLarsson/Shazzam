@@ -325,45 +325,123 @@
     <Content Include="Images\TextureMaps\bubbles.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Images\TextureMaps\clouds.png" />
-    <Resource Include="Images\TextureMaps\clover.png" />
-    <Resource Include="Images\TextureMaps\color_range.png" />
-    <Resource Include="Images\TextureMaps\curlique.png" />
-    <Resource Include="Images\TextureMaps\curlique_small.png" />
-    <Resource Include="Images\TextureMaps\flower.png" />
-    <Resource Include="Images\TextureMaps\fractal_bands.png" />
-    <Resource Include="Images\TextureMaps\fractal_butterfly.png" />
-    <Resource Include="Images\TextureMaps\fractal_centerband.png" />
-    <Resource Include="Images\TextureMaps\fractal_curls.png" />
-    <Resource Include="Images\TextureMaps\fractal_edge.png" />
-    <Resource Include="Images\TextureMaps\fractal_flame.png" />
-    <Resource Include="Images\TextureMaps\glassblocks_big.png" />
-    <Resource Include="Images\TextureMaps\glassblocks_medium.png" />
-    <Resource Include="Images\TextureMaps\glassblocks_simple.png" />
-    <Resource Include="Images\TextureMaps\koch_cubist.png" />
-    <Resource Include="Images\TextureMaps\koch_snowflake.png" />
-    <Resource Include="Images\TextureMaps\mawn.png" />
-    <Resource Include="Images\TextureMaps\moire.png" />
-    <Resource Include="Images\TextureMaps\noise.png" />
-    <Resource Include="Images\TextureMaps\noise_bumpy.png" />
-    <Resource Include="Images\TextureMaps\noise_weave.png" />
-    <Resource Include="Images\TextureMaps\oil_slick.png" />
-    <Resource Include="Images\TextureMaps\paise.png" />
-    <Resource Include="Images\TextureMaps\paise2.png" />
-    <Resource Include="Images\TextureMaps\peaks_horizontal.png" />
-    <Resource Include="Images\TextureMaps\peaks_vertical.png" />
-    <Resource Include="Images\TextureMaps\ring_center.png" />
-    <Resource Include="Images\TextureMaps\ripple.png" />
-    <Resource Include="Images\TextureMaps\rippled_glass.png" />
-    <Resource Include="Images\TextureMaps\river.png" />
-    <Resource Include="Images\TextureMaps\sand.png" />
-    <Resource Include="Images\TextureMaps\streaks_aurora.png" />
-    <Resource Include="Images\TextureMaps\streaks_grass.png" />
-    <Resource Include="Images\TextureMaps\streaks_vertical.png" />
-    <Resource Include="Images\TextureMaps\swirly.png" />
-    <Resource Include="Images\TextureMaps\waves_horizontal.png" />
-    <Resource Include="Images\TextureMaps\waves_vertical.png" />
-    <Resource Include="Images\TextureMaps\whirlpool.png" />
+    <Content Include="Images\TextureMaps\clouds.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\clover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\color_range.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\curlique.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\curlique_small.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\flower.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\fractal_bands.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\fractal_butterfly.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\fractal_centerband.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\fractal_curls.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\fractal_edge.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\fractal_flame.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\glassblocks_big.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\glassblocks_medium.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\glassblocks_simple.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\koch_cubist.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\koch_snowflake.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\mawn.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\moire.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\noise.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\noise_bumpy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\noise_weave.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\oil_slick.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\paise.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\paise2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\peaks_horizontal.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\peaks_vertical.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\ring_center.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\ripple.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\rippled_glass.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\river.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\sand.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\streaks_aurora.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\streaks_grass.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\streaks_vertical.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\swirly.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\waves_horizontal.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\waves_vertical.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TextureMaps\whirlpool.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Samples\Generative_Star.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
