@@ -47,7 +47,13 @@
     <Setting Name="TabIndex_LastLoader" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="FilePath_LastTextureMap" Type="System.String" Scope="User">
+    <Setting Name="FilePath_TextureMap1" Type="System.Uri" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="FilePath_TextureMap2" Type="System.Uri" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="FilePath_TextureMap3" Type="System.Uri" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

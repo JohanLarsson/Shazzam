@@ -205,13 +205,34 @@ namespace Shazzam.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string FilePath_LastTextureMap {
+        public global::System.Uri FilePath_TextureMap1 {
             get {
-                return ((string)(this["FilePath_LastTextureMap"]));
+                return ((global::System.Uri)(this["FilePath_TextureMap1"]));
             }
             set {
-                this["FilePath_LastTextureMap"] = value;
+                this["FilePath_TextureMap1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Uri FilePath_TextureMap2 {
+            get {
+                return ((global::System.Uri)(this["FilePath_TextureMap2"]));
+            }
+            set {
+                this["FilePath_TextureMap2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Uri FilePath_TextureMap3 {
+            get {
+                return ((global::System.Uri)(this["FilePath_TextureMap3"]));
+            }
+            set {
+                this["FilePath_TextureMap3"] = value;
             }
         }
     }
