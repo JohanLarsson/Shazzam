@@ -33,8 +33,6 @@ namespace Shazzam.Controls
 
         LoadTextureFromSettings();
 
-        //  Value = new ImageBrush(image1.Source);
-
       }
 
       SetupTextures();
@@ -42,15 +40,33 @@ namespace Shazzam.Controls
 
     private void LoadTextureFromSettings()
     {
-      if (Properties.Settings.Default.FilePath_LastTextureMap != null)
+      Uri tempUri;
+
+      switch (_register.RegisterNumber)
       {
-        if (Properties.Settings.Default.FilePath_LastTextureMap.IsAbsoluteUri)
+        case 2:
+          {
+            tempUri = Properties.Settings.Default.FilePath_TextureMap2;
+            break;
+          }
+        case 3:
+          {
+            tempUri = Properties.Settings.Default.FilePath_TextureMap3;
+            break;
+          }
+        default:
+          tempUri = Properties.Settings.Default.FilePath_TextureMap1;
+          break;
+      }
+      if (tempUri != null)
+      {
+        if (tempUri.IsAbsoluteUri)
         {
-          Value = new ImageBrush(new BitmapImage(Properties.Settings.Default.FilePath_LastTextureMap));
+          Value = new ImageBrush(new BitmapImage(tempUri));
         }
         else
         {
-          StreamResourceInfo streamInfo = Application.GetContentStream(Properties.Settings.Default.FilePath_LastTextureMap);
+          StreamResourceInfo streamInfo = Application.GetContentStream(tempUri);
 
           BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
           ImageBrush brush = new ImageBrush(temp);
@@ -132,7 +148,25 @@ namespace Shazzam.Controls
         Uri uriLocation = new Uri(filename, UriKind.RelativeOrAbsolute);
         ImageBrush brush = new ImageBrush(new BitmapImage(uriLocation));
         Value = brush;
-        Properties.Settings.Default.FilePath_LastTextureMap = uriLocation;
+
+        switch (_register.RegisterNumber)
+        {
+
+          case 2:
+            {
+              Properties.Settings.Default.FilePath_TextureMap2 = uriLocation;
+              break;
+            }
+          case 3:
+            {
+              Properties.Settings.Default.FilePath_TextureMap3 = uriLocation;
+              break;
+            }
+          default:
+            Properties.Settings.Default.FilePath_TextureMap1 = uriLocation;
+            break;
+        }
+
         Properties.Settings.Default.Save();
       }
 
@@ -151,7 +185,24 @@ namespace Shazzam.Controls
       ImageBrush brush = new ImageBrush(temp);
       Value = brush;
 
-      Properties.Settings.Default.FilePath_LastTextureMap = resourceUri;
+      switch (_register.RegisterNumber)
+      {
+
+        case 2:
+          {
+            Properties.Settings.Default.FilePath_TextureMap2 = resourceUri;
+            break;
+          }
+        case 3:
+          {
+            Properties.Settings.Default.FilePath_TextureMap3 = resourceUri;
+            break;
+          }
+        default:
+          Properties.Settings.Default.FilePath_TextureMap1 = resourceUri;
+          break;
+      }
+      // Properties.Settings.Default.FilePath_TextureMap1 = resourceUri;
       Properties.Settings.Default.Save();
 
     }
