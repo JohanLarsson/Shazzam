@@ -18,12 +18,6 @@ namespace Shazzam.Controls
     {
       InitializeComponent();
       _register = register;
-      this.Loaded += new RoutedEventHandler(TexturePicker_Loaded);
-    }
-
-    void TexturePicker_Loaded(object sender, RoutedEventArgs e)
-    {
-
       ImageBrush result;
       // attempt to get the already loaded value
       _images.TryGetValue(_register.RegisterNumber, out result);
@@ -36,6 +30,12 @@ namespace Shazzam.Controls
       }
 
       SetupTextures();
+    }
+
+    void TexturePicker_Loaded(object sender, RoutedEventArgs e)
+    {
+
+
     }
 
     private void LoadTextureFromSettings()
