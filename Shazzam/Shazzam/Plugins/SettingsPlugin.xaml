@@ -36,32 +36,6 @@
       <RowDefinition Height="Auto" />
 
     </Grid.RowDefinitions>
-    <!--<StackPanel>
-      <TextBlock Foreground="{StaticResource NeutralWhiteBrush}"
-                 Grid.Row="0"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Center"
-                 Margin="0,0,0,0"><Run Text="Location of DirectX FX compiler:" /></TextBlock>
-     
-      <TextBlock Foreground="#CFFF"
-                 HorizontalAlignment='Left'
-                 Grid.Row="0"
-                 VerticalAlignment="Center"
-                 Opacity="0.5"
-                 TextTrimming="CharacterEllipsis"
-                 Margin="10,10,26,0"
-                 Text="{Binding DirectX_FxcPath, Source={x:Static settings:Settings.Default}}"
-                 TextWrapping="NoWrap"
-                 ToolTip='{Binding DirectX_FxcPath, Source={x:Static settings:Settings.Default}}' />
-      <UniformGrid Rows="1"
-                   Margin="10,10,26,0">
-        <Button Content='Browse...'
-                Click='ChooseFxcLocation_Click' />
-        <Button Content='Restore Default'
-                Margin="5,0,0,0"
-                Click='RestoreDefaultFxcLocation_Click' />
-      </UniformGrid>
-    </StackPanel>-->
 
     <StackPanel Grid.Row="2"
                 Margin='3,0,0,0'>
@@ -71,19 +45,30 @@
                  Margin="0,0,0,0"
                  Text="Target framework:" />
       <StackPanel Orientation='Horizontal'>
-      <RadioButton Foreground="#FFF"
-                   HorizontalAlignment="Left"
-                   Margin="10,10,0,0"
-                   Content="WPF PS__3"
-                   ToolTip='Target Pixel Shader 3.  Permits up to 512 instructions for your HLSL '
-                   IsChecked="{Binding TargetFramework, Converter={StaticResource equalityConverter}, ConverterParameter=WPF_PS3, Source={x:Static settings:Settings.Default}}"
-                   Name='radioButtonPs3' />
+        <RadioButton Foreground="#FFF"
+                     HorizontalAlignment="Left"
+                     Margin="10,10,0,0"
+                     Content="WPF PS__3"
+                     ToolTip='Target Pixel Shader 3.  Permits up to 512 instructions for your HLSL '
+                     IsChecked="{Binding TargetFramework, Converter={StaticResource equalityConverter}, ConverterParameter=WPF_PS3, Source={x:Static settings:Settings.Default}}"
+                     Name='radioButtonPs3' />
         <TextBlock x:Name='notAvailable'
                    Foreground='Red'
-                   FontSize='24'
                    Text='*'
                    VerticalAlignment='Center'
-                   Margin="3,0,0,0" />
+                   Margin="3,0,0,0"
+                   RenderTransformOrigin="0.5,0.5">
+        	<TextBlock.RenderTransform>
+        		<TransformGroup>
+        			<ScaleTransform ScaleX="2"
+                              ScaleY="1.95" />
+        			<SkewTransform />
+        			<RotateTransform />
+        			<TranslateTransform Y="5"
+                                  X="2" />
+        		</TransformGroup>
+        	</TextBlock.RenderTransform>
+        </TextBlock>
       </StackPanel>
       <RadioButton Foreground="#FFF"
                    HorizontalAlignment="Left"
@@ -106,7 +91,8 @@
                  VerticalAlignment="Center"
                  Margin="0,0,0,0"
                  Text="Generated namespace:" />
-      <TextBox Margin="10,10,26,0" ToolTip='Choose a namespace for your generated class.  '
+      <TextBox Margin="10,10,26,0"
+               ToolTip='Choose a namespace for your generated class.  '
                Text="{Binding GeneratedNamespace, Source={x:Static settings:Settings.Default}}" />
     </StackPanel>
 
