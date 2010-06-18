@@ -32,11 +32,7 @@ namespace Shazzam.Controls
       SetupTextures();
     }
 
-    void TexturePicker_Loaded(object sender, RoutedEventArgs e)
-    {
 
-
-    }
 
     private void LoadTextureFromSettings()
     {
@@ -87,7 +83,13 @@ namespace Shazzam.Controls
       path += "\\Images\\TextureMaps";
       foreach (var file in System.IO.Directory.GetFiles(path))
       {
-        IncludedTexturesCombo.Items.Add(new TextureMapLocator
+        //IncludedTexturesCombo.Items.Add(new TextureMapLocator
+        //{
+        //  ShortFileName = System.IO.Path.GetFileNameWithoutExtension(file),
+        //  LongFileName = file,
+        //  TrimmedFileName = AssemblyPrefix + System.IO.Path.GetFileName(file)
+        //});
+        IncludedTexturesList.Items.Add(new TextureMapLocator
         {
           ShortFileName = System.IO.Path.GetFileNameWithoutExtension(file),
           LongFileName = file,
@@ -176,8 +178,9 @@ namespace Shazzam.Controls
     {
 
       BitmapImage bi = new BitmapImage(new Uri("/Shazzam;component/Images/cactus.jpg", UriKind.RelativeOrAbsolute)); ;
-      string uriLocation = ((TextureMapLocator)IncludedTexturesCombo.SelectedItem).TrimmedFileName;
-
+      //string uriLocation = ((TextureMapLocator)IncludedTexturesCombo.SelectedItem).TrimmedFileName;
+      string uriLocation = ((TextureMapLocator)IncludedTexturesList.SelectedItem).TrimmedFileName;
+      popSelectTexture.IsOpen = false;
       Uri resourceUri = new Uri(uriLocation, UriKind.RelativeOrAbsolute);
       StreamResourceInfo streamInfo = Application.GetContentStream(resourceUri);
 
@@ -205,6 +208,11 @@ namespace Shazzam.Controls
       // Properties.Settings.Default.FilePath_TextureMap1 = resourceUri;
       Properties.Settings.Default.Save();
 
+    }
+
+    private void chooseTexture_click(object sender, RoutedEventArgs e)
+    {
+      popSelectTexture.IsOpen = true;
     }
   }
   internal struct TextureMapLocator

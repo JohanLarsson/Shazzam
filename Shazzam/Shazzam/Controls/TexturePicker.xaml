@@ -8,7 +8,8 @@
              d:DesignWidth='603'
              VerticalAlignment="Top">
   <UserControl.Resources>
-    <DataTemplate x:Key="TextureMapDataTemplate">
+   
+    <DataTemplate x:Key="TextureMapDataTemplate2">
       <StackPanel Orientation='Horizontal'
                   Background="Black"
                   HorizontalAlignment="Center"
@@ -28,15 +29,37 @@
                  VerticalAlignment='Center'
                  Width='80'
                  Source='{Binding LongFileName}'
-                 ToolTip='{Binding ShortFileName}'
-                 ToolTipService.Placement='Left'>
+                 ToolTipService.Placement='Center'
+                 ToolTipService.VerticalOffset='-210'>
+            <Image.ToolTip>
+              <Grid Width="400"
+                    Height="300"
+                    Background="Black">
+
+                <Image Height='298'
+                       HorizontalAlignment='Center'
+                       Name='image2'
+                       Stretch='UniformToFill'
+                       VerticalAlignment='Center'
+                       Width='398'
+                       Source='{Binding LongFileName}' />
+                <TextBlock Foreground='{StaticResource VeryLightBrush}'
+                           Margin='4'
+                           FontSize='24'
+                           Background='#00FFFFFF'
+                           Text='{Binding ShortFileName}' />
+              </Grid>
+            </Image.ToolTip>
 
           </Image>
         </Border>
       </StackPanel>
     </DataTemplate>
+    <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
+      <StackPanel Orientation="Horizontal" />
+    </ItemsPanelTemplate>
   </UserControl.Resources>
-  <Grid>
+  <Grid Name='mainGrid'>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition Width="Auto"
@@ -47,7 +70,8 @@
              BorderThickness="4"
              Margin="2,2,2,0"
              VerticalAlignment='Top'
-             Grid.Column="1" HorizontalAlignment='Center'
+             Grid.Column="1"
+             HorizontalAlignment='Center'
              d:LayoutOverrides="Width">
 
       <Image Height='60'
@@ -62,10 +86,10 @@
                 Height="300"
                 Background="Black">
             <Image Height='298'
-                   HorizontalAlignment='Left'
+                   HorizontalAlignment='Center'
                    Name='image2'
                    Stretch='UniformToFill'
-                   VerticalAlignment='Top'
+                   VerticalAlignment='Center'
                    Width='398'
                    Source="/Shazzam;component/Images/cactus.jpg" />
           </Grid>
@@ -93,13 +117,28 @@
               Width='75'
               Click='btnOpenImage_Click'
               Grid.Column="0" />
+      <Popup x:Name="popSelectTexture"
+             StaysOpen='False'
+             PlacementTarget='{Binding ElementName=this}'
+             Placement='Left'
+             HorizontalOffset='-160'>
+        <Grid Background="Gray"
+              Height="106"
+              Width="600">
+          <ListBox Margin="2,2,2,2"
+                   x:Name='IncludedTexturesList'
+                   ItemTemplate="{DynamicResource TextureMapDataTemplate2}"
+                   ItemsPanel="{DynamicResource ItemsPanelTemplate1}"
+                   SelectionChanged="IncludedTextures_SelectionChanged" />
+        </Grid>
+      </Popup>
     </StackPanel>
     <StackPanel Grid.Column="2"
                 HorizontalAlignment="Left"
                 Orientation="Vertical"
                 d:LayoutOverrides="Height">
       <TextBlock TextWrapping="Wrap"
-                 Text="Choose Shazzam Texture Map"
+                 Text='Shazzam Texture Map'
                  HorizontalAlignment="Center"
                  Foreground="{DynamicResource NeutralWhiteBrush}"
                  Margin="0,3,0,0">
@@ -107,15 +146,13 @@
         			<ImageBrush />
         		</TextBlock.Background>
       </TextBlock>
-      <ComboBox Height='23'
-                HorizontalAlignment='Center'
-                x:Name='IncludedTexturesCombo'
-                VerticalAlignment='Top'
-                SelectionChanged="IncludedTextures_SelectionChanged"
-                Margin="12"
-                MinWidth="120"
-                ItemTemplate="{DynamicResource TextureMapDataTemplate}"
-                IsReadOnly="True" />
+      <Button Content='Choose Texture'
+              Height='23'
+              HorizontalAlignment='Center'
+              Margin="12"
+              x:Name='chooseTexture'
+              VerticalAlignment='Top'
+              Click='chooseTexture_click' />
 
     </StackPanel>
 
