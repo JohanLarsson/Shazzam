@@ -69,6 +69,7 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.TextEditor, Version=3.2.0.5777, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a, processorArchitecture=MSIL" />
@@ -115,6 +116,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\RelayCommand.cs" />
     <Page Include="Controls\AdjustableSlider.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -313,12 +315,12 @@
     <Content Include="D3DX9_40.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Images\Default\cactus.jpg">
+    <Content Include="Images\TextureMaps\cactus.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Default\ColorRange.png">
+    </Content>
+    <Content Include="Images\Default\ColorRange.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Content>
     <Content Include="Images\Noise.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -664,6 +666,8 @@
     <Compile Include="ShazzamSwitchboard.cs" />
     <Compile Include="TargetFramework.cs" />
     <Compile Include="ViewModels\CodeTabViewModel.cs" />
+    <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\VMBase.cs" />
     <Compile Include="Views\CodeTabsView.xaml.cs">
       <DependentUpon>CodeTabsView.xaml</DependentUpon>
       <SubType>Code</SubType>

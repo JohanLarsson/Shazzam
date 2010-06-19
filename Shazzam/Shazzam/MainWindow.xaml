@@ -72,10 +72,8 @@
 										Executed='FullScreenCode_Executed' />
         <CommandBinding Command='commands:AppCommands.ImageStretch'
                         Executed='ImageStretch_Executed' />
-        <CommandBinding Command='commands:AppCommands.WhatsNew'
-										Executed='WhatsNew_Executed' />
-		<CommandBinding Command='commands:AppCommands.ReportBug'
-										Executed='ReportBug_Executed' />
+
+		
 	</Window.CommandBindings>
 
 	<Grid Background="#101010">

@@ -367,14 +367,8 @@ namespace Shazzam
       //e.CanExecute = File.Exists(fxcPath);
 
     }
-    private void WhatsNew_Executed(object sender, ExecutedRoutedEventArgs e)
-    {
-      Process.Start("http://blog.shazzam-tool.com/");
-    }
-    private void ReportBug_Executed(object sender, ExecutedRoutedEventArgs e)
-    {
-      Process.Start("http://shazzam.codeplex.com/WorkItem/List.aspx");
-    }
+
+
 
     private void ImageStretch_Executed(object sender, ExecutedRoutedEventArgs e)
     {

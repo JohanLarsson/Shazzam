@@ -31,6 +31,9 @@
                  Source='{Binding LongFileName}'
                  ToolTipService.Placement='Center'
                  ToolTipService.VerticalOffset='-210'>
+          	
+   
+
             <Image.ToolTip>
               <Grid Width="400"
                     Height="300"
@@ -99,7 +102,7 @@
     <StackPanel>
 
       <TextBlock TextWrapping="Wrap"
-                 Text="Choose Image"
+                 Text='Choose Image File'
                  HorizontalAlignment="Center"
                  Foreground="{DynamicResource NeutralWhiteBrush}"
                  Margin="0,3,0,0">

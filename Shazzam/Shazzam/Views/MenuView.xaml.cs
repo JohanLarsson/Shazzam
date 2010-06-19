@@ -2,11 +2,14 @@
 using System.Diagnostics;
 using System;
 
-namespace Shazzam.Views {
+namespace Shazzam.Views
+{
 
-	public partial class MenuView : UserControl {
-		public MenuView() {
-			InitializeComponent();
-		}
-	}
+  public partial class MenuView : UserControl
+  {
+    public MenuView()
+    {
+      InitializeComponent();
+    }
+  }
 }
