@@ -264,7 +264,7 @@
 										<Border Style='{DynamicResource ImageInsideBorder}'>
 											<MediaElement Source='Images/plasma.wmv'
 																		DockPanel.Dock='Top'
-																		Stretch='UniformToFill'
+																		Stretch='Uniform'
 																		x:Name='mediaUI'
 																		LoadedBehavior='Manual'
 																		ToolTip='Click video to replay.'
