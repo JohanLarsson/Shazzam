@@ -34,8 +34,8 @@ namespace Shazzam.Commands
     public static readonly RoutedUICommand FullScreenCode = new RoutedUICommand("Full Screen Code", "FullScreenCode",
       typeof(AppCommands), new InputGestureCollection { new KeyGesture(Key.F11) });
 
-    public static readonly RoutedUICommand ImageStretch = new RoutedUICommand("Image Stretch", "ImageStretch",
-    typeof(AppCommands));
+    //public static readonly RoutedUICommand ImageStretch = new RoutedUICommand("Image Stretch", "ImageStretch",
+    //typeof(AppCommands));
 
 
 

@@ -97,7 +97,7 @@
       </Border.Background>
       <Grid>
         <ContentPresenter x:Name='Content'
-                          TextElement.Foreground='#80FFFFFF'
+                          TextElement.Foreground='#FFFFFFFF'
                           VerticalAlignment='Center'
                           HorizontalAlignment='Center'
                           Margin='10,-1,10,1'

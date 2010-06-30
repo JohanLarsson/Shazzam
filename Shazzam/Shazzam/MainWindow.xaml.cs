@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Shazzam.Commands;
 using System.Reflection;
+using Shazzam.ViewModels;
 
 namespace Shazzam
 {
@@ -82,31 +83,34 @@ namespace Shazzam
       }
       this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
       this.Closing += new System.ComponentModel.CancelEventHandler(MainWindow_Closing);
-      SetupMenuBindings();
+
 
     }
 
     void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
       this.plugin1.SelectedIndex = 0;
+      SetupMenuBindings();
     }
 
     private void SetupMenuBindings()
     {
-      var kb = new KeyBinding(AppCommands.ImageStretch, Key.F5, ModifierKeys.Control);
+
+      ICommand current = ((MainWindowViewModel)mainGrid.DataContext).ImageStretchCommand;
+
+      var kb = new KeyBinding(current, Key.F5, ModifierKeys.Control);
       kb.CommandParameter = "none";
       this.InputBindings.Add(kb);
 
-
-      kb = new KeyBinding(AppCommands.ImageStretch, Key.F6, ModifierKeys.Control);
+      kb = new KeyBinding(current, Key.F6, ModifierKeys.Control);
       kb.CommandParameter = "fill";
       this.InputBindings.Add(kb);
 
-      kb = new KeyBinding(AppCommands.ImageStretch, Key.F7, ModifierKeys.Control);
+      kb = new KeyBinding(current, Key.F7, ModifierKeys.Control);
       kb.CommandParameter = "uniform";
       this.InputBindings.Add(kb);
 
-      kb = new KeyBinding(AppCommands.ImageStretch, Key.F8, ModifierKeys.Control);
+      kb = new KeyBinding(current, Key.F8, ModifierKeys.Control);
       kb.CommandParameter = "uniformtofill";
       this.InputBindings.Add(kb);
 
@@ -372,36 +376,36 @@ namespace Shazzam
 
     private void ImageStretch_Executed(object sender, ExecutedRoutedEventArgs e)
     {
-      switch (e.Parameter.ToString())
-      {
-        case "none":
-          SetStretchMode(System.Windows.Media.Stretch.None);
-          break;
-        case "fill":
-          SetStretchMode(System.Windows.Media.Stretch.Fill);
-          break;
-        case "uniform":
-          SetStretchMode(System.Windows.Media.Stretch.Uniform);
-          break;
-        case "uniformtofill":
-          SetStretchMode(System.Windows.Media.Stretch.UniformToFill);
-          break;
-        default:
-          SetStretchMode(System.Windows.Media.Stretch.Uniform);
+      //switch (e.Parameter.ToString())
+      //{
+      //  case "none":
+      //    SetStretchMode(System.Windows.Media.Stretch.None);
+      //    break;
+      //  case "fill":
+      //    SetStretchMode(System.Windows.Media.Stretch.Fill);
+      //    break;
+      //  case "uniform":
+      //    SetStretchMode(System.Windows.Media.Stretch.Uniform);
+      //    break;
+      //  case "uniformtofill":
+      //    SetStretchMode(System.Windows.Media.Stretch.UniformToFill);
+      //    break;
+      //  default:
+      //    SetStretchMode(System.Windows.Media.Stretch.Uniform);
 
-          break;
-      }
+      //    break;
+      //}
     }
 
     private void SetStretchMode(System.Windows.Media.Stretch stretchMode)
     {
-      userImage.Stretch = stretchMode;
-      sampleImage1.Stretch = stretchMode;
-      sampleImage2.Stretch = stretchMode;
-      sampleImage3.Stretch = stretchMode;
-      sampleImage4.Stretch = stretchMode;
-      sampleImage5.Stretch = stretchMode;
-      mediaUI.Stretch = stretchMode;
+      // userImage.Stretch = stretchMode;
+      //  sampleImage1.Stretch = stretchMode;
+      // sampleImage2.Stretch = stretchMode;
+      // sampleImage3.Stretch = stretchMode;
+      //  sampleImage4.Stretch = stretchMode;
+      // sampleImage5.Stretch = stretchMode;
+      //  mediaUI.Stretch = stretchMode;
 
     }
 

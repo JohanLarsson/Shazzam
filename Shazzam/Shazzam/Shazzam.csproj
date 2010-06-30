@@ -223,12 +223,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MenuView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\PluginView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -270,6 +264,7 @@
       <DependentUpon>TexturePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\EqualityConverter.cs" />
+    <Compile Include="Converters\StretchToIsCheckedConverter.cs" />
     <Compile Include="Converters\RegisterValueConverter.cs" />
     <Compile Include="Converters\InvertBooleanConverter.cs" />
     <Compile Include="Converters\DoubleToStringConverter.cs" />
@@ -666,7 +661,7 @@
     <Compile Include="ShazzamSwitchboard.cs" />
     <Compile Include="TargetFramework.cs" />
     <Compile Include="ViewModels\CodeTabViewModel.cs" />
-    <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\VMBase.cs" />
     <Compile Include="Views\CodeTabsView.xaml.cs">
       <DependentUpon>CodeTabsView.xaml</DependentUpon>
@@ -680,9 +675,6 @@
     </Compile>
     <Compile Include="Views\ImageTabView.xaml.cs">
       <DependentUpon>ImageTabView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MenuView.xaml.cs">
-      <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PluginView.xaml.cs">
       <DependentUpon>PluginView.xaml</DependentUpon>

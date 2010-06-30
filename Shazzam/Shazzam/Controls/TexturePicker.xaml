@@ -59,7 +59,7 @@
       </StackPanel>
     </DataTemplate>
     <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
-      <StackPanel Orientation="Horizontal" />
+      <VirtualizingStackPanel Orientation="Horizontal" />
     </ItemsPanelTemplate>
   </UserControl.Resources>
   <Grid Name='mainGrid'>

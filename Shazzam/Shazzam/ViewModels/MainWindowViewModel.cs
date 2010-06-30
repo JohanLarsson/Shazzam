@@ -7,30 +7,61 @@ using System.Diagnostics;
 
 namespace Shazzam.ViewModels
 {
-  internal class MenuViewModel : ViewModels.ViewModelBase
+  internal class MainWindowViewModel : ViewModels.ViewModelBase
   {
 
 
-    //#region ImageStretch
-    //private RelayCommand _imageStretchCommand;
-    //public RelayCommand ImageStretchCommand
-    //{
-    //  get
-    //  {
+    #region ImageStretch
+    private RelayCommand<String> _imageStretchCommand;
+    public RelayCommand<string> ImageStretchCommand
+    {
+      get
+      {
 
-    //    if (_imageStretchCommand == null)
-    //    {
-    //      _imageStretchCommand = new RelayCommand(ImageStretch);
-    //    }
-    //  }
-    //}
-    //private void ImageStretch()
-    //{
+        if (_imageStretchCommand == null)
+        {
+          _imageStretchCommand = new RelayCommand<String>((param) => this.ImageStretch_Execute(param));
+        }
+        return _imageStretchCommand;
+      }
+    }
+    private void ImageStretch_Execute(string menuParameter)
+    {
+      switch (menuParameter)
+      {
+        case "none":
+          this.ImageStretch = System.Windows.Media.Stretch.None;
+          break;
+        case "fill":
+          this.ImageStretch = System.Windows.Media.Stretch.Fill;
+          break;
+        case "uniform":
+          this.ImageStretch = System.Windows.Media.Stretch.Uniform;
+          break;
+        case "uniformtofill":
+          this.ImageStretch = System.Windows.Media.Stretch.UniformToFill;
+          break;
+        default:
+          this.ImageStretch = System.Windows.Media.Stretch.Uniform;
 
-    //}
+          break;
+      }
+    }
 
-    //#endregion
-
+    #endregion
+    private System.Windows.Media.Stretch _imageStretch = System.Windows.Media.Stretch.Uniform;
+    public System.Windows.Media.Stretch ImageStretch
+    {
+      get
+      {
+        return _imageStretch;
+      }
+      set
+      {
+        _imageStretch = value;
+        NotifyPropertyChanged(() => this.ImageStretch);
+      }
+    }
 
     #region BrowseToBlog
     private RelayCommand _browseToBlogCommand;

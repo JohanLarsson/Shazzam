@@ -83,12 +83,7 @@ namespace Shazzam.Controls
       path += "\\Images\\TextureMaps";
       foreach (var file in System.IO.Directory.GetFiles(path))
       {
-        //IncludedTexturesCombo.Items.Add(new TextureMapLocator
-        //{
-        //  ShortFileName = System.IO.Path.GetFileNameWithoutExtension(file),
-        //  LongFileName = file,
-        //  TrimmedFileName = AssemblyPrefix + System.IO.Path.GetFileName(file)
-        //});
+
         IncludedTexturesList.Items.Add(new TextureMapLocator
         {
           ShortFileName = System.IO.Path.GetFileNameWithoutExtension(file),

@@ -18,7 +18,7 @@ namespace Shazzam.ViewModels
       }
       MemberExpression mExpress = (MemberExpression)propertyAccessor.Body;
       string name = mExpress.Member.Name;
-      this.PropertyChanged(this, new PropertyChangedEventArgs("Books"));
+      this.PropertyChanged(this, new PropertyChangedEventArgs(name));
     }
 
   }
