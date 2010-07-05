@@ -439,6 +439,9 @@
     <Content Include="Images\TextureMaps\whirlpool.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Samples\Circles.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Samples\Generative_Star.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -565,6 +568,7 @@
     <Content Include="Samples\GlassTiles.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Services\ReadAboutCinch.txt" />
     <Content Include="Tutorials\04c_TexturesVia_S_Registers.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -603,6 +607,12 @@
     </Content>
     <Content Include="Tutorials\14_PS3.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\BandedSwirl_PS3.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\Transition_SwirlGrid_PS3.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Tutorials\04d_InputVia_C_Registers.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -655,6 +665,12 @@
     <Content Include="Samples\SketchPencilStroke.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Services\IMessageBoxService.cs" />
+    <Compile Include="Services\IOpenFileService.cs" />
+    <Compile Include="Services\ISaveFileService.cs" />
+    <Compile Include="Services\WPFMessageBoxService.cs" />
+    <Compile Include="Services\WPFOpenFileService.cs" />
+    <Compile Include="Services\WPFSaveFileService.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ShaderModel.cs" />
     <Compile Include="ShaderModelConstantRegister.cs" />

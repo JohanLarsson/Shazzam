@@ -12,7 +12,7 @@
         mc:Ignorable='d'
         Icon='Images/star.png'
         xmlns:vms='clr-namespace:Shazzam.ViewModels'>
-  <Window.Resources>
+  <Window.Resources> 
 
     <converters:StringToVisibilityConverter x:Key='visConverter' />
     <converters:StretchToIsCheckedConverter x:Key='checkedConverter' />
@@ -63,15 +63,15 @@
     <CommandBinding Command='commands:AppCommands.CompileShader'
                     Executed='CompileShader_Executed'
                     CanExecute='ShaderCommand_CanExecute' />
-    <CommandBinding Command='commands:AppCommands.ExploreCompiledShaders'
-                    Executed='ExploreCompiledShaders_Executed' />
-    <CommandBinding Command='commands:AppCommands.ExploreTextureMaps'
-                    Executed='ExploreTextureMaps_Executed' />
+    <!--<CommandBinding Command='commands:AppCommands.ExploreCompiledShaders'
+                    Executed='ExploreCompiledShaders_Executed' />-->
+    <!--<CommandBinding Command='commands:AppCommands.ExploreTextureMaps'
+                    Executed='ExploreTextureMaps_Executed' />-->
 
-    <CommandBinding Command='commands:AppCommands.FullScreenImage'
-                    Executed='FullScreenImage_Executed' />
-    <CommandBinding Command='commands:AppCommands.FullScreenCode'
-                    Executed='FullScreenCode_Executed' />
+    <!--<CommandBinding Command='commands:AppCommands.FullScreenImage'
+                    Executed='FullScreenImage_Executed' />-->
+    <!--<CommandBinding Command='commands:AppCommands.FullScreenCode'
+                    Executed='FullScreenCode_Executed' />-->
     <!--<CommandBinding Command='commands:AppCommands.ImageStretch'
                     Executed='ImageStretch_Executed' />-->
 
@@ -197,16 +197,18 @@
                       Command='commands:AppCommands.CompileShader' />
             <Separator />
             <MenuItem Header='_Explore Compiled Shaders (*.ps)'
-                      Command='commands:AppCommands.ExploreCompiledShaders' />
+                      Command='{Binding ExploreCompiledShadersCommand}' />
             <MenuItem Header='_Explore Texture Maps'
-                      Command='commands:AppCommands.ExploreTextureMaps' />
+                      Command='{Binding ExploreTextureMapsCommand}' />
           </MenuItem>
 
           <MenuItem Header='_View'>
             <MenuItem Header='Full Screen _Image'
-                      Command='commands:AppCommands.FullScreenImage' />
+                      InputGestureText="F9"
+                      Command='{Binding FullScreenImageCommand}' />
             <MenuItem Header='Full Screen _Code'
-                      Command='commands:AppCommands.FullScreenCode' />
+                      InputGestureText="F11"
+                      Command='{Binding FullScreenCodeCommand}' />
             <Separator />
             <MenuItem Header="Image _Stretch">
               <MenuItem Header="_None"
@@ -279,11 +281,11 @@
     <Grid Grid.Column='1'
           Margin='3,6,0,0'>
       <Grid.RowDefinitions>
-        <RowDefinition Height='5*'
+        <RowDefinition Height='{Binding ImageRowHeight}'
                        x:Name='imageRow' />
         <RowDefinition Height='4'
                        x:Name='splitterRow' />
-        <RowDefinition Height='5*'
+        <RowDefinition Height='{Binding CodeRowHeight}'
                        x:Name='codeRow' />
       </Grid.RowDefinitions>
 

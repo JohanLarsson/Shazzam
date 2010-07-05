@@ -24,6 +24,7 @@ namespace Shazzam
   {
     public MainWindow()
     {
+
       Commands.AppCommands.Initialize();
       InitializeComponent();
 
@@ -96,21 +97,32 @@ namespace Shazzam
     private void SetupMenuBindings()
     {
 
-      ICommand current = ((MainWindowViewModel)mainGrid.DataContext).ImageStretchCommand;
+      ICommand isCommand = ((MainWindowViewModel)mainGrid.DataContext).ImageStretchCommand;
+      ICommand fullCodeCommand = ((MainWindowViewModel)mainGrid.DataContext).FullScreenCodeCommand;
+      ICommand fullImageCommand = ((MainWindowViewModel)mainGrid.DataContext).FullScreenImageCommand;
 
-      var kb = new KeyBinding(current, Key.F5, ModifierKeys.Control);
+      KeyBinding kb;
+
+
+      kb = new KeyBinding(fullImageCommand, Key.F9, ModifierKeys.None);
+      this.InputBindings.Add(kb);
+
+      kb = new KeyBinding(fullCodeCommand, Key.F11, ModifierKeys.None);
+      this.InputBindings.Add(kb);
+
+      kb = new KeyBinding(isCommand, Key.F5, ModifierKeys.Control);
       kb.CommandParameter = "none";
       this.InputBindings.Add(kb);
 
-      kb = new KeyBinding(current, Key.F6, ModifierKeys.Control);
+      kb = new KeyBinding(isCommand, Key.F6, ModifierKeys.Control);
       kb.CommandParameter = "fill";
       this.InputBindings.Add(kb);
 
-      kb = new KeyBinding(current, Key.F7, ModifierKeys.Control);
+      kb = new KeyBinding(isCommand, Key.F7, ModifierKeys.Control);
       kb.CommandParameter = "uniform";
       this.InputBindings.Add(kb);
 
-      kb = new KeyBinding(current, Key.F8, ModifierKeys.Control);
+      kb = new KeyBinding(isCommand, Key.F8, ModifierKeys.Control);
       kb.CommandParameter = "uniformtofill";
       this.InputBindings.Add(kb);
 
@@ -283,49 +295,49 @@ namespace Shazzam
       mediaUI.Effect = null;
     }
 
-    private void ExploreCompiledShaders_Executed(object sender, System.Windows.RoutedEventArgs e)
-    {
-      string path = Properties.Settings.Default.FolderPath_Output;
-      System.Diagnostics.Process.Start(path);
-    }
-    private void ExploreTextureMaps_Executed(object sender, System.Windows.RoutedEventArgs e)
-    {
-      string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-      System.Diagnostics.Process.Start(path + "\\Images\\TextureMaps");
-    }
+    //private void ExploreCompiledShaders_Executed(object sender, System.Windows.RoutedEventArgs e)
+    //{
+    //  string path = Properties.Settings.Default.FolderPath_Output;
+    //  System.Diagnostics.Process.Start(path);
+    //}
+    //private void ExploreTextureMaps_Executed(object sender, System.Windows.RoutedEventArgs e)
+    //{
+    //  string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+    //  System.Diagnostics.Process.Start(path + Constants.Paths.TextureMaps);
+    //}
 
-    private void FullScreenImage_Executed(object sender, ExecutedRoutedEventArgs e)
-    {
-      if (codeRow.Height != new GridLength(0, GridUnitType.Pixel))
-      {
+    //private void FullScreenImage_Executed(object sender, ExecutedRoutedEventArgs e)
+    //{
+    //  if (codeRow.Height != new GridLength(0, GridUnitType.Pixel))
+    //  {
 
-        codeRow.Height = new GridLength(0, GridUnitType.Pixel);
-        imageRow.Height = new GridLength(5, GridUnitType.Star);
-      }
-      else
-      {
+    //    codeRow.Height = new GridLength(0, GridUnitType.Pixel);
+    //    imageRow.Height = new GridLength(5, GridUnitType.Star);
+    //  }
+    //  else
+    //  {
 
-        codeRow.Height = new GridLength(5, GridUnitType.Star);
-        imageRow.Height = new GridLength(5, GridUnitType.Star);
-      }
-    }
+    //    codeRow.Height = new GridLength(5, GridUnitType.Star);
+    //    imageRow.Height = new GridLength(5, GridUnitType.Star);
+    //  }
+    //}
 
-    private void FullScreenCode_Executed(object sender, ExecutedRoutedEventArgs e)
-    {
+    //private void FullScreenCode_Executed(object sender, ExecutedRoutedEventArgs e)
+    //{
 
-      if (imageRow.Height != new GridLength(0, GridUnitType.Pixel))
-      {
-        imageRow.Height = new GridLength(0, GridUnitType.Pixel);
-        codeRow.Height = new GridLength(5, GridUnitType.Star);
-      }
-      else
-      {
-        imageRow.Height = new GridLength(5, GridUnitType.Star);
+    //  if (imageRow.Height != new GridLength(0, GridUnitType.Pixel))
+    //  {
+    //    imageRow.Height = new GridLength(0, GridUnitType.Pixel);
+    //    codeRow.Height = new GridLength(5, GridUnitType.Star);
+    //  }
+    //  else
+    //  {
+    //    imageRow.Height = new GridLength(5, GridUnitType.Star);
 
-      }
+    //  }
 
 
-    }
+    //}
     private void OpenImage_Executed(object sender, ExecutedRoutedEventArgs e)
     {
       OpenFileDialog ofd = new OpenFileDialog();
@@ -374,38 +386,38 @@ namespace Shazzam
 
 
 
-    private void ImageStretch_Executed(object sender, ExecutedRoutedEventArgs e)
-    {
-      //switch (e.Parameter.ToString())
-      //{
-      //  case "none":
-      //    SetStretchMode(System.Windows.Media.Stretch.None);
-      //    break;
-      //  case "fill":
-      //    SetStretchMode(System.Windows.Media.Stretch.Fill);
-      //    break;
-      //  case "uniform":
-      //    SetStretchMode(System.Windows.Media.Stretch.Uniform);
-      //    break;
-      //  case "uniformtofill":
-      //    SetStretchMode(System.Windows.Media.Stretch.UniformToFill);
-      //    break;
-      //  default:
-      //    SetStretchMode(System.Windows.Media.Stretch.Uniform);
+    //private void ImageStretch_Executed(object sender, ExecutedRoutedEventArgs e)
+    //{
+    //  //switch (e.Parameter.ToString())
+    //  //{
+    //  //  case "none":
+    //  //    SetStretchMode(System.Windows.Media.Stretch.None);
+    //  //    break;
+    //  //  case "fill":
+    //  //    SetStretchMode(System.Windows.Media.Stretch.Fill);
+    //  //    break;
+    //  //  case "uniform":
+    //  //    SetStretchMode(System.Windows.Media.Stretch.Uniform);
+    //  //    break;
+    //  //  case "uniformtofill":
+    //  //    SetStretchMode(System.Windows.Media.Stretch.UniformToFill);
+    //  //    break;
+    //  //  default:
+    //  //    SetStretchMode(System.Windows.Media.Stretch.Uniform);
 
-      //    break;
-      //}
-    }
+    //  //    break;
+    //  //}
+    //}
 
     private void SetStretchMode(System.Windows.Media.Stretch stretchMode)
     {
-      // userImage.Stretch = stretchMode;
-      //  sampleImage1.Stretch = stretchMode;
-      // sampleImage2.Stretch = stretchMode;
-      // sampleImage3.Stretch = stretchMode;
-      //  sampleImage4.Stretch = stretchMode;
-      // sampleImage5.Stretch = stretchMode;
-      //  mediaUI.Stretch = stretchMode;
+      userImage.Stretch = stretchMode;
+      sampleImage1.Stretch = stretchMode;
+      sampleImage2.Stretch = stretchMode;
+      sampleImage3.Stretch = stretchMode;
+      sampleImage4.Stretch = stretchMode;
+      sampleImage5.Stretch = stretchMode;
+      mediaUI.Stretch = stretchMode;
 
     }
 

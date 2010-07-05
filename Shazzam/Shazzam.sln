@@ -5,7 +5,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shazzam", "Shazzam\Shazzam.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KaxamlPlugins", "KaxamlPlugins\KaxamlPlugins.csproj", "{F6B1B201-8293-4729-842C-0BB54F89FFA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShazzamUnitTests", "ShazzamUnitTests\ShazzamUnitTests.csproj", "{52233C5C-BEC9-4B5D-A1F7-8C9300E955B2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{98D25AEF-1D81-4571-BB3E-5A3A85C8B79F}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		Shazzam.vsmdi = Shazzam.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Shazzam.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -19,6 +31,10 @@ Global
 		{F6B1B201-8293-4729-842C-0BB54F89FFA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6B1B201-8293-4729-842C-0BB54F89FFA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6B1B201-8293-4729-842C-0BB54F89FFA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52233C5C-BEC9-4B5D-A1F7-8C9300E955B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52233C5C-BEC9-4B5D-A1F7-8C9300E955B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52233C5C-BEC9-4B5D-A1F7-8C9300E955B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52233C5C-BEC9-4B5D-A1F7-8C9300E955B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
