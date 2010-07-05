@@ -1,6 +1,6 @@
 /// <class>BlindsTransitionEffect</class>
 /// <description>A transition effect </description>
-/// 
+///
 
 /// <summary>The amount(%) of the transition from first texture to the second texture. </summary>
 /// <minValue>0</minValue>
@@ -25,7 +25,7 @@ struct VS_OUTPUT
 };
 
 float4 Blinds(float2 uv)
-{		
+{
 	if(frac(uv.y * NumberOfBlinds) < Progress/100)
 	{
 		return tex2D(Texture1, uv);
@@ -43,4 +43,3 @@ float4 main(VS_OUTPUT input) : COlOR
 {
 	return Blinds(input.UV);
 }
-

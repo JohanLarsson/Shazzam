@@ -1,6 +1,6 @@
-/// <class>BandedSwirlEffect</class>
+﻿/// <class>CirclesEffect</class>
 
-/// <description>An effect that swirls the input in alternating clockwise and counterclockwise bands.</description>
+/// <description>An effect that generates concentric circles.</description>
 
 //-----------------------------------------------------------------------------------------
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
@@ -8,8 +8,8 @@
 
 /// <summary>The center of the swirl. (100,100) is lower right corner </summary>
 /// <minValue>0,0</minValue>
-/// <maxValue>1,1</maxValue>
-/// <defaultValue>.5,.5</defaultValue>
+/// <maxValue>100,100</maxValue>
+/// <defaultValue>50,50</defaultValue>
 float2 Center : register(C0);
 
 /// <summary>The number of bands in the swirl.</summary>
@@ -20,21 +20,17 @@ float Bands : register(C1);
 
 /// <summary>The strength of the effect.</summary>
 /// <minValue>0</minValue>
-/// <maxValue>1</maxValue>
+/// <maxValue>4</maxValue>
 /// <defaultValue>0.5</defaultValue>
-float Strength : register(C2);
+float Size : register(C2);
 
-/// <summary>The aspect ratio (width / height) of the input.</summary>
-/// <minValue>0.5</minValue>
-/// <maxValue>2</maxValue>
-/// <defaultValue>1.5</defaultValue>
-float AspectRatio : register(C3);
+
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -44,14 +40,14 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 {
    // normalize
    // ================================
-//   float2 centerNormalized ;
+   float2 centerNormalized  ={ Center.x/100,Center.y/100};
  //  centerNormalized.x = Center.x/100;
  //  centerNormalized.y = Center.y/100;
-   
+  // float4 color ={5,5,5,5};
    // ================================
-  float2 dir = uv - Center;
-  dir.y /= AspectRatio;
-  float dist = length(dir);
+  float2 dir = uv - centerNormalized;
+  //dir.y /= AspectRatio;
+  float dist = length(dir) * Size;
   float angle = atan2(dir.y, dir.x);
 
   float remainder = frac(dist * Bands);
@@ -75,11 +71,11 @@ float4 main(float2 uv : TEXCOORD) : COLOR
     fac = -(1 - 8 * (remainder - 0.75));
   }
 
-  float newAngle = angle + fac * Strength * dist;
+  //float newAngle = angle + fac * Strength * dist;
   float2 newDir;
-  sincos(newAngle, newDir.y, newDir.x);
-  newDir.y *= AspectRatio;
+//	sincos(newAngle, newDir.y, newDir.x);
+//	newDir.y *= AspectRatio;
 
-  float2 samplePoint = Center + dist * newDir;
-  return tex2D(implicitInputSampler, samplePoint);
+  
+  return tex2D(Texture1Sampler,  centerNormalized + dist  );
 }

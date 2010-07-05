@@ -1,6 +1,6 @@
 /// <class>ShrinkTransitionEffect</class>
 
-/// <description>An transition effect </description>
+/// <description>A transition effect </description>
 /// <summary>The amount(%) of the transition from first texture to the second texture. </summary>
 /// <minValue>0</minValue>
 /// <maxValue>100</maxValue>

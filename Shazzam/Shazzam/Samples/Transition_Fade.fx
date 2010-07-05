@@ -1,6 +1,6 @@
 /// <class>FadeTransitionEffect</class>
 
-/// <description>An transition effect </description>
+/// <description>A transition effect </description>
 /// <summary>The amount(%) of the transition from first texture to the second texture. </summary>
 /// <minValue>0</minValue>
 /// <maxValue>100</maxValue>
@@ -30,6 +30,5 @@ float4 Fade(float2 uv, float progress)
 //--------------------------------------------------------------------------------------
 float4 main(VS_OUTPUT input) : COlOR
 {
-	return Fade(input.UV, Progress/100);
+  return Fade(input.UV, Progress/100);
 }
-

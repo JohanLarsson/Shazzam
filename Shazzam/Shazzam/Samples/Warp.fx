@@ -1,7 +1,7 @@
 ﻿// from http://fluidkit.codeplex.com/
 // http://blog.pixelingene.com/?p=229
 
-sampler2D Texture1 : register(s0);
+sampler2D input : register(s0);
 /// <summary>The Size of the texture.</summary>
 /// <minValue>0</minValue>
 /// <maxValue>100</maxValue>
@@ -70,7 +70,7 @@ float4 main(float2 uv : TEXCOORD) : COLOR
         float tx = lerp(0, 1, (uv.x-left)/(right-left));
         float2 pos = float2(tx, uv.y);
         
-        return tex2D(implicitInput, pos);
+        return tex2D(input, pos);
     }
     else return float4(0,0,0,1);
 }

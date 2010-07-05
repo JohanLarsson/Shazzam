@@ -34,7 +34,7 @@ float4 SampleWithBorder(float4 border, sampler2D tex, float2 uv)
 
 float4 SwirlGrid(float2 uv,float progress)
 {
-  float cellCount = 10;
+//  float cellCount = 10;
   float cellsize = 1.0 / cellCount;
   
   float2 cell = floor(uv * cellCount);

@@ -1,12 +1,12 @@
 /// <class>BloodTransitionEffect</class>
 
-/// <description>An transition effect </description>
+/// <description>A transition effect </description>
 /// <summary>The amount(%) of the transition from first texture to the second texture. </summary>
+
 /// <minValue>0</minValue>
 /// <maxValue>100</maxValue>
 /// <defaultValue>30</defaultValue>
 float Progress : register(C0);
-
 
 /// <summary>The seed value that determines dripiness. </summary>
 /// <minValue>0</minValue>
@@ -28,17 +28,17 @@ struct VS_OUTPUT
 
 float4 Blood(float2 uv,float progress)
 {
-	float offset = min(progress + progress * tex2D(CloudInput, float2(uv.x, RandomSeed)).r, 1.0);
-	uv.y -= offset;
-	
-	if(uv.y > 0.0)
-	{
-		return tex2D(Texture2, uv);
-	}
-	else
-	{
-		return tex2D(Texture1, frac(uv));
-	}
+  float offset = min(progress + progress * tex2D(CloudInput, float2(uv.x, RandomSeed)).r, 1.0);
+  uv.y -= offset;
+
+  if(uv.y > 0.0)
+  {
+    return tex2D(Texture2, uv);
+  }
+  else
+  {
+    return tex2D(Texture1, frac(uv));
+  }
 }
 
 //--------------------------------------------------------------------------------------
@@ -46,6 +46,5 @@ float4 Blood(float2 uv,float progress)
 //--------------------------------------------------------------------------------------
 float4 main(VS_OUTPUT input) : COlOR
 {
-	return Blood(input.UV,  Progress/100);
+  return Blood(input.UV,  Progress/100);
 }
-

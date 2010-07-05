@@ -1,6 +1,6 @@
 /// <class>LeastBrightTransitionEffect</class>
 
-/// <description>An transition effect </description>
+/// <description>A transition effect </description>
 /// <summary>The amount(%) of the transition from first texture to the second texture. </summary>
 /// <minValue>0</minValue>
 /// <maxValue>100</maxValue>
@@ -10,7 +10,6 @@ float Progress : register(C0);
 sampler2D Texture1 : register(s0);
 sampler2D Texture2 : register(s1);
 
-
 float4 LeastBright(float2 uv,float progress)
 {
 	int c = 4;
@@ -18,7 +17,7 @@ float4 LeastBright(float2 uv,float progress)
 	float oc = (c -1) / 2;
 	float oc2 = (c2 -1) / 2;
 	float offset = 0.01 * progress;
-	
+
 	float leastBright = 1;
 	float4 leastBrightColor;
 	for(int y=0; y<c; y++)
@@ -35,9 +34,9 @@ float4 LeastBright(float2 uv,float progress)
 			}
 		}
 	}
-	
+
 	float4 impl = tex2D(Texture1, uv);
-	    
+
 	return lerp(leastBrightColor,impl, progress);
 }
 
@@ -48,4 +47,3 @@ float4 main(float2 uv : TEXCOORD) : COlOR
 {
 	return LeastBright(uv, Progress/100);
 }
-

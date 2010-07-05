@@ -1,6 +1,6 @@
 /// <class>BandedSwirlEffect</class>
 
-/// <description>An effect that swirls the input in alternating clockwise and counterclockwise bands.</description>
+/// <description>An effect that swirls the input in alternating clockwise and counterclockwise bands. Compile it with PS_3 settings enabled.</description>
 
 //-----------------------------------------------------------------------------------------
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
@@ -8,8 +8,8 @@
 
 /// <summary>The center of the swirl. (100,100) is lower right corner </summary>
 /// <minValue>0,0</minValue>
-/// <maxValue>1,1</maxValue>
-/// <defaultValue>.5,.5</defaultValue>
+/// <maxValue>100,100</maxValue>
+/// <defaultValue>50,50</defaultValue>
 float2 Center : register(C0);
 
 /// <summary>The number of bands in the swirl.</summary>
@@ -31,10 +31,10 @@ float Strength : register(C2);
 float AspectRatio : register(C3);
 
 //--------------------------------------------------------------------------------------
-// Sampler Inputs (Brushes, including ImplicitInput)
+// Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D Texture1Sampler : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -44,42 +44,42 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 {
    // normalize
    // ================================
-//   float2 centerNormalized ;
- //  centerNormalized.x = Center.x/100;
- //  centerNormalized.y = Center.y/100;
+   float2 centerNormalized ;
+   centerNormalized.x = Center.x/100;
+   centerNormalized.y = Center.y/100;
    
    // ================================
-  float2 dir = uv - Center;
-  dir.y /= AspectRatio;
-  float dist = length(dir);
-  float angle = atan2(dir.y, dir.x);
+	float2 dir = uv - centerNormalized;
+	dir.y /= AspectRatio;
+	float dist = length(dir);
+	float angle = atan2(dir.y, dir.x);
 
-  float remainder = frac(dist * Bands);
-  float fac;   
-  if (remainder < 0.25)
-  {
-    fac = 1.0;
-  }
-  else if (remainder < 0.5)
-  {
-    // transition zone - go smoothly from previous zone to next.
-    fac = 1 - 8 * (remainder - 0.25);
-  }
-  else if (remainder < 0.75)
-  {
-    fac = -1.0;
-  }
-  else
-  {
-    // transition zone - go smoothly from previous zone to next.
-    fac = -(1 - 8 * (remainder - 0.75));
-  }
+	float remainder = frac(dist * Bands);
+	float fac;   
+	if (remainder < 0.25)
+	{
+		fac = 1.0;
+	}
+	else if (remainder < 0.5)
+	{
+		// transition zone - go smoothly from previous zone to next.
+		fac = 1 - 8 * (remainder - 0.25);
+	}
+	else if (remainder < 0.75)
+	{
+		fac = -1.0;
+	}
+	else
+	{
+		// transition zone - go smoothly from previous zone to next.
+		fac = -(1 - 8 * (remainder - 0.75));
+	}
 
-  float newAngle = angle + fac * Strength * dist;
-  float2 newDir;
-  sincos(newAngle, newDir.y, newDir.x);
-  newDir.y *= AspectRatio;
+	float newAngle = angle + fac * Strength * dist;
+	float2 newDir;
+	sincos(newAngle, newDir.y, newDir.x);
+	newDir.y *= AspectRatio;
 
-  float2 samplePoint = Center + dist * newDir;
-  return tex2D(implicitInputSampler, samplePoint);
+	float2 samplePoint = centerNormalized + dist * newDir;
+	return tex2D(Texture1Sampler, samplePoint);
 }

@@ -1,6 +1,6 @@
 /// <class>CircleRevealTransitionEffect</class>
 
-/// <description>An transition effect </description>
+/// <description>A transition effect </description>
 /// <summary>The amount(%) of the transition from first texture to the second texture. </summary>
 /// <minValue>0</minValue>
 /// <maxValue>100</maxValue>
@@ -37,15 +37,15 @@ struct VS_OUTPUT
 
 float4 Circle(float2 uv,float progress)
 {
-	float radius = -FuzzyAmount + progress * (CircleSize + 2.0 * FuzzyAmount);
-	float fromCenter = length(uv - CenterPoint);
-	float distFromCircle = fromCenter - radius;
-	
-	float4 c1 = tex2D(Texture2, uv); 
+  float radius = -FuzzyAmount + progress * (CircleSize + 2.0 * FuzzyAmount);
+  float fromCenter = length(uv - CenterPoint);
+  float distFromCircle = fromCenter - radius;
+
+  float4 c1 = tex2D(Texture2, uv);
     float4 c2 = tex2D(Texture1, uv);
-    
-	float p = saturate((distFromCircle + FuzzyAmount) / (2.0 * FuzzyAmount));
-	return lerp(c2, c1, p);
+
+  float p = saturate((distFromCircle + FuzzyAmount) / (2.0 * FuzzyAmount));
+  return lerp(c2, c1, p);
 }
 
 //--------------------------------------------------------------------------------------
@@ -53,6 +53,5 @@ float4 Circle(float2 uv,float progress)
 //--------------------------------------------------------------------------------------
 float4 main(VS_OUTPUT input) : COlOR
 {
-	return Circle(input.UV, Progress/100);
+  return Circle(input.UV, Progress/100);
 }
-

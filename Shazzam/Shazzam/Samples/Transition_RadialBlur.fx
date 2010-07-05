@@ -1,6 +1,6 @@
 /// <class>RadialBlurTransitionEffect</class>
 
-/// <description>An transition effect </description>
+/// <description>A transition effect </description>
 /// <summary>The amount(%) of the transition from first texture to the second texture. </summary>
 /// <minValue>0</minValue>
 /// <maxValue>100</maxValue>
@@ -19,24 +19,24 @@ struct VS_OUTPUT
 
 float4 RadialBlur(float2 uv,float progress)
 {
-	float2 center = float2(0.5,0.5);
-	float2 toUV = uv - center;
-	float2 normToUV = toUV;
-	
-	
-	float4 c1 = float4(0,0,0,0);
-	int count = 24;
-	float s = progress * 0.02;
-	
-	for(int i=0; i<count; i++)
-	{
-		c1 += tex2D(Texture2, uv - normToUV * s * i); 
-	}
-	
-	c1 /= count;
+  float2 center = float2(0.5,0.5);
+  float2 toUV = uv - center;
+  float2 normToUV = toUV;
+  
+  
+  float4 c1 = float4(0,0,0,0);
+  int count = 24;
+  float s = progress * 0.02;
+  
+  for(int i=0; i<count; i++)
+  {
+    c1 += tex2D(Texture2, uv - normToUV * s * i); 
+  }
+  
+  c1 /= count;
     float4 c2 = tex2D(Texture1, uv);
 
-	return lerp(c1, c2, progress);
+  return lerp(c1, c2, progress);
 }
 
 //--------------------------------------------------------------------------------------
@@ -44,6 +44,6 @@ float4 RadialBlur(float2 uv,float progress)
 //--------------------------------------------------------------------------------------
 float4 main(VS_OUTPUT input) : COlOR
 {
-	return RadialBlur(input.UV, Progress/100);
+  return RadialBlur(input.UV, Progress/100);
 }
 
