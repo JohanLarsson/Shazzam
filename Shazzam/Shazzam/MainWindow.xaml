@@ -4,7 +4,7 @@
         xmlns:converters='clr-namespace:Shazzam.Converters'
         xmlns:commands='clr-namespace:Shazzam.Commands'
         xmlns:view='clr-namespace:Shazzam.Views'
-        Title='Shazzam - 1.2 Shader Effect Tester'
+        Title='Shazzam Shader Editor = V1.2'
         WindowState='Maximized'
         Background='Black'
         xmlns:d='http://schemas.microsoft.com/expression/blend/2008'

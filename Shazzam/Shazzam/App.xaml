@@ -8,8 +8,9 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Resources/BrushesRD.xaml" />
-        <ResourceDictionary Source="/Resources/EditorRD.xaml" />
         <ResourceDictionary Source="/Resources/MenuRD.xaml" />
+        <ResourceDictionary Source="/Resources/EditorRD.xaml" />
+     
       </ResourceDictionary.MergedDictionaries>
             <Style x:Key='ImageInsideBorder'
 					 TargetType='{x:Type Border}'>

@@ -10,6 +10,7 @@ using Microsoft.Win32;
 using Shazzam.Commands;
 using System.Reflection;
 using Shazzam.ViewModels;
+using Shazzam.Helpers;
 
 namespace Shazzam
 {
@@ -92,6 +93,7 @@ namespace Shazzam
     {
       this.plugin1.SelectedIndex = 0;
       SetupMenuBindings();
+      this.Title = "Shazzam Shader Editor - v" + VersionHelper.GetShortVersionNumber();
     }
 
     private void SetupMenuBindings()
