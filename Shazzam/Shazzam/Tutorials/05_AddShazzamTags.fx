@@ -48,7 +48,7 @@ float4 main(float2 locationInSource : TEXCOORD) : COLOR
   color.b *= BlueValue;
 
 
-// modify these variable at runtime in Shazzam with the controls in the 'Change Shader Settings' tab.
+// modify these variable at runtime in Shazzam with the controls in the 'Tryout shader (adjust settings)' tab.
 
 
 

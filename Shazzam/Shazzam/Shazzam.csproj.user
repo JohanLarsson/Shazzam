@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectView>ProjectFiles</ProjectView>
-    <PublishUrlHistory>C:\Data\Projects\Publish\Shazzam\34\|C:\Data\Projects\Publish\Shazzam\33\|C:\Data\Projects\Publish\Shazzam\32\|C:\Data\Projects\Publish\Shazzam\31\|C:\Data\Projects\Publish\Shazzam\</PublishUrlHistory>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <PublishUrlHistory>C:\Data\Projects\Publish\Shazzam\36\|C:\Data\Projects\Publish\Shazzam\35\|C:\Data\Projects\Publish\Shazzam\34\|C:\Data\Projects\Publish\Shazzam\33\|C:\Data\Projects\Publish\Shazzam\32\</PublishUrlHistory>
     <InstallUrlHistory>http://shazzam-tool.com/test11/|http://shazzam-tool.com/</InstallUrlHistory>
     <SupportUrlHistory>http://shazzam-tool.com/support.htm</SupportUrlHistory>
     <UpdateUrlHistory>

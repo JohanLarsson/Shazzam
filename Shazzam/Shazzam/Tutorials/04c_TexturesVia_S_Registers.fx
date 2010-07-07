@@ -19,6 +19,7 @@ float4 main(float2 locationInSource : TEXCOORD) : COLOR
 
   
     return color;
-  // TODO: look at these input parameter at runtime in Shazzam with the controls in the 'Change Shader Settings' tab.
+  // TODO: look at these input parameter at runtime in Shazzam with 
+  // the controls in the 'Tryout shader (adjust settings)' tab.
 }
     

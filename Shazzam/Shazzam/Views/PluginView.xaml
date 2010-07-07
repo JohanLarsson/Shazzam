@@ -59,10 +59,11 @@
                       <!--<Border Height="1" BorderBrush="#00000000" BorderThickness="1,1,1,0" CornerRadius="0" SnapsToDevicePixels="True" VerticalAlignment="Top" />
                       <Border Height="1" BorderBrush="#00FFFFFF" BorderThickness="1,1,1,0" CornerRadius="0" SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="0,1,0,0"  />-->
 
-                      <Image Source='check.png'
+                      <Image Source='greentarget.png'
                              Width='18'
                              Height='18'
                              Name="checkIcon"
+                             Stretch='Uniform'
                              SnapsToDevicePixels="True"
                              IsHitTestVisible="False"
                              Margin="8,0,8,0"

@@ -2,6 +2,8 @@
 
 /// <description>A transition effect </description>
 
+// will not compile unless you have .NET 4 installed and the PS_3 settings enabled in Shazzam
+
 /// <summary>The amount(%) of the transition from first texture to the second texture. </summary>
 /// <minValue>0</minValue>
 /// <maxValue>100</maxValue>

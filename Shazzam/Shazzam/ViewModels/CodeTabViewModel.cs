@@ -5,10 +5,16 @@ using System.Text;
 
 namespace Shazzam.ViewModels
 {
-	class CodeTabViewModel
-	{
+  class CodeTabViewModel : ViewModelBase
+  {
 
-		// nothing here yet.  
-		// soon I need to have a real MVVM implementation
-	}
+    public bool AreGeneratedCodeTabsEnabled
+    {
+      get
+      {
+        return Shazzam.Properties.Settings.Default.AreGeneratedCodeTabsEnabled;
+      }
+    }
+
+  }
 }

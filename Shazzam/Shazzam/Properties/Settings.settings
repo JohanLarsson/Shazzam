@@ -56,5 +56,8 @@
     <Setting Name="FilePath_TextureMap3" Type="System.Uri" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="AreGeneratedCodeTabsEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

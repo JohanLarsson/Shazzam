@@ -28,7 +28,7 @@ float4 main(float2 locationInSource : TEXCOORD) : COLOR
  // the following line will fail however, because you cannot modify a globel var
  //  NotInRegister = 9 ;
 
-  // modify these variable at runtime in Shazzam with the controls in the 'Change Shader Settings' tab.
+  // modify these variable at runtime in Shazzam with the controls in the 'Tryout shader (adjust settings)' tab.
 
     return color;
 

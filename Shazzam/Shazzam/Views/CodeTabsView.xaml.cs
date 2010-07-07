@@ -531,7 +531,7 @@ namespace Shazzam.Views
       //	_dirtyCounter = 2;
       _storedDocHash = _shaderTextEditor.Document.TextContent.GetHashCode();
       _shaderTextEditor.SaveFile(fileName);
-      this.codeTab.Header = Path.GetFileName(fileName);
+      this.codeTabHeaderText.Text = Path.GetFileName(fileName);
     }
 
     public void OpenFile(string fileName)
@@ -540,7 +540,7 @@ namespace Shazzam.Views
       ResetDirty();
       _dirtyCounter = 0;
       this.codeTab.Focus();
-      this.codeTab.Header = Path.GetFileName(fileName);
+      this.codeTabHeaderText.Text = Path.GetFileName(fileName);
       this._shaderTextEditor.LoadFile(fileName);
       this._shaderTextEditor.Document.HighlightingStrategy = _hlslHS;
       Shazzam.Properties.Settings.Default.FilePath_LastFx = fileName;

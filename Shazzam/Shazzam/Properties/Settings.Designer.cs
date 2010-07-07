@@ -235,5 +235,17 @@ namespace Shazzam.Properties {
                 this["FilePath_TextureMap3"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AreGeneratedCodeTabsEnabled {
+            get {
+                return ((bool)(this["AreGeneratedCodeTabsEnabled"]));
+            }
+            set {
+                this["AreGeneratedCodeTabsEnabled"] = value;
+            }
+        }
     }
 }

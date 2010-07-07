@@ -1,7 +1,7 @@
 /// <class>BandedSwirlEffect</class>
 
 /// <description>An effect that swirls the input in alternating clockwise and counterclockwise bands. Compile it with PS_3 settings enabled.</description>
-
+// will not compile unless you have .NET 4 installed and the PS_3 settings enabled in Shazzam
 //-----------------------------------------------------------------------------------------
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
 //-----------------------------------------------------------------------------------------

@@ -26,7 +26,7 @@
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Data\Projects\Publish\Shazzam\34\</PublishUrl>
+    <PublishUrl>C:\Data\Projects\Publish\Shazzam\36\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -43,7 +43,7 @@
     <SuiteName>By Walt Ritscher</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>35</ApplicationRevision>
+    <ApplicationRevision>37</ApplicationRevision>
     <ApplicationVersion>1.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -311,6 +311,7 @@
     <Content Include="D3DX9_40.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Views\greentarget.png" />
     <Resource Include="Images\connect.png" />
     <Resource Include="Images\disconnect.png" />
     <Resource Include="Images\page_copy.png" />
@@ -319,9 +320,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Default\ColorRange.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\Noise.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\TextureMaps\bubbles.png">
@@ -806,7 +804,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Fire1.jpg" />
-    <Resource Include="Images\Geese.jpg" />
+    <Resource Include="Images\Default\Geese.jpg" />
     <Resource Include="Images\Light1.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -815,16 +813,11 @@
     <Resource Include="Views\info.png" />
     <Resource Include="Images\help.ico" />
     <Resource Include="Images\Star.png" />
-    <Resource Include="Images\SwirlLogo3.png" />
     <Resource Include="Views\check.png" />
-    <Resource Include="Views\zoom.png" />
     <Resource Include="Views\Fav2.png" />
-    <Resource Include="Views\Arrow2.png" />
-    <Resource Include="Views\add.png" />
-    <Resource Include="Views\play.png" />
     <Resource Include="Images\square.png" />
     <Resource Include="Images\SwirlLogo2.png" />
-    <Resource Include="Images\crystal.jpg" />
+    <Resource Include="Images\Default\crystal.jpg" />
     <Resource Include="Images\SpikeBalls.jpg" />
   </ItemGroup>
   <ItemGroup>

@@ -73,7 +73,7 @@
         Shader Editor   
       </Run>
         <LineBreak />
-      <Run>© 2008-2009 Walt Ritscher</Run>
+      <Run>© 2008-2010 Walt Ritscher</Run>
       <LineBreak />
       <Hyperlink Foreground="White"
                  TextDecorations="Underline" NavigateUri='http://shazzam-tool.com'>shazzam-tool.com</Hyperlink>
