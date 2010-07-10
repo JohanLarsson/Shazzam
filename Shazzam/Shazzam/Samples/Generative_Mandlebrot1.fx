@@ -1,42 +1,65 @@
-﻿/// <class>GenerateStar</class>
+﻿/// <class>GenerateMandelbrot</class>
 
-/// <description>An effect that swirls the input in alternating clockwise and counterclockwise bands.</description>
+/// <description>Create a Mandelbrot.  Does now use any of original pixels</description>
 
 //-----------------------------------------------------------------------------------------
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
 //-----------------------------------------------------------------------------------------
 
-/// <summary>The center of the star.  </summary>
-/// <minValue>0,0</minValue>
-/// <maxValue>2,2</maxValue>
-/// <defaultValue>.5,.5</defaultValue>
-float2 Center : register(C0);
+/// <summary>The center of the effect.  </summary>
+/// <minValue>0</minValue>
+/// <maxValue>1</maxValue>
+/// <defaultValue>.6</defaultValue>
+float Center : register(C0);
 
 
+/// <summary>The red strength of the effect.</summary>
+/// <minValue>-2</minValue>
+/// <maxValue>2</maxValue>
+/// <defaultValue>2</defaultValue>
+float RedStrength : register(C2);
 
-/// <summary>The strength of the effect.</summary>
+
+/// <summary>The blue strength of the effect.</summary>
+/// <minValue>-2</minValue>
+/// <maxValue>2</maxValue>
+/// <defaultValue>,.9</defaultValue>
+float BlueStrength : register(C4);
+
+/// <summary>The green strength of the effect.</summary>
 /// <minValue>-2</minValue>
 /// <maxValue>2</maxValue>
 /// <defaultValue>1</defaultValue>
-float ColorStrength : register(C2);
+float GreenStrength : register(C6);
 
+/// <summary>The Width of the effect.</summary>
+/// <minValue>0</minValue>
+/// <maxValue>4</maxValue>
+/// <defaultValue>3.7</defaultValue>
+float Width : register(C5);   
 
-/// <defaultValue>Blue</defaultValue>
-float4 mainColor :  register(C4); 
+/// <summary>The Width of the effect.</summary>
+/// <minValue>0</minValue>
+/// <maxValue>4</maxValue>
+/// <defaultValue>3</defaultValue>
+float Height : register(C7); 
 
-/// <defaultValue>Orange</defaultValue> 
-float4 secondaryColor : register(C5);   
-
-/// <minValue>0.5</minValue>
-/// <maxValue>8</maxValue>
+/// <summary>The Width of the effect.</summary>
+/// <minValue>0</minValue>
+/// <maxValue>4</maxValue>
 /// <defaultValue>2</defaultValue>
-float  ringMultiplier : register(C6);  
- 
+float ScatterA : register(C3);
+/// <summary>The Width of the effect.</summary>
+/// <minValue>0</minValue>
+/// <maxValue>4</maxValue>
+/// <defaultValue>2</defaultValue>
+float ScatterB : register(C8);
+
 //--------------------------------------------------------------------------------------
 // Sampler Inputs (Brushes, including ImplicitInput)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D inputSource : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -44,19 +67,19 @@ sampler2D implicitInputSampler : register(S0);
 
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
-   float2 c = (uv - .5) * float2(3.8,3); 
+   float2 c = (uv.xy - Center) * float2(Width,Height); 
    float2 v = c;
   
    for (int n = 0; n < 70; n++){
-   v = float2(pow(v.x,2) - pow(v.y,2), v.x * v.y * 1.4) + c;    } 
-   float4 color =float4(uv.x, uv.y, uv.y, uv.x);// = tex2D(implicitInputSampler,uv);
-   float4 result =float4(uv.y, uv.x, uv.y, uv.x);// = (dot(v, v) > 1) ? 1- color :color; 
-   float red = (dot(v, v) > 1) ? 1- color.r :color.r; 
-    float blue = (dot(v, v) > 1) ? 1- color.b :color.b; 
-     float green = (dot(v, v) > 1) ? 1- color.g :color.g; 
+   v = float2(pow(v.x,ScatterA) - pow(v.y,ScatterB), v.x * v.y * 1.4) + c;    } 
+   float4 color = float4(uv.x, uv.y, uv.y, uv.x);// = tex2D(inputSource,uv);
+   float4 result = float4(uv.y, uv.x, uv.y, uv.x);// = (dot(v, v) > 1) ? 1- color :color; 
+   float red = (dot(v, v) > RedStrength) ? RedStrength- color.r :color.r; 
+   float blue = (dot(v, v) > BlueStrength) ? BlueStrength- color.b :color.b; 
+   float green = (dot(v, v) > GreenStrength) ? GreenStrength- color.g :color.g; 
    result.a = 1; 
    result.r = red;
    result.b = blue;
-  // result.g = green;
+   result.g = green;
    return result;
 }

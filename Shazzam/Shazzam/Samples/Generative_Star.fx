@@ -36,7 +36,7 @@ float  ringMultiplier : register(C6);
 // Sampler Inputs (Brushes, including ImplicitInput)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D inputSource : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -46,7 +46,7 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 {
    float scaledDistance = sqrt(dot(Center.y -uv.y, Center.x -uv.x)) * ringMultiplier; 
  
-    float blendFactor = tex2D (implicitInputSampler, scaledDistance) * ColorStrength; 
+    float blendFactor = tex2D (inputSource, scaledDistance) * ColorStrength; 
   
     return lerp (secondaryColor, mainColor, blendFactor); 
 }

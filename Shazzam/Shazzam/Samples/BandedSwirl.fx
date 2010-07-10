@@ -34,7 +34,7 @@ float AspectRatio : register(C3);
 // Sampler Inputs (Brushes, including ImplicitInput)
 //--------------------------------------------------------------------------------------
 
-sampler2D implicitInputSampler : register(S0);
+sampler2D inputSource : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -81,5 +81,5 @@ float4 main(float2 uv : TEXCOORD) : COLOR
   newDir.y *= AspectRatio;
 
   float2 samplePoint = Center + dist * newDir;
-  return tex2D(implicitInputSampler, samplePoint);
+  return tex2D(inputSource, samplePoint);
 }

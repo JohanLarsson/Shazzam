@@ -22,7 +22,7 @@ float BlurAmount : register(C1);
 // Sampler Inputs (Brushes, including ImplicitInput)
 //--------------------------------------------------------------------------------------
 
-sampler2D  implicitInputSampler : register(S0);
+sampler2D  inputSource : register(S0);
 
 //--------------------------------------------------------------------------------------
 // Pixel Shader
@@ -36,7 +36,7 @@ float4 main(float2 uv : TEXCOORD) : COLOR
 	for (int i = 0; i < 15; i++)
     {
 		float scale = 1.0 + BlurAmount * (i / 14.0);
-		c += tex2D(implicitInputSampler, uv * scale + Center);
+		c += tex2D(inputSource, uv * scale + Center);
 	}
    
 	c /= 15;
