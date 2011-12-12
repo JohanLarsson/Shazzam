@@ -67,6 +67,7 @@ namespace Shazzam.ViewModels
         return _exploreCompiledShadersCommand;
       }
     }
+    [PreEmptive.Attributes.Feature("ExploreCompiledShaders")]
     private void ExploreCompiledShadersCommand_Execute()
     {
       string path = Properties.Settings.Default.FolderPath_Output;
@@ -93,6 +94,7 @@ namespace Shazzam.ViewModels
         return _exploreTextureMapsCommand;
       }
     }
+    [PreEmptive.Attributes.Feature("ExploreTextureMaps")]
     private void ExploreTextureMapsCommand_Execute()
     {
       string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -120,6 +122,7 @@ namespace Shazzam.ViewModels
         return _fullScreenImageCommand;
       }
     }
+    [PreEmptive.Attributes.Feature("FullScreenImage")]
     private void FullScreenImageCommand_Execute()
     {
       if (CodeRowHeight != new GridLength(0, GridUnitType.Pixel))
@@ -153,6 +156,7 @@ namespace Shazzam.ViewModels
         return _fullScreenCodeCommand;
       }
     }
+    [PreEmptive.Attributes.Feature("FullScreenCode")]
     private void FullScreenCode_Execute()
     {
       if (ImageRowHeight != new GridLength(0, GridUnitType.Pixel))
@@ -211,6 +215,7 @@ namespace Shazzam.ViewModels
         return _imageStretchCommand;
       }
     }
+    [PreEmptive.Attributes.Feature("ImageStretch")]
     private void ImageStretch_Execute(string menuParameter)
     {
       switch (menuParameter)
@@ -258,12 +263,13 @@ namespace Shazzam.ViewModels
 
         if (_browseToBlogCommand == null)
         {
-          _browseToBlogCommand = new RelayCommand(BrowseToBlog_Callback);
+          _browseToBlogCommand = new RelayCommand(BrowseToBlog_Execute);
         }
         return _browseToBlogCommand;
       }
     }
-    private void BrowseToBlog_Callback()
+    [PreEmptive.Attributes.Feature("BrowseToBlog")]
+    private void BrowseToBlog_Execute()
     {
       try
       {
@@ -286,12 +292,13 @@ namespace Shazzam.ViewModels
 
         if (_showForumsCommand == null)
         {
-          _showForumsCommand = new RelayCommand(ShowForums_Callback);
+          _showForumsCommand = new RelayCommand(ShowForums_Execute);
         }
         return _showForumsCommand;
       }
     }
-    private void ShowForums_Callback()
+    [PreEmptive.Attributes.Feature("ShowForums")]
+    private void ShowForums_Execute()
     {
       try
       {
@@ -313,12 +320,13 @@ namespace Shazzam.ViewModels
 
         if (_showTwitterCommand == null)
         {
-          _showTwitterCommand = new RelayCommand(ShowTwitter_Callback);
+          _showTwitterCommand = new RelayCommand(ShowTwitter_Execute);
         }
         return _showTwitterCommand;
       }
     }
-    private void ShowTwitter_Callback()
+    [PreEmptive.Attributes.Feature("ShowTwitter")]
+    private void ShowTwitter_Execute()
     {
       try
       {
@@ -341,12 +349,13 @@ namespace Shazzam.ViewModels
 
         if (_browseToReportBugCommand == null)
         {
-          _browseToReportBugCommand = new RelayCommand(BrowseToReportBug_Callback);
+          _browseToReportBugCommand = new RelayCommand(BrowseToReportBug_Execute);
         }
         return _browseToReportBugCommand;
       }
     }
-    private void BrowseToReportBug_Callback()
+    [PreEmptive.Attributes.Feature("BrowseToReportBug")]
+    private void BrowseToReportBug_Execute()
     {
       try
       {
