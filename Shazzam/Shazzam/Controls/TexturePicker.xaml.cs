@@ -58,19 +58,29 @@ namespace Shazzam.Controls
       {
         if (tempUri.IsAbsoluteUri)
         {
-          Value = new ImageBrush(new BitmapImage(tempUri));
+          if (System.IO.File.Exists(tempUri.AbsolutePath)) {
+            Value = new ImageBrush(new BitmapImage(tempUri));
+          }
+          else {
+            Value = null;
+          }
+        
         }
         else
         {
           StreamResourceInfo streamInfo = Application.GetContentStream(tempUri);
-
-          BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
-          ImageBrush brush = new ImageBrush(temp);
-          Value = brush;
-          if (brush == null)
-          {
-            Value = new ImageBrush(image1.Source);
+          if (streamInfo != null) {
+            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+            ImageBrush brush = new ImageBrush(temp);
+            Value = brush;
+            if (brush == null) {
+              Value = new ImageBrush(image1.Source);
+            }
           }
+          else {
+            Value = null;
+          }
+          
 
         }
       }
