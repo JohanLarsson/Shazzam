@@ -43,6 +43,19 @@ namespace Shazzam.CodeGen
                                                 out IntPtr ppConstantTable);
 
     [PreserveSig]
+    [DllImport("D3DX9_40_64bit.dll", CharSet = CharSet.Auto, EntryPoint = "D3DXCompileShader")]
+    private static extern int D3DXCompileShader64Bit([MarshalAs(UnmanagedType.LPStr)]string pSrcData,
+                                                int dataLen,
+                                                IntPtr pDefines,
+                                                IntPtr includes,
+                                                [MarshalAs(UnmanagedType.LPStr)]string pFunctionName,
+                                                [MarshalAs(UnmanagedType.LPStr)]string pTarget,
+                                                int flags,
+                                                out ID3DXBuffer ppShader,
+                                                out ID3DXBuffer ppErrorMsgs,
+                                                out IntPtr ppConstantTable);
+
+    [PreserveSig]
     [DllImport("d3dx10_43.dll", CharSet = CharSet.Auto)]
     private static extern int D3DX10CompileFromMemory([MarshalAs(UnmanagedType.LPStr)]string pSrcData,
                                                         int dataLen,
@@ -58,6 +71,7 @@ namespace Shazzam.CodeGen
                                                         out ID3DXBuffer ppErrorMsgs,
                                                         ref int pHresult);
 
+    [PreEmptive.Attributes.Feature("CompileShader", EventType = PreEmptive.Attributes.FeatureEventTypes.Start)]
     public void Compile(string codeText, ShaderProfile shaderProfile)
     {
 
@@ -104,16 +118,36 @@ namespace Shazzam.CodeGen
       }
       else
       {
-        hr = D3DXCompileShader(codeText,
-                                    codeText.Length,
-                                    defines,
-                                    includes,
-                                    methodName,
-                                    targetProfile,
-                                    0,
-                                    out ppShader,
-                                    out ppErrorMsgs,
-                                    out ppConstantTable);
+        if (System.IntPtr.Size == 8)
+        {
+          // 64 bit
+          hr = D3DXCompileShader64Bit(codeText,
+                                   codeText.Length,
+                                   defines,
+                                   includes,
+                                   methodName,
+                                   targetProfile,
+                                   0,
+                                   out ppShader,
+                                   out ppErrorMsgs,
+                                   out ppConstantTable);
+        }
+        else
+        {
+          // 32 bit
+          hr = D3DXCompileShader(codeText,
+                                   codeText.Length,
+                                   defines,
+                                   includes,
+                                   methodName,
+                                   targetProfile,
+                                   0,
+                                   out ppShader,
+                                   out ppErrorMsgs,
+                                   out ppConstantTable);
+        }
+
+
       }
 
       if (hr != 0)
@@ -155,6 +189,7 @@ namespace Shazzam.CodeGen
       //	throw new Exception("testing");
 
     }
+    [PreEmptive.Attributes.Feature("CompileShader", EventType = PreEmptive.Attributes.FeatureEventTypes.Stop)]
     private void CreateFileCopies(string path)
     {
       if (String.IsNullOrEmpty(Properties.Settings.Default.FilePath_LastFx))
