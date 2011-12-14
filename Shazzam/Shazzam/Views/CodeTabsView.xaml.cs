@@ -36,8 +36,7 @@ namespace Shazzam.Views
     private int _dirtyCounter;
     private int _storedDocHash;
 
-    public CodeTabView()
-    {
+    public CodeTabView() {
       InitializeComponent();
 
       _shaderTextEditor = CreateTextEditor();
@@ -45,10 +44,8 @@ namespace Shazzam.Views
       //	_shaderTextEditor.TextChanged += new EventHandler(_shaderTextEditor_TextChanged);
       //	_shaderTextEditor.Document.TextContentChanged += new EventHandler(Document_TextContentChanged);
       _shaderTextEditor.Document.DocumentChanged += new DocumentEventHandler(Document_DocumentChanged);
-      using (var stream = typeof(CodeTabView).Assembly.GetManifestResourceStream("Shazzam.Resources.HLSLSyntax.xshd"))
-      {
-        using (var reader = new XmlTextReader(stream))
-        {
+      using (var stream = typeof(CodeTabView).Assembly.GetManifestResourceStream("Shazzam.Resources.HLSLSyntax.xshd")) {
+        using (var reader = new XmlTextReader(stream)) {
           var sm = new SyntaxMode("HLSL.xshd", "HLSL", ".fx");
           _hlslHS = HighlightingDefinitionParser.Parse(sm, reader);
           _hlslHS.ResolveReferences(); // don't forget this!
@@ -74,8 +71,7 @@ namespace Shazzam.Views
     }
 
 
-    private void SetupInputBindings()
-    {
+    private void SetupInputBindings() {
       KeyBinding kb;
 
       RoutedUICommand ChangeToCodeTab = new RoutedUICommand("Change To Code Tab", "ChangeToCodeTab", typeof(CodeTabView));
@@ -101,31 +97,26 @@ namespace Shazzam.Views
 
     }
 
-    void Document_DocumentChanged(object sender, DocumentEventArgs e)
-    {
+    void Document_DocumentChanged(object sender, DocumentEventArgs e) {
       // this smells bad, but the TextEditor doesn't have a isDirty flag
       // the DocumentChanged event fires twice when a document is loaded.
 
       _dirtyCounter += 1;
-      if (_dirtyCounter == 2)
-      {
+      if (_dirtyCounter == 2) {
         _storedDocHash = _shaderTextEditor.Document.TextContent.GetHashCode();
 
       }
 
-      if (_shaderTextEditor.Document.TextContent.GetHashCode() == _storedDocHash)
-      {
+      if (_shaderTextEditor.Document.TextContent.GetHashCode() == _storedDocHash) {
         ShazzamSwitchboard.CodeTabView.dirtyStatusText.Visibility = Visibility.Collapsed;
       }
-      else
-      {
+      else {
         ShazzamSwitchboard.CodeTabView.dirtyStatusText.Visibility = Visibility.Visible;
       }
 
     }
 
-    void CodeTabView_Loaded(object sender, RoutedEventArgs e)
-    {
+    void CodeTabView_Loaded(object sender, RoutedEventArgs e) {
       SetupBlurAnimation();
       SetupInputBindings();
 
@@ -135,8 +126,7 @@ namespace Shazzam.Views
     private DoubleAnimation blurAnimation = new DoubleAnimation();
     private DoubleAnimation opacityAnimation = new DoubleAnimation();
     private BlurEffect blur = new BlurEffect { Radius = 0, RenderingBias = RenderingBias.Performance };
-    public void SetupBlurAnimation()
-    {
+    public void SetupBlurAnimation() {
       blurAnimation.Duration = opacityAnimation.Duration = new Duration(TimeSpan.FromSeconds(1.2));
       blurAnimation.From = 0;
       blurAnimation.To = 6;
@@ -154,31 +144,25 @@ namespace Shazzam.Views
       this.blurStoryBoard.Children.Add(this.opacityAnimation);
 
     }
-    public void CompileShader()
-    {
-      try
-      {
+    public void CompileShader() {
+      try {
 
         ShazzamSwitchboard.MainWindow.Effect = blur;
         versionNotSupported.Visibility = Visibility.Hidden;
 
         blurStoryBoard.Begin(this, true);
 
-        if (Shazzam.Properties.Settings.Default.TargetFramework == "WPF_PS3")
-        {
-          if (RenderCapability.IsPixelShaderVersionSupported(3, 0))
-          {
+        if (Shazzam.Properties.Settings.Default.TargetFramework == "WPF_PS3") {
+          if (RenderCapability.IsPixelShaderVersionSupported(3, 0)) {
             versionNotSupported.Visibility = Visibility.Hidden;
           }
-          else
-          {
+          else {
             versionNotSupported.Visibility = Visibility.Visible;
           }
           _compiler.Compile(this.CodeText, ShaderProfile.PixelShader3);
           //_compiler.Compile(this.CodeText);
         }
-        else
-        {
+        else {
           _compiler.Compile(this.CodeText, ShaderProfile.PixelShader2);
           //_compiler.Compile(this.CodeText);
 
@@ -188,16 +172,14 @@ namespace Shazzam.Views
         compileStatusText.Text = String.Format("Last Compiled at: {0}", DateTime.Now.ToLongTimeString());
 
       }
-      catch (CompilerException ex)
-      {
+      catch (CompilerException ex) {
         MessageBox.Show(ShazzamSwitchboard.MainWindow, ex.Message, "Could not compile", MessageBoxButton.OK, MessageBoxImage.Error);
       }
 
 
     }
 
-    private ICSharpCode.TextEditor.TextEditorControl CreateTextEditor()
-    {
+    private ICSharpCode.TextEditor.TextEditorControl CreateTextEditor() {
 
       var currentEditor = new ICSharpCode.TextEditor.TextEditorControl();
       currentEditor.ShowLineNumbers = true;
@@ -219,8 +201,7 @@ namespace Shazzam.Views
 
     }
 
-    private void GenerateBlankInputControls()
-    {
+    private void GenerateBlankInputControls() {
       TextBlock textBlock = new TextBlock
       {
         Foreground = Brushes.White,
@@ -230,8 +211,7 @@ namespace Shazzam.Views
       inputControlPanel.Children.Add(textBlock);
     }
 
-    private void GenerateShaderInputControl(ShaderModelConstantRegister register)
-    {
+    private void GenerateShaderInputControl(ShaderModelConstantRegister register) {
       string toolTipText = String.IsNullOrEmpty(register.Description) ? null : register.Description;
 
       TextBlock textBlock = new TextBlock
@@ -248,13 +228,11 @@ namespace Shazzam.Views
       inputControlPanel.Children.Add(textBlock);
 
       Control control = null;
-      if (register.RegisterType == typeof(Brush))
-      {
+      if (register.RegisterType == typeof(Brush)) {
         control = new TexturePicker(register);
 
       }
-      else if (register.RegisterType == typeof(double) || register.RegisterType == typeof(float))
-      {
+      else if (register.RegisterType == typeof(double) || register.RegisterType == typeof(float)) {
         double minValue = Convert.ToDouble(register.MinValue);
         double maxValue = Convert.ToDouble(register.MaxValue);
         //double defaultValue = Double.Parse(register.DefaultValue.ToString(), NumberStyles.Any, null);
@@ -266,8 +244,7 @@ namespace Shazzam.Views
           Value = defaultValue
         };
       }
-      else if (register.RegisterType == typeof(Point) || register.RegisterType == typeof(Vector) || register.RegisterType == typeof(Size))
-      {
+      else if (register.RegisterType == typeof(Point) || register.RegisterType == typeof(Vector) || register.RegisterType == typeof(Size)) {
         Point minValue = (Point)RegisterValueConverter.ConvertToUsualType(register.MinValue);
         Point maxValue = (Point)RegisterValueConverter.ConvertToUsualType(register.MaxValue);
         Point defaultValue = (Point)RegisterValueConverter.ConvertToUsualType(register.DefaultValue);
@@ -278,8 +255,7 @@ namespace Shazzam.Views
           Value = defaultValue
         };
       }
-      else if (register.RegisterType == typeof(Point3D) || register.RegisterType == typeof(Vector3D))
-      {
+      else if (register.RegisterType == typeof(Point3D) || register.RegisterType == typeof(Vector3D)) {
         Point3D minValue = (Point3D)RegisterValueConverter.ConvertToUsualType(register.MinValue);
         Point3D maxValue = (Point3D)RegisterValueConverter.ConvertToUsualType(register.MaxValue);
         Point3D defaultValue = (Point3D)RegisterValueConverter.ConvertToUsualType(register.DefaultValue);
@@ -290,19 +266,31 @@ namespace Shazzam.Views
           Value = defaultValue
         };
       }
-      else if (register.RegisterType == typeof(Color))
-      {
+      else if (register.RegisterType == typeof(Color)) {
         Color defaultValue = (Color)register.DefaultValue;
-        control = new TextBox
+        //control = new Telerik.Windows.Controls.RadColorEditor
+        //{
+
+        //  HorizontalAlignment = HorizontalAlignment.Left,
+        //  SelectedColor = defaultValue
+        //};
+
+        control = new AdjustableColor
         {
-          Background = Brushes.LightYellow,
-          Width = 150,
+
           HorizontalAlignment = HorizontalAlignment.Left,
-          Text = defaultValue.ToString()
+          Value = defaultValue
         };
+        //  ((control) as AdjustableColor).;
+        //control = new TextBox
+        //{
+        //  Background = Brushes.LightYellow,
+        //  Width = 150,
+        //  HorizontalAlignment = HorizontalAlignment.Left,
+        //  Text = defaultValue.ToString()
+        //};
       }
-      else if (register.RegisterType == typeof(Point4D))
-      {
+      else if (register.RegisterType == typeof(Point4D)) {
         Point4D minValue = (Point4D)register.MinValue;
         Point4D maxValue = (Point4D)register.MaxValue;
         Point4D defaultValue = (Point4D)register.DefaultValue;
@@ -314,8 +302,7 @@ namespace Shazzam.Views
         };
       }
 
-      if (control != null)
-      {
+      if (control != null) {
         control.Margin = new Thickness(15, 2, 25, 5);
         control.ToolTip = toolTipText;
         this.inputControlPanel.Children.Add(control);
@@ -323,26 +310,17 @@ namespace Shazzam.Views
       }
     }
 
-    private void BindShaderEffectToControls()
-    {
+    private void BindShaderEffectToControls() {
       ShaderEffect shaderEffect = this.CurrentShaderEffect;
-      if (shaderEffect != null)
-      {
-        foreach (ShaderModelConstantRegister register in this._shaderModel.Registers)
-        {
-          if (register.AffiliatedControl != null)
-          {
+      if (shaderEffect != null) {
+        foreach (ShaderModelConstantRegister register in this._shaderModel.Registers) {
+          if (register.AffiliatedControl != null) {
             FieldInfo fieldInfo = shaderEffect.GetType().GetField(String.Format("{0}Property", register.RegisterName), BindingFlags.Public | BindingFlags.Static);
-            if (fieldInfo != null)
-            {
+            if (fieldInfo != null) {
               DependencyProperty dependencyProperty = fieldInfo.GetValue(null) as DependencyProperty;
-              if (dependencyProperty != null)
-              {
+              if (dependencyProperty != null) {
                 string controlPropertyName = "Value";
-                if (register.RegisterType == typeof(Color))
-                {
-                  controlPropertyName = "Text";
-                }
+                
                 Binding binding = new Binding(controlPropertyName)
                 {
                   Source = register.AffiliatedControl,
@@ -356,11 +334,9 @@ namespace Shazzam.Views
       }
     }
     string csFolder, vbFolder;
-    private void FillEditControls()
-    {
+    private void FillEditControls() {
       inputControlPanel.Children.Clear();
-      if (_shaderModel.Registers.Count == 0)
-      {
+      if (_shaderModel.Registers.Count == 0) {
         GenerateBlankInputControls();
       }
       _shaderModel.Registers.ForEach(GenerateShaderInputControl);
@@ -373,20 +349,16 @@ namespace Shazzam.Views
 
     }
 
-    public void RenderShader()
-    {
+    public void RenderShader() {
       CompileShader();
-      if (_compiler.IsCompiled == false)
-      {
+      if (_compiler.IsCompiled == false) {
         return;
       }
 
-      try
-      {
+      try {
         this.InputControlsTab.IsEnabled = false;
         string path = Properties.Settings.Default.FolderPath_Output;
-        if (!File.Exists(path + Constants.FileNames.TempShaderPs))
-        {
+        if (!File.Exists(path + Constants.FileNames.TempShaderPs)) {
           return;
         }
         var ps = new PixelShader { UriSource = new Uri(path + Constants.FileNames.TempShaderPs) };
@@ -395,8 +367,7 @@ namespace Shazzam.Views
         string codeString = CreatePixelShaderClass.GetSourceText(new CSharpCodeProvider(), this._shaderModel, true);
         Assembly autoAssembly = CreatePixelShaderClass.CompileInMemory(codeString);
 
-        if (autoAssembly == null)
-        {
+        if (autoAssembly == null) {
           MessageBox.Show(ShazzamSwitchboard.MainWindow, "Cannot compile the generated C# code.", "Compile error", MessageBoxButton.OK, MessageBoxImage.Error);
           return;
         }
@@ -404,14 +375,12 @@ namespace Shazzam.Views
         Type t = autoAssembly.GetType(String.Format("{0}.{1}", _shaderModel.GeneratedNamespace, _shaderModel.GeneratedClassName));
         this.FillEditControls();
         csFolder = String.Format("{0}CS", Properties.Settings.Default.FolderPath_Output);
-        if (!Directory.Exists(csFolder))
-        {
+        if (!Directory.Exists(csFolder)) {
           Directory.CreateDirectory(csFolder);
         }
         _csTextEditor.SaveFile(String.Format("{0}\\{1}.cs", csFolder, _shaderModel.GeneratedClassName));
         vbFolder = String.Format("{0}VB", Properties.Settings.Default.FolderPath_Output);
-        if (!Directory.Exists(vbFolder))
-        {
+        if (!Directory.Exists(vbFolder)) {
           Directory.CreateDirectory(vbFolder);
         }
         _vbTextEditor.SaveFile(String.Format("{0}\\{1}.vb", vbFolder, _shaderModel.GeneratedClassName));
@@ -419,47 +388,36 @@ namespace Shazzam.Views
         this.CurrentShaderEffect = (ShaderEffect)Activator.CreateInstance(t, new object[] { ps });
         this.InputControlsTab.IsEnabled = true;
       }
-      catch (Exception)
-      {
+      catch (Exception) {
         MessageBox.Show(ShazzamSwitchboard.MainWindow, "Cannot create a WPF shader from the code snippet.", "Compile error", MessageBoxButton.OK, MessageBoxImage.Error);
       }
     }
 
     #region Properties
 
-    public String CodeText
-    {
-      get
-      {
+    public String CodeText {
+      get {
 
         return _shaderTextEditor.Text;
       }
-      set
-      {
+      set {
         _shaderTextEditor.Text = value;
       }
     }
-    public String OutputText
-    {
-      get
-      {
+    public String OutputText {
+      get {
         return outputTextBox.Text;
       }
-      set
-      {
+      set {
         outputTextBox.Text = value;
       }
     }
-    internal ShaderEffect CurrentShaderEffect
-    {
-      get
-      {
+    internal ShaderEffect CurrentShaderEffect {
+      get {
         return _currentShaderEffect;
       }
-      private set
-      {
-        if (this._currentShaderEffect != value)
-        {
+      private set {
+        if (this._currentShaderEffect != value) {
           ShaderEffect oldShaderEffect = this._currentShaderEffect;
           this._currentShaderEffect = value;
           this.BindShaderEffectToControls();
@@ -471,15 +429,12 @@ namespace Shazzam.Views
     #endregion
     #region Events
 
-    public event RoutedPropertyChangedEventHandler<object> ShaderEffectChanged
-    {
-      add
-      {
+    public event RoutedPropertyChangedEventHandler<object> ShaderEffectChanged {
+      add {
         AddHandler(ShaderEffectChangedEvent, value);
       }
 
-      remove
-      {
+      remove {
         RemoveHandler(ShaderEffectChangedEvent, value);
       }
     }
@@ -491,21 +446,17 @@ namespace Shazzam.Views
             typeof(CodeTabView)
         );
 
-    protected virtual void OnShaderEffectChanged(object oldItem, object newItem)
-    {
+    protected virtual void OnShaderEffectChanged(object oldItem, object newItem) {
       RoutedPropertyChangedEventArgs<object> args =
           new RoutedPropertyChangedEventArgs<object>(newItem, newItem);
       args.RoutedEvent = CodeTabView.ShaderEffectChangedEvent;
       RaiseEvent(args);
     }
 
-    private void OutputTextBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-      if (e.ClickCount == 2)
-      {
+    private void OutputTextBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+      if (e.ClickCount == 2) {
         Match match = Regex.Match(this.OutputText, @"\((?<lineNumber>\d+),(?<charNumber>\d+)\)");
-        if (match.Success)
-        {
+        if (match.Success) {
           int lineNumber = Int32.Parse(match.Groups["lineNumber"].Value);
           int charNumber = Int32.Parse(match.Groups["charNumber"].Value);
           this._shaderTextEditor.ActiveTextAreaControl.Caret.Line = lineNumber - 1;
@@ -517,16 +468,14 @@ namespace Shazzam.Views
     }
     #endregion
 
-    public void SaveFile()
-    {
+    public void SaveFile() {
       ResetDirty();
       //_dirtyCounter = 2;
       _storedDocHash = _shaderTextEditor.Document.TextContent.GetHashCode();
       _shaderTextEditor.SaveFile(_shaderTextEditor.FileName);
     }
 
-    public void SaveFile(string fileName)
-    {
+    public void SaveFile(string fileName) {
       ResetDirty();
       //	_dirtyCounter = 2;
       _storedDocHash = _shaderTextEditor.Document.TextContent.GetHashCode();
@@ -534,8 +483,7 @@ namespace Shazzam.Views
       this.codeTabHeaderText.Text = Path.GetFileName(fileName);
     }
 
-    public void OpenFile(string fileName)
-    {
+    public void OpenFile(string fileName) {
       SaveFileFirst();
       ResetDirty();
       _dirtyCounter = 0;
@@ -548,20 +496,16 @@ namespace Shazzam.Views
       this.RenderShader();
     }
 
-    public void SaveFileFirst()
-    {
-      if (dirtyStatusText.Visibility == Visibility.Visible)
-      {
+    public void SaveFileFirst() {
+      if (dirtyStatusText.Visibility == Visibility.Visible) {
         string message = "The fx file has unsaved changes.  Would you like to save your work?";
-        if (MessageBox.Show(message, "Save file", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-        {
+        if (MessageBox.Show(message, "Save file", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
           SaveFile();
         }
       }
 
     }
-    private void ResetDirty()
-    {
+    private void ResetDirty() {
 
       _storedDocHash = 0;
       dirtyStatusText.Visibility = Visibility.Collapsed;
