@@ -28,12 +28,13 @@ namespace Shazzam.Views {
 			fileLoader.Name = "Shader Loader";
 			fileLoader.Description = "Pick a shader file to open";
 
-			Plugins.Add(fileLoader);
-			Plugin colorLoader = new Plugin();
-			colorLoader.Root = new Kaxaml.Plugins.ColorPicker.ColorPickerPlugin();
-			colorLoader.Name = "Color Picker";
-			colorLoader.Description = "Color assistant";
-			Plugins.Add(colorLoader);
+      Plugins.Add(fileLoader);
+
+      //Plugin colorLoader = new Plugin();
+      //colorLoader.Root = new Kaxaml.Plugins.ColorPicker.ColorPickerPlugin();
+      //colorLoader.Name = "Color Picker";
+      //colorLoader.Description = "Color assistant";
+      //Plugins.Add(colorLoader);
 
 			AddSettingsPlugin();
 
@@ -43,7 +44,7 @@ namespace Shazzam.Views {
 			about.Name = "About Shazzam";
 			about.Description = "About Shazzam";
 			Plugins.Add(about);
-			SelectedPlugin = colorLoader;
+		//	SelectedPlugin = colorLoader;
 		}
 
 		private void AddSettingsPlugin() {
