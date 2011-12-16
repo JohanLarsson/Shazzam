@@ -10,6 +10,7 @@ using System.Reflection;
 
 namespace Shazzam.CodeGen
 {
+  [Obsolete("Replaced by ShaderCompiler")]
   class ShaderCompilerx : INotifyPropertyChanged
   {
     public void Compile(string codeText)

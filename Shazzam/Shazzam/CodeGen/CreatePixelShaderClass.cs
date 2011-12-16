@@ -311,7 +311,7 @@ namespace Shazzam.CodeGen
 		private static CodeConstructor CreateDefaultConstructor(ShaderModel shaderModel)
 		{
 			// Create a default constructor.
-			string shaderRelativeUri = String.Format("/{0};component/{1}.ps", shaderModel.GeneratedNamespace, Path.GetFileNameWithoutExtension(shaderModel.ShaderFileName));
+			string shaderRelativeUri = String.Format("/{0};component/{1}.ps", shaderModel.GeneratedNamespace, shaderModel.GeneratedClassName);
 			CodeConstructor constructor = new CodeConstructor
 			{
 				Attributes = MemberAttributes.Public,

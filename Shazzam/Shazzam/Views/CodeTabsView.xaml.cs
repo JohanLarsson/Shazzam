@@ -374,22 +374,33 @@ namespace Shazzam.Views
 
         Type t = autoAssembly.GetType(String.Format("{0}.{1}", _shaderModel.GeneratedNamespace, _shaderModel.GeneratedClassName));
         this.FillEditControls();
-        csFolder = String.Format("{0}CS", Properties.Settings.Default.FolderPath_Output);
-        if (!Directory.Exists(csFolder)) {
-          Directory.CreateDirectory(csFolder);
+        var outputFolder = String.Format("{0}{1}",
+          Properties.Settings.Default.FolderPath_Output, _shaderModel.GeneratedClassName);
+  
+        if (!Directory.Exists(outputFolder)) {
+          Directory.CreateDirectory(outputFolder);
         }
-        _csTextEditor.SaveFile(String.Format("{0}\\{1}.cs", csFolder, _shaderModel.GeneratedClassName));
-        vbFolder = String.Format("{0}VB", Properties.Settings.Default.FolderPath_Output);
-        if (!Directory.Exists(vbFolder)) {
-          Directory.CreateDirectory(vbFolder);
-        }
-        _vbTextEditor.SaveFile(String.Format("{0}\\{1}.vb", vbFolder, _shaderModel.GeneratedClassName));
+        
 
+        _csTextEditor.SaveFile(String.Format("{0}\\{1}.cs", outputFolder, _shaderModel.GeneratedClassName));
+        _vbTextEditor.SaveFile(String.Format("{0}\\{1}.vb", outputFolder, _shaderModel.GeneratedClassName));
+
+        CreateFileCopies(outputFolder + @"\", _shaderModel.GeneratedClassName);
         this.CurrentShaderEffect = (ShaderEffect)Activator.CreateInstance(t, new object[] { ps });
         this.InputControlsTab.IsEnabled = true;
       }
       catch (Exception) {
         MessageBox.Show(ShazzamSwitchboard.MainWindow, "Cannot create a WPF shader from the code snippet.", "Compile error", MessageBoxButton.OK, MessageBoxImage.Error);
+      }
+    }
+    private void CreateFileCopies(string path, string newFileName) {
+      if (String.IsNullOrEmpty(Properties.Settings.Default.FilePath_LastFx)) {
+        return;
+      }
+      string currentFileName = System.IO.Path.GetFileNameWithoutExtension(Properties.Settings.Default.FilePath_LastFx);
+      if (File.Exists(Properties.Settings.Default.FolderPath_Output + Constants.FileNames.TempShaderPs)) {
+
+        File.Copy(Properties.Settings.Default.FolderPath_Output + Constants.FileNames.TempShaderPs, path + newFileName + ".ps", true);
       }
     }
 

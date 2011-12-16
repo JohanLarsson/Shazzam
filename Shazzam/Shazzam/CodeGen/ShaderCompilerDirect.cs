@@ -184,25 +184,29 @@ namespace Shazzam.CodeGen
       if (ppErrorMsgs != null)
         Marshal.ReleaseComObject(ppErrorMsgs);
       ppErrorMsgs = null;
-
-      CreateFileCopies(path);
+      CompileFinished();
+      //CreateFileCopies(path);
       //	throw new Exception("testing");
 
     }
     [PreEmptive.Attributes.Feature("CompileShader", EventType = PreEmptive.Attributes.FeatureEventTypes.Stop)]
-    private void CreateFileCopies(string path)
-    {
-      if (String.IsNullOrEmpty(Properties.Settings.Default.FilePath_LastFx))
-      {
-        return;
-      }
-      string currentFileName = System.IO.Path.GetFileNameWithoutExtension(Properties.Settings.Default.FilePath_LastFx);
-      if (File.Exists(path + Constants.FileNames.TempShaderPs))
-      {
-
-        File.Copy(path + Constants.FileNames.TempShaderPs, path + currentFileName + ".ps", true);
-      }
+    private void CompileFinished() { 
+     // for instrumentation
     }
+    //[PreEmptive.Attributes.Feature("CompileShader", EventType = PreEmptive.Attributes.FeatureEventTypes.Stop)]
+    //private void CreateFileCopies(string path)
+    //{
+    //  if (String.IsNullOrEmpty(Properties.Settings.Default.FilePath_LastFx))
+    //  {
+    //    return;
+    //  }
+    //  string currentFileName = System.IO.Path.GetFileNameWithoutExtension(Properties.Settings.Default.FilePath_LastFx);
+    //  if (File.Exists(path + Constants.FileNames.TempShaderPs))
+    //  {
+
+    //    File.Copy(path + Constants.FileNames.TempShaderPs, path + currentFileName + ".ps", true);
+    //  }
+    //}
     public void Reset()
     {
       ErrorText = "not compiled";
