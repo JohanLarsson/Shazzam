@@ -254,120 +254,28 @@ namespace Shazzam.ViewModels
       }
     }
 
-    #region BrowseToBlog
-    private RelayCommand _browseToBlogCommand;
-    public RelayCommand BrowseToBlogCommand
-    {
-      get
-      {
+    private RelayCommand<string> _browseToSiteCommand;
+    public RelayCommand<string> BrowseToSiteCommand {
+      get {
 
-        if (_browseToBlogCommand == null)
-        {
-          _browseToBlogCommand = new RelayCommand(BrowseToBlog_Execute);
+        if (_browseToSiteCommand == null) {
+          _browseToSiteCommand = new RelayCommand<string>((param) => BrowseToSite_Execute(param));
         }
-        return _browseToBlogCommand;
-      }
-    }
-    [PreEmptive.Attributes.Feature("BrowseToBlog")]
-    private void BrowseToBlog_Execute()
-    {
-      try
-      {
-        Process.Start(Constants.Urls.ShazzamBlog);
-      }
-      catch
-      {
-        Console.WriteLine("Could not start process for " + Constants.Urls.ShazzamBlog);
+        return _browseToSiteCommand;
       }
     }
 
-    #endregion
+       public void BrowseToSite_Execute (string url)
+       {
+         try {
+           Process.Start(url);
+         }
+         catch {
+           Console.WriteLine("Could not start process for " + url);
+         }
+       }
 
-    #region ShowForums
-    private RelayCommand _showForumsCommand;
-    public RelayCommand ShowForumsCommand
-    {
-      get
-      {
-
-        if (_showForumsCommand == null)
-        {
-          _showForumsCommand = new RelayCommand(ShowForums_Execute);
-        }
-        return _showForumsCommand;
-      }
-    }
-    [PreEmptive.Attributes.Feature("ShowForums")]
-    private void ShowForums_Execute()
-    {
-      try
-      {
-        Process.Start(Constants.Urls.ShazzamForums);
-      }
-      catch
-      {
-        Console.WriteLine("Could not start process for " + Constants.Urls.ShazzamForums);
-      }
-    }
-
-    #endregion
-    #region ShowTwitter
-    private RelayCommand _showTwitterCommand;
-    public RelayCommand ShowTwitterCommand
-    {
-      get
-      {
-
-        if (_showTwitterCommand == null)
-        {
-          _showTwitterCommand = new RelayCommand(ShowTwitter_Execute);
-        }
-        return _showTwitterCommand;
-      }
-    }
-    [PreEmptive.Attributes.Feature("ShowTwitter")]
-    private void ShowTwitter_Execute()
-    {
-      try
-      {
-        Process.Start(Constants.Urls.Twitter);
-      }
-      catch
-      {
-        Console.WriteLine("Could not start process for " + Constants.Urls.Twitter);
-      }
-    }
-
-    #endregion
-
-    #region BrowseToReportBug
-    private RelayCommand _browseToReportBugCommand;
-    public RelayCommand BrowseToReportBugCommand
-    {
-      get
-      {
-
-        if (_browseToReportBugCommand == null)
-        {
-          _browseToReportBugCommand = new RelayCommand(BrowseToReportBug_Execute);
-        }
-        return _browseToReportBugCommand;
-      }
-    }
-    [PreEmptive.Attributes.Feature("BrowseToReportBug")]
-    private void BrowseToReportBug_Execute()
-    {
-      try
-      {
-        Process.Start(Constants.Urls.ShazzamBug);
-      }
-      catch
-      {
-        Console.WriteLine("Could not start process for " + Constants.Urls.ShazzamBug);
-      }
-    }
-
-    #endregion
+   
 
   }
 }
