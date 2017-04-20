@@ -1,4 +1,3 @@
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.ComponentModel;
@@ -83,7 +82,7 @@ namespace KaxamlPlugins
 
         public static event PropertyChangedEventHandler PropertyChanged;
 
-        private static void NotifyPropertyChanged(String info)
+        private static void NotifyPropertyChanged(string info)
         {
             if (PropertyChanged != null)
             {

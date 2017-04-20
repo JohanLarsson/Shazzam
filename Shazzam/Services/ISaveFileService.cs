@@ -1,16 +1,13 @@
-﻿using System;
-using System.Windows;
-
-
-namespace Cinch
+﻿namespace Cinch
 {
+    using System.Windows;
+
   /// <summary>
-  /// This interface defines a interface that will allow 
+  /// This interface defines a interface that will allow
   /// a ViewModel to save a file
   /// </summary>
   public interface ISaveFileService
   {
-
     /// <summary>
     /// AddExtension
     /// </summary>
@@ -19,49 +16,42 @@ namespace Cinch
     /// <summary>
     /// CheckFileExists
     /// </summary>
-    Boolean CheckFileExists { get; set; }
+    bool CheckFileExists { get; set; }
 
     /// <summary>
     /// CheckPathExists
     /// </summary>
-    Boolean CheckPathExists { get; set; }
+    bool CheckPathExists { get; set; }
 
     /// <summary>
     /// DefaultExt
     /// </summary>
-    String DefaultExt { get; set; }
-
+    string DefaultExt { get; set; }
 
     /// <summary>
     /// CreatePrompt
     /// </summary>
-    Boolean CreatePrompt { get; set; }
-
+    bool CreatePrompt { get; set; }
 
     /// <summary>
     /// FileName
     /// </summary>
-    String FileName { get; set; }
-
-
+    string FileName { get; set; }
 
     /// <summary>
     /// Filter
     /// </summary>
-    String Filter { get; set; }
+    string Filter { get; set; }
 
     /// <summary>
     /// FilterIndex
     /// </summary>
-    Int32 FilterIndex { get; set; }
+    int FilterIndex { get; set; }
 
     /// <summary>
     /// InitialDirectory
     /// </summary>
-    String InitialDirectory { get; set; }
-
-
-
+    string InitialDirectory { get; set; }
 
     /// <summary>
     /// RestoreDirectory
@@ -71,30 +61,27 @@ namespace Cinch
     /// <summary>
     /// SafeFileName
     /// </summary>
-    String SafeFileName { get; }
+    string SafeFileName { get; }
 
     /// <summary>
     /// SafeFileNames
     /// </summary>
-    String[] SafeFileNames { get; set; }
+    string[] SafeFileNames { get; set; }
 
     /// <summary>
     /// Title
     /// </summary>
     string Title { get; set; }
 
-
     /// <summary>
     /// OverwritePrompt
     /// </summary>
-    Boolean OverwritePrompt { get; set; }
-
-
+    bool OverwritePrompt { get; set; }
 
     /// <summary>
     /// ValidateNames
     /// </summary>
-    Boolean ValidateNames { get; set; }
+    bool ValidateNames { get; set; }
 
     /// <summary>
     /// This method should show a window that allows a file to be saved

@@ -1,28 +1,25 @@
-﻿using System;
-using System.Windows.Data;
-using System.Windows;
-
-namespace Shazzam.Converters
+﻿namespace Shazzam.Converters
 {
-  class VisibiltyToVisibilityConverter : IValueConverter
-  {
-    #region IValueConverter Members
+    using System;
+    using System.Windows;
+    using System.Windows.Data;
 
-    public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    internal class VisibiltyToVisibilityConverter : IValueConverter
     {
-      Visibility temp = (Visibility)value;
-      if(temp==Visibility.Visible){
-        return Visibility.Collapsed;
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            Visibility temp = (Visibility)value;
+            if (temp == Visibility.Visible)
+            {
+                return Visibility.Collapsed;
+            }
 
-      }
-      return Visibility.Visible;
+            return Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
-
-    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-    {
-      throw new NotImplementedException();
-    }
-
-    #endregion
-  }
 }

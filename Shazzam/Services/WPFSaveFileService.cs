@@ -1,51 +1,47 @@
-﻿using System;
-using System.Windows;
-using Microsoft.Win32;
-
-
-namespace Cinch
+﻿namespace Cinch
 {
+    using System.Windows;
+    using Microsoft.Win32;
+
   // learn more about Cinch at
-  // http://sachabarber.net/?page_id=523 
+  // http://sachabarber.net/?page_id=523
 
   /// <summary>
   /// This class implements the ISaveFileService for WPF purposes.
   /// </summary>
   public class WPFSaveFileService : ISaveFileService
   {
-    #region Data
+        /// <summary>
+        /// Embedded SaveFileDialog to pass back correctly selected
+        /// values to ViewModel
+        /// </summary>
+        private SaveFileDialog sfd = new SaveFileDialog();
 
-    /// <summary>
-    /// Embedded SaveFileDialog to pass back correctly selected
-    /// values to ViewModel
-    /// </summary>
-    private SaveFileDialog sfd = new SaveFileDialog();
-
-    #endregion
-
-    #region ISaveFileService Members
-    /// <summary>
-    /// This method should show a window that allows a file to be selected
-    /// </summary>
-    /// <param name="owner">The owner window of the dialog</param>
-    /// <returns>A bool from the ShowDialog call</returns>
-    public bool? ShowDialog(Window owner)
+        /// <summary>
+        /// This method should show a window that allows a file to be selected
+        /// </summary>
+        /// <param name="owner">The owner window of the dialog</param>
+        /// <returns>A bool from the ShowDialog call</returns>
+        public bool? ShowDialog(Window owner)
     {
-      //Set embedded SaveFileDialog.Filter
-      if (!String.IsNullOrEmpty(this.Filter))
-        sfd.Filter = this.Filter;
+      // Set embedded SaveFileDialog.Filter
+      if (!string.IsNullOrEmpty(this.Filter))
+            {
+                this.sfd.Filter = this.Filter;
+            }
 
-      //Set embedded SaveFileDialog.InitialDirectory
-      if (!String.IsNullOrEmpty(this.InitialDirectory))
-        sfd.InitialDirectory = this.InitialDirectory;
+            // Set embedded SaveFileDialog.InitialDirectory
+            if (!string.IsNullOrEmpty(this.InitialDirectory))
+            {
+                this.sfd.InitialDirectory = this.InitialDirectory;
+            }
 
-      //Set embedded SaveFileDialog.OverwritePrompt
-      sfd.OverwritePrompt = this.OverwritePrompt;
+            // Set embedded SaveFileDialog.OverwritePrompt
+            this.sfd.OverwritePrompt = this.OverwritePrompt;
 
-      //return results
-      return sfd.ShowDialog(owner);
+      // return results
+      return this.sfd.ShowDialog(owner);
     }
-
 
     /// <summary>
     /// FileName : Simply use embedded SaveFileDialog.FileName
@@ -54,10 +50,11 @@ namespace Cinch
     /// </summary>
     public string FileName
     {
-      get { return sfd.FileName; }
+      get { return this.sfd.FileName; }
+
       set
       {
-        //Do nothing
+        // Do nothing
       }
     }
 
@@ -66,8 +63,8 @@ namespace Cinch
     /// </summary>
     public string Filter
     {
-      get { return sfd.Filter; }
-      set { sfd.Filter = value; }
+      get { return this.sfd.Filter; }
+      set { this.sfd.Filter = value; }
     }
 
     /// <summary>
@@ -75,8 +72,8 @@ namespace Cinch
     /// </summary>
     public string InitialDirectory
     {
-      get { return sfd.InitialDirectory; }
-      set { sfd.InitialDirectory = value; }
+      get { return this.sfd.InitialDirectory; }
+      set { this.sfd.InitialDirectory = value; }
     }
 
     /// <summary>
@@ -84,8 +81,8 @@ namespace Cinch
     /// </summary>
     public bool OverwritePrompt
     {
-      get { return sfd.OverwritePrompt; }
-      set { sfd.OverwritePrompt = value; }
+      get { return this.sfd.OverwritePrompt; }
+      set { this.sfd.OverwritePrompt = value; }
     }
 
     /// <summary>
@@ -93,102 +90,101 @@ namespace Cinch
     /// </summary>
     public string Title
     {
-      get { return sfd.Title; }
-      set { sfd.Title = value; }
+      get { return this.sfd.Title; }
+      set { this.sfd.Title = value; }
     }
 
     /// <summary>
     /// CheckFileExists : Simply use embedded SaveFileDialog.CheckFileExists
     /// </summary>
-    public Boolean CheckFileExists
+    public bool CheckFileExists
     {
-      get { return sfd.CheckFileExists; }
-      set { sfd.CheckFileExists = value; }
+      get { return this.sfd.CheckFileExists; }
+      set { this.sfd.CheckFileExists = value; }
     }
 
     /// <summary>
     /// CheckPathExists : Simply use embedded SaveFileDialog.CheckPathExists
     /// </summary>
-    public Boolean CheckPathExists
+    public bool CheckPathExists
     {
-      get { return sfd.CheckPathExists; }
-      set { sfd.CheckPathExists = value; }
+      get { return this.sfd.CheckPathExists; }
+      set { this.sfd.CheckPathExists = value; }
     }
 
     /// <summary>
     /// CreatePrompt : Simply use embedded SaveFileDialog.CheckPathExists
     /// </summary>
-    public Boolean CreatePrompt
+    public bool CreatePrompt
     {
-      get { return sfd.CreatePrompt; }
-      set { sfd.CreatePrompt = value; }
+      get { return this.sfd.CreatePrompt; }
+      set { this.sfd.CreatePrompt = value; }
     }
 
     /// <summary>
     /// DefaultExt : Simply use embedded SaveFileDialog.DefaultExt
     /// </summary>
-    public String DefaultExt
+    public string DefaultExt
     {
-      get { return sfd.DefaultExt; }
-      set { sfd.DefaultExt = value; }
+      get { return this.sfd.DefaultExt; }
+      set { this.sfd.DefaultExt = value; }
     }
 
     /// <summary>
     /// AddExtension : Simply use embedded SaveFileDialog.AddExtension
     /// </summary>
-    public Boolean AddExtension
+    public bool AddExtension
     {
-      get { return sfd.AddExtension; }
-      set { sfd.AddExtension = value; }
+      get { return this.sfd.AddExtension; }
+      set { this.sfd.AddExtension = value; }
     }
 
     /// <summary>
     /// FilterIndex : Simply use embedded SaveFileDialog.FilterIndex
     /// </summary>
-    public Int32 FilterIndex
+    public int FilterIndex
     {
-      get { return sfd.FilterIndex; }
-      set { sfd.FilterIndex = value; }
+      get { return this.sfd.FilterIndex; }
+      set { this.sfd.FilterIndex = value; }
     }
 
     /// <summary>
     /// RestoreDirectory : Simply use embedded SaveFileDialog.RestoreDirectory
     /// </summary>
-    public Boolean RestoreDirectory
+    public bool RestoreDirectory
     {
-      get { return sfd.RestoreDirectory; }
-      set { sfd.RestoreDirectory = value; }
+      get { return this.sfd.RestoreDirectory; }
+      set { this.sfd.RestoreDirectory = value; }
     }
 
     /// <summary>
     /// SafeFileName : Simply use embedded SaveFileDialog.SafeFileName
     /// </summary>
-    public String SafeFileName
+    public string SafeFileName
     {
-      get { return sfd.SafeFileName; }
-
+      get { return this.sfd.SafeFileName; }
     }
 
     /// <summary>
     /// SafeFileNames : Simply use embedded SaveFileDialog.SafeFileNames
     /// </summary>
-    public String[] SafeFileNames
+    public string[] SafeFileNames
     {
-      get { return sfd.SafeFileNames; }
+      get { return this.sfd.SafeFileNames; }
+
       set
       {
-        //Do nothing
+        // Do nothing
       }
     }
 
     /// <summary>
     /// ValidateNames : Simply use embedded SaveFileDialog.ValidateNames
     /// </summary>
-    public Boolean ValidateNames
+    public bool ValidateNames
     {
-      get { return sfd.ValidateNames; }
-      set { sfd.ValidateNames = value; }
+      get { return this.sfd.ValidateNames; }
+      set { this.sfd.ValidateNames = value; }
     }
-    #endregion
-  }
+    }
 }

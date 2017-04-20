@@ -1,15 +1,15 @@
-﻿using System.Windows.Controls;
-
-namespace Shazzam.Views
+﻿namespace Shazzam.Views
 {
-	/// <summary>
-	/// Interaction logic for ImageTabView.xaml
-	/// </summary>
-	public partial class ImageTabView : UserControl
-	{
-		public ImageTabView()
-		{
-			InitializeComponent();
-		}
-	}
+    using System.Windows.Controls;
+
+    /// <summary>
+    /// Interaction logic for ImageTabView.xaml
+    /// </summary>
+    public partial class ImageTabView : UserControl
+    {
+        public ImageTabView()
+        {
+            this.InitializeComponent();
+        }
+    }
 }

@@ -1,13 +1,11 @@
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-
 namespace Magic.Controls
 {
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Controls.Primitives;
+
     public class IndexingStackPanel : StackPanel
     {
-        #region Index (Attached Dependency Property)
-
         public static int GetIndex(DependencyObject obj)
         {
             return (int)obj.GetValue(IndexProperty);
@@ -20,10 +18,6 @@ namespace Magic.Controls
 
         public static readonly DependencyProperty IndexProperty =
             DependencyProperty.RegisterAttached("Index", typeof(int), typeof(IndexingStackPanel), new UIPropertyMetadata(default(int)));
-
-        #endregion
-
-        #region SelectionLocation
 
         public static SelectionLocation GetSelectionLocation(DependencyObject obj)
         {
@@ -38,10 +32,6 @@ namespace Magic.Controls
         public static readonly DependencyProperty SelectionLocationProperty =
             DependencyProperty.RegisterAttached("SelectionLocation", typeof(SelectionLocation), typeof(IndexingStackPanel), new UIPropertyMetadata(default(SelectionLocation)));
 
-        #endregion
-
-        #region StackLocation (Attached Dependency Property)
-
         public static StackLocation GetStackLocation(DependencyObject obj)
         {
             return (StackLocation)obj.GetValue(StackLocationProperty);
@@ -54,10 +44,6 @@ namespace Magic.Controls
 
         public static readonly DependencyProperty StackLocationProperty =
             DependencyProperty.RegisterAttached("StackLocation", typeof(StackLocation), typeof(IndexingStackPanel), new UIPropertyMetadata(default(StackLocation)));
-
-        #endregion
-
-        #region IndexOddEven (Attached DependencyProperty)
 
         public static IndexOddEven GetIndexOddEven(DependencyObject obj)
         {
@@ -72,11 +58,6 @@ namespace Magic.Controls
         public static readonly DependencyProperty IndexOddEvenProperty =
             DependencyProperty.RegisterAttached("IndexOddEven", typeof(IndexOddEven), typeof(IndexingStackPanel), new UIPropertyMetadata(default(IndexOddEven)));
 
-
-        #endregion
-
-        #region Overrides
-
         protected override Size MeasureOverride(Size constraint)
         {
             int index = 0;
@@ -85,14 +66,13 @@ namespace Magic.Controls
 
             foreach (UIElement element in this.Children)
             {
-
                 if (this.IsItemsHost)
                 {
-                    Selector SelectorParent = this.TemplatedParent as Selector;
+                    var selectorParent = this.TemplatedParent as Selector;
 
-                    if (SelectorParent != null)
+                    if (selectorParent != null)
                     {
-                        UIElement selectedElement = (SelectorParent.ItemContainerGenerator.ContainerFromItem(SelectorParent.SelectedItem) as UIElement);
+                        var selectedElement = selectorParent.ItemContainerGenerator.ContainerFromItem(selectorParent.SelectedItem) as UIElement;
 
                         if (selectedElement != null)
                         {
@@ -114,8 +94,7 @@ namespace Magic.Controls
                 }
 
                 // StackLocation
-
-                if (Children.Count - 1 == 0)
+                if (this.Children.Count - 1 == 0)
                 {
                     element.SetValue(StackLocationProperty, StackLocation.FirstAndLast);
                 }
@@ -123,7 +102,7 @@ namespace Magic.Controls
                 {
                     element.SetValue(StackLocationProperty, StackLocation.First);
                 }
-                else if (index == Children.Count - 1)
+                else if (index == this.Children.Count - 1)
                 {
                     element.SetValue(StackLocationProperty, StackLocation.Last);
                 }
@@ -133,7 +112,6 @@ namespace Magic.Controls
                 }
 
                 // IndexOddEven
-
                 if (isEven)
                 {
                     element.SetValue(IndexOddEvenProperty, IndexOddEven.Even);
@@ -145,13 +123,10 @@ namespace Magic.Controls
 
                 element.SetValue(IndexProperty, index);
                 index++;
-
             }
 
             return base.MeasureOverride(constraint);
         }
-
-        #endregion
     }
 
     public enum StackLocation

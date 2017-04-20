@@ -1,10 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Media;
-using Shazzam.ViewModels;
-
-namespace ShazzamUnitTests
+﻿namespace ShazzamUnitTests
 {
+    using System.Windows;
+    using System.Windows.Media;
     using NUnit.Framework;
+    using Shazzam.ViewModels;
 
     public class MainWindowVmUnitTest
   {
@@ -34,6 +33,7 @@ namespace ShazzamUnitTests
       vm.FullScreenImageCommand.Execute(this);
       Assert.AreEqual(vm.CodeRowHeight, new GridLength(0));
     }
+
     [Test]
     public void ImageStretchCommand_CheckDefault_IsUniform()
     {
@@ -41,6 +41,7 @@ namespace ShazzamUnitTests
 
       Assert.AreEqual(vm.ImageStretch, Stretch.Uniform);
     }
+
     [Test]
     public void ImageStretchCommand_RunCommand_StretchValueCorrect()
     {

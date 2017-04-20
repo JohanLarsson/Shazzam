@@ -1,26 +1,19 @@
-﻿using System;
-using System.Windows;
-using Microsoft.Win32;
-
-
-namespace Cinch
+﻿namespace Cinch
 {
+    using System.Windows;
+    using Microsoft.Win32;
+
     /// <summary>
     /// This class implements the IOpenFileService for WPF purposes.
     /// </summary>
     public class WPFOpenFileService : IOpenFileService
     {
-        #region Data
-
         /// <summary>
         /// Embedded OpenFileDialog to pass back correctly selected
         /// values to ViewModel
         /// </summary>
-        private OpenFileDialog ofd = new OpenFileDialog(); 
+        private OpenFileDialog ofd = new OpenFileDialog();
 
-        #endregion
-
-        #region IOpenFileService Members
         /// <summary>
         /// This method should show a window that allows a file to be selected
         /// </summary>
@@ -28,16 +21,20 @@ namespace Cinch
         /// <returns>A bool from the ShowDialog call</returns>
         public bool? ShowDialog(Window owner)
         {
-            //Set embedded OpenFileDialog.Filter
-            if (!String.IsNullOrEmpty(this.Filter))
-                ofd.Filter = this.Filter;
+            // Set embedded OpenFileDialog.Filter
+            if (!string.IsNullOrEmpty(this.Filter))
+            {
+                this.ofd.Filter = this.Filter;
+            }
 
-            //Set embedded OpenFileDialog.InitialDirectory
-            if (!String.IsNullOrEmpty(this.InitialDirectory))
-                ofd.InitialDirectory = this.InitialDirectory;
+            // Set embedded OpenFileDialog.InitialDirectory
+            if (!string.IsNullOrEmpty(this.InitialDirectory))
+            {
+                this.ofd.InitialDirectory = this.InitialDirectory;
+            }
 
-            //return results
-            return ofd.ShowDialog(owner);
+            // return results
+            return this.ofd.ShowDialog(owner);
         }
 
         /// <summary>
@@ -47,10 +44,11 @@ namespace Cinch
         /// </summary>
         public string FileName
         {
-            get { return ofd.FileName; }
-            set 
-            {  
-                //Do nothing
+            get { return this.ofd.FileName; }
+
+            set
+            {
+                // Do nothing
             }
         }
 
@@ -59,8 +57,8 @@ namespace Cinch
         /// </summary>
         public string Filter
         {
-            get { return ofd.Filter; }
-            set { ofd.Filter = value; }
+            get { return this.ofd.Filter; }
+            set { this.ofd.Filter = value; }
         }
 
         /// <summary>
@@ -68,10 +66,8 @@ namespace Cinch
         /// </summary>
         public string InitialDirectory
         {
-            get { return ofd.InitialDirectory; }
-            set { ofd.InitialDirectory = value; }
+            get { return this.ofd.InitialDirectory; }
+            set { this.ofd.InitialDirectory = value; }
         }
-
-        #endregion
     }
 }

@@ -1,55 +1,21 @@
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-
 namespace Kaxaml
 {
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+
     public class Plugin
     {
-        #region Properties
+        public UserControl Root { get; set; }
 
-        private UserControl _Root;
-        public UserControl Root
-        {
-            get { return _Root; }
-            set { _Root = value; }
-        }
+        public string Name { get; set; }
 
-        private string _Name;
-        public string Name
-        {
-            get { return _Name; }
-            set { _Name = value; }
-        }
+        public string Description { get; set; }
 
-        private string _Description;
-        public string Description
-        {
-            get { return _Description; }
-            set { _Description = value; }
-        }
+        public Key Key { get; set; }
 
-        private Key _Key;
-        public Key Key
-        {
-            get { return _Key; }
-            set { _Key = value; }
-        }
+        public ModifierKeys ModifierKeys { get; set; }
 
-        public ModifierKeys _ModifierKeys;
-        public ModifierKeys ModifierKeys
-        {
-            get { return _ModifierKeys; }
-            set { _ModifierKeys = value; }
-        }
-
-        private ImageSource _Icon;
-        public ImageSource Icon
-        {
-            get { return _Icon; }
-            set { _Icon = value; }
-        }
-
-        #endregion
+        public ImageSource Icon { get; set; }
     }
 }

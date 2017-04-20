@@ -1,4 +1,3 @@
-using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Input;
@@ -16,16 +15,16 @@ namespace Kaxaml.Plugins.Controls
 
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            get { return (string) this.GetValue(TextProperty); }
+            set { this.SetValue(TextProperty, value); }
         }
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(TextDragger), new UIPropertyMetadata(string.Empty));
 
         public object Data
         {
-            get { return (object)GetValue(DataProperty); }
-            set { SetValue(DataProperty, value); }
+            get { return (object) this.GetValue(DataProperty); }
+            set { this.SetValue(DataProperty, value); }
         }
         public static readonly DependencyProperty DataProperty =
             DependencyProperty.Register("Data", typeof(object), typeof(TextDragger), new UIPropertyMetadata(null));
@@ -36,23 +35,23 @@ namespace Kaxaml.Plugins.Controls
         {
             if (e.ClickCount == 1)
             {
-                if (!String.IsNullOrEmpty(Text))
+                if (!string.IsNullOrEmpty(this.Text))
                 {
-                    Clipboard.SetText(Text);
-                    IsClipboardSet = true;
+                    Clipboard.SetText(this.Text);
+                    this.IsClipboardSet = true;
                 }
-                else if (Data != null)
+                else if (this.Data != null)
                 {
-                    Clipboard.SetText(Data.ToString());
-                    IsClipboardSet = true;
+                    Clipboard.SetText(this.Data.ToString());
+                    this.IsClipboardSet = true;
                 }
             }
             else if (e.ClickCount == 2)
             {
-                if (IsClipboardSet)
+                if (this.IsClipboardSet)
                 {
-                    KaxamlInfo.Editor.InsertStringAtCaret(Text);
-                    IsClipboardSet = false;
+                    KaxamlInfo.Editor.InsertStringAtCaret(this.Text);
+                    this.IsClipboardSet = false;
                 }
             }
             base.OnMouseDown(e);
@@ -69,13 +68,13 @@ namespace Kaxaml.Plugins.Controls
 
         protected override void OnPreviewMouseMove(MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed && (!IsDragging))
+            if (e.LeftButton == MouseButtonState.Pressed && (!this.IsDragging))
             {
-                StartDrag();
+                this.StartDrag();
             }
             else if (e.LeftButton == MouseButtonState.Released)
             {
-                IsDragging = false;
+                this.IsDragging = false;
             }
 
             base.OnPreviewMouseMove(e);
@@ -83,11 +82,11 @@ namespace Kaxaml.Plugins.Controls
 
         private void StartDrag()
         {
-            DataObject obj = new DataObject(DataFormats.Text, Text);
+            DataObject obj = new DataObject(DataFormats.Text, this.Text);
 
             if (obj != null)
             {
-                if (Data != null) obj.SetData(Data.GetType(), Data);
+                if (this.Data != null) obj.SetData(this.Data.GetType(), this.Data);
 
                 try
                 {

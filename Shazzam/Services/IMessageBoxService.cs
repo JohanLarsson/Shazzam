@@ -1,7 +1,7 @@
 ﻿namespace Cinch
 {
     /// <summary>
-    /// Available Button options. 
+    /// Available Button options.
     /// Abstracted to allow some level of UI Agnosticness
     /// </summary>
     public enum CustomDialogButtons
@@ -40,7 +40,7 @@
     }
 
     /// <summary>
-    /// This interface defines a interface that will allow 
+    /// This interface defines a interface that will allow
     /// a ViewModel to show a messagebox
     /// </summary>
     public interface IMessageBoxService
@@ -86,6 +86,5 @@
         /// <param name="icon">The icon to be displayed.</param>
         /// <returns>User selection.</returns>
         CustomDialogResults ShowOkCancel(string message, CustomDialogIcons icon);
-
     }
 }

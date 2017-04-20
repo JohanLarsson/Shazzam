@@ -13,17 +13,10 @@ namespace Shazzam.Commands
     /// default return value for the CanExecute
     /// method is 'true'.
     /// </summary>
-    public class RelayCommand : ICommand
+    public class RelayCommand<T> : ICommand
     {
-        private readonly Action execute;
-        private readonly Func<bool> canExecute;
-
-        /// <summary>
-        /// Creates a new command that can always execute.
-        /// </summary>
-        /// <param name="execute">The execution logic.</param>
-        public RelayCommand(Action execute)
-          : this(execute, null)
+        public RelayCommand(Action<T> execute)
+        : this(execute, null)
         {
         }
 
@@ -32,7 +25,7 @@ namespace Shazzam.Commands
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
-        public RelayCommand(Action execute, Func<bool> canExecute)
+        public RelayCommand(Action<T> execute, Predicate<T> canExecute)
         {
             if (execute == null)
             {
@@ -65,12 +58,15 @@ namespace Shazzam.Commands
         [DebuggerStepThrough]
         public bool CanExecute(object parameter)
         {
-            return this.canExecute?.Invoke() ?? true;
+            return this.canExecute == null ? true : this.canExecute((T)parameter);
         }
 
         public void Execute(object parameter)
         {
-            this.execute();
+            this.execute((T)parameter);
         }
+
+        private readonly Action<T> execute = null;
+        private readonly Predicate<T> canExecute = null;
     }
 }

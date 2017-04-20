@@ -1,252 +1,274 @@
-using System;
-using System.Windows;
-using System.Windows.Media.Animation;
+namespace Shazzam.Controls
+{
+    using System;
+    using System.Windows;
+    using System.Windows.Media.Animation;
 
-namespace Shazzam.Controls {
-	public class Reveal : System.Windows.Controls.Decorator {
-		#region Constructors
+    public class Reveal : System.Windows.Controls.Decorator
+    {
+        // Using a DependencyProperty as the backing store for IsExpanded.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register(
+            "IsExpanded",
+            typeof(bool),
+            typeof(Reveal),
+            new UIPropertyMetadata(false, OnIsExpandedChanged));
 
-		static Reveal() {
-			ClipToBoundsProperty.OverrideMetadata(typeof(Reveal), new FrameworkPropertyMetadata(true));
-		}
+        // Using a DependencyProperty as the backing store for Duration.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DurationProperty = DependencyProperty.Register(
+            "Duration",
+            typeof(double),
+            typeof(Reveal),
+            new UIPropertyMetadata(250.0));
 
-		#endregion
+        // Using a DependencyProperty as the backing store for HorizontalReveal.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty HorizontalRevealProperty = DependencyProperty.Register(
+            "HorizontalReveal",
+            typeof(HorizontalRevealMode),
+            typeof(Reveal),
+            new UIPropertyMetadata(HorizontalRevealMode.None));
 
-		#region Public Properties
+        // Using a DependencyProperty as the backing store for VerticalReveal.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty VerticalRevealProperty = DependencyProperty.Register(
+            "VerticalReveal",
+            typeof(VerticalRevealMode),
+            typeof(Reveal),
+            new UIPropertyMetadata(VerticalRevealMode.FromTopToBottom));
 
-		/// <summary>
-		///     Whether the child is expanded or not.
-		///     Note that an animation may be in progress when the value changes.
-		///     This is not meant to be used with AnimationProgress and can overwrite any
-		///     animation or values in that property.
-		/// </summary>
-		public bool IsExpanded {
-			get { return (bool)GetValue(IsExpandedProperty); }
-			set { SetValue(IsExpandedProperty, value); }
-		}
+        // Using a DependencyProperty as the backing store for AnimationProgress.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty AnimationProgressProperty = DependencyProperty.Register(
+            "AnimationProgress",
+            typeof(double),
+            typeof(Reveal),
+            new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsMeasure, null, CoerceAnimationProgress));
 
-		// Using a DependencyProperty as the backing store for IsExpanded.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty IsExpandedProperty =
-				DependencyProperty.Register("IsExpanded", typeof(bool), typeof(Reveal), new UIPropertyMetadata(false, new PropertyChangedCallback(OnIsExpandedChanged)));
+        static Reveal()
+        {
+            ClipToBoundsProperty.OverrideMetadata(typeof(Reveal), new FrameworkPropertyMetadata(true));
+        }
 
-		private static void OnIsExpandedChanged(object sender, DependencyPropertyChangedEventArgs e) {
-			((Reveal)sender).SetupAnimation((bool)e.NewValue);
-		}
+        /// <summary>
+        ///     Whether the child is expanded or not.
+        ///     Note that an animation may be in progress when the value changes.
+        ///     This is not meant to be used with AnimationProgress and can overwrite any
+        ///     animation or values in that property.
+        /// </summary>
+        public bool IsExpanded
+        {
+            get { return (bool)this.GetValue(IsExpandedProperty); }
+            set { this.SetValue(IsExpandedProperty, value); }
+        }
 
-		/// <summary>
-		///     The duration in milliseconds of the reveal animation.
-		///     Will apply to the next animation that occurs (not to currently running animations).
-		/// </summary>
-		public double Duration {
-			get { return (double)GetValue(DurationProperty); }
-			set { SetValue(DurationProperty, value); }
-		}
+        /// <summary>
+        ///     The duration in milliseconds of the reveal animation.
+        ///     Will apply to the next animation that occurs (not to currently running animations).
+        /// </summary>
+        public double Duration
+        {
+            get { return (double)this.GetValue(DurationProperty); }
+            set { this.SetValue(DurationProperty, value); }
+        }
 
-		// Using a DependencyProperty as the backing store for Duration.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty DurationProperty =
-				DependencyProperty.Register("Duration", typeof(double), typeof(Reveal), new UIPropertyMetadata(250.0));
+        public HorizontalRevealMode HorizontalReveal
+        {
+            get { return (HorizontalRevealMode)this.GetValue(HorizontalRevealProperty); }
+            set { this.SetValue(HorizontalRevealProperty, value); }
+        }
 
-		public HorizontalRevealMode HorizontalReveal {
-			get { return (HorizontalRevealMode)GetValue(HorizontalRevealProperty); }
-			set { SetValue(HorizontalRevealProperty, value); }
-		}
+        public VerticalRevealMode VerticalReveal
+        {
+            get { return (VerticalRevealMode)this.GetValue(VerticalRevealProperty); }
+            set { this.SetValue(VerticalRevealProperty, value); }
+        }
 
-		// Using a DependencyProperty as the backing store for HorizontalReveal.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty HorizontalRevealProperty =
-				DependencyProperty.Register("HorizontalReveal", typeof(HorizontalRevealMode), typeof(Reveal), new UIPropertyMetadata(HorizontalRevealMode.None));
+        /// <summary>
+        ///     Value between 0 and 1 (inclusive) to move the reveal along.
+        ///     This is not meant to be used with IsExpanded.
+        /// </summary>
+        public double AnimationProgress
+        {
+            get { return (double)this.GetValue(AnimationProgressProperty); }
+            set { this.SetValue(AnimationProgressProperty, value); }
+        }
 
-		public VerticalRevealMode VerticalReveal {
-			get { return (VerticalRevealMode)GetValue(VerticalRevealProperty); }
-			set { SetValue(VerticalRevealProperty, value); }
-		}
+        private static object CoerceAnimationProgress(DependencyObject d, object baseValue)
+        {
+            double num = (double)baseValue;
+            if (num < 0.0)
+            {
+                return 0.0;
+            }
+            else if (num > 1.0)
+            {
+                return 1.0;
+            }
 
-		// Using a DependencyProperty as the backing store for VerticalReveal.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty VerticalRevealProperty =
-				DependencyProperty.Register("VerticalReveal", typeof(VerticalRevealMode), typeof(Reveal), new UIPropertyMetadata(VerticalRevealMode.FromTopToBottom));
+            return baseValue;
+        }
 
-		/// <summary>
-		///     Value between 0 and 1 (inclusive) to move the reveal along.
-		///     This is not meant to be used with IsExpanded.
-		/// </summary>
-		public double AnimationProgress {
-			get { return (double)GetValue(AnimationProgressProperty); }
-			set { SetValue(AnimationProgressProperty, value); }
-		}
+        protected override Size MeasureOverride(Size constraint)
+        {
+            UIElement child = this.Child;
+            if (child != null)
+            {
+                child.Measure(constraint);
 
-		// Using a DependencyProperty as the backing store for AnimationProgress.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty AnimationProgressProperty =
-				DependencyProperty.Register("AnimationProgress", typeof(double), typeof(Reveal), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsMeasure, null, new CoerceValueCallback(OnCoerceAnimationProgress)));
+                double percent = this.AnimationProgress;
+                double width = CalculateWidth(child.DesiredSize.Width, percent, this.HorizontalReveal);
+                double height = CalculateHeight(child.DesiredSize.Height, percent, this.VerticalReveal);
+                return new Size(width, height);
+            }
 
-		private static object OnCoerceAnimationProgress(DependencyObject d, object baseValue) {
-			double num = (double)baseValue;
-			if (num < 0.0)
-			{
-				return 0.0;
-			}
-			else if (num > 1.0)
-			{
-				return 1.0;
-			}
+            return default(Size);
+        }
 
-			return baseValue;
-		}
+        protected override Size ArrangeOverride(Size arrangeSize)
+        {
+            UIElement child = this.Child;
+            if (child != null)
+            {
+                double percent = this.AnimationProgress;
+                HorizontalRevealMode horizontalReveal = this.HorizontalReveal;
+                VerticalRevealMode verticalReveal = this.VerticalReveal;
 
-		#endregion
+                double childWidth = child.DesiredSize.Width;
+                double childHeight = child.DesiredSize.Height;
+                double x = CalculateLeft(childWidth, percent, horizontalReveal);
+                double y = CalculateTop(childHeight, percent, verticalReveal);
 
-		#region Implementation
+                child.Arrange(new Rect(x, y, childWidth, childHeight));
 
-		protected override Size MeasureOverride(Size constraint) {
-			UIElement child = Child;
-			if (child != null)
-			{
-				child.Measure(constraint);
+                childWidth = child.RenderSize.Width;
+                childHeight = child.RenderSize.Height;
+                double width = CalculateWidth(childWidth, percent, horizontalReveal);
+                double height = CalculateHeight(childHeight, percent, verticalReveal);
+                return new Size(width, height);
+            }
 
-				double percent = AnimationProgress;
-				double width = CalculateWidth(child.DesiredSize.Width, percent, HorizontalReveal);
-				double height = CalculateHeight(child.DesiredSize.Height, percent, VerticalReveal);
-				return new Size(width, height);
-			}
+            return default(Size);
+        }
 
-			return new Size();
-		}
+        private static void OnIsExpandedChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ((Reveal)sender).SetupAnimation((bool)e.NewValue);
+        }
 
-		protected override Size ArrangeOverride(Size arrangeSize) {
-			UIElement child = Child;
-			if (child != null)
-			{
-				double percent = AnimationProgress;
-				HorizontalRevealMode horizontalReveal = HorizontalReveal;
-				VerticalRevealMode verticalReveal = VerticalReveal;
+        private static double CalculateLeft(double width, double percent, HorizontalRevealMode reveal)
+        {
+            if (reveal == HorizontalRevealMode.FromRightToLeft)
+            {
+                return (percent - 1.0) * width;
+            }
+            else if (reveal == HorizontalRevealMode.FromCenterToEdge)
+            {
+                return (percent - 1.0) * width * 0.5;
+            }
+            else
+            {
+                return 0.0;
+            }
+        }
 
-				double childWidth = child.DesiredSize.Width;
-				double childHeight = child.DesiredSize.Height;
-				double x = CalculateLeft(childWidth, percent, horizontalReveal);
-				double y = CalculateTop(childHeight, percent, verticalReveal);
+        private static double CalculateTop(double height, double percent, VerticalRevealMode reveal)
+        {
+            if (reveal == VerticalRevealMode.FromBottomToTop)
+            {
+                return (percent - 1.0) * height;
+            }
+            else if (reveal == VerticalRevealMode.FromCenterToEdge)
+            {
+                return (percent - 1.0) * height * 0.5;
+            }
+            else
+            {
+                return 0.0;
+            }
+        }
 
-				child.Arrange(new Rect(x, y, childWidth, childHeight));
+        private static double CalculateWidth(double originalWidth, double percent, HorizontalRevealMode reveal)
+        {
+            if (reveal == HorizontalRevealMode.None)
+            {
+                return originalWidth;
+            }
+            else
+            {
+                return originalWidth * percent;
+            }
+        }
 
-				childWidth = child.RenderSize.Width;
-				childHeight = child.RenderSize.Height;
-				double width = CalculateWidth(childWidth, percent, horizontalReveal);
-				double height = CalculateHeight(childHeight, percent, verticalReveal);
-				return new Size(width, height);
-			}
+        private static double CalculateHeight(double originalHeight, double percent, VerticalRevealMode reveal)
+        {
+            if (reveal == VerticalRevealMode.None)
+            {
+                return originalHeight;
+            }
+            else
+            {
+                return originalHeight * percent;
+            }
+        }
 
-			return new Size();
-		}
+        private void SetupAnimation(bool isExpanded)
+        {
+            // Adjust the time if the animation is already in progress
+            double currentProgress = this.AnimationProgress;
+            if (isExpanded)
+            {
+                currentProgress = 1.0 - currentProgress;
+            }
 
-		private static double CalculateLeft(double width, double percent, HorizontalRevealMode reveal) {
-			if (reveal == HorizontalRevealMode.FromRightToLeft)
-			{
-				return (percent - 1.0) * width;
-			}
-			else if (reveal == HorizontalRevealMode.FromCenterToEdge)
-			{
-				return (percent - 1.0) * width * 0.5;
-			}
-			else
-			{
-				return 0.0;
-			}
-		}
+            DoubleAnimation animation = new DoubleAnimation();
+            animation.To = isExpanded ? 1.0 : 0.0;
+            animation.Duration = TimeSpan.FromMilliseconds(this.Duration * currentProgress);
+            animation.FillBehavior = FillBehavior.HoldEnd;
 
-		private static double CalculateTop(double height, double percent, VerticalRevealMode reveal) {
-			if (reveal == VerticalRevealMode.FromBottomToTop)
-			{
-				return (percent - 1.0) * height;
-			}
-			else if (reveal == VerticalRevealMode.FromCenterToEdge)
-			{
-				return (percent - 1.0) * height * 0.5;
-			}
-			else
-			{
-				return 0.0;
-			}
-		}
+            this.BeginAnimation(AnimationProgressProperty, animation);
+        }
+    }
 
-		private static double CalculateWidth(double originalWidth, double percent, HorizontalRevealMode reveal) {
-			if (reveal == HorizontalRevealMode.None)
-			{
-				return originalWidth;
-			}
-			else
-			{
-				return originalWidth * percent;
-			}
-		}
+    public enum HorizontalRevealMode
+    {
+        /// <summary>
+        ///     No horizontal reveal animation.
+        /// </summary>
+        None,
 
-		private static double CalculateHeight(double originalHeight, double percent, VerticalRevealMode reveal) {
-			if (reveal == VerticalRevealMode.None)
-			{
-				return originalHeight;
-			}
-			else
-			{
-				return originalHeight * percent;
-			}
-		}
+        /// <summary>
+        ///     Reveal from the left to the right.
+        /// </summary>
+        FromLeftToRight,
 
-		private void SetupAnimation(bool isExpanded) {
-			// Adjust the time if the animation is already in progress
-			double currentProgress = AnimationProgress;
-			if (isExpanded)
-			{
-				currentProgress = 1.0 - currentProgress;
-			}
+        /// <summary>
+        ///     Reveal from the right to the left.
+        /// </summary>
+        FromRightToLeft,
 
-			DoubleAnimation animation = new DoubleAnimation();
-			animation.To = isExpanded ? 1.0 : 0.0;
-			animation.Duration = TimeSpan.FromMilliseconds(Duration * currentProgress);
-			animation.FillBehavior = FillBehavior.HoldEnd;
+        /// <summary>
+        ///     Reveal from the center to the bounding edge.
+        /// </summary>
+        FromCenterToEdge,
+    }
 
-			this.BeginAnimation(AnimationProgressProperty, animation);
-		}
+    public enum VerticalRevealMode
+    {
+        /// <summary>
+        ///     No vertical reveal animation.
+        /// </summary>
+        None,
 
-		#endregion
-	}
+        /// <summary>
+        ///     Reveal from top to bottom.
+        /// </summary>
+        FromTopToBottom,
 
-	public enum HorizontalRevealMode {
-		/// <summary>
-		///     No horizontal reveal animation.
-		/// </summary>
-		None,
+        /// <summary>
+        ///     Reveal from bottom to top.
+        /// </summary>
+        FromBottomToTop,
 
-		/// <summary>
-		///     Reveal from the left to the right.
-		/// </summary>
-		FromLeftToRight,
-
-		/// <summary>
-		///     Reveal from the right to the left.
-		/// </summary>
-		FromRightToLeft,
-
-		/// <summary>
-		///     Reveal from the center to the bounding edge.
-		/// </summary>
-		FromCenterToEdge,
-	}
-
-	public enum VerticalRevealMode {
-		/// <summary>
-		///     No vertical reveal animation.
-		/// </summary>
-		None,
-
-		/// <summary>
-		///     Reveal from top to bottom.
-		/// </summary>
-		FromTopToBottom,
-
-		/// <summary>
-		///     Reveal from bottom to top.
-		/// </summary>
-		FromBottomToTop,
-
-		/// <summary>
-		///     Reveal from the center to the bounding edge.
-		/// </summary>
-		FromCenterToEdge,
-	}
+        /// <summary>
+        ///     Reveal from the center to the bounding edge.
+        /// </summary>
+        FromCenterToEdge,
+    }
 }

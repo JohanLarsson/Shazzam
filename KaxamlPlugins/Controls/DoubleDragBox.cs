@@ -26,8 +26,8 @@ namespace Kaxaml.Plugins.Controls
 
         public int Precision
         {
-            get { return (int)GetValue(PrecisionProperty); }
-            set { SetValue(PrecisionProperty, value); }
+            get { return (int) this.GetValue(PrecisionProperty); }
+            set { this.SetValue(PrecisionProperty, value); }
         }
 
 
@@ -39,8 +39,8 @@ namespace Kaxaml.Plugins.Controls
 
         public string CurrentText
         {
-            get { return (string)GetValue(CurrentTextProperty); }
-            set { SetValue(CurrentTextProperty, value); }
+            get { return (string) this.GetValue(CurrentTextProperty); }
+            set { this.SetValue(CurrentTextProperty, value); }
         }
 
 
@@ -53,8 +53,8 @@ namespace Kaxaml.Plugins.Controls
 
         public double Current
         {
-            get { return (double)GetValue(CurrentProperty); }
-            set { SetValue(CurrentProperty, value); }
+            get { return (double) this.GetValue(CurrentProperty); }
+            set { this.SetValue(CurrentProperty, value); }
         }
 
         public static void CurrentChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -85,8 +85,8 @@ namespace Kaxaml.Plugins.Controls
 
         public double Interval
         {
-            get { return (double)GetValue(IntervalProperty); }
-            set { SetValue(IntervalProperty, value); }
+            get { return (double) this.GetValue(IntervalProperty); }
+            set { this.SetValue(IntervalProperty, value); }
         }
 
 
@@ -96,8 +96,8 @@ namespace Kaxaml.Plugins.Controls
 
         public double Sensitivity
         {
-            get { return (double)GetValue(SensitivityProperty); }
-            set { SetValue(SensitivityProperty, value); }
+            get { return (double) this.GetValue(SensitivityProperty); }
+            set { this.SetValue(SensitivityProperty, value); }
         }
 
 
@@ -108,8 +108,8 @@ namespace Kaxaml.Plugins.Controls
 
         public double Minimum
         {
-            get { return (double)GetValue(MinimumProperty); }
-            set { SetValue(MinimumProperty, value); }
+            get { return (double) this.GetValue(MinimumProperty); }
+            set { this.SetValue(MinimumProperty, value); }
         }
 
 
@@ -118,8 +118,8 @@ namespace Kaxaml.Plugins.Controls
 
         public double Maximum
         {
-            get { return (double)GetValue(MaximumProperty); }
-            set { SetValue(MaximumProperty, value); }
+            get { return (double) this.GetValue(MaximumProperty); }
+            set { this.SetValue(MaximumProperty, value); }
         }
 
 
@@ -135,14 +135,14 @@ namespace Kaxaml.Plugins.Controls
         protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
         {
             this.CaptureMouse();
-            _BeginPoint = e.GetPosition(this);
-            _IsPointValid = true;
+            this._BeginPoint = e.GetPosition(this);
+            this._IsPointValid = true;
             base.OnPreviewMouseDown(e);
         }
 
         protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
         {
-            _IsPointValid = false;
+            this._IsPointValid = false;
             this.ReleaseMouseCapture();
             base.OnPreviewMouseUp(e);
         }
@@ -151,18 +151,18 @@ namespace Kaxaml.Plugins.Controls
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (_IsPointValid)
+                if (this._IsPointValid)
                 {
 
-                    if (e.GetPosition(this).Y - _BeginPoint.Y > Sensitivity)
+                    if (e.GetPosition(this).Y - this._BeginPoint.Y > this.Sensitivity)
                     {
-                        Current -= Interval;
-                        _BeginPoint.Y = e.GetPosition(this).Y;
+                        this.Current -= this.Interval;
+                        this._BeginPoint.Y = e.GetPosition(this).Y;
                     }
-                    else if (e.GetPosition(this).Y - _BeginPoint.Y < (-1 * Sensitivity))
+                    else if (e.GetPosition(this).Y - this._BeginPoint.Y < (-1 * this.Sensitivity))
                     {
-                        Current += Interval;
-                        _BeginPoint.Y = e.GetPosition(this).Y;
+                        this.Current += this.Interval;
+                        this._BeginPoint.Y = e.GetPosition(this).Y;
                     }
                 }
             }

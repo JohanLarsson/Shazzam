@@ -1,13 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq.Expressions;
-
-namespace Shazzam.ViewModels
+﻿namespace Shazzam.ViewModels
 {
+    using System;
+    using System.ComponentModel;
+    using System.Linq.Expressions;
 
   public class ViewModelBase : INotifyPropertyChanged
   {
-
     public event PropertyChangedEventHandler PropertyChanged;
 
     internal protected void NotifyPropertyChanged<T>(Expression<Func<T>> propertyAccessor)
@@ -16,10 +14,10 @@ namespace Shazzam.ViewModels
       {
         return;
       }
+
       MemberExpression mExpress = (MemberExpression)propertyAccessor.Body;
       string name = mExpress.Member.Name;
       this.PropertyChanged(this, new PropertyChangedEventArgs(name));
     }
-
   }
 }

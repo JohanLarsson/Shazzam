@@ -1,346 +1,342 @@
-﻿using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Media3D;
-
-namespace Shazzam.Controls
+﻿namespace Shazzam.Controls
 {
-	/// <summary>
-	/// Interaction logic for AdjustableSliderTriplet.xaml.
-	/// </summary>
-	public partial class AdjustableSliderTriplet : UserControl
-	{
-		private const double DefaultDuration = 0.5;
+    using System;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Controls.Primitives;
+    using System.Windows.Input;
+    using System.Windows.Media.Animation;
+    using System.Windows.Media.Media3D;
 
-		private Storyboard storyboard = new Storyboard();
-		private DoubleAnimation xSliderValueAnimation = new DoubleAnimation
-		{
-			Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
-			RepeatBehavior = RepeatBehavior.Forever,
-			AutoReverse = true,
-			AccelerationRatio = 0.25,
-			DecelerationRatio = 0.25
-		};
-		private DoubleAnimation ySliderValueAnimation = new DoubleAnimation
-		{
-			Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
-			RepeatBehavior = RepeatBehavior.Forever,
-			AutoReverse = true,
-			AccelerationRatio = 0.25,
-			DecelerationRatio = 0.25
-		};
-		private DoubleAnimation zSliderValueAnimation = new DoubleAnimation
-		{
-			Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
-			RepeatBehavior = RepeatBehavior.Forever,
-			AutoReverse = true,
-			AccelerationRatio = 0.25,
-			DecelerationRatio = 0.25
-		};
+    /// <summary>
+    /// Interaction logic for AdjustableSliderTriplet.xaml.
+    /// </summary>
+    public partial class AdjustableSliderTriplet : UserControl
+    {
+        /// <summary>
+        /// Value Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
+            "Value",
+            typeof(Point3D),
+            typeof(AdjustableSliderTriplet),
+            new FrameworkPropertyMetadata(new Point3D(0, 0, 0), OnValueChanged));
 
-		public AdjustableSliderTriplet()
-		{
-			this.InitializeComponent();
+        /// <summary>
+        /// Minimum Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
+            "Minimum",
+            typeof(Point3D),
+            typeof(AdjustableSliderTriplet),
+            new FrameworkPropertyMetadata(new Point3D(0, 0, 0), OnMinimumChanged));
 
-			Storyboard.SetTarget(this.xSliderValueAnimation, this.xSlider);
-			Storyboard.SetTargetProperty(this.xSliderValueAnimation, new PropertyPath(Slider.ValueProperty));
-			this.storyboard.Children.Add(this.xSliderValueAnimation);
+        /// <summary>
+        /// Maximum Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
+            "Maximum",
+            typeof(Point3D),
+            typeof(AdjustableSliderTriplet),
+            new FrameworkPropertyMetadata(new Point3D(100, 100, 100), OnMaximumChanged));
 
-			Storyboard.SetTarget(this.ySliderValueAnimation, this.ySlider);
-			Storyboard.SetTargetProperty(this.ySliderValueAnimation, new PropertyPath(Slider.ValueProperty));
-			this.storyboard.Children.Add(this.ySliderValueAnimation);
+        private const double DefaultDuration = 0.5;
 
-			Storyboard.SetTarget(this.zSliderValueAnimation, this.zSlider);
-			Storyboard.SetTargetProperty(this.zSliderValueAnimation, new PropertyPath(Slider.ValueProperty));
-			this.storyboard.Children.Add(this.zSliderValueAnimation);
+        private readonly Storyboard storyboard = new Storyboard();
+        private readonly DoubleAnimation xSliderValueAnimation = new DoubleAnimation
+        {
+            Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
+            RepeatBehavior = RepeatBehavior.Forever,
+            AutoReverse = true,
+            AccelerationRatio = 0.25,
+            DecelerationRatio = 0.25
+        };
 
-			this.mainPanel.PreviewKeyDown += new System.Windows.Input.KeyEventHandler(mainStackPanel_PreviewKeyDown);
+        private readonly DoubleAnimation ySliderValueAnimation = new DoubleAnimation
+        {
+            Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
+            RepeatBehavior = RepeatBehavior.Forever,
+            AutoReverse = true,
+            AccelerationRatio = 0.25,
+            DecelerationRatio = 0.25
+        };
 
-			this.xMinTextBox.LostFocus += new RoutedEventHandler(xMinTextBox_LostFocus);
-			this.xMaxTextBox.LostFocus += new RoutedEventHandler(xMaxTextBox_LostFocus);
-			this.xSlider.ValueChanged += this.XSlider_ValueChanged;
+        private readonly DoubleAnimation zSliderValueAnimation = new DoubleAnimation
+        {
+            Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
+            RepeatBehavior = RepeatBehavior.Forever,
+            AutoReverse = true,
+            AccelerationRatio = 0.25,
+            DecelerationRatio = 0.25
+        };
 
-			this.yMinTextBox.LostFocus += new RoutedEventHandler(yMinTextBox_LostFocus);
-			this.yMaxTextBox.LostFocus += new RoutedEventHandler(yMaxTextBox_LostFocus);
-			this.ySlider.ValueChanged += this.YSlider_ValueChanged;
+        public AdjustableSliderTriplet()
+        {
+            this.InitializeComponent();
 
-			this.zMinTextBox.LostFocus += new RoutedEventHandler(zMinTextBox_LostFocus);
-			this.zMaxTextBox.LostFocus += new RoutedEventHandler(zMaxTextBox_LostFocus);
-			this.zSlider.ValueChanged += this.ZSlider_ValueChanged;
+            Storyboard.SetTarget(this.xSliderValueAnimation, this.xSlider);
+            Storyboard.SetTargetProperty(this.xSliderValueAnimation, new PropertyPath(RangeBase.ValueProperty));
+            this.storyboard.Children.Add(this.xSliderValueAnimation);
 
-			this.noAnimationToggleButton.Click += this.AnimationToggleButton_Click;
-			this.linearAnimationToggleButton.Click += this.AnimationToggleButton_Click;
-			this.circularAnimationToggleButton.Click += this.AnimationToggleButton_Click;
-			this.durationTextBox.TextChanged += this.DurationTextBox_TextChanged;
-			durationTextBox.Text = Properties.Settings.Default.AnimationLengthDefault.ToString();
+            Storyboard.SetTarget(this.ySliderValueAnimation, this.ySlider);
+            Storyboard.SetTargetProperty(this.ySliderValueAnimation, new PropertyPath(RangeBase.ValueProperty));
+            this.storyboard.Children.Add(this.ySliderValueAnimation);
 
-		}
+            Storyboard.SetTarget(this.zSliderValueAnimation, this.zSlider);
+            Storyboard.SetTargetProperty(this.zSliderValueAnimation, new PropertyPath(RangeBase.ValueProperty));
+            this.storyboard.Children.Add(this.zSliderValueAnimation);
 
-		void mainStackPanel_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-		{
-			// pressing the enter key will move focus to next control
-			var uie = e.OriginalSource as UIElement;
-			if (e.Key == Key.Enter)
-			{
-				e.Handled = true;
-				uie.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-			}
-		}
+            this.mainPanel.PreviewKeyDown += this.MainStackPanel_PreviewKeyDown;
 
-		void xMinTextBox_LostFocus(object sender, RoutedEventArgs e)
-		{
-			double number;
-			if (Double.TryParse(this.xMinTextBox.Text, NumberStyles.Any, null, out number))
-			{
-				this.Minimum = new Point3D(number, this.Minimum.Y, this.Minimum.Z);
-			}
-		}
+            this.xMinTextBox.LostFocus += this.XMinTextBox_LostFocus;
+            this.xMaxTextBox.LostFocus += this.XMaxTextBox_LostFocus;
+            this.xSlider.ValueChanged += this.XSlider_ValueChanged;
 
-		void xMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
-		{
-			double number;
-			if (Double.TryParse(this.xMaxTextBox.Text, NumberStyles.Any, null, out number))
-			{
-				this.Maximum = new Point3D(number, this.Maximum.Y, this.Maximum.Z);
-			}
-		}
+            this.yMinTextBox.LostFocus += this.YMinTextBox_LostFocus;
+            this.yMaxTextBox.LostFocus += this.YMaxTextBox_LostFocus;
+            this.ySlider.ValueChanged += this.YSlider_ValueChanged;
 
-		private void XSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			this.Value = new Point3D(e.NewValue, this.Value.Y, this.Value.Z);
-		}
+            this.zMinTextBox.LostFocus += this.ZMinTextBox_LostFocus;
+            this.zMaxTextBox.LostFocus += this.ZMaxTextBox_LostFocus;
+            this.zSlider.ValueChanged += this.ZSlider_ValueChanged;
 
-		void yMinTextBox_LostFocus(object sender, RoutedEventArgs e)
-		{
-			double number;
-			if (Double.TryParse(this.yMinTextBox.Text, NumberStyles.Any, null, out number))
-			{
-				this.Minimum = new Point3D(this.Minimum.X, number, this.Minimum.Z);
-			}
-		}
+            this.noAnimationToggleButton.Click += this.AnimationToggleButton_Click;
+            this.linearAnimationToggleButton.Click += this.AnimationToggleButton_Click;
+            this.circularAnimationToggleButton.Click += this.AnimationToggleButton_Click;
+            this.durationTextBox.TextChanged += this.DurationTextBox_TextChanged;
+            this.durationTextBox.Text = Properties.Settings.Default.AnimationLengthDefault.ToString(CultureInfo.InvariantCulture);
+        }
 
-		void yMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
-		{
-			double number;
-			if (Double.TryParse(this.yMaxTextBox.Text, NumberStyles.Any, null, out number))
-			{
-				this.Maximum = new Point3D(this.Maximum.X, number, this.Maximum.Z);
-			}
-		}
+        /// <summary>
+        /// Gets or sets the Value property.  This dependency property
+        /// indicates the current value of the AdjustableSliderTriplet.
+        /// </summary>
+        public Point3D Value
+        {
+            get { return (Point3D)this.GetValue(ValueProperty); }
+            set { this.SetValue(ValueProperty, value); }
+        }
 
-		private void YSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			this.Value = new Point3D(this.Value.X, e.NewValue, this.Value.Z);
-		}
+        /// <summary>
+        /// Gets or sets the Minimum property.  This dependency property
+        /// indicates Minimum allowed value for the control.
+        /// </summary>
+        public Point3D Minimum
+        {
+            get { return (Point3D)this.GetValue(MinimumProperty); }
+            set { this.SetValue(MinimumProperty, value); }
+        }
 
-		void zMinTextBox_LostFocus(object sender, RoutedEventArgs e)
-		{
-			double number;
-			if (Double.TryParse(this.zMinTextBox.Text, NumberStyles.Any, null, out number))
-			{
-				this.Minimum = new Point3D(this.Minimum.X, this.Minimum.Y, number);
-			}
-		}
+        /// <summary>
+        /// Gets or sets the Maximum property.  This dependency property
+        /// indicates Maximum allowed value for control.
+        /// </summary>
+        public Point3D Maximum
+        {
+            get { return (Point3D)this.GetValue(MaximumProperty); }
+            set { this.SetValue(MaximumProperty, value); }
+        }
 
-		void zMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
-		{
-			double number;
-			if (Double.TryParse(this.zMaxTextBox.Text, NumberStyles.Any, null, out number))
-			{
-				this.Maximum = new Point3D(this.Maximum.X, this.Maximum.Y, number);
-			}
-		}
+        /// <summary>
+        /// Provides derived classes an opportunity to handle changes to the Value property.
+        /// </summary>
+        protected virtual void OnValueChanged(DependencyPropertyChangedEventArgs e)
+        {
+            Point3D point = (Point3D)e.NewValue;
+            this.xSlider.Value = point.X;
+            this.ySlider.Value = point.Y;
+            this.zSlider.Value = point.Z;
+        }
 
-		private void ZSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			this.Value = new Point3D(this.Value.X, this.Value.Y, e.NewValue);
-		}
+        /// <summary>
+        /// Provides derived classes an opportunity to handle changes to the Maximum property.
+        /// </summary>
+        protected virtual void OnMaximumChanged(DependencyPropertyChangedEventArgs e)
+        {
+            Point3D point = (Point3D)e.NewValue;
+            this.xMaxTextBox.SetCurrentValue(TextBox.TextProperty, point.X.ToString(CultureInfo.InvariantCulture));
+            this.yMaxTextBox.SetCurrentValue(TextBox.TextProperty, point.Y.ToString(CultureInfo.InvariantCulture));
+            this.zMaxTextBox.SetCurrentValue(TextBox.TextProperty, point.Z.ToString(CultureInfo.InvariantCulture));
+            this.UpdateAnimation();
+        }
 
-		private void AnimationToggleButton_Click(object sender, RoutedEventArgs e)
-		{
-			this.noAnimationToggleButton.IsChecked = sender == this.noAnimationToggleButton;
-			this.linearAnimationToggleButton.IsChecked = sender == this.linearAnimationToggleButton;
-			this.circularAnimationToggleButton.IsChecked = sender == this.circularAnimationToggleButton;
-			this.UpdateAnimation();
-		}
+        /// <summary>
+        /// Provides derived classes an opportunity to handle changes to the Minimum property.
+        /// </summary>
+        protected virtual void OnMinimumChanged(DependencyPropertyChangedEventArgs e)
+        {
+            Point3D point = (Point3D)e.NewValue;
+            this.xMinTextBox.SetCurrentValue(TextBox.TextProperty, point.X.ToString(CultureInfo.InvariantCulture));
+            this.yMinTextBox.SetCurrentValue(TextBox.TextProperty, point.Y.ToString(CultureInfo.InvariantCulture));
+            this.zMinTextBox.SetCurrentValue(TextBox.TextProperty, point.Z.ToString(CultureInfo.InvariantCulture));
+            this.UpdateAnimation();
+        }
 
-		private void DurationTextBox_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			double number;
-			if (Double.TryParse(this.durationTextBox.Text, out number))
-			{
-				TimeSpan duration = TimeSpan.FromSeconds(Math.Max(0, number));
-				this.xSliderValueAnimation.Duration = duration;
-				this.ySliderValueAnimation.Duration = duration;
-				this.zSliderValueAnimation.Duration = duration;
-				this.UpdateAnimation();
-			}
-		}
+        /// <summary>
+        /// Handles changes to the Value property.
+        /// </summary>
+        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((AdjustableSliderTriplet)d).OnValueChanged(e);
+        }
 
-		private void UpdateAnimation()
-		{
-			Point3D minimum = this.Minimum;
-			Point3D maximum = this.Maximum;
-			this.xSliderValueAnimation.From = minimum.X;
-			this.xSliderValueAnimation.To = maximum.X;
+        /// <summary>
+        /// Handles changes to the Minimum property.
+        /// </summary>
+        private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((AdjustableSliderTriplet)d).OnMinimumChanged(e);
+        }
 
-			this.ySliderValueAnimation.From = minimum.Y;
-			this.ySliderValueAnimation.To = maximum.Y;
+        /// <summary>
+        /// Handles changes to the Maximum property.
+        /// </summary>
+        private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((AdjustableSliderTriplet)d).OnMaximumChanged(e);
+        }
 
-			this.zSliderValueAnimation.From = minimum.Z;
-			this.zSliderValueAnimation.To = maximum.Z;
+        private void MainStackPanel_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // pressing the enter key will move focus to next control
+            var uie = e.OriginalSource as UIElement;
+            if (e.Key == Key.Enter)
+            {
+                e.Handled = true;
+                uie?.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+            }
+        }
 
-			if (this.noAnimationToggleButton.IsChecked.GetValueOrDefault() ||
-				this.xSliderValueAnimation.Duration.TimeSpan == TimeSpan.Zero)
-			{
-				this.storyboard.Stop(this);
-				xSlider.Visibility = Visibility.Visible;
-				xSliderText.Visibility = Visibility.Collapsed;
-				ySlider.Visibility = Visibility.Visible;
-				ySliderText.Visibility = Visibility.Collapsed;
-				zSlider.Visibility = Visibility.Visible;
-				zSliderText.Visibility = Visibility.Collapsed;
-			}
-			else
-			{
-				double duration = this.xSliderValueAnimation.Duration.TimeSpan.TotalSeconds;
-				double yBeginTime = this.circularAnimationToggleButton.IsChecked.GetValueOrDefault() ? duration / 3 : 0;
-				double zBeginTime = this.circularAnimationToggleButton.IsChecked.GetValueOrDefault() ? 2 * duration / 3 : 0;
-				this.ySliderValueAnimation.BeginTime = TimeSpan.FromSeconds(yBeginTime);
-				this.zSliderValueAnimation.BeginTime = TimeSpan.FromSeconds(zBeginTime);
-				this.storyboard.Begin(this, true);
-				xSlider.Visibility = Visibility.Collapsed;
-				xSliderText.Visibility = Visibility.Visible;
-				ySlider.Visibility = Visibility.Collapsed;
-				ySliderText.Visibility = Visibility.Visible;
-				zSlider.Visibility = Visibility.Collapsed;
-				zSliderText.Visibility = Visibility.Visible;
-			}
-		}
+        private void XMinTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            double number;
+            if (double.TryParse(this.xMinTextBox.Text, NumberStyles.Any, null, out number))
+            {
+                this.Minimum = new Point3D(number, this.Minimum.Y, this.Minimum.Z);
+            }
+        }
 
-		#region Value
+        private void XMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            double number;
+            if (double.TryParse(this.xMaxTextBox.Text, NumberStyles.Any, null, out number))
+            {
+                this.Maximum = new Point3D(number, this.Maximum.Y, this.Maximum.Z);
+            }
+        }
 
-		/// <summary>
-		/// Value Dependency Property
-		/// </summary>
-		public static readonly DependencyProperty ValueProperty =
-			DependencyProperty.Register("Value", typeof(Point3D), typeof(AdjustableSliderTriplet),
-				new FrameworkPropertyMetadata(new Point3D(0, 0, 0), new PropertyChangedCallback(OnValueChanged)));
+        private void XSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.Value = new Point3D(e.NewValue, this.Value.Y, this.Value.Z);
+        }
 
-		/// <summary>
-		/// Gets or sets the Value property.  This dependency property
-		/// indicates the current value of the AdjustableSliderTriplet.
-		/// </summary>
-		public Point3D Value
-		{
-			get { return (Point3D)GetValue(ValueProperty); }
-			set { SetValue(ValueProperty, value); }
-		}
+        private void YMinTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            double number;
+            if (double.TryParse(this.yMinTextBox.Text, NumberStyles.Any, null, out number))
+            {
+                this.Minimum = new Point3D(this.Minimum.X, number, this.Minimum.Z);
+            }
+        }
 
-		/// <summary>
-		/// Handles changes to the Value property.
-		/// </summary>
-		private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			((AdjustableSliderTriplet)d).OnValueChanged(e);
-		}
+        private void YMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            double number;
+            if (double.TryParse(this.yMaxTextBox.Text, NumberStyles.Any, null, out number))
+            {
+                this.Maximum = new Point3D(this.Maximum.X, number, this.Maximum.Z);
+            }
+        }
 
-		/// <summary>
-		/// Provides derived classes an opportunity to handle changes to the Value property.
-		/// </summary>
-		protected virtual void OnValueChanged(DependencyPropertyChangedEventArgs e)
-		{
-			Point3D point = (Point3D)e.NewValue;
-			this.xSlider.Value = point.X;
-			this.ySlider.Value = point.Y;
-			this.zSlider.Value = point.Z;
-		}
+        private void YSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.Value = new Point3D(this.Value.X, e.NewValue, this.Value.Z);
+        }
 
-		#endregion
+        private void ZMinTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            double number;
+            if (double.TryParse(this.zMinTextBox.Text, NumberStyles.Any, null, out number))
+            {
+                this.Minimum = new Point3D(this.Minimum.X, this.Minimum.Y, number);
+            }
+        }
 
-		#region Minimum
+        private void ZMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            double number;
+            if (double.TryParse(this.zMaxTextBox.Text, NumberStyles.Any, null, out number))
+            {
+                this.Maximum = new Point3D(this.Maximum.X, this.Maximum.Y, number);
+            }
+        }
 
-		/// <summary>
-		/// Minimum Dependency Property
-		/// </summary>
-		public static readonly DependencyProperty MinimumProperty =
-			DependencyProperty.Register("Minimum", typeof(Point3D), typeof(AdjustableSliderTriplet),
-				new FrameworkPropertyMetadata(new Point3D(0, 0, 0), new PropertyChangedCallback(OnMinimumChanged)));
+        private void ZSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.Value = new Point3D(this.Value.X, this.Value.Y, e.NewValue);
+        }
 
-		/// <summary>
-		/// Gets or sets the Minimum property.  This dependency property
-		/// indicates Minimum allowed value for the control.
-		/// </summary>
-		public Point3D Minimum
-		{
-			get { return (Point3D)GetValue(MinimumProperty); }
-			set { SetValue(MinimumProperty, value); }
-		}
+        private void AnimationToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.noAnimationToggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, sender == this.noAnimationToggleButton);
+            this.linearAnimationToggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, sender == this.linearAnimationToggleButton);
+            this.circularAnimationToggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, sender == this.circularAnimationToggleButton);
+            this.UpdateAnimation();
+        }
 
-		/// <summary>
-		/// Handles changes to the Minimum property.
-		/// </summary>
-		private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			((AdjustableSliderTriplet)d).OnMinimumChanged(e);
-		}
+        private void DurationTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            double number;
+            if (double.TryParse(this.durationTextBox.Text, out number))
+            {
+                TimeSpan duration = TimeSpan.FromSeconds(Math.Max(0, number));
+                this.xSliderValueAnimation.Duration = duration;
+                this.ySliderValueAnimation.Duration = duration;
+                this.zSliderValueAnimation.Duration = duration;
+                this.UpdateAnimation();
+            }
+        }
 
-		/// <summary>
-		/// Provides derived classes an opportunity to handle changes to the Minimum property.
-		/// </summary>
-		protected virtual void OnMinimumChanged(DependencyPropertyChangedEventArgs e)
-		{
-			Point3D point = (Point3D)e.NewValue;
-			this.xMinTextBox.Text = point.X.ToString();
-			this.yMinTextBox.Text = point.Y.ToString();
-			this.zMinTextBox.Text = point.Z.ToString();
-			this.UpdateAnimation();
-		}
+        private void UpdateAnimation()
+        {
+            Point3D minimum = this.Minimum;
+            Point3D maximum = this.Maximum;
+            this.xSliderValueAnimation.From = minimum.X;
+            this.xSliderValueAnimation.To = maximum.X;
 
-		#endregion
+            this.ySliderValueAnimation.From = minimum.Y;
+            this.ySliderValueAnimation.To = maximum.Y;
 
-		#region Maximum
+            this.zSliderValueAnimation.From = minimum.Z;
+            this.zSliderValueAnimation.To = maximum.Z;
 
-		/// <summary>
-		/// Maximum Dependency Property
-		/// </summary>
-		public static readonly DependencyProperty MaximumProperty =
-			DependencyProperty.Register("Maximum", typeof(Point3D), typeof(AdjustableSliderTriplet),
-				new FrameworkPropertyMetadata(new Point3D(100, 100, 100), new PropertyChangedCallback(OnMaximumChanged)));
-
-		/// <summary>
-		/// Gets or sets the Maximum property.  This dependency property
-		/// indicates Maximum allowed value for control.
-		/// </summary>
-		public Point3D Maximum
-		{
-			get { return (Point3D)GetValue(MaximumProperty); }
-			set { SetValue(MaximumProperty, value); }
-		}
-
-		/// <summary>
-		/// Handles changes to the Maximum property.
-		/// </summary>
-		private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			((AdjustableSliderTriplet)d).OnMaximumChanged(e);
-		}
-
-		/// <summary>
-		/// Provides derived classes an opportunity to handle changes to the Maximum property.
-		/// </summary>
-		protected virtual void OnMaximumChanged(DependencyPropertyChangedEventArgs e)
-		{
-			Point3D point = (Point3D)e.NewValue;
-			this.xMaxTextBox.Text = point.X.ToString();
-			this.yMaxTextBox.Text = point.Y.ToString();
-			this.zMaxTextBox.Text = point.Z.ToString();
-			this.UpdateAnimation();
-		}
-
-		#endregion
-	}
+            if (this.noAnimationToggleButton.IsChecked.GetValueOrDefault() ||
+                this.xSliderValueAnimation.Duration.TimeSpan == TimeSpan.Zero)
+            {
+                this.storyboard.Stop(this);
+                this.xSlider.Visibility = Visibility.Visible;
+                this.xSliderText.Visibility = Visibility.Collapsed;
+                this.ySlider.Visibility = Visibility.Visible;
+                this.ySliderText.Visibility = Visibility.Collapsed;
+                this.zSlider.Visibility = Visibility.Visible;
+                this.zSliderText.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                double duration = this.xSliderValueAnimation.Duration.TimeSpan.TotalSeconds;
+                double yBeginTime = this.circularAnimationToggleButton.IsChecked.GetValueOrDefault() ? duration / 3 : 0;
+                double zBeginTime = this.circularAnimationToggleButton.IsChecked.GetValueOrDefault() ? 2 * duration / 3 : 0;
+                this.ySliderValueAnimation.BeginTime = TimeSpan.FromSeconds(yBeginTime);
+                this.zSliderValueAnimation.BeginTime = TimeSpan.FromSeconds(zBeginTime);
+                this.storyboard.Begin(this, isControllable: true);
+                this.xSlider.Visibility = Visibility.Collapsed;
+                this.xSliderText.Visibility = Visibility.Visible;
+                this.ySlider.Visibility = Visibility.Collapsed;
+                this.ySliderText.Visibility = Visibility.Visible;
+                this.zSlider.Visibility = Visibility.Collapsed;
+                this.zSliderText.Visibility = Visibility.Visible;
+            }
+        }
+    }
 }

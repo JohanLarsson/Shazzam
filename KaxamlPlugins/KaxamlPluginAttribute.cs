@@ -10,36 +10,36 @@ namespace Kaxaml.Plugins
         private string _Name;
         public string Name
         {
-            get { return _Name; }
-            set { _Name = value; }
+            get { return this._Name; }
+            set { this._Name = value; }
         }
 
         private string _Description;
         public string Description
         {
-            get { return _Description; }
-            set { _Description = value; }
+            get { return this._Description; }
+            set { this._Description = value; }
         }
 
         private Key _Key;
         public Key Key
         {
-            get { return _Key; }
-            set { _Key = value; }
+            get { return this._Key; }
+            set { this._Key = value; }
         }
 
         public ModifierKeys _ModifierKeys;
         public ModifierKeys ModifierKeys
         {
-            get { return _ModifierKeys; }
-            set { _ModifierKeys = value; }
+            get { return this._ModifierKeys; }
+            set { this._ModifierKeys = value; }
         }
 
         private string _Icon;
         public string Icon
         {
-            get { return _Icon; }
-            set { _Icon = value; }
+            get { return this._Icon; }
+            set { this._Icon = value; }
         }
 
     }

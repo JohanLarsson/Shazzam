@@ -1,9 +1,9 @@
-﻿using System;
-using System.Globalization;
-using System.Windows.Data;
-
-namespace Shazzam.Converters
+﻿namespace Shazzam.Converters
 {
+    using System;
+    using System.Globalization;
+    using System.Windows.Data;
+
   public class StretchToIsCheckedConverter : IValueConverter
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -13,8 +13,8 @@ namespace Shazzam.Converters
       {
         return true;
       }
-      return false;
 
+      return false;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -23,4 +23,3 @@ namespace Shazzam.Converters
     }
   }
 }
-

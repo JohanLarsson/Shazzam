@@ -2,14 +2,12 @@
 {
   class CodeTabViewModel : ViewModelBase
   {
-
     public bool AreGeneratedCodeTabsEnabled
     {
       get
       {
-        return Shazzam.Properties.Settings.Default.AreGeneratedCodeTabsEnabled;
+        return Properties.Settings.Default.AreGeneratedCodeTabsEnabled;
       }
     }
-
   }
 }

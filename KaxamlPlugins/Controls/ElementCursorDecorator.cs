@@ -20,22 +20,22 @@ namespace Kaxaml.Plugins.Controls
                 return;
             }
 
-            if (_CursorAdorner == null)
+            if (this._CursorAdorner == null)
             {
-                _CursorAdorner = new CursorAdorner(this, this.CursorElement);
+                this._CursorAdorner = new CursorAdorner(this, this.CursorElement);
             }
 
-            _AdornerLayer.Add(_CursorAdorner);
+            _AdornerLayer.Add(this._CursorAdorner);
 
             base.OnMouseEnter(e);
         }
 
         protected override void OnMouseLeave(MouseEventArgs e)
         {
-            if (_CursorAdorner != null)
+            if (this._CursorAdorner != null)
             {
-                AdornerLayer layer = VisualTreeHelper.GetParent(_CursorAdorner) as AdornerLayer;
-                layer.Remove(_CursorAdorner);
+                AdornerLayer layer = VisualTreeHelper.GetParent(this._CursorAdorner) as AdornerLayer;
+                layer.Remove(this._CursorAdorner);
             }
 
             base.OnMouseLeave(e);
@@ -43,7 +43,7 @@ namespace Kaxaml.Plugins.Controls
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            _CursorAdorner.Offset = e.GetPosition(this);
+            this._CursorAdorner.Offset = e.GetPosition(this);
             base.OnMouseMove(e);
         }
 
@@ -55,8 +55,8 @@ namespace Kaxaml.Plugins.Controls
 
         public UIElement CursorElement
         {
-            get { return (UIElement)GetValue(CursorElementProperty); }
-            set { SetValue(CursorElementProperty, value); }
+            get { return (UIElement) this.GetValue(CursorElementProperty); }
+            set { this.SetValue(CursorElementProperty, value); }
         }
         public static readonly DependencyProperty CursorElementProperty =
             DependencyProperty.Register("CursorElement", typeof(UIElement), typeof(ElementCursorDecorator), new UIPropertyMetadata(null));
@@ -74,24 +74,24 @@ namespace Kaxaml.Plugins.Controls
         private Point _Offset;
         public Point Offset
         {
-            get { return _Offset; }
+            get { return this._Offset; }
             set
             {
-                _Offset = value;
-                InvalidateArrange();
+                this._Offset = value;
+                this.InvalidateArrange();
             }
         }
 
         public CursorAdorner(ElementCursorDecorator Owner, UIElement Cursor)
             : base(Owner)
         {
-            _Cursor = Cursor;
-            this.AddVisualChild(_Cursor);
+            this._Cursor = Cursor;
+            this.AddVisualChild(this._Cursor);
         }
 
         protected override Visual GetVisualChild(int index)
         {
-            return _Cursor;
+            return this._Cursor;
         }
 
         protected override int VisualChildrenCount
@@ -104,7 +104,7 @@ namespace Kaxaml.Plugins.Controls
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            _Cursor.Arrange(new Rect(Offset, _Cursor.DesiredSize));
+            this._Cursor.Arrange(new Rect(this.Offset, this._Cursor.DesiredSize));
             return finalSize;
         }
 

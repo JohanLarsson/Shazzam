@@ -1,254 +1,238 @@
-using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using Kaxaml.Plugins.Controls;
-using System.Collections.ObjectModel;
-using KaxamlPlugins;
-using System.Windows.Threading;
-//using Kaxaml.Plugins.ColorPicker.Properties;
+// using Kaxaml.Plugins.ColorPicker.Properties;
 
 namespace Kaxaml.Plugins.ColorPicker
 {
-  /// <summary>
-  /// Interaction logic for UserControl1.xaml
-  /// </summary>
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Threading;
+    using Kaxaml.Plugins.Controls;
+    using KaxamlPlugins;
 
-
-
-  public partial class ColorPickerPlugin : UserControl
-  {
-    public ColorPickerPlugin()
+    public partial class ColorPickerPlugin : UserControl
     {
-      InitializeComponent();
-      Colors = new ObservableCollection<Color>();
-      ColorString = Shazzam.Properties.Settings.Default.ColorPickerColors;
+        private ColorConverter converter = new ColorConverter();
+        private DispatcherTimer colorChangedTimer;
+        private Color colorChangedColor;
 
-      KaxamlInfo.EditSelectionChanged += new KaxamlInfo.EditSelectionChangedDelegate(KaxamlInfo_EditSelectionChanged);
-    }
-
-    #region Sync Interaction Logic
-
-    ColorConverter converter = new ColorConverter();
-    void KaxamlInfo_EditSelectionChanged(string SelectedText)
-    {
-      // wish we could do this without a try catch!
-      try
-      {
-        Color c = (Color)ColorConverter.ConvertFromString(KaxamlInfo.Editor.SelectedText);
-        SyncButton.IsEnabled = true;
-      }
-      catch
-      {
-        SyncButton.IsEnabled = false;
-        SyncButton.IsChecked = false;
-      }
-    }
-
-    private void SyncButtonChecked(object sender, RoutedEventArgs e)
-    {
-      try
-      {
-        Color c = (Color)ColorConverter.ConvertFromString(KaxamlInfo.Editor.SelectedText);
-        C.Color = c;
-
-        C.ColorChanged += new Kaxaml.Plugins.Controls.ColorPicker.ColorChangedEventHandler(C_ColorChanged);
-      }
-      catch
-      {
-        SyncButton.IsEnabled = false;
-      }
-    }
-
-    private void SyncButtonUnChecked(object sender, RoutedEventArgs e)
-    {
-      try
-      {
-        C.ColorChanged -= new Kaxaml.Plugins.Controls.ColorPicker.ColorChangedEventHandler(C_ColorChanged);
-      }
-      catch
-      {
-        SyncButton.IsEnabled = false;
-      }
-    }
-
-    DispatcherTimer _ColorChangedTimer;
-    Color _ColorChangedColor;
-
-    void C_ColorChanged(object sender, ColorChangedEventArgs e)
-    {
-      if ((bool)SyncButton.IsChecked)
-      {
-        try
+        public ColorPickerPlugin()
         {
-          if (_ColorChangedTimer == null)
-          {
-            _ColorChangedTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(200), DispatcherPriority.Background, _ColorChangedTimer_Tick, this.Dispatcher);
-          }
+            this.InitializeComponent();
+            this.Colors = new ObservableCollection<Color>();
+            this.ColorString = Shazzam.Properties.Settings.Default.ColorPickerColors;
 
-          _ColorChangedTimer.Stop();
-          _ColorChangedTimer.Start();
-
-          _ColorChangedColor = e.Color;
-        }
-        catch { }
-      }
-    }
-
-    void _ColorChangedTimer_Tick(object sender, EventArgs e)
-    {
-      _ColorChangedTimer.Stop();
-
-      KaxamlInfo.Editor.ReplaceSelectedText(_ColorChangedColor.ToString());
-      KaxamlInfo.Parse();
-    }
-
-    #endregion
-
-    #region Event Handlers
-
-    private void CopyColor(object o, EventArgs e)
-    {
-      Clipboard.SetText(C.Color.ToString());
-    }
-
-    private void SaveColor(object o, EventArgs e)
-    {
-      Colors.Add(C.Color);
-    }
-
-    private void RemoveColor(object o, EventArgs e)
-    {
-      ContextMenu cm = (ContextMenu)ItemsControl.ItemsControlFromItemContainer(o as MenuItem);
-      ListBoxItem lbi = (ListBoxItem)cm.PlacementTarget;
-      Colors.Remove((Color)lbi.Content);
-    }
-
-    private void RemoveAllColors(object o, EventArgs e)
-    {
-      Colors.Clear();
-    }
-
-    private void SwatchMouseDown(object o, MouseEventArgs e)
-    {
-      Color c = (Color)(o as FrameworkElement).DataContext;
-      C.Color = c;
-    }
-
-    #endregion
-
-    #region Colors (DependencyProperty)
-
-    /// <summary>
-    /// description of the property
-    /// </summary>
-    public ObservableCollection<Color> Colors
-    {
-      get { return (ObservableCollection<Color>)GetValue(ColorsProperty); }
-      set { SetValue(ColorsProperty, value); }
-    }
-
-    /// <summary>
-    /// DependencyProperty for Colors
-    /// </summary>
-    public static readonly DependencyProperty ColorsProperty =
-        DependencyProperty.Register("Colors", typeof(ObservableCollection<Color>), typeof(ColorPickerPlugin), new FrameworkPropertyMetadata(default(ObservableCollection<Color>), new PropertyChangedCallback(ColorsChanged)));
-
-    /// <summary>
-    /// PropertyChangedCallback for Colors
-    /// </summary>
-    private static void ColorsChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-    {
-      if (obj is ColorPickerPlugin)
-      {
-        ColorPickerPlugin owner = (ColorPickerPlugin)obj;
-
-        ObservableCollection<Color> c = args.NewValue as ObservableCollection<Color>;
-        if (c != null)
-        {
-          c.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(owner.c_CollectionChanged);
+            KaxamlInfo.EditSelectionChanged += this.KaxamlInfo_EditSelectionChanged;
         }
 
-      }
-    }
-
-    private void c_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-    {
-      if (!updateinternal)
-      {
-        updateinternal = true;
-
-        string s = "";
-        foreach (Color c in Colors)
+        private void KaxamlInfo_EditSelectionChanged(string selectedText)
         {
-          s = s + c.ToString() + DELIMITER;
-        }
-        ColorString = s;
-
-        updateinternal = false;
-      }
-    }
-
-    #endregion
-
-    #region ColorString (DependencyProperty)
-
-    /// <summary>
-    /// description of the property
-    /// </summary>
-    public string ColorString
-    {
-      get { return (string)GetValue(ColorStringProperty); }
-      set { SetValue(ColorStringProperty, value); }
-    }
-
-    /// <summary>
-    /// DependencyProperty for ColorString
-    /// </summary>
-    public static readonly DependencyProperty ColorStringProperty =
-        DependencyProperty.Register("ColorString", typeof(string), typeof(ColorPickerPlugin), new FrameworkPropertyMetadata(
-            default(string),
-            new PropertyChangedCallback(ColorStringChanged)));
-
-    /// <summary>
-    /// PropertyChangedCallback for ColorString
-    /// </summary>
-    private static void ColorStringChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-    {
-      if (obj is ColorPickerPlugin)
-      {
-        ColorPickerPlugin owner = (ColorPickerPlugin)obj;
-        Shazzam.Properties.Settings.Default.ColorPickerColors = args.NewValue as string;
-
-        if (!owner.updateinternal)
-        {
-          owner.updateinternal = true;
-
-          owner.Colors.Clear();
-          string[] colors = (args.NewValue as string).Split(owner.DELIMITER);
-
-          foreach (string s in colors)
-          {
+            // wish we could do this without a try catch!
             try
             {
-              if (s.Length > 3)
-              {
-                Color c = ColorPickerUtil.ColorFromString(s);
-                owner.Colors.Add(c);
-              }
+                var c = (Color)ColorConverter.ConvertFromString(KaxamlInfo.Editor.SelectedText);
+                this.SyncButton.SetCurrentValue(IsEnabledProperty, true);
             }
-            catch { }
-          }
-
-          owner.updateinternal = false;
+            catch
+            {
+                this.SyncButton.SetCurrentValue(IsEnabledProperty, false);
+                this.SyncButton.SetCurrentValue(System.Windows.Controls.Primitives.ToggleButton.IsCheckedProperty, false);
+            }
         }
-      }
+
+        private void SyncButtonChecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var c = (Color)ColorConverter.ConvertFromString(KaxamlInfo.Editor.SelectedText);
+                this.C.SetCurrentValue(Controls.ColorPicker.ColorProperty, c);
+
+                this.C.ColorChanged += this.C_ColorChanged;
+            }
+            catch
+            {
+                this.SyncButton.SetCurrentValue(IsEnabledProperty, false);
+            }
+        }
+
+        private void SyncButtonUnChecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.C.ColorChanged -= this.C_ColorChanged;
+            }
+            catch
+            {
+                this.SyncButton.SetCurrentValue(IsEnabledProperty, false);
+            }
+        }
+
+        private void C_ColorChanged(object sender, ColorChangedEventArgs e)
+        {
+            if ((bool)this.SyncButton.IsChecked)
+            {
+                try
+                {
+                    if (this.colorChangedTimer == null)
+                    {
+                        this.colorChangedTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(200), DispatcherPriority.Background, this._ColorChangedTimer_Tick, this.Dispatcher);
+                    }
+
+                    this.colorChangedTimer.Stop();
+                    this.colorChangedTimer.Start();
+
+                    this.colorChangedColor = e.Color;
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        private void _ColorChangedTimer_Tick(object sender, EventArgs e)
+        {
+            this.colorChangedTimer.Stop();
+
+            KaxamlInfo.Editor.ReplaceSelectedText(this.colorChangedColor.ToString());
+            KaxamlInfo.Parse();
+        }
+
+        private void CopyColor(object o, EventArgs e)
+        {
+            Clipboard.SetText(this.C.Color.ToString());
+        }
+
+        private void SaveColor(object o, EventArgs e)
+        {
+            this.Colors.Add(this.C.Color);
+        }
+
+        private void RemoveColor(object o, EventArgs e)
+        {
+            var cm = (ContextMenu)ItemsControl.ItemsControlFromItemContainer(o as MenuItem);
+            var lbi = (ListBoxItem)cm.PlacementTarget;
+            this.Colors.Remove((Color)lbi.Content);
+        }
+
+        private void RemoveAllColors(object o, EventArgs e)
+        {
+            this.Colors.Clear();
+        }
+
+        private void SwatchMouseDown(object o, MouseEventArgs e)
+        {
+            var c = (Color)(o as FrameworkElement).DataContext;
+            this.C.Color = c;
+        }
+
+        /// <summary>
+        /// description of the property
+        /// </summary>
+        public ObservableCollection<Color> Colors
+        {
+            get { return (ObservableCollection<Color>)this.GetValue(ColorsProperty); }
+            set { this.SetValue(ColorsProperty, value); }
+        }
+
+        /// <summary>
+        /// DependencyProperty for Colors
+        /// </summary>
+        public static readonly DependencyProperty ColorsProperty =
+            DependencyProperty.Register("Colors", typeof(ObservableCollection<Color>), typeof(ColorPickerPlugin), new FrameworkPropertyMetadata(default(ObservableCollection<Color>), OnColorsChanged));
+
+        /// <summary>
+        /// PropertyChangedCallback for Colors
+        /// </summary>
+        private static void OnColorsChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            if (obj is ColorPickerPlugin)
+            {
+                var owner = (ColorPickerPlugin)obj;
+
+                var c = args.NewValue as ObservableCollection<Color>;
+                if (c != null)
+                {
+                    c.CollectionChanged += owner.c_CollectionChanged;
+                }
+            }
+        }
+
+        private void c_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (!this.updateinternal)
+            {
+                this.updateinternal = true;
+
+                var s = string.Empty;
+                foreach (var c in this.Colors)
+                {
+                    s = s + c.ToString() + this.DELIMITER;
+                }
+
+                this.ColorString = s;
+
+                this.updateinternal = false;
+            }
+        }
+
+        /// <summary>
+        /// description of the property
+        /// </summary>
+        public string ColorString
+        {
+            get { return (string)this.GetValue(ColorStringProperty); }
+            set { this.SetValue(ColorStringProperty, value); }
+        }
+
+        /// <summary>
+        /// DependencyProperty for ColorString
+        /// </summary>
+        public static readonly DependencyProperty ColorStringProperty = DependencyProperty.Register(
+            "ColorString",
+            typeof(string),
+            typeof(ColorPickerPlugin),
+            new FrameworkPropertyMetadata(default(string), ColorStringChanged));
+
+        /// <summary>
+        /// PropertyChangedCallback for ColorString
+        /// </summary>
+        private static void ColorStringChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            if (obj is ColorPickerPlugin)
+            {
+                var owner = (ColorPickerPlugin)obj;
+                Shazzam.Properties.Settings.Default.ColorPickerColors = args.NewValue as string;
+
+                if (!owner.updateinternal)
+                {
+                    owner.updateinternal = true;
+
+                    owner.Colors.Clear();
+                    var colors = (args.NewValue as string).Split(owner.DELIMITER);
+
+                    foreach (var s in colors)
+                    {
+                        try
+                        {
+                            if (s.Length > 3)
+                            {
+                                var c = ColorPickerUtil.ColorFromString(s);
+                                owner.Colors.Add(c);
+                            }
+                        }
+                        catch
+                        {
+                        }
+                    }
+
+                    owner.updateinternal = false;
+                }
+            }
+        }
+
+        private char DELIMITER = '|';
+        private bool updateinternal = false;
     }
-
-    #endregion
-
-    private char DELIMITER = '|';
-    bool updateinternal = false;
-  }
 }

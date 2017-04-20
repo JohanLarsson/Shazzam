@@ -1,156 +1,157 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using Kaxaml;
-using Shazzam.Plugins;
+namespace Shazzam.Views
+{
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Reflection;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using Kaxaml;
+    using Shazzam.Plugins;
 
-namespace Shazzam.Views {
+    public partial class PluginView : UserControl
+    {
+        public const string PluginSubDir = "\\plugins";
 
-	public partial class PluginView : System.Windows.Controls.UserControl {
+        public PluginView()
+        {
+            this.InitializeComponent();
+            this.LoadPlugins();
+        }
 
-		public const string PluginSubDir = "\\plugins";
+        private void LoadPlugins()
+        {
+            var fileLoader = new Plugin();
+            fileLoader.Root = new FileLoaderPlugin();
+            fileLoader.Name = "Shader Loader";
+            fileLoader.Description = "Pick a shader file to open";
 
-		public PluginView() {
-			InitializeComponent();
-			LoadPlugins();
-		}
+            this.Plugins.Add(fileLoader);
 
-		private void LoadPlugins() {
+      // Plugin colorLoader = new Plugin();
+      // colorLoader.Root = new Kaxaml.Plugins.ColorPicker.ColorPickerPlugin();
+      // colorLoader.Name = "Color Picker";
+      // colorLoader.Description = "Color assistant";
+      // Plugins.Add(colorLoader);
+            this.AddSettingsPlugin();
 
-			Plugin fileLoader = new Plugin();
-			fileLoader.Root = new FileLoaderPlugin();
-			fileLoader.Name = "Shader Loader";
-			fileLoader.Description = "Pick a shader file to open";
+            //// add the about plugin
+            var about = new Plugin();
+            about.Root = new About();
+            about.Name = "About Shazzam";
+            about.Description = "About Shazzam";
+            this.Plugins.Add(about);
+        // SelectedPlugin = colorLoader;
+        }
 
-      Plugins.Add(fileLoader);
+        private void AddSettingsPlugin()
+        {
+            var settings = new Plugin();
+            settings.Root = new SettingsPlugin();
+            settings.Name = "Settings";
+            settings.Description = "Modify program settings and options";
+            // settings.Key = Key.E;
+            // settings.ModifierKeys = ModifierKeys.Control;
+            this.Plugins.Add(settings);
+        }
 
-      //Plugin colorLoader = new Plugin();
-      //colorLoader.Root = new Kaxaml.Plugins.ColorPicker.ColorPickerPlugin();
-      //colorLoader.Name = "Color Picker";
-      //colorLoader.Description = "Color assistant";
-      //Plugins.Add(colorLoader);
+        private ImageSource LoadIcon(string imagePath)
+        {
+            // ImageSourceConverter conv = new ImageSourceConverter();
+            // return conv.ConvertFromString(imagePath);
+            var resourceUri = new Uri(imagePath, UriKind.Relative);
+            var streamInfo = Application.GetResourceStream(resourceUri);
 
-			AddSettingsPlugin();
+            var temp = BitmapFrame.Create(streamInfo.Stream);
+            return temp;
+            // return bitmapSource;
+        }
 
-			//// add the about plugin
-			Plugin about = new Plugin();
-			about.Root = new About();
-			about.Name = "About Shazzam";
-			about.Description = "About Shazzam";
-			Plugins.Add(about);
-		//	SelectedPlugin = colorLoader;
-		}
+        private ImageSource LoadIcon(Type typ, string icon)
+        {
+            var asm = Assembly.GetAssembly(typ);
+            //// string iconString = typ.Namespace + '.' + icon.Replace('\\', '.');
+            using (var myStream = asm.GetManifestResourceStream(icon))
+            {
+                if (myStream != null)
+                {
+                    var bitmapDecoder = new PngBitmapDecoder(myStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+                    return bitmapDecoder.Frames[0];
+                }
+            }
 
-		private void AddSettingsPlugin() {
-			Plugin settings = new Plugin();
-			settings.Root = new SettingsPlugin();
-			settings.Name = "Settings";
-			settings.Description = "Modify program settings and options";
-			//settings.Key = Key.E;
-			//settings.ModifierKeys = ModifierKeys.Control;
-			Plugins.Add(settings);
-		}
-		private ImageSource LoadIcon(string imagePath) {
-			//ImageSourceConverter conv = new ImageSourceConverter();
-			//return conv.ConvertFromString(imagePath);
-			Uri resourceUri = new Uri(imagePath, UriKind.Relative);
-			System.Windows.Resources.StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
+            return null;
+        }
 
-			BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
-			return temp;
-			//	return bitmapSource;
-		}
-		private ImageSource LoadIcon(Type typ, string icon) {
-			Assembly asm = Assembly.GetAssembly(typ);
-			//	string iconString = typ.Namespace + '.' + icon.Replace('\\', '.');
-			Stream myStream = asm.GetManifestResourceStream(icon);
+        public List<Plugin> Plugins
+        {
+            get { return (List<Plugin>)this.GetValue(PluginsProperty); }
+            set { this.SetValue(PluginsProperty, value); }
+        }
 
-			if (myStream == null)
-			{
-				//	iconString = typ.Name + '.' + icon.Replace('\\', '.');
-				myStream = asm.GetManifestResourceStream(icon);
-			}
+        public static readonly DependencyProperty PluginsProperty =
+                DependencyProperty.Register("Plugins", typeof(List<Plugin>), typeof(PluginView), new UIPropertyMetadata(new List<Plugin>()));
 
-			if (myStream == null)
-			{
-				//	iconString = "Kaxaml.Images.package.png";
-				myStream = asm.GetManifestResourceStream(icon);
-			}
+        public void OpenPlugin(Key key, ModifierKeys modifierkeys)
+        {
+            foreach (var p in this.Plugins)
+            {
+                if (modifierkeys == p.ModifierKeys && key == p.Key)
+                {
+                    try
+                    {
+                        var t = (TabItem)((FrameworkElement)p.Root).Parent;
+                        t.IsSelected = true;
+                        t.Focus();
 
-			if (myStream != null)
-			{
-				PngBitmapDecoder bitmapDecoder = new PngBitmapDecoder(myStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-				if (bitmapDecoder.Frames[0] != null && bitmapDecoder.Frames[0] is ImageSource)
-				{
-					return bitmapDecoder.Frames[0];
-				}
-				else
-				{
-					return null;
-				}
-			}
-			return null;
-		}
+                        this.UpdateLayout();
 
-		public List<Plugin> Plugins {
-			get { return (List<Plugin>)GetValue(PluginsProperty); }
-			set { SetValue(PluginsProperty, value); }
-		}
-		public static readonly DependencyProperty PluginsProperty =
-				DependencyProperty.Register("Plugins", typeof(List<Plugin>), typeof(PluginView), new UIPropertyMetadata(new List<Plugin>()));
+                        if (t.Content is FrameworkElement)
+                        {
+                            (t.Content as FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+        }
 
-		public void OpenPlugin(Key key, ModifierKeys modifierkeys) {
-			foreach (Plugin p in Plugins)
-			{
-				if (modifierkeys == p.ModifierKeys && key == p.Key)
-				{
-					try
-					{
-						TabItem t = (TabItem)((FrameworkElement)p.Root).Parent;
-						t.IsSelected = true;
-						t.Focus();
+        Plugin findPlugin = null;
 
-						UpdateLayout();
+        internal Plugin GetFindPlugin()
+        {
+            return this.findPlugin;
+        }
 
-						if (t.Content is FrameworkElement)
-						{
-							(t.Content as FrameworkElement).MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
-						}
-					}
-					catch { }
-				}
-			}
-		}
+        public int SelectedIndex
+        {
+            get
+            {
+                return (int)this.PluginTabControl.SelectedIndex;
+            }
 
-		Plugin _findPlugin = null;
-		internal Plugin GetFindPlugin() {
-			return _findPlugin;
-		}
-		public int SelectedIndex
-		{
-			get
-			{
-				return (int)PluginTabControl.SelectedIndex;
-			}
-			set
-			{
-				PluginTabControl.SelectedIndex = (int)value;
-			}
-		}
-		public Plugin SelectedPlugin {
-			get {
-				return (Plugin)PluginTabControl.SelectedItem;
-			}
-			set {
-				PluginTabControl.SelectedItem = (Plugin)value;
-			}
-		}
+            set
+            {
+                this.PluginTabControl.SelectedIndex = (int)value;
+            }
+        }
 
-	}
+        public Plugin SelectedPlugin
+        {
+            get
+            {
+                return (Plugin)this.PluginTabControl.SelectedItem;
+            }
+
+            set
+            {
+                this.PluginTabControl.SelectedItem = (Plugin)value;
+            }
+        }
+    }
 }

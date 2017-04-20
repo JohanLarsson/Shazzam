@@ -1,22 +1,19 @@
-﻿using System.Windows;
-
-
-namespace Cinch
+﻿namespace Cinch
 {
+    using System.Windows;
+
     /// <summary>
     /// This class implements the IMessageBoxService for WPF purposes.
     /// </summary>
     public class WPFMessageBoxService : IMessageBoxService
     {
-        #region IMessageBoxService Members
-
         /// <summary>
         /// Displays an error dialog with a given message.
         /// </summary>
         /// <param name="message">The message to be displayed.</param>
         public void ShowError(string message)
         {
-            ShowMessage(message, "Error", CustomDialogIcons.Stop);
+            this.ShowMessage(message, "Error", CustomDialogIcons.Stop);
         }
 
         /// <summary>
@@ -25,7 +22,7 @@ namespace Cinch
         /// <param name="message">The message to be displayed.</param>
         public void ShowInformation(string message)
         {
-            ShowMessage(message, "Information", CustomDialogIcons.Information);
+            this.ShowMessage(message, "Information", CustomDialogIcons.Information);
         }
 
         /// <summary>
@@ -34,7 +31,7 @@ namespace Cinch
         /// <param name="message">The message to be displayed.</param>
         public void ShowWarning(string message)
         {
-            ShowMessage(message, "Warning", CustomDialogIcons.Warning);
+            this.ShowMessage(message, "Warning", CustomDialogIcons.Warning);
         }
 
         /// <summary>
@@ -45,7 +42,7 @@ namespace Cinch
         /// <returns>User selection.</returns>
         public CustomDialogResults ShowYesNo(string message, CustomDialogIcons icon)
         {
-            return ShowQuestionWithButton(message, icon, CustomDialogButtons.YesNo);
+            return this.ShowQuestionWithButton(message, icon, CustomDialogButtons.YesNo);
         }
 
         /// <summary>
@@ -56,7 +53,7 @@ namespace Cinch
         /// <returns>User selection.</returns>
         public CustomDialogResults ShowYesNoCancel(string message, CustomDialogIcons icon)
         {
-            return ShowQuestionWithButton(message, icon, CustomDialogButtons.YesNoCancel);
+            return this.ShowQuestionWithButton(message, icon, CustomDialogButtons.YesNoCancel);
         }
 
         /// <summary>
@@ -67,11 +64,9 @@ namespace Cinch
         /// <returns>User selection.</returns>
         public CustomDialogResults ShowOkCancel(string message, CustomDialogIcons icon)
         {
-            return ShowQuestionWithButton(message, icon, CustomDialogButtons.OKCancel);
+            return this.ShowQuestionWithButton(message, icon, CustomDialogButtons.OKCancel);
         }
-        #endregion
 
-        #region Private Methods
         /// <summary>
         /// Shows a standard System.Windows.MessageBox using the parameters requested
         /// </summary>
@@ -80,15 +75,14 @@ namespace Cinch
         /// <param name="icon">The icon to be displayed.</param>
         private void ShowMessage(string message, string heading, CustomDialogIcons icon)
         {
-            MessageBox.Show(message, heading, MessageBoxButton.OK, GetImage(icon));
+            MessageBox.Show(message, heading, MessageBoxButton.OK, this.GetImage(icon));
         }
-
 
         /// <summary>
         /// Shows a standard System.Windows.MessageBox using the parameters requested
         /// but will return a translated result to enable adhere to the IMessageBoxService
-        /// implementation required. 
-        /// 
+        /// implementation required.
+        ///
         /// This abstraction allows for different frameworks to use the same ViewModels but supply
         /// alternative implementations of core service interfaces
         /// </summary>
@@ -96,14 +90,11 @@ namespace Cinch
         /// <param name="icon">The icon to be displayed.</param>
         /// <param name="button"></param>
         /// <returns>CustomDialogResults results to use</returns>
-        private CustomDialogResults ShowQuestionWithButton(string message,
-            CustomDialogIcons icon, CustomDialogButtons button)
+        private CustomDialogResults ShowQuestionWithButton(string message, CustomDialogIcons icon, CustomDialogButtons button)
         {
-            MessageBoxResult result = MessageBox.Show(message, "Please confirm...",
-                GetButton(button), GetImage(icon));
-            return GetResult(result);
+            MessageBoxResult result = MessageBox.Show(message, "Please confirm...", this.GetButton(button), this.GetImage(icon));
+            return this.GetResult(result);
         }
-
 
         /// <summary>
         /// Translates a CustomDialogIcons into a standard WPF System.Windows.MessageBox MessageBoxImage.
@@ -134,9 +125,9 @@ namespace Cinch
                     image = MessageBoxImage.Warning;
                     break;
             }
+
             return image;
         }
-
 
         /// <summary>
         /// Translates a CustomDialogButtons into a standard WPF System.Windows.MessageBox MessageBoxButton.
@@ -164,9 +155,9 @@ namespace Cinch
                     button = MessageBoxButton.YesNoCancel;
                     break;
             }
+
             return button;
         }
-
 
         /// <summary>
         /// Translates a standard WPF System.Windows.MessageBox MessageBoxResult into a
@@ -198,11 +189,8 @@ namespace Cinch
                     customDialogResults = CustomDialogResults.Yes;
                     break;
             }
+
             return customDialogResults;
         }
-
-
-        #endregion
-
     }
 }
