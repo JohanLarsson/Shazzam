@@ -1,2 +1,8 @@
 Extended.Wpf.Toolkit
 ICSharpCode.TextEditor
+
+group Analyzers
+  JetBrains.Annotations
+  StyleCop.Analyzers
+  WpfAnalyzers
+  Gu.Analyzers

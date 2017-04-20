@@ -4,3 +4,10 @@ nuget Extended.Wpf.Toolkit 1.5.0
 nuget ICSharpCode.TextEditor
 
 nuget NUnit
+
+group Analyzers
+  source http://nuget.org/api/v2
+  nuget StyleCop.Analyzers
+  nuget WpfAnalyzers
+  nuget Gu.Analyzers
+  nuget JetBrains.Annotations

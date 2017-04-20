@@ -500,3 +500,17 @@ NUGET
       System.Text.Encoding (>= 4.3) - framework: dnxcore50, >= netstandard13
       System.Threading (>= 4.3) - framework: dnxcore50, >= netstandard13
       System.Xml.ReaderWriter (>= 4.3) - framework: dnxcore50, netstandard10, >= netstandard13
+
+GROUP Analyzers
+NUGET
+  remote: http://www.nuget.org/api/v2
+    Gu.Analyzers (0.1.11.23-dev)
+    JetBrains.Annotations (10.4)
+      System.Runtime (>= 4.1) - framework: >= netstandard10
+    Microsoft.NETCore.Platforms (1.1) - framework: netstandard10, netstandard12, netstandard13, >= netstandard15
+    Microsoft.NETCore.Targets (1.1) - framework: netstandard10, netstandard12, netstandard13, >= netstandard15
+    StyleCop.Analyzers (1.0)
+    System.Runtime (4.3) - framework: >= netstandard10
+      Microsoft.NETCore.Platforms (>= 1.1) - framework: dnxcore50, netstandard10, netstandard12, netstandard13, >= netstandard15
+      Microsoft.NETCore.Targets (>= 1.1) - framework: dnxcore50, netstandard10, netstandard12, netstandard13, >= netstandard15
+    WpfAnalyzers (0.2.7.10)
