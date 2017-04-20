@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,8 +6,6 @@ using System.Windows.Input;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-using Shazzam.Commands;
-using System.Reflection;
 using Shazzam.ViewModels;
 using Shazzam.Helpers;
 

@@ -14,11 +14,6 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
-    <ManifestCertificateThumbprint>51ED5969E56E61763E23ED5ABB85072D524CE246</ManifestCertificateThumbprint>
-    <ManifestKeyFile>Shazzam_TemporaryKey.pfx</ManifestKeyFile>
-    <GenerateManifests>true</GenerateManifests>
-    <SignManifests>true</SignManifests>
     <ExpressionBlendVersion>3.0.1927.0</ExpressionBlendVersion>
     <ApplicationIcon>Images\logo.ico</ApplicationIcon>
     <FileUpgradeFlags>
@@ -26,28 +21,6 @@
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Data\Projects\Publish\Shazzam\Release\41\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Web</InstallFrom>
-    <UpdateEnabled>true</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://shazzam-tool.com/</InstallUrl>
-    <SupportUrl>http://shazzam-tool.com/support.htm</SupportUrl>
-    <ProductName>Shazzam</ProductName>
-    <PublisherName>Shazzam - Shader Effect Editor</PublisherName>
-    <SuiteName>By Walt Ritscher</SuiteName>
-    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
-    <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>42</ApplicationRevision>
-    <ApplicationVersion>1.4.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
