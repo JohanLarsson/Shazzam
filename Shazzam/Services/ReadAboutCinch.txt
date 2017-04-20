@@ -1,0 +1,2 @@
+﻿Learn more about Cinch MVVM framework at 
+http://sachabarber.net/?page_id=523 

@@ -1,0 +1,255 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- 
+  ===================================================================
+  Basic Colors
+  ===================================================================
+  -->
+
+  <Color x:Key="VeryDark"
+         A="255"
+         R="70"
+         G="70"
+         B="70" />
+  <Color x:Key="Dark"
+         A="255"
+         R="102"
+         G="102"
+         B="102" />
+  <Color x:Key="Medium"
+         A="255"
+         R="140"
+         G="140"
+         B="140" />
+  <Color x:Key="Light"
+         A="255"
+         R="204"
+         G="204"
+         B="204" />
+  <Color x:Key="VeryLight"
+         A="255"
+         R="241"
+         G="241"
+         B="241" />
+  <Color x:Key="OffWhite"
+         A="255"
+         R="255"
+         G="255"
+         B="255" />
+
+  <Color x:Key="Highlight">Gold</Color>
+  <Color x:Key="Accent">#FFC0A000</Color>
+  <Color x:Key='NeutralDark'
+         A='255'
+         R='44'
+         G='44'
+         B='33' />
+  <Color x:Key='NeutralWhite'
+         A='255'
+         R='221'
+         G='221'
+         B='221' />
+
+  <!--<SolidColorBrush x:Key='NeutralDarkBrush'
+                     Color='{StaticResource NeutralDark}' />
+    <SolidColorBrush x:Key='NeutralWhiteBrush'
+                     Color='{StaticResource NeutralWhite}' />-->
+  <!-- 
+  ===================================================================
+  Basic Brushes (Derived from Basic Colors)
+  ===================================================================
+  -->
+
+  <SolidColorBrush x:Key="VeryDarkBrush"
+                   Color="{StaticResource VeryDark}" />
+  <SolidColorBrush x:Key="DarkBrush"
+                   Color="{StaticResource Dark}" />
+  <SolidColorBrush x:Key="MediumBrush"
+                   Color="{StaticResource Medium}" />
+  <SolidColorBrush x:Key="LightBrush"
+                   Color="{StaticResource Light}" />
+  <SolidColorBrush x:Key="VeryLightBrush"
+                   Color="{StaticResource VeryLight}" />
+  <SolidColorBrush x:Key="OffWhiteBrush"
+                   Color="{StaticResource OffWhite}" />
+  <SolidColorBrush x:Key="HighlightBrush"
+                   Color="{StaticResource Highlight}" />
+  <SolidColorBrush x:Key="AccentBrush"
+                   Color="{StaticResource Accent}" />
+  <SolidColorBrush x:Key='NeutralDarkBrush'
+                   Color="{StaticResource NeutralDark}" />
+  <SolidColorBrush x:Key='NeutralWhiteBrush'
+                   Color='{StaticResource NeutralWhite}' />
+
+  <!-- 
+  ===================================================================
+  Other Brushes
+  ====================================================================
+  -->
+
+  <LinearGradientBrush x:Key="EdgeBorder"
+                       StartPoint="0,0"
+                       EndPoint="0,1">
+    <GradientStop Color="#0000"
+                  Offset="0" />
+    <GradientStop Color="#1000"
+                  Offset="0.65" />
+    <GradientStop Color="#3000"
+                  Offset="1" />
+  </LinearGradientBrush>
+  <LinearGradientBrush x:Key="ErrorBrush"
+                       StartPoint="0,0"
+                       EndPoint="0,1">
+    <GradientStop Color="Black"
+                  Offset="0" />
+    <GradientStop Color="DarkRed"
+                  Offset="0.1" />
+    <GradientStop Color="DarkRed"
+                  Offset="0.8" />
+
+    <GradientStop Color="Black"
+                  Offset="1" />
+
+  </LinearGradientBrush>
+
+  <SolidColorBrush x:Key="DisabledForegroundBrush"
+                   Color="#6FFF" />
+
+  <SolidColorBrush x:Key="SelectedBackgroundBrush"
+                   Color="{StaticResource Light}" />
+	
+  <DrawingBrush x:Key="CircularAnimationIconBrush" Viewbox="0,0,16,16" ViewboxUnits="Absolute" Stretch="Uniform">
+  	<DrawingBrush.Drawing>
+  		<DrawingGroup>
+  			<GeometryDrawing Brush="#FF003096">
+  				<GeometryDrawing.Geometry>
+  					<PathGeometry Figures="M1.891602,2.2505624 L4.0314832,4.3833489 C3.8178811,4.6783177 3.3701093,5.2770358 3.2427189,5.6249437 3.0632591,6.1150595 2.9775598,6.6606752 3.0052047,7.2060647 3.0605019,8.2969183 3.5528016,9.2723772 4.3104906,9.9610071 4.6893411,10.305325 5.134555,10.577933 5.6246659,10.757388 6.0436327,10.910793 6.5347307,10.995949 7,11.000099 L7,14 C3.1343343,14 0,10.866619 0,7.0002322 0,5.2979015 0.88120904,3.4639587 1.891602,2.2505624 z M7,0 C10.866282,0 14,3.1341308 14,7.0000377 14,8.7818292 13.334264,10.408349 12.237957,11.643999 12.237957,11.643999 9.9608727,9.6895618 9.9608727,9.6895618 10.305206,9.310701 10.577817,8.8655262 10.757281,8.3753786 10.936731,7.8852854 11.022444,7.3396122 10.994795,6.7941971 10.939526,5.7033545 10.447203,4.7278047 9.6895094,4.0391493 9.3106659,3.694819 8.865492,3.422203 8.3753338,3.2427363 8.1302845,3.1530114 7.8739905,3.0865712&#xd;&#xa;7.6091605,3.0461054 7.4767426,3.0258722 7.3421929,3.0121331 7.2058392,3.0052209 7.1376624,3.0017652 7.069035,3.0000162 7,3.0000162 z">
+  						<PathGeometry.Transform>
+  							<MatrixTransform Matrix="1.14285714285714,0,0,1.14285714285714,0,0"/>
+  						</PathGeometry.Transform>
+  					</PathGeometry>
+  				</GeometryDrawing.Geometry>
+  			</GeometryDrawing>
+  			<GeometryDrawing Brush="#FF003096" Geometry="M0,1 L7,0 6,7 z"/>
+  			<DrawingGroup>
+  				<DrawingGroup.Transform>
+  					<MatrixTransform Matrix="1,0,0,1,9,9"/>
+  				</DrawingGroup.Transform>
+  				<GeometryDrawing Brush="#FF003096">
+  					<GeometryDrawing.Geometry>
+  						<PathGeometry Figures="M10,9 L16,15 9,16 z">
+  							<PathGeometry.Transform>
+  								<MatrixTransform Matrix="1,0,0,1,-9,-9"/>
+  							</PathGeometry.Transform>
+  						</PathGeometry>
+  					</GeometryDrawing.Geometry>
+  				</GeometryDrawing>
+  			</DrawingGroup>
+  		</DrawingGroup>
+  	</DrawingBrush.Drawing>
+  </DrawingBrush>
+  <DrawingBrush x:Key="HorizontalAnimationIconBrush" Viewbox="0,0,16,16" ViewboxUnits="Absolute" Stretch="Uniform">
+  	<DrawingBrush.Drawing>
+  		<DrawingGroup>
+  			<DrawingGroup>
+  				<DrawingGroup.Transform>
+  					<MatrixTransform Matrix="1,0,0,1,3,6"/>
+  				</DrawingGroup.Transform>
+  				<GeometryDrawing Brush="#FF003096">
+  					<GeometryDrawing.Geometry>
+  						<RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,10,4"/>
+  					</GeometryDrawing.Geometry>
+  				</GeometryDrawing>
+  			</DrawingGroup>
+  			<DrawingGroup>
+  				<DrawingGroup.Transform>
+  					<MatrixTransform Matrix="1,0,0,1,11,4"/>
+  				</DrawingGroup.Transform>
+  				<GeometryDrawing Brush="#FF003096">
+  					<GeometryDrawing.Geometry>
+  						<PathGeometry Figures="M12,4 L16,8 12,12 z">
+  							<PathGeometry.Transform>
+  								<MatrixTransform Matrix="1.25,0,0,1,-15,-4"/>
+  							</PathGeometry.Transform>
+  						</PathGeometry>
+  					</GeometryDrawing.Geometry>
+  				</GeometryDrawing>
+  			</DrawingGroup>
+  			<DrawingGroup>
+  				<DrawingGroup.Transform>
+  					<MatrixTransform Matrix="1,0,0,1,0,4"/>
+  				</DrawingGroup.Transform>
+  				<GeometryDrawing Brush="#FF003096">
+  					<GeometryDrawing.Geometry>
+  						<PathGeometry Figures="M4,4 L4,12 0,8 z">
+  							<PathGeometry.Transform>
+  								<MatrixTransform Matrix="1.25,0,0,1,0,-4"/>
+  							</PathGeometry.Transform>
+  						</PathGeometry>
+  					</GeometryDrawing.Geometry>
+  				</GeometryDrawing>
+  			</DrawingGroup>
+  		</DrawingGroup>
+  	</DrawingBrush.Drawing>
+  </DrawingBrush>
+  <DrawingBrush x:Key="DiagonalAnimationIconBrush" Viewbox="0,0,16,16" ViewboxUnits="Absolute" Stretch="Uniform">
+  	<DrawingBrush.Drawing>
+  		<DrawingGroup>
+  			<DrawingGroup>
+  				<DrawingGroup.Transform>
+  					<MatrixTransform Matrix="0.707106781186548,0.707106781186547,-0.707106781186547,0.707106781186548,4.62851486730254,1.80008774255635"/>
+  				</DrawingGroup.Transform>
+  				<GeometryDrawing Brush="#FF003096">
+  					<GeometryDrawing.Geometry>
+  						<RectangleGeometry RadiusX="0" RadiusY="0" Rect="0,0,13.536,4"/>
+  					</GeometryDrawing.Geometry>
+  				</GeometryDrawing>
+  			</DrawingGroup>
+  			<DrawingGroup>
+  				<DrawingGroup.Transform>
+  					<MatrixTransform Matrix="1,0,0,1,1,1"/>
+  				</DrawingGroup.Transform>
+  				<GeometryDrawing Brush="#FF003096">
+  					<GeometryDrawing.Geometry>
+  						<PathGeometry Figures="M1,1 L8,2 2,8 z">
+  							<PathGeometry.Transform>
+  								<MatrixTransform Matrix="1,0,0,1,-1,-1"/>
+  							</PathGeometry.Transform>
+  						</PathGeometry>
+  					</GeometryDrawing.Geometry>
+  				</GeometryDrawing>
+  			</DrawingGroup>
+  			<DrawingGroup>
+  				<DrawingGroup.Transform>
+  					<MatrixTransform Matrix="1,0,0,1,8,8"/>
+  				</DrawingGroup.Transform>
+  				<GeometryDrawing Brush="#FF003096">
+  					<GeometryDrawing.Geometry>
+  						<PathGeometry Figures="M15,15 L8,14 14,8 z">
+  							<PathGeometry.Transform>
+  								<MatrixTransform Matrix="1,0,0,1,-8,-8"/>
+  							</PathGeometry.Transform>
+  						</PathGeometry>
+  					</GeometryDrawing.Geometry>
+  				</GeometryDrawing>
+  			</DrawingGroup>
+  		</DrawingGroup>
+  	</DrawingBrush.Drawing>
+  </DrawingBrush>
+  <DrawingBrush x:Key="NoAnimationIconBrush" Viewbox="0,0,16,16" ViewboxUnits="Absolute" Stretch="Uniform">
+  	<DrawingBrush.Drawing>
+  		<GeometryDrawing Geometry="M3.5661399,5.6874604 L3.5469983,5.7237396 C3.2525161,6.2986737 3.0661006,6.9381461 3.0145793,7.6153002 2.9630515,8.2924901 3.0530716,8.9841477 3.2627156,9.6036615 3.3675435,9.9134361 3.501891,10.209565 3.662441,10.488782 3.7025769,10.558582 3.744349,10.627321 3.7877059,10.694949 3.8093839,10.728763 3.8314581,10.762298 3.8539214,10.795547 4.5727569,11.859566 5.690379,12.631998 6.9923258,12.898417 7.3178223,12.965023 7.6548201,13 8,13 8.69038,13 9.3480688,12.86008&#xd;&#xa;9.9462261,12.607075 10.020996,12.575451 10.094839,12.542058 10.167702,12.506949 10.204133,12.489396 10.240318,12.471413 10.276253,12.453008 L10.312541,12.433862 z M8,3 C7.3096568,3 6.6519608,3.1399122 6.0537744,3.3929248 5.9789988,3.4245518 5.9051554,3.457946 5.8322926,3.4930546 5.7958612,3.5106091 5.7596755,3.5285923 5.7237415,3.5469975 L5.6874604,3.5661404 12.433862,10.312541 12.453004,10.276262 C12.747478,9.701321 12.933888,9.0619155 12.98542,8.3847075 13.036948,7.7075732 12.946952,7.0159242 12.737293,6.3963561 12.632457,6.0865741 12.498106,5.7904118 12.337559,5.5112152 12.297422,5.441415 12.255651,5.3726761 12.212294,5.3050508 12.190616,5.2712374 12.168542,5.2377028 12.146078,5.2044525 11.427251,4.140449 10.309589,3.3679892 9.0076742,3.1015823 8.6821895,3.0349781 8.3451844,3 8,3 z M8,0 C12.417989,0 16,3.5821222 16,8 16,12.417572 12.417572,16 8,16 3.5821222,16 0,12.417989 0,8 0,3.5819433 3.5819433,0 8,0 z">
+  			<GeometryDrawing.Brush>
+  				<LinearGradientBrush EndPoint="0.854,0.854" StartPoint="0.146,0.146" MappingMode="RelativeToBoundingBox">
+  					<GradientStop Color="#FFFF8585" Offset="0.302"/>
+  					<GradientStop Color="#FFB30000" Offset="0.776"/>
+  					<GradientStop Color="#FFB30000"/>
+  				</LinearGradientBrush>
+  			</GeometryDrawing.Brush>
+  		</GeometryDrawing>
+  	</DrawingBrush.Drawing>
+  </DrawingBrush>
+
+</ResourceDictionary>

@@ -1,0 +1,51 @@
+﻿/// <class>CirclesEffect</class>
+
+/// <description>An effect that generates concentric circles.</description>
+
+//-----------------------------------------------------------------------------------------
+// Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
+//-----------------------------------------------------------------------------------------
+
+/// <summary>The center of the swirl. (100,100) is lower right corner </summary>
+/// <minValue>0,0</minValue>
+/// <maxValue>100,100</maxValue>
+/// <defaultValue>50,50</defaultValue>
+float2 Center : register(C0);
+
+
+
+/// <summary>The strength of the effect.</summary>
+/// <minValue>0</minValue>
+/// <maxValue>4</maxValue>
+/// <defaultValue>0.9</defaultValue>
+float Size : register(C2);
+
+
+
+//--------------------------------------------------------------------------------------
+// Sampler Inputs (Brushes, including Texture1)
+//--------------------------------------------------------------------------------------
+
+sampler2D Texture1Sampler : register(S0);
+
+//--------------------------------------------------------------------------------------
+// Pixel Shader
+//--------------------------------------------------------------------------------------
+
+float4 main(float2 uv : TEXCOORD) : COLOR
+{
+   // normalize
+   // ================================
+   float2 centerNormalized  ={ Center.x/100,Center.y/100};
+
+   // ================================
+  float2 dir = uv - centerNormalized;
+  float dist = length(dir) * Size;
+  float angle = atan2(dir.y, dir.x);
+
+
+  float2 newDir;
+
+  
+  return tex2D(Texture1Sampler,  centerNormalized + dist  );
+}
