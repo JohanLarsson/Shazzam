@@ -64,7 +64,6 @@ namespace Shazzam.ViewModels
         return _exploreCompiledShadersCommand;
       }
     }
-    [PreEmptive.Attributes.Feature("ExploreCompiledShaders")]
     private void ExploreCompiledShadersCommand_Execute()
     {
       string path = Properties.Settings.Default.FolderPath_Output;
@@ -91,7 +90,6 @@ namespace Shazzam.ViewModels
         return _exploreTextureMapsCommand;
       }
     }
-    [PreEmptive.Attributes.Feature("ExploreTextureMaps")]
     private void ExploreTextureMapsCommand_Execute()
     {
       string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -119,7 +117,6 @@ namespace Shazzam.ViewModels
         return _fullScreenImageCommand;
       }
     }
-    [PreEmptive.Attributes.Feature("FullScreenImage")]
     private void FullScreenImageCommand_Execute()
     {
       if (CodeRowHeight != new GridLength(0, GridUnitType.Pixel))
@@ -153,7 +150,6 @@ namespace Shazzam.ViewModels
         return _fullScreenCodeCommand;
       }
     }
-    [PreEmptive.Attributes.Feature("FullScreenCode")]
     private void FullScreenCode_Execute()
     {
       if (ImageRowHeight != new GridLength(0, GridUnitType.Pixel))
@@ -212,7 +208,6 @@ namespace Shazzam.ViewModels
         return _imageStretchCommand;
       }
     }
-    [PreEmptive.Attributes.Feature("ImageStretch")]
     private void ImageStretch_Execute(string menuParameter)
     {
       switch (menuParameter)

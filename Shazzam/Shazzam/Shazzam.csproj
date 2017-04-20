@@ -46,9 +46,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.TextEditor, Version=3.2.0.5777, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a, processorArchitecture=MSIL" />
-    <Reference Include="PreEmptive.Attributes">
-      <HintPath>..\..\..\..\Program Files (x86)\Microsoft Visual Studio 10.0\PreEmptive Solutions\Dotfuscator Community Edition\PreEmptive.Attributes.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationFramework.Aero">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>

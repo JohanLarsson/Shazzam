@@ -14,8 +14,6 @@ using System.Windows;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: PreEmptive.Attributes.Business("3E35F098-CE43-4F82-9E9D-05C8B1046A45")]
-[assembly: PreEmptive.Attributes.Application("B8CF0F16-4CBE-4F58-A0CB-AE8974E04D78")]
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.

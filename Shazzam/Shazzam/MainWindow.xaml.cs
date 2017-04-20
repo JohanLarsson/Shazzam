@@ -170,7 +170,6 @@ namespace Shazzam
       mediaUI.Effect = se;
     }
 
-    [PreEmptive.Attributes.Feature("NewShader")]
     private void New_Executed(object sender, ExecutedRoutedEventArgs e)
     {
       //codeTabView.NewShader();
@@ -218,7 +217,6 @@ namespace Shazzam
       }
 
     }
-    [PreEmptive.Attributes.Feature("OpenShader")]
     private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
     {
 
@@ -274,7 +272,6 @@ namespace Shazzam
     {
       Application.Current.Shutdown();
     }
-    [PreEmptive.Attributes.Feature("ApplyShader")]
     private void ApplyShader_Executed(object sender, ExecutedRoutedEventArgs e)
     {
       codeTabView.RenderShader();
@@ -285,7 +282,6 @@ namespace Shazzam
       codeTabView.CompileShader();
     }
 
-    [PreEmptive.Attributes.Feature("RemoveShader")]
     private void RemoveShader_Executed(object sender, ExecutedRoutedEventArgs e)
     {
       userImage.Effect = null;

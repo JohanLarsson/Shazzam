@@ -71,7 +71,6 @@ namespace Shazzam.CodeGen
                                                         out ID3DXBuffer ppErrorMsgs,
                                                         ref int pHresult);
 
-    [PreEmptive.Attributes.Feature("CompileShader", EventType = PreEmptive.Attributes.FeatureEventTypes.Start)]
     public void Compile(string codeText, ShaderProfile shaderProfile)
     {
 
@@ -189,7 +188,6 @@ namespace Shazzam.CodeGen
       //	throw new Exception("testing");
 
     }
-    [PreEmptive.Attributes.Feature("CompileShader", EventType = PreEmptive.Attributes.FeatureEventTypes.Stop)]
     private void CompileFinished() { 
      // for instrumentation
     }

@@ -7,8 +7,9 @@ using System.Windows.Media.Animation;
 
 namespace Shazzam.Controls
 {
+    using Microsoft.Windows.Controls;
 
-  public partial class AdjustableColor : UserControl
+    public partial class AdjustableColor : UserControl
   {
     private const double DefaultDuration = 0.5;
 
