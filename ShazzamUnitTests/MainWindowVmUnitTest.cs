@@ -1,14 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Media;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shazzam.ViewModels;
 
 namespace ShazzamUnitTests
 {
-  [TestClass]
-  public class MainWindowVmUnitTest
+    using NUnit.Framework;
+
+    public class MainWindowVmUnitTest
   {
-    [TestMethod]
+    [Test]
     public void CodeAndImageRows_CheckDefault_AreBothSameHeight()
     {
       var vm = new MainWindowViewModel();
@@ -17,7 +17,7 @@ namespace ShazzamUnitTests
       Assert.AreEqual(vm.ImageRowHeight, rowHeight);
     }
 
-    [TestMethod]
+    [Test]
     public void FullScreenCodeCommand_RunCommand_ImageRowSetToZero()
     {
       var vm = new MainWindowViewModel();
@@ -26,7 +26,7 @@ namespace ShazzamUnitTests
       Assert.AreEqual(vm.ImageRowHeight, new GridLength(0));
     }
 
-    [TestMethod]
+    [Test]
     public void FullScreenImageCommand_RunCommand_CodeRowSetToZero()
     {
       var vm = new MainWindowViewModel();
@@ -34,14 +34,14 @@ namespace ShazzamUnitTests
       vm.FullScreenImageCommand.Execute(this);
       Assert.AreEqual(vm.CodeRowHeight, new GridLength(0));
     }
-    [TestMethod]
+    [Test]
     public void ImageStretchCommand_CheckDefault_IsUniform()
     {
       var vm = new MainWindowViewModel();
 
       Assert.AreEqual(vm.ImageStretch, Stretch.Uniform);
     }
-    [TestMethod]
+    [Test]
     public void ImageStretchCommand_RunCommand_StretchValueCorrect()
     {
       var vm = new MainWindowViewModel();

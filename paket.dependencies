@@ -2,3 +2,5 @@ source https://www.nuget.org/api/v2/
 
 nuget Extended.Wpf.Toolkit 1.5.0
 nuget ICSharpCode.TextEditor
+
+nuget NUnit
