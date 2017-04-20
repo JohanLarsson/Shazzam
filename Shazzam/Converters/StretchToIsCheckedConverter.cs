@@ -4,22 +4,22 @@
     using System.Globalization;
     using System.Windows.Data;
 
-  public class StretchToIsCheckedConverter : IValueConverter
-  {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public class StretchToIsCheckedConverter : IValueConverter
     {
-      var mode = (System.Windows.Media.Stretch)value;
-      if (mode.ToString().ToLower() == parameter.ToString().ToLower())
-      {
-        return true;
-      }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var mode = (System.Windows.Media.Stretch)value;
+            if (mode.ToString().ToLower() == parameter.ToString().ToLower())
+            {
+                return true;
+            }
 
-      return false;
-    }
+            return false;
+        }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-      return !(bool)value;
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return !(bool)value;
+        }
     }
-  }
 }

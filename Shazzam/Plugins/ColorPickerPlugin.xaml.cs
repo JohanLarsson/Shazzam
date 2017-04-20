@@ -1,5 +1,3 @@
-// using Kaxaml.Plugins.ColorPicker.Properties;
-
 namespace Kaxaml.Plugins.ColorPicker
 {
     using System;
@@ -14,7 +12,8 @@ namespace Kaxaml.Plugins.ColorPicker
 
     public partial class ColorPickerPlugin : UserControl
     {
-        private ColorConverter converter = new ColorConverter();
+        private const char DELIMITER = '|';
+        private bool updateInternal = false;
         private DispatcherTimer colorChangedTimer;
         private Color colorChangedColor;
 
@@ -46,7 +45,7 @@ namespace Kaxaml.Plugins.ColorPicker
         {
             try
             {
-                var c = (Color)ColorConverter.ConvertFromString(KaxamlInfo.Editor.SelectedText);
+                var c = ColorConverter.ConvertFromString(KaxamlInfo.Editor.SelectedText);
                 this.C.SetCurrentValue(Controls.ColorPicker.ColorProperty, c);
 
                 this.C.ColorChanged += this.C_ColorChanged;
@@ -132,8 +131,8 @@ namespace Kaxaml.Plugins.ColorPicker
         /// </summary>
         public ObservableCollection<Color> Colors
         {
-            get { return (ObservableCollection<Color>)this.GetValue(ColorsProperty); }
-            set { this.SetValue(ColorsProperty, value); }
+            get => (ObservableCollection<Color>)this.GetValue(ColorsProperty);
+            set => this.SetValue(ColorsProperty, value);
         }
 
         /// <summary>
@@ -161,19 +160,19 @@ namespace Kaxaml.Plugins.ColorPicker
 
         private void c_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (!this.updateinternal)
+            if (!this.updateInternal)
             {
-                this.updateinternal = true;
+                this.updateInternal = true;
 
                 var s = string.Empty;
                 foreach (var c in this.Colors)
                 {
-                    s = s + c.ToString() + this.DELIMITER;
+                    s = s + c.ToString() + DELIMITER;
                 }
 
                 this.ColorString = s;
 
-                this.updateinternal = false;
+                this.updateInternal = false;
             }
         }
 
@@ -182,8 +181,8 @@ namespace Kaxaml.Plugins.ColorPicker
         /// </summary>
         public string ColorString
         {
-            get { return (string)this.GetValue(ColorStringProperty); }
-            set { this.SetValue(ColorStringProperty, value); }
+            get => (string)this.GetValue(ColorStringProperty);
+            set => this.SetValue(ColorStringProperty, value);
         }
 
         /// <summary>
@@ -193,24 +192,24 @@ namespace Kaxaml.Plugins.ColorPicker
             "ColorString",
             typeof(string),
             typeof(ColorPickerPlugin),
-            new FrameworkPropertyMetadata(default(string), ColorStringChanged));
+            new FrameworkPropertyMetadata(default(string), OnColorStringChanged));
 
         /// <summary>
         /// PropertyChangedCallback for ColorString
         /// </summary>
-        private static void ColorStringChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        private static void OnColorStringChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             if (obj is ColorPickerPlugin)
             {
                 var owner = (ColorPickerPlugin)obj;
                 Shazzam.Properties.Settings.Default.ColorPickerColors = args.NewValue as string;
 
-                if (!owner.updateinternal)
+                if (!owner.updateInternal)
                 {
-                    owner.updateinternal = true;
+                    owner.updateInternal = true;
 
                     owner.Colors.Clear();
-                    var colors = (args.NewValue as string).Split(owner.DELIMITER);
+                    var colors = (args.NewValue as string).Split(DELIMITER);
 
                     foreach (var s in colors)
                     {
@@ -227,12 +226,9 @@ namespace Kaxaml.Plugins.ColorPicker
                         }
                     }
 
-                    owner.updateinternal = false;
+                    owner.updateInternal = false;
                 }
             }
         }
-
-        private char DELIMITER = '|';
-        private bool updateinternal = false;
     }
 }

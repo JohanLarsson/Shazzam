@@ -11,21 +11,24 @@
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             // Convert double to float, Point to Vector, Point to Size, and Point3D to Vector3D.
-            // Leave anythign else unchanged.
+            // Leave anything else unchanged.
             if (targetType == typeof(float))
             {
                 return (float)(double)value;
             }
-            else if (targetType == typeof(Vector))
+
+            if (targetType == typeof(Vector))
             {
                 return (Vector)(Point)value;
             }
-            else if (targetType == typeof(Size))
+
+            if (targetType == typeof(Size))
             {
-                Point p = (Point)value;
+                var p = (Point)value;
                 return new Size(Math.Max(0, p.X), Math.Max(0, p.Y));
             }
-            else if (targetType == typeof(Vector3D))
+
+            if (targetType == typeof(Vector3D))
             {
                 return (Vector3D)(Point3D)value;
             }

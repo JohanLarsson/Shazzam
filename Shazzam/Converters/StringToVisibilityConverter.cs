@@ -4,11 +4,11 @@
     using System.Windows;
     using System.Windows.Data;
 
-    class StringToVisibilityConverter : IValueConverter
+    public class StringToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            string temp = value.ToString();
+            var temp = value.ToString();
             if (temp.Length == 0)
             {
                 return Visibility.Collapsed;

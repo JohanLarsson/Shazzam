@@ -1,98 +1,211 @@
-﻿namespace Shazzam.CodeGen
+namespace Shazzam.CodeGen
 {
     using System;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.IO;
-    using System.Reflection;
-    using System.Text;
+    using System.Runtime.InteropServices;
 
-    [Obsolete("Replaced by ShaderCompiler")]
-    internal class ShaderCompilerx : INotifyPropertyChanged
+    internal class ShaderCompiler : INotifyPropertyChanged
     {
-        public void Compile(string codeText)
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [Guid("8BA5FB08-5195-40e2-AC58-0D989C3A0102")]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        private interface ID3DXBuffer
+        {
+            [PreserveSig]
+            IntPtr GetBufferPointer();
+
+            [PreserveSig]
+            int GetBufferSize();
+        }
+
+        [PreserveSig]
+        [DllImport("D3DX9_40.dll", CharSet = CharSet.Auto)]
+        private static extern int D3DXCompileShader(
+            [MarshalAs(UnmanagedType.LPStr)]string pSrcData,
+            int dataLen,
+            IntPtr pDefines,
+            IntPtr includes,
+            [MarshalAs(UnmanagedType.LPStr)]string pFunctionName,
+            [MarshalAs(UnmanagedType.LPStr)]string pTarget,
+            int flags,
+            out ID3DXBuffer ppShader,
+            out ID3DXBuffer ppErrorMsgs,
+            out IntPtr ppConstantTable);
+
+        [PreserveSig]
+        [DllImport("D3DX9_40_64bit.dll", CharSet = CharSet.Auto, EntryPoint = "D3DXCompileShader")]
+        private static extern int D3DXCompileShader64Bit(
+            [MarshalAs(UnmanagedType.LPStr)]string pSrcData,
+            int dataLen,
+            IntPtr pDefines,
+            IntPtr includes,
+            [MarshalAs(UnmanagedType.LPStr)]string pFunctionName,
+            [MarshalAs(UnmanagedType.LPStr)]string pTarget,
+            int flags,
+            out ID3DXBuffer ppShader,
+            out ID3DXBuffer ppErrorMsgs,
+            out IntPtr ppConstantTable);
+
+        [PreserveSig]
+        [DllImport("d3dx10_43.dll", CharSet = CharSet.Auto)]
+        private static extern int D3DX10CompileFromMemory(
+            [MarshalAs(UnmanagedType.LPStr)]string pSrcData,
+            int dataLen,
+            [MarshalAs(UnmanagedType.LPStr)]string pFilename,
+            IntPtr pDefines,
+            IntPtr pInclude,
+            [MarshalAs(UnmanagedType.LPStr)]string pFunctionName,
+            [MarshalAs(UnmanagedType.LPStr)]string pProfile,
+            int flags1,
+            int flags2,
+            IntPtr pPump,
+            out ID3DXBuffer ppShader,
+            out ID3DXBuffer ppErrorMsgs,
+            ref int pHresult);
+
+        public void Compile(string codeText, ShaderProfile shaderProfile)
         {
             this.IsCompiled = false;
-            //// verify that the DirectX composer exe (fxc.exe) path is stored in settings
-            // string fxcPath = Environment.ExpandEnvironmentVariables(Properties.Settings.Default.DirectX_FxcPath);
-            // if (Path.GetFileName(fxcPath).ToLower() != "fxc.exe" || !File.Exists(fxcPath))
-            // {
-            //  throw new CompilerException("Could not find the effect compiler \"fxc.exe\". " +
-            //    "Ensure that the DirectX SDK is installed and the correct path is configured in the Settings pane.\n\n" +
-            //    "The current setting is \"" + Properties.Settings.Default.DirectX_FxcPath + "\".");
-            // }
-
-            // verify that we have a copy Of the Local DirectX fxc.exe File.
-            string fxcLocalPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Exes\\fxc.exe");
-            if (Path.GetFileName(fxcLocalPath) != "fxc.exe" || !File.Exists(fxcLocalPath))
-            {
-                throw new CompilerException("Could not find the effect compiler \"fxc.exe\". ");
-            }
-
-            // create application folder
             string path = Properties.Settings.Default.FolderPath_Output;
-            if (Directory.Exists(path) == false)
+
+            IntPtr defines = IntPtr.Zero;
+            IntPtr includes = IntPtr.Zero;
+            IntPtr ppConstantTable = IntPtr.Zero;
+            ID3DXBuffer ppShader;
+            ID3DXBuffer ppErrorMsgs;
+
+            var methodName = "main";
+
+            string targetProfile = "ps_2_0";
+            if (shaderProfile == ShaderProfile.PixelShader3)
             {
-                Directory.CreateDirectory(path);
+                targetProfile = "ps_3_0";
+            }
+            else
+            {
+                targetProfile = "ps_2_0";
             }
 
-            // create new file with fx extension
-            using (FileStream fs = new FileStream(path + Constants.FileNames.TempShaderFx, FileMode.Create))
+            bool useDx10 = false;
+
+            int hr = 0;
+            if (useDx10)
             {
-                byte[] data = Encoding.ASCII.GetBytes(codeText);
-                fs.Write(data, 0, data.Length);
+                int pHr = 0;
+                hr = D3DX10CompileFromMemory(
+                    codeText,
+                    codeText.Length,
+                    string.Empty,
+                    IntPtr.Zero,
+                    IntPtr.Zero,
+                    methodName,
+                    targetProfile,
+                    0,
+                    0,
+                    IntPtr.Zero,
+                    out ppShader,
+                    out ppErrorMsgs,
+                    ref pHr);
             }
-
-            ProcessStartInfo psi = new ProcessStartInfo(fxcLocalPath);
-            psi.CreateNoWindow = true;
-            psi.UseShellExecute = false;
-
-            psi.RedirectStandardError = true;
-
-            // call fxc with these arguments
-            // this will create the *.ps file
-            // the ps file is use  by the WPF framework when working with shaders
-            psi.Arguments = string.Format("/T ps_3_0 /E main /Fo\"{0}\" \"{1}\"", path + Constants.FileNames.TempShaderPs, path + Constants.FileNames.TempShaderFx);
-
-            // launch the process
-            this.ErrorText = string.Empty;
-
-            // delete any existing ps files
-            if (File.Exists(path + Constants.FileNames.TempShaderPs))
+            else
             {
-                File.Delete(path + Constants.FileNames.TempShaderPs);
-            }
-
-            using (Process p = Process.Start(psi))
-            {
-                // monitor the error stream
-                StreamReader sr = p.StandardError;
-                this.ErrorText = sr.ReadToEnd().Replace(path + Constants.FileNames.TempShaderFx, "Source Line - ");
-                if (this.ErrorText == string.Empty)
+                if (IntPtr.Size == 8)
                 {
-                    this.IsCompiled = true;
+                    // 64 bit
+                    hr = D3DXCompileShader64Bit(
+                        codeText,
+                        codeText.Length,
+                        defines,
+                        includes,
+                        methodName,
+                        targetProfile,
+                        0,
+                        out ppShader,
+                        out ppErrorMsgs,
+                        out ppConstantTable);
                 }
-
-                p.WaitForExit();
+                else
+                {
+                    // 32 bit
+                    hr = D3DXCompileShader(
+                        codeText,
+                        codeText.Length,
+                        defines,
+                        includes,
+                        methodName,
+                        targetProfile,
+                        0,
+                        out ppShader,
+                        out ppErrorMsgs,
+                        out ppConstantTable);
+                }
             }
 
-            this.CreateFileCopies(path);
+            if (hr != 0)
+            {
+                IntPtr errors = ppErrorMsgs.GetBufferPointer();
+
+                int size = ppErrorMsgs.GetBufferSize();
+
+                this.ErrorText = Marshal.PtrToStringAnsi(errors);
+                this.IsCompiled = false;
+                goto finished;
+            }
+
+            this.ErrorText = string.Empty;
+            this.IsCompiled = true;
+            var psPath = path + Constants.FileNames.TempShaderPs;
+            IntPtr pCompiledPs = ppShader.GetBufferPointer();
+            int compiledPsSize = ppShader.GetBufferSize();
+
+            var compiledPs = new byte[compiledPsSize];
+            Marshal.Copy(pCompiledPs, compiledPs, 0, compiledPs.Length);
+            using (var psFile = File.Open(psPath, FileMode.Create, FileAccess.Write))
+            {
+                psFile.Write(compiledPs, 0, compiledPs.Length);
+            }
+
+            finished:
+
+            if (ppShader != null)
+            {
+                Marshal.ReleaseComObject(ppShader);
+            }
+
+            ppShader = null;
+
+            if (ppErrorMsgs != null)
+            {
+                Marshal.ReleaseComObject(ppErrorMsgs);
+            }
+
+            ppErrorMsgs = null;
+            this.CompileFinished();
+            //// CreateFileCopies(path);
+            //// throw new Exception("testing");
         }
 
-        private void CreateFileCopies(string path)
+        private void CompileFinished()
         {
-            if (string.IsNullOrEmpty(Properties.Settings.Default.FilePath_LastFx))
-            {
-                return;
-            }
-
-            string currentFileName = Path.GetFileNameWithoutExtension(Properties.Settings.Default.FilePath_LastFx);
-            if (File.Exists(path + Constants.FileNames.TempShaderPs))
-            {
-                File.Copy(path + Constants.FileNames.TempShaderPs, path + currentFileName + ".ps", overwrite: true);
-            }
+            // for instrumentation
         }
 
+        // [PreEmptive.Attributes.Feature("CompileShader", EventType = PreEmptive.Attributes.FeatureEventTypes.Stop)]
+        // private void CreateFileCopies(string path)
+        // {
+        //  if (String.IsNullOrEmpty(Properties.Settings.Default.FilePath_LastFx))
+        //  {
+        //    return;
+        //  }
+        //  string currentFileName = System.IO.Path.GetFileNameWithoutExtension(Properties.Settings.Default.FilePath_LastFx);
+        //  if (File.Exists(path + Constants.FileNames.TempShaderPs))
+        //  {
+
+        // File.Copy(path + Constants.FileNames.TempShaderPs, path + currentFileName + ".ps", true);
+        //  }
+        // }
         public void Reset()
         {
             this.ErrorText = "not compiled";
@@ -137,7 +250,5 @@
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

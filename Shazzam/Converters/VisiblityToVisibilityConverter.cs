@@ -8,7 +8,7 @@
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            Visibility temp = (Visibility)value;
+            var temp = (Visibility)value;
             if (temp == Visibility.Visible)
             {
                 return Visibility.Collapsed;

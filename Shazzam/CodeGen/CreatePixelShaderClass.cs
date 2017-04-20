@@ -399,7 +399,7 @@
         private static string GenerateCode(CodeDomProvider provider, CodeCompileUnit compileUnit)
         {
             // Generate source code using the code generator.
-            using (StringWriter writer = new StringWriter())
+            using (var writer = new StringWriter())
             {
                 string indentString = Settings.Default.IndentUsingTabs ? "\t" : string.Format("{0," + Settings.Default.IndentSpaces.ToString() + "}", " ");
                 CodeGeneratorOptions options = new CodeGeneratorOptions { IndentString = indentString, BlankLinesBetweenMembers = false };

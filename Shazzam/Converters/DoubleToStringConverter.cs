@@ -8,20 +8,13 @@
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double number = (double)value;
-            return number.ToString("F2");
+            var number = (double)value;
+            return number.ToString("F2", CultureInfo.InvariantCulture);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string number = value.ToString();
-            double cleanedNumber;
-            if (double.TryParse(number, NumberStyles.Any, null, out cleanedNumber))
-            {
-                return cleanedNumber;
-            }
-
-            return number;
+            return System.Convert.ToDouble(value, CultureInfo.InvariantCulture);
         }
     }
 }

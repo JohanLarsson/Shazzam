@@ -60,7 +60,6 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.TextEditor, Version=3.2.0.5777, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a, processorArchitecture=MSIL" />
     <Reference Include="PresentationFramework.Aero">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -105,6 +104,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CodeGen\ShaderCompiler.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Page Include="Controls\AdjustableColor.xaml">
       <SubType>Designer</SubType>
@@ -231,8 +231,7 @@
     <Compile Include="CodeGen\CodeParser.cs" />
     <Compile Include="CodeGen\CompilerException.cs" />
     <Compile Include="CodeGen\CreatePixelShaderClass.cs" />
-    <Compile Include="CodeGen\ShaderCompiler.cs" />
-    <Compile Include="CodeGen\ShaderCompilerDirect.cs" />
+    <Compile Include="CodeGen\ShaderProfile.cs" />
     <Compile Include="Commands\AppCommands.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -297,7 +296,6 @@
     </Compile>
     <Compile Include="Reveal.cs" />
     <Compile Include="RoutedEventHelper.cs" />
-    <Content Include="Assemblies\ICSharpCode.TextEditor.dll" />
     <Content Include="d3dx10_40.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1015,6 +1013,17 @@
       <ItemGroup>
         <Reference Include="WPFToolkit.Extended">
           <HintPath>..\packages\Extended.Wpf.Toolkit\lib\net40\WPFToolkit.Extended.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v3.0' Or $(TargetFrameworkVersion) == 'v3.5' Or $(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7')">
+      <ItemGroup>
+        <Reference Include="ICSharpCode.TextEditor">
+          <HintPath>..\packages\ICSharpCode.TextEditor\lib\Net20\ICSharpCode.TextEditor.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
