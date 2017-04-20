@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Deployment.Application;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;

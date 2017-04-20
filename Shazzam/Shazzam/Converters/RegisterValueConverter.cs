@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows;
 using System.Windows.Media.Media3D;
-using System.Windows.Media;
 
 namespace Shazzam.Converters {
 	public class RegisterValueConverter : IValueConverter {

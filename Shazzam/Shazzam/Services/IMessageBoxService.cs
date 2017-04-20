@@ -1,7 +1,4 @@
-﻿using System;
-
-
-namespace Cinch
+﻿namespace Cinch
 {
     /// <summary>
     /// Available Button options. 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Shazzam.ViewModels
+﻿namespace Shazzam.ViewModels
 {
   class CodeTabViewModel : ViewModelBase
   {

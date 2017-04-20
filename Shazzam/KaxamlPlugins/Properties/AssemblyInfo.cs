@@ -1,9 +1,6 @@
 #region Using directives
 
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Resources;
-using System.Globalization;
 using System.Windows;
 using System.Runtime.InteropServices;
 

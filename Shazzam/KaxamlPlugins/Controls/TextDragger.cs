@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Controls;
-using Kaxaml.Plugins;
 using KaxamlPlugins;
 
 namespace Kaxaml.Plugins.Controls

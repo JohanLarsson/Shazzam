@@ -18,8 +18,6 @@ using Microsoft.CSharp;
 using Shazzam.CodeGen;
 using Shazzam.Controls;
 using Shazzam.Converters;
-using Shazzam.Commands;
-using System.Globalization;
 
 namespace Shazzam.Views
 {

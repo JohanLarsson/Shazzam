@@ -2,10 +2,7 @@
 using System.Windows.Media;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shazzam.ViewModels;
-using TypeMock.ArrangeActAssert;
-using System;
 using System.Diagnostics;
-using TypeMock;
 
 namespace ShazzamUnitTests
 {
