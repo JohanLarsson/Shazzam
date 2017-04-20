@@ -621,7 +621,6 @@
     <Content Include="Tutorials\07a_ChangePosition.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Shazzam_TemporaryKey.pfx" />
     <Content Include="Tutorials\06_SwapColors.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -868,6 +867,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="..\.paket\paket.targets" />
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v3.5'">
       <ItemGroup>
@@ -883,7 +883,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7')">
       <ItemGroup>
         <Reference Include="WPFToolkit.Extended">
           <HintPath>..\packages\Extended.Wpf.Toolkit\lib\net40\WPFToolkit.Extended.dll</HintPath>
@@ -893,5 +893,4 @@
       </ItemGroup>
     </When>
   </Choose>
-  <Import Project="..\.paket\paket.targets" />
 </Project>

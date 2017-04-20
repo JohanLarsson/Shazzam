@@ -1,5 +1,4 @@
-source C:\Git\Guget
 source https://www.nuget.org/api/v2/
-source C:\Git\Gu.Units\publish
 
 nuget Extended.Wpf.Toolkit 1.5.0
+nuget ICSharpCode.TextEditor
