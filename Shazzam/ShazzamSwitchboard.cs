@@ -2,6 +2,7 @@
 {
     using System.Windows;
     using Shazzam.Views;
+    using FileLoaderPlugin = Shazzam.Plugins.FileLoaderPlugin;
 
     internal static class ShazzamSwitchboard
     {

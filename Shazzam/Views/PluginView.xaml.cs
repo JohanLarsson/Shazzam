@@ -2,7 +2,6 @@ namespace Shazzam.Views
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
@@ -25,7 +24,7 @@ namespace Shazzam.Views
         private void LoadPlugins()
         {
             var fileLoader = new Plugin();
-            fileLoader.Root = new FileLoaderPlugin();
+            fileLoader.Root = new Plugins.FileLoaderPlugin();
             fileLoader.Name = "Shader Loader";
             fileLoader.Description = "Pick a shader file to open";
 

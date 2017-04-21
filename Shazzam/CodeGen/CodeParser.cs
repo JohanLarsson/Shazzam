@@ -11,7 +11,7 @@
     using System.Windows.Media.Media3D;
     using Shazzam.Properties;
 
-    static class CodeParser
+    internal static class CodeParser
     {
         // Regular expression that matches a comment from double-slash to end-of-line (but not a triple-slash comment):
         private static readonly Regex CommentRegex = new Regex(@"(?<!/)//$|(?<!/)//[^/].*?$", RegexOptions.Compiled | RegexOptions.Multiline);

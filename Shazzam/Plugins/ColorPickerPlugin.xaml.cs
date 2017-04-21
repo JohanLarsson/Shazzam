@@ -1,4 +1,4 @@
-namespace Kaxaml.Plugins.ColorPicker
+namespace Shazzam.Plugins
 {
     using System;
     using System.Collections.ObjectModel;
@@ -46,7 +46,7 @@ namespace Kaxaml.Plugins.ColorPicker
             try
             {
                 var c = ColorConverter.ConvertFromString(KaxamlInfo.Editor.SelectedText);
-                this.C.SetCurrentValue(Controls.ColorPicker.ColorProperty, c);
+                this.C.SetCurrentValue(Kaxaml.Plugins.Controls.ColorPicker.ColorProperty, c);
 
                 this.C.ColorChanged += this.C_ColorChanged;
             }

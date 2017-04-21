@@ -12,16 +12,16 @@
             this.Loaded += this.SettingsPlugin_Loaded;
         }
 
-        void SettingsPlugin_Loaded(object sender, RoutedEventArgs e)
+        private void SettingsPlugin_Loaded(object sender, RoutedEventArgs e)
         {
             if (RenderCapability.IsPixelShaderVersionSupported(3, 0))
             {
-                this.notAvailable.Visibility = Visibility.Collapsed;
+                this.notAvailable.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
             }
             else
             {
-                this.notAvailable.Visibility = Visibility.Visible;
-                this.notAvailable.ToolTip = "PS_3 is not supported on your video card.";
+                this.notAvailable.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.notAvailable.SetCurrentValue(ToolTipProperty, "PS_3 is not supported on your video card.");
             }
         }
     }

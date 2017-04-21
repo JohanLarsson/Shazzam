@@ -57,7 +57,7 @@
                                 Background="{StaticResource SunkenBackground}"
                                 CornerRadius="2" />
                         <Border x:Name="Hl"
-                                BorderBrush="{StaticResource Highlight}"
+                                BorderBrush="{StaticResource HighlightBrush}"
                                 BorderThickness="0,0,0,1"
                                 CornerRadius="2" />
                         <Border x:Name="Sh"
@@ -533,7 +533,7 @@
                                         Background="{StaticResource SunkenBackground}"
                                         CornerRadius="0" />
                                 <Border x:Name="Hl"
-                                        BorderBrush="{StaticResource Highlight}"
+                                        BorderBrush="{StaticResource HighlightBrush}"
                                         BorderThickness="0,0,0,1"
                                         CornerRadius="0" />
                                 <Border x:Name="Sh"

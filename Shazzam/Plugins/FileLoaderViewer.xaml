@@ -1,45 +1,44 @@
-﻿<UserControl x:Class="Shazzam.Views.FileLoaderPlugin"
+﻿<UserControl x:Class="Shazzam.Plugins.FileLoaderPlugin"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Height="300">
-  <Grid>
-    <TabControl x:Name="loaderTab">
-      <TabItem Header='Your folder'>
-        <DockPanel LastChildFill='True'
-                   Margin='10'>
+    <Grid>
+        <TabControl x:Name="loaderTab">
+            <TabItem Header="Your folder">
+                <DockPanel Margin="10" LastChildFill="True">
 
-          <TextBlock DockPanel.Dock='Top'>
-            <Hyperlink Foreground='{StaticResource HighlightBrush}'
-                       x:Name='locationHyperlink'
-                       MouseEnter='locationHyperlink_MouseEnter'
-                       Click='Hyperlink_Click'>Change location</Hyperlink></TextBlock>
+                    <TextBlock DockPanel.Dock="Top">
+                        <Hyperlink x:Name="locationHyperlink"
+                                   Click="Hyperlink_Click"
+                                   Foreground="{StaticResource HighlightBrush}"
+                                   MouseEnter="locationHyperlink_MouseEnter">
+                            Change location
+                        </Hyperlink>
+                    </TextBlock>
 
-          <ListBox x:Name='fileListBox'
-                   Margin='0,5,0,0' />
-        </DockPanel>
-      </TabItem>
-      <TabItem Header='Sample Shaders'>
+                    <ListBox x:Name="fileListBox" Margin="0,5,0,0" />
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Sample Shaders">
 
-        <DockPanel LastChildFill='True'
-                   Margin='10'>
-          <TextBlock DockPanel.Dock='Top'>
-          Pre-installed samples</TextBlock>
-          <ListBox x:Name='sampleListBox'
-                   Margin='0,5,0,0' />
+                <DockPanel Margin="10" LastChildFill="True">
+                    <TextBlock DockPanel.Dock="Top">
+                        Pre-installed samples
+                    </TextBlock>
+                    <ListBox x:Name="sampleListBox" Margin="0,5,0,0" />
 
-        </DockPanel>
-      </TabItem>
-      <TabItem Header='Tutorial'>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Tutorial">
 
-        <DockPanel LastChildFill='True'
-                   Margin='10'>
-          <TextBlock DockPanel.Dock='Top'>
-          Learn more about HLSL</TextBlock>
-          <ListBox x:Name='tutorialListBox'
-                   Margin='0,5,0,0' />
+                <DockPanel Margin="10" LastChildFill="True">
+                    <TextBlock DockPanel.Dock="Top">
+                        Learn more about HLSL
+                    </TextBlock>
+                    <ListBox x:Name="tutorialListBox" Margin="0,5,0,0" />
 
-        </DockPanel>
-      </TabItem>
-    </TabControl>
-  </Grid>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
 </UserControl>

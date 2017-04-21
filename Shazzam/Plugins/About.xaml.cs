@@ -6,25 +6,25 @@
     using System.Windows.Documents;
     using Shazzam.Helpers;
 
-  public partial class About : UserControl
-  {
-    public About()
+    public partial class About : UserControl
     {
-        this.InitializeComponent();
-      this.AddHandler(Hyperlink.RequestNavigateEvent, new RoutedEventHandler(this.HandleRequestNavigate), false);
-        this.versionText.Text = VersionHelper.GetVersionNumber();
-        this.versionRun.Text = string.Format("v{0}", VersionHelper.GetShortVersionNumber());
-    }
+        public About()
+        {
+            this.InitializeComponent();
+            this.AddHandler(Hyperlink.RequestNavigateEvent, new RoutedEventHandler(HandleRequestNavigate), handledEventsToo: false);
+            this.versionText.Text = VersionHelper.GetVersionNumber();
+            this.versionRun.Text = $"v{VersionHelper.GetShortVersionNumber()}";
+        }
 
-    void HandleRequestNavigate(object sender, RoutedEventArgs e)
-    {
-      var hl = e.OriginalSource as Hyperlink;
-      if (hl != null)
-      {
-        var navigateUri = hl.NavigateUri.ToString();
-        Process.Start(new ProcessStartInfo(navigateUri));
-        e.Handled = true;
-      }
+        private static void HandleRequestNavigate(object sender, RoutedEventArgs e)
+        {
+            var hl = e.OriginalSource as Hyperlink;
+            if (hl != null)
+            {
+                var navigateUri = hl.NavigateUri.ToString();
+                Process.Start(new ProcessStartInfo(navigateUri));
+                e.Handled = true;
+            }
+        }
     }
-  }
 }

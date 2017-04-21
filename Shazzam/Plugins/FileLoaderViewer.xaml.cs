@@ -1,10 +1,11 @@
-﻿namespace Shazzam.Views
+﻿namespace Shazzam.Plugins
 {
     using System.IO;
     using System.Linq;
     using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
+    using Shazzam.Views;
 
     public partial class FileLoaderPlugin : UserControl
     {

@@ -1,15 +1,12 @@
 ﻿<UserControl x:Class="Shazzam.Views.ImageTabView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters='clr-namespace:Shazzam.Converters'
-             xmlns:commands='clr-namespace:Shazzam.Commands'>
-              >
-  <UserControl.Resources>
-    <converters:StringToVisibilityConverter x:Key='visConverter' />
-  </UserControl.Resources>
-  <UserControl.CommandBindings>
+             xmlns:commands="clr-namespace:Shazzam.Commands"
+             xmlns:converters="clr-namespace:Shazzam.Converters">
+    &gt;
+    <UserControl.Resources>
+        <converters:StringToVisibilityConverter x:Key="visConverter" />
+    </UserControl.Resources>
+    <UserControl.CommandBindings />
 
-  
-  </UserControl.CommandBindings>
- 
 </UserControl>
