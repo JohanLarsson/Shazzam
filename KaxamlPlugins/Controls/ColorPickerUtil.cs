@@ -5,42 +5,43 @@ namespace KaxamlPlugins.Controls
 
     public static class ColorPickerUtil
     {
+        private static readonly char[] HexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
-        public static string MakeValidColorString(string S)
+        public static string MakeValidColorString(string text)
         {
-            string s = S;
-
             // remove invalid characters (this is a very forgiving function)
-            for (int i = 0; i < s.Length; i++)
+            for (var i = 0; i < text.Length; i++)
             {
-                char c = s[i];
+                var c = text[i];
 
                 if (!(c >= 'a' && c <= 'f') &&
                     !(c >= 'A' && c <= 'F') &&
                     !(c >= '0' && c <= '9'))
                 {
-                    s = s.Remove(i, 1);
+                    text = text.Remove(i, 1);
                     i--;
                 }
             }
 
             // trim if too long
-            if (s.Length > 8) s = s.Substring(0, 8);
-
-            // pad with zeroes until a valid length is found
-            while (s.Length <= 8 && s.Length != 3 && s.Length != 4 && s.Length != 6 && s.Length != 8)
+            if (text.Length > 8)
             {
-                s = s + "0";
+                text = text.Substring(0, 8);
             }
 
-            return s;
+            // pad with zeroes until a valid length is found
+            while (text.Length <= 8 && text.Length != 3 && text.Length != 4 && text.Length != 6 && text.Length != 8)
+            {
+                text = text + "0";
+            }
+
+            return text;
         }
 
-        public static Color ColorFromString(string S)
+        public static Color ColorFromString(string text)
         {
-            //ColorConverter converter = new ColorConverter();
-            Color c = (Color) ColorConverter.ConvertFromString(S);
-
+            // ReSharper disable once PossibleNullReferenceException
+            var c = (Color)ColorConverter.ConvertFromString(text);
             return c;
             /*
             string s = MakeValidColorString(S);
@@ -85,95 +86,114 @@ namespace KaxamlPlugins.Controls
             }
 
             return Color.FromArgb(A, R, G, B);
-             */ 
+             */
         }
-
-        static char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
         public static string StringFromColor(Color c)
         {
-            byte[] bytes = new byte[4];
+            var bytes = new byte[4];
             bytes[0] = c.A;
             bytes[1] = c.R;
             bytes[2] = c.G;
             bytes[3] = c.B;
 
-            char[] chars = new char[bytes.Length * 2];
+            var chars = new char[bytes.Length * 2];
 
-            for (int i = 0; i < bytes.Length; i++)
+            for (var i = 0; i < bytes.Length; i++)
             {
                 int b = bytes[i];
-                chars[i * 2] = hexDigits[b >> 4];
-                chars[i * 2 + 1] = hexDigits[b & 0xF];
+                chars[i * 2] = HexDigits[b >> 4];
+                chars[(i * 2) + 1] = HexDigits[b & 0xF];
             }
 
             return new string(chars);
         }
 
-        public static void HSBFromColor(Color C, ref double H, ref double S, ref double B)
+        public static void HsbFromColor(Color c, out double h, out double s, out double b)
         {
             // standard algorithm from nearly any graphics textbook
+            var red = c.R;
+            var green = c.G;
+            var blue = c.B;
 
-            byte _red = C.R;
-            byte _green = C.G;
-            byte _blue = C.B;
+            int imax = red, imin = red;
 
-            int imax = _red, imin = _red;
+            if (green > imax)
+            {
+                imax = green;
+            }
+            else if (green < imin)
+            {
+                imin = green;
+            }
 
-            if (_green > imax) imax = _green; else if (_green < imin) imin = _green;
-            if (_blue > imax) imax = _blue; else if (_blue < imin) imin = _blue;
+            if (blue > imax)
+            {
+                imax = blue;
+            }
+            else if (blue < imin)
+            {
+                imin = blue;
+            }
+
             double max = imax / 255.0, min = imin / 255.0;
 
-            double value = max;
-            double saturation = (max > 0) ? (max - min) / max : 0.0;
+            var value = max;
+            var saturation = (max > 0) ? (max - min) / max : 0.0;
             double hue = 0;
 
             if (imax > imin)
             {
-                double f = 1.0 / ((max - min) * 255.0);
-                hue = (imax == _red) ? 0.0 + f * (_green - _blue)
-                          : (imax == _green) ? 2.0 + f * (_blue - _red)
-                              : 4.0 + f * (_red - _green);
+                var f = 1.0 / ((max - min) * 255.0);
+                hue = (imax == red) ? 0.0 + (f * (green - blue))
+                          : (imax == green) ? 2.0 + (f * (blue - red))
+                              : 4.0 + (f * (red - green));
                 hue = hue * 60.0;
                 if (hue < 0.0)
+                {
                     hue += 360.0;
+                }
             }
 
-            H = hue / 360;
-            S = saturation;
-            B = value;
+            h = hue / 360;
+            s = saturation;
+            b = value;
         }
 
-        public static Color ColorFromAHSB(double A, double H, double S, double B)
+        public static Color ColorFromAhsb(double a, double h, double s, double b)
         {
-            Color r = ColorFromHSB(H, S, B);
-            r.A = (byte)Math.Round(A * 255);
+            var r = ColorFromHsb(h, s, b);
+            r.A = (byte)Math.Round(a * 255);
             return r;
         }
 
-        public static Color ColorFromHSB(double H, double S, double B)
+#pragma warning disable SA1313 // Parameter names must begin with lower-case letter
+        public static Color ColorFromHsb(double H, double S, double B)
+#pragma warning restore SA1313 // Parameter names must begin with lower-case letter
         {
             // standard algorithm from nearly any graphics textbook
-
             double red = 0.0, green = 0.0, blue = 0.0;
 
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (S == 0.0)
             {
                 red = green = blue = B;
             }
             else
             {
-                double h = H * 360;
+                var h = H * 360;
                 while (h >= 360.0)
+                {
                     h -= 360.0;
+                }
 
                 h = h / 60.0;
-                int i = (int)h;
+                var i = (int)h;
 
-                double f = h - i;
-                double r = B * (1.0 - S);
-                double s = B * (1.0 - S * f);
-                double t = B * (1.0 - S * (1.0 - f));
+                var f = h - i;
+                var r = B * (1.0 - S);
+                var s = B * (1.0 - (S * f));
+                var t = B * (1.0 - (S * (1.0 - f)));
 
                 switch (i)
                 {

@@ -8,44 +8,13 @@ namespace KaxamlPlugins.Controls
 
     public class ElementCursorDecorator : Decorator
     {
-        CursorAdorner _CursorAdorner;
+        public static readonly DependencyProperty CursorElementProperty = DependencyProperty.Register(
+            "CursorElement",
+            typeof(UIElement),
+            typeof(ElementCursorDecorator),
+            new UIPropertyMetadata(null));
 
-        protected override void OnMouseEnter(MouseEventArgs e)
-        {
-            // setup the adorner layer
-            AdornerLayer _AdornerLayer = AdornerLayer.GetAdornerLayer(this);
-
-            if (_AdornerLayer == null)
-            {
-                return;
-            }
-
-            if (this._CursorAdorner == null)
-            {
-                this._CursorAdorner = new CursorAdorner(this, this.CursorElement);
-            }
-
-            _AdornerLayer.Add(this._CursorAdorner);
-
-            base.OnMouseEnter(e);
-        }
-
-        protected override void OnMouseLeave(MouseEventArgs e)
-        {
-            if (this._CursorAdorner != null)
-            {
-                AdornerLayer layer = VisualTreeHelper.GetParent(this._CursorAdorner) as AdornerLayer;
-                layer.Remove(this._CursorAdorner);
-            }
-
-            base.OnMouseLeave(e);
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            this._CursorAdorner.Offset = e.GetPosition(this);
-            base.OnMouseMove(e);
-        }
+        private CursorAdorner cursorAdorner;
 
         static ElementCursorDecorator()
         {
@@ -55,11 +24,46 @@ namespace KaxamlPlugins.Controls
 
         public UIElement CursorElement
         {
-            get { return (UIElement) this.GetValue(CursorElementProperty); }
-            set { this.SetValue(CursorElementProperty, value); }
+            get => (UIElement)this.GetValue(CursorElementProperty);
+            set => this.SetValue(CursorElementProperty, value);
         }
-        public static readonly DependencyProperty CursorElementProperty =
-            DependencyProperty.Register("CursorElement", typeof(UIElement), typeof(ElementCursorDecorator), new UIPropertyMetadata(null));
+
+        protected override void OnMouseEnter(MouseEventArgs e)
+        {
+            // setup the adorner layer
+            var adornerLayer = AdornerLayer.GetAdornerLayer(this);
+
+            if (adornerLayer == null)
+            {
+                return;
+            }
+
+            if (this.cursorAdorner == null)
+            {
+                this.cursorAdorner = new CursorAdorner(this, this.CursorElement);
+            }
+
+            adornerLayer.Add(this.cursorAdorner);
+
+            base.OnMouseEnter(e);
+        }
+
+        protected override void OnMouseLeave(MouseEventArgs e)
+        {
+            if (this.cursorAdorner != null)
+            {
+                var layer = VisualTreeHelper.GetParent(this.cursorAdorner) as AdornerLayer;
+                layer?.Remove(this.cursorAdorner);
+            }
+
+            base.OnMouseLeave(e);
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            this.cursorAdorner.Offset = e.GetPosition(this);
+            base.OnMouseMove(e);
+        }
 
         protected override void OnRender(DrawingContext dc)
         {

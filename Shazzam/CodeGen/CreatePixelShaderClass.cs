@@ -397,7 +397,7 @@
             // Generate source code using the code generator.
             using (var writer = new StringWriter())
             {
-                var indentString = Settings.Default.IndentUsingTabs ? "\t" : string.Format("{0," + Settings.Default.IndentSpaces.ToString() + "}", " ");
+                var indentString = Settings.Default.IndentUsingTabs ? "\t" : string.Format("{0," + Settings.Default.IndentSpaces + "}", " ");
                 var options = new CodeGeneratorOptions { IndentString = indentString, BlankLinesBetweenMembers = false };
                 provider.GenerateCodeFromCompileUnit(compileUnit, writer, options);
                 var text = writer.ToString();

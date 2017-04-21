@@ -1,46 +1,20 @@
+#pragma warning disable WPF1011 // Implement INotifyPropertyChanged.
 namespace KaxamlPlugins
 {
     using System;
     using System.Windows.Input;
 
     [AttributeUsage(AttributeTargets.Class)]
-
     public class PluginAttribute : Attribute
     {
-        private string _Name;
-        public string Name
-        {
-            get { return this._Name; }
-            set { this._Name = value; }
-        }
+        public string Name { get; set; }
 
-        private string _Description;
-        public string Description
-        {
-            get { return this._Description; }
-            set { this._Description = value; }
-        }
+        public string Description { get; set; }
 
-        private Key _Key;
-        public Key Key
-        {
-            get { return this._Key; }
-            set { this._Key = value; }
-        }
+        public Key Key { get; set; }
 
-        public ModifierKeys _ModifierKeys;
-        public ModifierKeys ModifierKeys
-        {
-            get { return this._ModifierKeys; }
-            set { this._ModifierKeys = value; }
-        }
+        public ModifierKeys ModifierKeys { get; set; }
 
-        private string _Icon;
-        public string Icon
-        {
-            get { return this._Icon; }
-            set { this._Icon = value; }
-        }
-
+        public string Icon { get; set; }
     }
 }

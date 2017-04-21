@@ -7,6 +7,21 @@ namespace KaxamlPlugins.Controls
 
     public class TextDragger : Decorator
     {
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
+            "Text",
+            typeof(string),
+            typeof(TextDragger),
+            new UIPropertyMetadata(string.Empty));
+
+        public static readonly DependencyProperty DataProperty = DependencyProperty.Register(
+            "Data",
+            typeof(object),
+            typeof(TextDragger),
+            new UIPropertyMetadata(null));
+
+        private bool isClipboardSet;
+        private bool isDragging;
+
         static TextDragger()
         {
             CursorProperty.OverrideMetadata(typeof(TextDragger), new FrameworkPropertyMetadata(Cursors.Hand));
@@ -14,21 +29,15 @@ namespace KaxamlPlugins.Controls
 
         public string Text
         {
-            get { return (string) this.GetValue(TextProperty); }
-            set { this.SetValue(TextProperty, value); }
+            get => (string)this.GetValue(TextProperty);
+            set => this.SetValue(TextProperty, value);
         }
-        public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(TextDragger), new UIPropertyMetadata(string.Empty));
 
         public object Data
         {
-            get { return (object) this.GetValue(DataProperty); }
-            set { this.SetValue(DataProperty, value); }
+            get => this.GetValue(DataProperty);
+            set => this.SetValue(DataProperty, value);
         }
-        public static readonly DependencyProperty DataProperty =
-            DependencyProperty.Register("Data", typeof(object), typeof(TextDragger), new UIPropertyMetadata(null));
-
-        bool IsClipboardSet = false;
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
@@ -37,43 +46,45 @@ namespace KaxamlPlugins.Controls
                 if (!string.IsNullOrEmpty(this.Text))
                 {
                     Clipboard.SetText(this.Text);
-                    this.IsClipboardSet = true;
+                    this.isClipboardSet = true;
                 }
                 else if (this.Data != null)
                 {
                     Clipboard.SetText(this.Data.ToString());
-                    this.IsClipboardSet = true;
+                    this.isClipboardSet = true;
                 }
             }
             else if (e.ClickCount == 2)
             {
-                if (this.IsClipboardSet)
+                if (this.isClipboardSet)
                 {
                     KaxamlInfo.Editor.InsertStringAtCaret(this.Text);
-                    this.IsClipboardSet = false;
+                    this.isClipboardSet = false;
                 }
             }
+
             base.OnMouseDown(e);
         }
 
         protected override void OnRender(DrawingContext drawingContext)
         {
             // need this to ensure hittesting
-            drawingContext.DrawRectangle(Brushes.Transparent, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
+            drawingContext.DrawRectangle(
+                Brushes.Transparent,
+                null,
+                new Rect(0, 0, this.ActualWidth, this.ActualHeight));
             base.OnRender(drawingContext);
         }
 
-        bool IsDragging = false;
-
         protected override void OnPreviewMouseMove(MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed && (!this.IsDragging))
+            if (e.LeftButton == MouseButtonState.Pressed && (!this.isDragging))
             {
                 this.StartDrag();
             }
             else if (e.LeftButton == MouseButtonState.Released)
             {
-                this.IsDragging = false;
+                this.isDragging = false;
             }
 
             base.OnPreviewMouseMove(e);
@@ -81,19 +92,19 @@ namespace KaxamlPlugins.Controls
 
         private void StartDrag()
         {
-            DataObject obj = new DataObject(DataFormats.Text, this.Text);
-
-            if (obj != null)
+            var obj = new DataObject(DataFormats.Text, this.Text);
+            if (this.Data != null)
             {
-                if (this.Data != null) obj.SetData(this.Data.GetType(), this.Data);
+                obj.SetData(this.Data.GetType(), this.Data);
+            }
 
-                try
-                {
-                    DragDrop.DoDragDrop(this, obj, DragDropEffects.Copy);
-                }
-                catch { }
+            try
+            {
+                DragDrop.DoDragDrop(this, obj, DragDropEffects.Copy);
+            }
+            catch
+            {
             }
         }
-
     }
 }

@@ -7,77 +7,74 @@ namespace KaxamlPlugins.Controls
 
     public class ColorTextBox : TextBox
     {
+        public static readonly DependencyProperty ColorBrushProperty = DependencyProperty.Register(
+            "ColorBrush",
+            typeof(SolidColorBrush),
+            typeof(ColorTextBox),
+            new UIPropertyMetadata(Brushes.Black));
 
-        #region Properties
+        public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
+            "Color",
+            typeof(Color),
+            typeof(ColorTextBox),
+            new UIPropertyMetadata(Colors.Black));
 
-        /// <summary>
-        /// ColorBrush Property
-        /// </summary>
+        private bool colorSetInternally;
 
         public SolidColorBrush ColorBrush
         {
-            get { return (SolidColorBrush) this.GetValue(ColorBrushProperty); }
-            set { this.SetValue(ColorBrushProperty, value); }
+            get => (SolidColorBrush)this.GetValue(ColorBrushProperty);
+            set => this.SetValue(ColorBrushProperty, value);
         }
-        public static readonly DependencyProperty ColorBrushProperty =
-            DependencyProperty.Register("ColorBrush", typeof(SolidColorBrush), typeof(ColorTextBox), new UIPropertyMetadata(Brushes.Black));
-
-        /// <summary>
-        /// Color Property
-        /// </summary>
-        bool ColorSetInternally = false;
 
         public Color Color
         {
-            get { return (Color) this.GetValue(ColorProperty); }
+            get => (Color)this.GetValue(ColorProperty);
             set
             {
-                this.SetValue(ColorProperty, value);
+                this.SetCurrentValue(ColorProperty, value);
 
-                if (!this.ColorSetInternally)
+                if (!this.colorSetInternally)
                 {
-                    this.SetValue(TextProperty, value.ToString());
+                    this.SetCurrentValue(TextProperty, value.ToString());
                 }
             }
         }
-        public static readonly DependencyProperty ColorProperty =
-            DependencyProperty.Register("Color", typeof(Color), typeof(ColorTextBox), new UIPropertyMetadata(Colors.Black));
-
-        #endregion
-
-        #region Overridden Methods
-
-        /// <summary>
-        /// Updates the Color property any time the text changes
-        /// </summary>
 
         protected override void OnTextChanged(TextChangedEventArgs e)
         {
             base.OnTextChanged(e);
 
-            this.ColorSetInternally = true;
-            this.Color = ColorPickerUtil.ColorFromString(this.Text);
-            this.ColorBrush = new SolidColorBrush(this.Color);
-            this.ColorSetInternally = false;
+            this.colorSetInternally = true;
+            this.SetCurrentValue(ColorProperty, ColorPickerUtil.ColorFromString(this.Text));
+            this.SetCurrentValue(ColorBrushProperty, new SolidColorBrush(this.Color));
+            this.colorSetInternally = false;
         }
-
-        /// <summary>
-        /// Restricts input to chacters that are valid for defining a color
-        /// </summary>
 
         protected override void OnPreviewTextInput(TextCompositionEventArgs e)
         {
             if (e.Text.Length > 0)
             {
-                char c = e.Text[0];
+                var c = e.Text[0];
 
-                bool IsValid = false;
+                var isValid = false;
 
-                if (c >= 'a' && c <= 'f') IsValid = true;
-                if (c >= 'A' && c <= 'F') IsValid = true;
-                if (c >= '0' && c <= '9' && Keyboard.Modifiers != ModifierKeys.Shift) IsValid = true;
+                if (c >= 'a' && c <= 'f')
+                {
+                    isValid = true;
+                }
 
-                if (!IsValid)
+                if (c >= 'A' && c <= 'F')
+                {
+                    isValid = true;
+                }
+
+                if (c >= '0' && c <= '9' && Keyboard.Modifiers != ModifierKeys.Shift)
+                {
+                    isValid = true;
+                }
+
+                if (!isValid)
                 {
                     e.Handled = true;
                 }
@@ -90,8 +87,5 @@ namespace KaxamlPlugins.Controls
 
             base.OnPreviewTextInput(e);
         }
-
-        #endregion
-
     }
 }

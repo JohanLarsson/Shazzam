@@ -2,8 +2,8 @@
     x:Class="Shazzam.Plugins.ColorPickerPlugin"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:p="clr-namespace:KaxamlPlugins;assembly=KaxamlPlugins"
     xmlns:controls="clr-namespace:KaxamlPlugins.Controls;assembly=KaxamlPlugins"
+    xmlns:p="clr-namespace:KaxamlPlugins;assembly=KaxamlPlugins"
     x:Name="This">
 
     <StackPanel SnapsToDevicePixels="True">

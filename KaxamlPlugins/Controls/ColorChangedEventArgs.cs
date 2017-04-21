@@ -11,11 +11,6 @@ namespace KaxamlPlugins.Controls
             this.Color = color;
         }
 
-        private Color _Color;
-        public Color Color
-        {
-            get { return this._Color; }
-            set { this._Color = value; }
-        }
+        public Color Color { get; }
     }
 }

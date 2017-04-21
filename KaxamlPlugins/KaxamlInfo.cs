@@ -1,67 +1,68 @@
-using System.Windows;
-using System.Windows.Controls;
-using System.ComponentModel;
-
 namespace KaxamlPlugins
 {
-    public class KaxamlInfo 
+    using System.ComponentModel;
+    using System.Windows;
+    using System.Windows.Controls;
+
+    public class KaxamlInfo
     {
-        public delegate void EditSelectionChangedDelegate(string SelectedText);
-        public static event EditSelectionChangedDelegate EditSelectionChanged;
+        private static IKaxamlInfoTextEditor editor;
+        private static Window mainWindow;
+        private static Frame frame;
+
+        public delegate void EditSelectionChangedDelegate(string selectedText);
 
         public delegate void ParseRequestedDelegate();
-        public static event ParseRequestedDelegate ParseRequested;
 
         public delegate void ContentLoadedDelegate();
+
+        public static event EditSelectionChangedDelegate EditSelectionChanged;
+
+        public static event ParseRequestedDelegate ParseRequested;
+
         public static event ContentLoadedDelegate ContentLoaded;
 
-        private static IKaxamlInfoTextEditor _Editor;
+        public static event PropertyChangedEventHandler PropertyChanged;
+
         public static IKaxamlInfoTextEditor Editor
         {
-            get { return _Editor; }
-            set 
+            get => editor;
+            set
             {
                 // remove current event handler
-                if (_Editor != null)
+                if (editor != null)
                 {
-                    _Editor.TextSelectionChanged -= new RoutedEventHandler(_Editor_TextSelectionChanged);
+                    editor.TextSelectionChanged -= EditorTextSelectionChanged;
                 }
 
-                _Editor = value;
+                editor = value;
 
                 // add new event handler
-                if (_Editor != null)
+                if (editor != null)
                 {
-                    _Editor.TextSelectionChanged += new RoutedEventHandler(_Editor_TextSelectionChanged);
+                    editor.TextSelectionChanged += EditorTextSelectionChanged;
                 }
             }
         }
 
-        static void _Editor_TextSelectionChanged(object sender, RoutedEventArgs e)
-        {
-            EditSelectionChanged(_Editor.SelectedText);
-        }
-
-        private static Window _MainWindow;
         public static Window MainWindow
         {
-            get { return _MainWindow; }
-            set 
+            get => mainWindow;
+            set
             {
-                _MainWindow = value;
+                mainWindow = value;
                 NotifyPropertyChanged("MainWindow");
             }
         }
 
-        private static Frame _Frame;
         public static Frame Frame
         {
-            get { return _Frame; }
-            set 
+            get => frame;
+            set
             {
-                if (_Frame != value)
+                if (!ReferenceEquals(frame, value))
                 {
-                    _Frame = value;
+                    frame = value;
                     NotifyPropertyChanged("Frame");
                 }
             }
@@ -69,15 +70,18 @@ namespace KaxamlPlugins
 
         public static void Parse()
         {
-            ParseRequested();
+            ParseRequested?.Invoke();
         }
 
         public static void RaiseContentLoaded()
         {
-            ContentLoaded();
+            ContentLoaded?.Invoke();
         }
 
-        public static event PropertyChangedEventHandler PropertyChanged;
+        private static void EditorTextSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            EditSelectionChanged?.Invoke(editor.SelectedText);
+        }
 
         private static void NotifyPropertyChanged(string info)
         {

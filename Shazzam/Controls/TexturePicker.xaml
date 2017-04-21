@@ -17,7 +17,6 @@
                 Background="Black"
                 Orientation="Horizontal">
                 <Border
-                    Grid.Column="1"
                     Margin="2"
                     Padding="2"
                     HorizontalAlignment="Center"
@@ -124,7 +123,6 @@
 
             <Button
                 x:Name="OpenImageButton"
-                Grid.Column="0"
                 Width="75"
                 Height="23"
                 Margin="12"

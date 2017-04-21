@@ -6,44 +6,38 @@ namespace KaxamlPlugins.Controls
 
     internal sealed class CursorAdorner : Adorner
     {
-        UIElement _Cursor;
+        private readonly UIElement cursor;
 
-        private Point _Offset;
+        private Point offset;
+
+        public CursorAdorner(ElementCursorDecorator owner, UIElement cursor)
+            : base(owner)
+        {
+            this.cursor = cursor;
+            this.AddVisualChild(this.cursor);
+        }
+
         public Point Offset
         {
-            get { return this._Offset; }
+            get => this.offset;
             set
             {
-                this._Offset = value;
+                this.offset = value;
                 this.InvalidateArrange();
             }
         }
 
-        public CursorAdorner(ElementCursorDecorator Owner, UIElement Cursor)
-            : base(Owner)
-        {
-            this._Cursor = Cursor;
-            this.AddVisualChild(this._Cursor);
-        }
+        protected override int VisualChildrenCount => 1;
 
         protected override Visual GetVisualChild(int index)
         {
-            return this._Cursor;
-        }
-
-        protected override int VisualChildrenCount
-        {
-            get
-            {
-                return 1;
-            }
+            return this.cursor;
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            this._Cursor.Arrange(new Rect(this.Offset, this._Cursor.DesiredSize));
+            this.cursor.Arrange(new Rect(this.Offset, this.cursor.DesiredSize));
             return finalSize;
         }
-
     }
 }
