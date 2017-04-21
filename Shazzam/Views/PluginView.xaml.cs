@@ -88,8 +88,8 @@ namespace Shazzam.Views
 
         public List<Plugin> Plugins
         {
-            get { return (List<Plugin>)this.GetValue(PluginsProperty); }
-            set { this.SetValue(PluginsProperty, value); }
+            get => (List<Plugin>)this.GetValue(PluginsProperty);
+            set => this.SetValue(PluginsProperty, value);
         }
 
         public static readonly DependencyProperty PluginsProperty =
@@ -130,28 +130,16 @@ namespace Shazzam.Views
 
         public int SelectedIndex
         {
-            get
-            {
-                return (int)this.PluginTabControl.SelectedIndex;
-            }
+            get => (int)this.PluginTabControl.SelectedIndex;
 
-            set
-            {
-                this.PluginTabControl.SelectedIndex = (int)value;
-            }
+            set => this.PluginTabControl.SelectedIndex = (int)value;
         }
 
         public Plugin SelectedPlugin
         {
-            get
-            {
-                return (Plugin)this.PluginTabControl.SelectedItem;
-            }
+            get => (Plugin)this.PluginTabControl.SelectedItem;
 
-            set
-            {
-                this.PluginTabControl.SelectedItem = (Plugin)value;
-            }
+            set => this.PluginTabControl.SelectedItem = (Plugin)value;
         }
     }
 }

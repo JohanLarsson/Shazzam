@@ -15,8 +15,8 @@
     {
         private const double DefaultDuration = 0.5;
 
-        private Storyboard storyboard = new Storyboard();
-        private DoubleAnimation xSliderValueAnimation = new DoubleAnimation
+        private readonly Storyboard storyboard = new Storyboard();
+        private readonly DoubleAnimation xSliderValueAnimation = new DoubleAnimation
         {
             Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
             RepeatBehavior = RepeatBehavior.Forever,
@@ -25,7 +25,7 @@
             DecelerationRatio = 0.25
         };
 
-        private DoubleAnimation ySliderValueAnimation = new DoubleAnimation
+        private readonly DoubleAnimation ySliderValueAnimation = new DoubleAnimation
         {
             Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
             RepeatBehavior = RepeatBehavior.Forever,
@@ -49,14 +49,14 @@
 
             // this.xMinTextBox.TextChanged += this.XMinTextBox_TextChanged;
             // this.xMaxTextBox.TextChanged += this.XMaxTextBox_TextChanged;
-            this.xMinTextBox.LostFocus += this.xMinTextBox_LostFocus;
-            this.xMaxTextBox.LostFocus += this.xMaxTextBox_LostFocus;
+            this.xMinTextBox.LostFocus += this.XMinTextBox_LostFocus;
+            this.xMaxTextBox.LostFocus += this.XMaxTextBox_LostFocus;
             this.xSlider.ValueChanged += this.XSlider_ValueChanged;
 
             // this.yMinTextBox.TextChanged += this.YMinTextBox_TextChanged;
             // this.yMaxTextBox.TextChanged += this.YMaxTextBox_TextChanged;
-            this.yMinTextBox.LostFocus += this.yMinTextBox_LostFocus;
-            this.yMaxTextBox.LostFocus += this.yMaxTextBox_LostFocus;
+            this.yMinTextBox.LostFocus += this.YMinTextBox_LostFocus;
+            this.yMaxTextBox.LostFocus += this.YMaxTextBox_LostFocus;
             this.ySlider.ValueChanged += this.YSlider_ValueChanged;
 
             this.noAnimationToggleButton.Click += this.AnimationToggleButton_Click;
@@ -66,56 +66,35 @@
             this.durationTextBox.Text = Properties.Settings.Default.AnimationLengthDefault.ToString();
         }
 
-        //// private void YMaxTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        //// {
-        ////  double number;
-        ////  if (Double.TryParse(this.yMaxTextBox.Text, out number))
-        ////  {
-        ////    this.Maximum = new Point(this.Maximum.X, number);
-        ////  }
-        //// }
-
-        private void yMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void YMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(this.yMaxTextBox.Text, NumberStyles.Any, null, out number))
+            if (double.TryParse(this.yMaxTextBox.Text, NumberStyles.Any, null, out double number))
             {
-                this.Maximum = new Point(this.Maximum.X, number);
+                this.SetCurrentValue(MaximumProperty, new Point(this.Maximum.X, number));
             }
         }
 
-        // private void YMinTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        // {
-        //  double number;
-        //  if (Double.TryParse(this.yMinTextBox.Text, out number))
-        //  {
-        //    this.Minimum = new Point(this.Minimum.X, number);
-        //  }
-        // }
-        private void yMinTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void YMinTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(this.yMinTextBox.Text, NumberStyles.Any, null, out number))
+            if (double.TryParse(this.yMinTextBox.Text, NumberStyles.Any, null, out double number))
             {
-                this.Minimum = new Point(this.Minimum.X, number);
+                this.SetCurrentValue(MinimumProperty, new Point(this.Minimum.X, number));
             }
         }
 
-        private void xMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void XMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(this.xMaxTextBox.Text, NumberStyles.Any, null, out number))
+            if (double.TryParse(this.xMaxTextBox.Text, NumberStyles.Any, null, out double number))
             {
-                this.Maximum = new Point(number, this.Maximum.Y);
+                this.SetCurrentValue(MaximumProperty, new Point(number, this.Maximum.Y));
             }
         }
 
-        private void xMinTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void XMinTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(this.xMinTextBox.Text, NumberStyles.Any, null, out number))
+            if (double.TryParse(this.xMinTextBox.Text, NumberStyles.Any, null, out double number))
             {
-                this.Minimum = new Point(number, this.Minimum.Y);
+                this.SetCurrentValue(MinimumProperty, new Point(number, this.Minimum.Y));
             }
         }
 
@@ -132,12 +111,12 @@
 
         private void XSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            this.Value = new Point(e.NewValue, this.Value.Y);
+            this.SetCurrentValue(ValueProperty, new Point(e.NewValue, this.Value.Y));
         }
 
         private void YSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            this.Value = new Point(this.Value.X, e.NewValue);
+            this.SetCurrentValue(ValueProperty, new Point(this.Value.X, e.NewValue));
         }
 
         private void AnimationToggleButton_Click(object sender, RoutedEventArgs e)
@@ -150,8 +129,7 @@
 
         private void DurationTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            double number;
-            if (double.TryParse(this.durationTextBox.Text, out number))
+            if (double.TryParse(this.durationTextBox.Text, out double number))
             {
                 TimeSpan duration = TimeSpan.FromSeconds(Math.Max(0, number));
                 this.xSliderValueAnimation.Duration = duration;
@@ -207,8 +185,8 @@
         /// </summary>
         public Point Value
         {
-            get { return (Point)this.GetValue(ValueProperty); }
-            set { this.SetValue(ValueProperty, value); }
+            get => (Point)this.GetValue(ValueProperty);
+            set => this.SetValue(ValueProperty, value);
         }
 
         /// <summary>
@@ -244,8 +222,8 @@
         /// </summary>
         public Point Minimum
         {
-            get { return (Point)this.GetValue(MinimumProperty); }
-            set { this.SetValue(MinimumProperty, value); }
+            get => (Point)this.GetValue(MinimumProperty);
+            set => this.SetValue(MinimumProperty, value);
         }
 
         /// <summary>
@@ -282,8 +260,8 @@
         /// </summary>
         public Point Maximum
         {
-            get { return (Point)this.GetValue(MaximumProperty); }
-            set { this.SetValue(MaximumProperty, value); }
+            get => (Point)this.GetValue(MaximumProperty);
+            set => this.SetValue(MaximumProperty, value);
         }
 
         /// <summary>

@@ -118,8 +118,8 @@
         /// </summary>
         public Color Value
         {
-            get { return (Color)this.GetValue(ValueProperty); }
-            set { this.SetValue(ValueProperty, value); }
+            get => (Color)this.GetValue(ValueProperty);
+            set => this.SetValue(ValueProperty, value);
         }
 
         /// <summary>

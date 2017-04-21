@@ -57,8 +57,8 @@
         /// </summary>
         public string Filter
         {
-            get { return this.ofd.Filter; }
-            set { this.ofd.Filter = value; }
+            get => this.ofd.Filter;
+            set => this.ofd.Filter = value;
         }
 
         /// <summary>
@@ -66,8 +66,8 @@
         /// </summary>
         public string InitialDirectory
         {
-            get { return this.ofd.InitialDirectory; }
-            set { this.ofd.InitialDirectory = value; }
+            get => this.ofd.InitialDirectory;
+            set => this.ofd.InitialDirectory = value;
         }
     }
 }

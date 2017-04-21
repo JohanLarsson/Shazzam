@@ -96,10 +96,7 @@
 
         public GridLength CodeRowHeight
         {
-            get
-            {
-                return this.codeGridHeight;
-            }
+            get => this.codeGridHeight;
 
             set
             {
@@ -112,10 +109,7 @@
 
         public GridLength ImageRowHeight
         {
-            get
-            {
-                return this.imageRowHeight;
-            }
+            get => this.imageRowHeight;
 
             set
             {
@@ -166,10 +160,7 @@
 
         public System.Windows.Media.Stretch ImageStretch
         {
-            get
-            {
-                return this.imageStretch;
-            }
+            get => this.imageStretch;
 
             set
             {

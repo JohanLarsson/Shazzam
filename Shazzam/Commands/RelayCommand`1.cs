@@ -15,6 +15,9 @@ namespace Shazzam.Commands
     /// </summary>
     public class RelayCommand<T> : ICommand
     {
+        private readonly Action<T> execute = null;
+        private readonly Predicate<T> canExecute = null;
+
         public RelayCommand(Action<T> execute)
         : this(execute, null)
         {
@@ -27,12 +30,7 @@ namespace Shazzam.Commands
         /// <param name="canExecute">The execution status logic.</param>
         public RelayCommand(Action<T> execute, Predicate<T> canExecute)
         {
-            if (execute == null)
-            {
-                throw new ArgumentNullException("execute");
-            }
-
-            this.execute = execute;
+            this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
             this.canExecute = canExecute;
         }
 
@@ -58,15 +56,12 @@ namespace Shazzam.Commands
         [DebuggerStepThrough]
         public bool CanExecute(object parameter)
         {
-            return this.canExecute == null ? true : this.canExecute((T)parameter);
+            return this.canExecute?.Invoke((T)parameter) ?? true;
         }
 
         public void Execute(object parameter)
         {
             this.execute((T)parameter);
         }
-
-        private readonly Action<T> execute = null;
-        private readonly Predicate<T> canExecute = null;
     }
 }

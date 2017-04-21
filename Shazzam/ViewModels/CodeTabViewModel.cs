@@ -2,12 +2,6 @@
 {
   class CodeTabViewModel : ViewModelBase
   {
-    public bool AreGeneratedCodeTabsEnabled
-    {
-      get
-      {
-        return Properties.Settings.Default.AreGeneratedCodeTabsEnabled;
-      }
-    }
+    public bool AreGeneratedCodeTabsEnabled => Properties.Settings.Default.AreGeneratedCodeTabsEnabled;
   }
 }

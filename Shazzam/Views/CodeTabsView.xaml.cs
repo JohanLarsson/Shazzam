@@ -431,28 +431,16 @@
 
         public string CodeText
         {
-            get
-            {
-                return this.shaderTextEditor.Text;
-            }
+            get => this.shaderTextEditor.Text;
 
-            set
-            {
-                this.shaderTextEditor.Text = value;
-            }
+            set => this.shaderTextEditor.Text = value;
         }
 
         public string OutputText
         {
-            get
-            {
-                return this.outputTextBox.Text;
-            }
+            get => this.outputTextBox.Text;
 
-            set
-            {
-                this.outputTextBox.Text = value;
-            }
+            set => this.outputTextBox.Text = value;
         }
 
         internal ShaderEffect CurrentShaderEffect
@@ -476,15 +464,9 @@
 
         public event RoutedPropertyChangedEventHandler<object> ShaderEffectChanged
         {
-            add
-            {
-                this.AddHandler(ShaderEffectChangedEvent, value);
-            }
+            add => this.AddHandler(ShaderEffectChangedEvent, value);
 
-            remove
-            {
-                this.RemoveHandler(ShaderEffectChangedEvent, value);
-            }
+            remove => this.RemoveHandler(ShaderEffectChangedEvent, value);
         }
 
         public static readonly RoutedEvent ShaderEffectChangedEvent = EventManager.RegisterRoutedEvent(

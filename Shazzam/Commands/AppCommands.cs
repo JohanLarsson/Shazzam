@@ -39,25 +39,10 @@
             typeof(AppCommands),
             new InputGestureCollection { new KeyGesture(Key.F7) });
 
-        // public static readonly RoutedUICommand ExploreCompiledShaders = new RoutedUICommand("Explore Compiled Shaders",
-        //  "ExploreCompiledShaders", typeof(AppCommands));
-
-        // public static readonly RoutedUICommand ExploreTextureMaps = new RoutedUICommand("Explore TextureMaps",
-        // "ExploreTextureMaps", typeof(AppCommands));
-
-        // public static readonly RoutedUICommand FullScreenImage = new RoutedUICommand("Full Screen Image", "FullScreenImage",
-        //  typeof(AppCommands), new InputGestureCollection { new KeyGesture(Key.F9) });
-
-        // public static readonly RoutedUICommand FullScreenCode = new RoutedUICommand("Full Screen Code", "FullScreenCode",
-        //  typeof(AppCommands), new InputGestureCollection { new KeyGesture(Key.F11) });
-
-        // public static readonly RoutedUICommand ImageStretch = new RoutedUICommand("Image Stretch", "ImageStretch",
-        // typeof(AppCommands));
         public static void Initialize()
         {
             // Add a keyboard shortcut (Ctrl+Shift+S) to the "Save As" command.
-            ApplicationCommands.SaveAs.InputGestures.Add(
-                new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift));
+            ApplicationCommands.SaveAs.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift));
         }
     }
 }

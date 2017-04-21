@@ -7,6 +7,9 @@ namespace Shazzam.CodeGen
 
     internal class ShaderCompiler : INotifyPropertyChanged
     {
+        private string errorText;
+        private bool isCompiled;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [Guid("8BA5FB08-5195-40e2-AC58-0D989C3A0102")]
@@ -20,65 +23,42 @@ namespace Shazzam.CodeGen
             int GetBufferSize();
         }
 
-        [PreserveSig]
-        [DllImport("D3DX9_40.dll", CharSet = CharSet.Auto)]
-        private static extern int D3DXCompileShader(
-            [MarshalAs(UnmanagedType.LPStr)]string pSrcData,
-            int dataLen,
-            IntPtr pDefines,
-            IntPtr includes,
-            [MarshalAs(UnmanagedType.LPStr)]string pFunctionName,
-            [MarshalAs(UnmanagedType.LPStr)]string pTarget,
-            int flags,
-            out ID3DXBuffer ppShader,
-            out ID3DXBuffer ppErrorMsgs,
-            out IntPtr ppConstantTable);
+        public string ErrorText
+        {
+            get => this.errorText;
 
-        [PreserveSig]
-        [DllImport("D3DX9_40_64bit.dll", CharSet = CharSet.Auto, EntryPoint = "D3DXCompileShader")]
-        private static extern int D3DXCompileShader64Bit(
-            [MarshalAs(UnmanagedType.LPStr)]string pSrcData,
-            int dataLen,
-            IntPtr pDefines,
-            IntPtr includes,
-            [MarshalAs(UnmanagedType.LPStr)]string pFunctionName,
-            [MarshalAs(UnmanagedType.LPStr)]string pTarget,
-            int flags,
-            out ID3DXBuffer ppShader,
-            out ID3DXBuffer ppErrorMsgs,
-            out IntPtr ppConstantTable);
+            set
+            {
+                this.errorText = value;
+                this.RaiseNotifyChanged("ErrorText");
+            }
+        }
 
-        [PreserveSig]
-        [DllImport("d3dx10_43.dll", CharSet = CharSet.Auto)]
-        private static extern int D3DX10CompileFromMemory(
-            [MarshalAs(UnmanagedType.LPStr)]string pSrcData,
-            int dataLen,
-            [MarshalAs(UnmanagedType.LPStr)]string pFilename,
-            IntPtr pDefines,
-            IntPtr pInclude,
-            [MarshalAs(UnmanagedType.LPStr)]string pFunctionName,
-            [MarshalAs(UnmanagedType.LPStr)]string pProfile,
-            int flags1,
-            int flags2,
-            IntPtr pPump,
-            out ID3DXBuffer ppShader,
-            out ID3DXBuffer ppErrorMsgs,
-            ref int pHresult);
+        public bool IsCompiled
+        {
+            get => this.isCompiled;
+
+            set
+            {
+                this.isCompiled = value;
+                this.RaiseNotifyChanged("IsCompiled");
+            }
+        }
 
         public void Compile(string codeText, ShaderProfile shaderProfile)
         {
             this.IsCompiled = false;
-            string path = Properties.Settings.Default.FolderPath_Output;
+            var path = Properties.Settings.Default.FolderPath_Output;
 
-            IntPtr defines = IntPtr.Zero;
-            IntPtr includes = IntPtr.Zero;
-            IntPtr ppConstantTable = IntPtr.Zero;
+            var defines = IntPtr.Zero;
+            var includes = IntPtr.Zero;
+            var ppConstantTable = IntPtr.Zero;
             ID3DXBuffer ppShader;
             ID3DXBuffer ppErrorMsgs;
 
             var methodName = "main";
 
-            string targetProfile = "ps_2_0";
+            var targetProfile = "ps_2_0";
             if (shaderProfile == ShaderProfile.PixelShader3)
             {
                 targetProfile = "ps_3_0";
@@ -88,12 +68,12 @@ namespace Shazzam.CodeGen
                 targetProfile = "ps_2_0";
             }
 
-            bool useDx10 = false;
+            var useDx10 = false;
 
-            int hr = 0;
+            var hr = 0;
             if (useDx10)
             {
-                int pHr = 0;
+                var pHr = 0;
                 hr = D3DX10CompileFromMemory(
                     codeText,
                     codeText.Length,
@@ -145,9 +125,9 @@ namespace Shazzam.CodeGen
 
             if (hr != 0)
             {
-                IntPtr errors = ppErrorMsgs.GetBufferPointer();
+                var errors = ppErrorMsgs.GetBufferPointer();
 
-                int size = ppErrorMsgs.GetBufferSize();
+                var size = ppErrorMsgs.GetBufferSize();
 
                 this.ErrorText = Marshal.PtrToStringAnsi(errors);
                 this.IsCompiled = false;
@@ -157,8 +137,8 @@ namespace Shazzam.CodeGen
             this.ErrorText = string.Empty;
             this.IsCompiled = true;
             var psPath = path + Constants.FileNames.TempShaderPs;
-            IntPtr pCompiledPs = ppShader.GetBufferPointer();
-            int compiledPsSize = ppShader.GetBufferSize();
+            var pCompiledPs = ppShader.GetBufferPointer();
+            var compiledPsSize = ppShader.GetBufferSize();
 
             var compiledPs = new byte[compiledPsSize];
             Marshal.Copy(pCompiledPs, compiledPs, 0, compiledPs.Length);
@@ -187,60 +167,59 @@ namespace Shazzam.CodeGen
             //// throw new Exception("testing");
         }
 
-        private void CompileFinished()
-        {
-            // for instrumentation
-        }
-
-        // [PreEmptive.Attributes.Feature("CompileShader", EventType = PreEmptive.Attributes.FeatureEventTypes.Stop)]
-        // private void CreateFileCopies(string path)
-        // {
-        //  if (String.IsNullOrEmpty(Properties.Settings.Default.FilePath_LastFx))
-        //  {
-        //    return;
-        //  }
-        //  string currentFileName = System.IO.Path.GetFileNameWithoutExtension(Properties.Settings.Default.FilePath_LastFx);
-        //  if (File.Exists(path + Constants.FileNames.TempShaderPs))
-        //  {
-
-        // File.Copy(path + Constants.FileNames.TempShaderPs, path + currentFileName + ".ps", true);
-        //  }
-        // }
         public void Reset()
         {
             this.ErrorText = "not compiled";
         }
 
-        private string errorText;
+        [PreserveSig]
+        [DllImport("D3DX9_40.dll", CharSet = CharSet.Auto)]
+        private static extern int D3DXCompileShader(
+            [MarshalAs(UnmanagedType.LPStr)]string pSrcData,
+            int dataLen,
+            IntPtr pDefines,
+            IntPtr includes,
+            [MarshalAs(UnmanagedType.LPStr)]string pFunctionName,
+            [MarshalAs(UnmanagedType.LPStr)]string pTarget,
+            int flags,
+            out ID3DXBuffer ppShader,
+            out ID3DXBuffer ppErrorMsgs,
+            out IntPtr ppConstantTable);
 
-        public string ErrorText
+        [PreserveSig]
+        [DllImport("D3DX9_40_64bit.dll", CharSet = CharSet.Auto, EntryPoint = "D3DXCompileShader")]
+        private static extern int D3DXCompileShader64Bit(
+            [MarshalAs(UnmanagedType.LPStr)]string pSrcData,
+            int dataLen,
+            IntPtr pDefines,
+            IntPtr includes,
+            [MarshalAs(UnmanagedType.LPStr)]string pFunctionName,
+            [MarshalAs(UnmanagedType.LPStr)]string pTarget,
+            int flags,
+            out ID3DXBuffer ppShader,
+            out ID3DXBuffer ppErrorMsgs,
+            out IntPtr ppConstantTable);
+
+        [PreserveSig]
+        [DllImport("d3dx10_43.dll", CharSet = CharSet.Auto)]
+        private static extern int D3DX10CompileFromMemory(
+            [MarshalAs(UnmanagedType.LPStr)]string pSrcData,
+            int dataLen,
+            [MarshalAs(UnmanagedType.LPStr)]string pFilename,
+            IntPtr pDefines,
+            IntPtr pInclude,
+            [MarshalAs(UnmanagedType.LPStr)]string pFunctionName,
+            [MarshalAs(UnmanagedType.LPStr)]string pProfile,
+            int flags1,
+            int flags2,
+            IntPtr pPump,
+            out ID3DXBuffer ppShader,
+            out ID3DXBuffer ppErrorMsgs,
+            ref int pHresult);
+
+        private void CompileFinished()
         {
-            get
-            {
-                return this.errorText;
-            }
-
-            set
-            {
-                this.errorText = value;
-                this.RaiseNotifyChanged("ErrorText");
-            }
-        }
-
-        private bool isCompiled;
-
-        public bool IsCompiled
-        {
-            get
-            {
-                return this.isCompiled;
-            }
-
-            set
-            {
-                this.isCompiled = value;
-                this.RaiseNotifyChanged("IsCompiled");
-            }
+            // for instrumentation
         }
 
         private void RaiseNotifyChanged(string propName)

@@ -119,8 +119,8 @@
         /// </summary>
         public ImageBrush Value
         {
-            get { return (ImageBrush)this.GetValue(ValueProperty); }
-            set { this.SetValue(ValueProperty, value); }
+            get => (ImageBrush)this.GetValue(ValueProperty);
+            set => this.SetValue(ValueProperty, value);
         }
 
         /// <summary>

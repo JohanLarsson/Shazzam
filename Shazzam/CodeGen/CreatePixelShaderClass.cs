@@ -75,7 +75,7 @@
             };
             if (!string.IsNullOrEmpty(shaderModel.Description))
             {
-                shader.Comments.Add(new CodeCommentStatement(string.Format("<summary>{0}</summary>", shaderModel.Description)));
+                shader.Comments.Add(new CodeCommentStatement($"<summary>{shaderModel.Description}</summary>"));
             }
 
             // Add a dependency property and a CLR property for each of the shader's register variables.
@@ -96,8 +96,8 @@
             return new CodeMemberField
             {
                 Type = new CodeTypeReference("DependencyProperty"),
-                Name = string.Format("{0}Property", propertyName),
-                Attributes = MemberAttributes.Public | MemberAttributes.Static,
+                Name = $"{propertyName}Property",
+                Attributes = MemberAttributes.Static | MemberAttributes.Public,
                 InitExpression = new CodeMethodInvokeExpression
                 {
                     Method = new CodeMethodReferenceExpression
@@ -122,7 +122,7 @@
                 return new CodeMemberField
                 {
                     Type = new CodeTypeReference("DependencyProperty"),
-                    Name = string.Format("{0}Property", register.RegisterName),
+                    Name = $"{register.RegisterName}Property",
                     Attributes = MemberAttributes.Public | MemberAttributes.Static,
                     InitExpression = new CodeMethodInvokeExpression
                     {
@@ -144,7 +144,7 @@
             return new CodeMemberField
             {
                 Type = new CodeTypeReference("DependencyProperty"),
-                Name = string.Format("{0}Property", register.RegisterName),
+                Name = $"{register.RegisterName}Property",
                 Attributes = MemberAttributes.Public | MemberAttributes.Static,
                 InitExpression = new CodeMethodInvokeExpression
                 {
@@ -256,7 +256,7 @@
                             Expression = new CodeMethodInvokeExpression
                             {
                                 Method = new CodeMethodReferenceExpression(new CodeThisReferenceExpression(), "GetValue"),
-                                Parameters = { new CodeVariableReferenceExpression(string.Format("{0}Property", propertyName)) }
+                                Parameters = { new CodeVariableReferenceExpression($"{propertyName}Property") }
                             }
                         }
                     }
@@ -277,7 +277,7 @@
             };
             if (!string.IsNullOrEmpty(description))
             {
-                property.Comments.Add(new CodeCommentStatement(string.Format("<summary>{0}</summary>", description)));
+                property.Comments.Add(new CodeCommentStatement($"<summary>{description}</summary>"));
             }
 
             return property;
@@ -320,7 +320,8 @@
         private static CodeConstructor CreateDefaultConstructor(ShaderModel shaderModel)
         {
             // Create a default constructor.
-            string shaderRelativeUri = string.Format("/{0};component/{1}.ps", shaderModel.GeneratedNamespace, shaderModel.GeneratedClassName);
+            string shaderRelativeUri =
+                $"/{shaderModel.GeneratedNamespace};component/{shaderModel.GeneratedClassName}.ps";
             CodeConstructor constructor = new CodeConstructor
             {
                 Attributes = MemberAttributes.Public,

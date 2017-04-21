@@ -63,8 +63,8 @@
     /// </summary>
     public string Filter
     {
-      get { return this.sfd.Filter; }
-      set { this.sfd.Filter = value; }
+      get => this.sfd.Filter;
+        set => this.sfd.Filter = value;
     }
 
     /// <summary>
@@ -72,8 +72,8 @@
     /// </summary>
     public string InitialDirectory
     {
-      get { return this.sfd.InitialDirectory; }
-      set { this.sfd.InitialDirectory = value; }
+      get => this.sfd.InitialDirectory;
+        set => this.sfd.InitialDirectory = value;
     }
 
     /// <summary>
@@ -81,8 +81,8 @@
     /// </summary>
     public bool OverwritePrompt
     {
-      get { return this.sfd.OverwritePrompt; }
-      set { this.sfd.OverwritePrompt = value; }
+      get => this.sfd.OverwritePrompt;
+        set => this.sfd.OverwritePrompt = value;
     }
 
     /// <summary>
@@ -90,8 +90,8 @@
     /// </summary>
     public string Title
     {
-      get { return this.sfd.Title; }
-      set { this.sfd.Title = value; }
+      get => this.sfd.Title;
+        set => this.sfd.Title = value;
     }
 
     /// <summary>
@@ -99,8 +99,8 @@
     /// </summary>
     public bool CheckFileExists
     {
-      get { return this.sfd.CheckFileExists; }
-      set { this.sfd.CheckFileExists = value; }
+      get => this.sfd.CheckFileExists;
+        set => this.sfd.CheckFileExists = value;
     }
 
     /// <summary>
@@ -108,8 +108,8 @@
     /// </summary>
     public bool CheckPathExists
     {
-      get { return this.sfd.CheckPathExists; }
-      set { this.sfd.CheckPathExists = value; }
+      get => this.sfd.CheckPathExists;
+        set => this.sfd.CheckPathExists = value;
     }
 
     /// <summary>
@@ -117,8 +117,8 @@
     /// </summary>
     public bool CreatePrompt
     {
-      get { return this.sfd.CreatePrompt; }
-      set { this.sfd.CreatePrompt = value; }
+      get => this.sfd.CreatePrompt;
+        set => this.sfd.CreatePrompt = value;
     }
 
     /// <summary>
@@ -126,8 +126,8 @@
     /// </summary>
     public string DefaultExt
     {
-      get { return this.sfd.DefaultExt; }
-      set { this.sfd.DefaultExt = value; }
+      get => this.sfd.DefaultExt;
+        set => this.sfd.DefaultExt = value;
     }
 
     /// <summary>
@@ -135,8 +135,8 @@
     /// </summary>
     public bool AddExtension
     {
-      get { return this.sfd.AddExtension; }
-      set { this.sfd.AddExtension = value; }
+      get => this.sfd.AddExtension;
+        set => this.sfd.AddExtension = value;
     }
 
     /// <summary>
@@ -144,8 +144,8 @@
     /// </summary>
     public int FilterIndex
     {
-      get { return this.sfd.FilterIndex; }
-      set { this.sfd.FilterIndex = value; }
+      get => this.sfd.FilterIndex;
+        set => this.sfd.FilterIndex = value;
     }
 
     /// <summary>
@@ -153,19 +153,16 @@
     /// </summary>
     public bool RestoreDirectory
     {
-      get { return this.sfd.RestoreDirectory; }
-      set { this.sfd.RestoreDirectory = value; }
+      get => this.sfd.RestoreDirectory;
+        set => this.sfd.RestoreDirectory = value;
     }
 
     /// <summary>
     /// SafeFileName : Simply use embedded SaveFileDialog.SafeFileName
     /// </summary>
-    public string SafeFileName
-    {
-      get { return this.sfd.SafeFileName; }
-    }
+    public string SafeFileName => this.sfd.SafeFileName;
 
-    /// <summary>
+      /// <summary>
     /// SafeFileNames : Simply use embedded SaveFileDialog.SafeFileNames
     /// </summary>
     public string[] SafeFileNames
@@ -183,8 +180,8 @@
     /// </summary>
     public bool ValidateNames
     {
-      get { return this.sfd.ValidateNames; }
-      set { this.sfd.ValidateNames = value; }
+      get => this.sfd.ValidateNames;
+        set => this.sfd.ValidateNames = value;
     }
     }
 }

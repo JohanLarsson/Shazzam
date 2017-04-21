@@ -54,8 +54,8 @@ namespace Shazzam.Controls
         /// </summary>
         public bool IsExpanded
         {
-            get { return (bool)this.GetValue(IsExpandedProperty); }
-            set { this.SetValue(IsExpandedProperty, value); }
+            get => (bool)this.GetValue(IsExpandedProperty);
+            set => this.SetValue(IsExpandedProperty, value);
         }
 
         /// <summary>
@@ -64,20 +64,20 @@ namespace Shazzam.Controls
         /// </summary>
         public double Duration
         {
-            get { return (double)this.GetValue(DurationProperty); }
-            set { this.SetValue(DurationProperty, value); }
+            get => (double)this.GetValue(DurationProperty);
+            set => this.SetValue(DurationProperty, value);
         }
 
         public HorizontalRevealMode HorizontalReveal
         {
-            get { return (HorizontalRevealMode)this.GetValue(HorizontalRevealProperty); }
-            set { this.SetValue(HorizontalRevealProperty, value); }
+            get => (HorizontalRevealMode)this.GetValue(HorizontalRevealProperty);
+            set => this.SetValue(HorizontalRevealProperty, value);
         }
 
         public VerticalRevealMode VerticalReveal
         {
-            get { return (VerticalRevealMode)this.GetValue(VerticalRevealProperty); }
-            set { this.SetValue(VerticalRevealProperty, value); }
+            get => (VerticalRevealMode)this.GetValue(VerticalRevealProperty);
+            set => this.SetValue(VerticalRevealProperty, value);
         }
 
         /// <summary>
@@ -86,8 +86,8 @@ namespace Shazzam.Controls
         /// </summary>
         public double AnimationProgress
         {
-            get { return (double)this.GetValue(AnimationProgressProperty); }
-            set { this.SetValue(AnimationProgressProperty, value); }
+            get => (double)this.GetValue(AnimationProgressProperty);
+            set => this.SetValue(AnimationProgressProperty, value);
         }
 
         private static object CoerceAnimationProgress(DependencyObject d, object baseValue)

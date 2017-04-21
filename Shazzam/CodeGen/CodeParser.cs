@@ -67,25 +67,25 @@
             shaderText = CommentRegex.Replace(shaderText, string.Empty);
 
             // Find all header comments.
-            Match headerMatch = HeaderCommentsRegex.Match(shaderText);
+            var headerMatch = HeaderCommentsRegex.Match(shaderText);
 
             // Determine the class name, namespace, description, and target platform.
-            string defaultClassName = Path.GetFileNameWithoutExtension(shaderFileName);
+            var defaultClassName = Path.GetFileNameWithoutExtension(shaderFileName);
             defaultClassName = char.ToUpperInvariant(defaultClassName[0]) + defaultClassName.Substring(1) + "Effect";
-            string className = GetValidId(headerMatch.Groups["class"].Value, defaultClassName, isDotAllowed: false);
-            string namespaceName = GetValidId(headerMatch.Groups["namespace"].Value, Settings.Default.GeneratedNamespace, isDotAllowed: true);
-            string description = headerMatch.Groups["description"].Success ? headerMatch.Groups["description"].Value : null;
-            string targetFrameworkName = headerMatch.Groups["target"].Success ? headerMatch.Groups["target"].Value : Settings.Default.TargetFramework;
-            TargetFramework targetFramework = targetFrameworkName == "Silverlight" ? TargetFramework.Silverlight : TargetFramework.WPF;
+            var className = GetValidId(headerMatch.Groups["class"].Value, defaultClassName, isDotAllowed: false);
+            var namespaceName = GetValidId(headerMatch.Groups["namespace"].Value, Settings.Default.GeneratedNamespace, isDotAllowed: true);
+            var description = headerMatch.Groups["description"].Success ? headerMatch.Groups["description"].Value : null;
+            var targetFrameworkName = headerMatch.Groups["target"].Success ? headerMatch.Groups["target"].Value : Settings.Default.TargetFramework;
+            var targetFramework = targetFrameworkName == "Silverlight" ? TargetFramework.Silverlight : TargetFramework.WPF;
 
             // Find all register declarations.
-            MatchCollection matches = RegisterConstantDeclarationRegex.Matches(shaderText);
+            var matches = RegisterConstantDeclarationRegex.Matches(shaderText);
 
             // Create a list of shader model constant registers.
-            List<ShaderModelConstantRegister> registers = new List<ShaderModelConstantRegister>();
+            var registers = new List<ShaderModelConstantRegister>();
             foreach (Match match in matches)
             {
-                ShaderModelConstantRegister register = CreateRegister(targetFramework, match);
+                var register = CreateRegister(targetFramework, match);
                 if (register != null)
                 {
                     registers.Add(register);
@@ -113,8 +113,8 @@
             ShaderModelConstantRegister register = null;
 
             // Figure out the .NET type that corresponds to the register type.
-            string registerTypeInHLSL = match.Groups["registerType"].Value;
-            Type registerType = GetRegisterType(targetFramework, registerTypeInHLSL);
+            var registerTypeInHLSL = match.Groups["registerType"].Value;
+            var registerType = GetRegisterType(targetFramework, registerTypeInHLSL);
             if (registerType != null)
             {
                 // See if the user prefers to specify a different type in a comment.
@@ -124,23 +124,20 @@
                 }
 
                 // Capitalize the first letter of the variable name.  Leave the rest alone.
-                string registerName = match.Groups["registerName"].Value;
+                var registerName = match.Groups["registerName"].Value;
                 registerName = char.ToUpperInvariant(registerName[0]) + registerName.Substring(1);
 
                 // Get the register number and the optional summary comment.
-                int registerNumber = int.Parse(match.Groups["registerNumber"].Value);
+                var registerNumber = int.Parse(match.Groups["registerNumber"].Value);
                 if (typeof(Brush).IsAssignableFrom(registerType) && (registerNumber == 0))
                 {
                     return null; // ignore the implicit input sampler
                 }
 
-                string summary = match.Groups["summary"].Value;
+                var summary = match.Groups["summary"].Value;
 
                 // Get the standard min, max, and default value for the register type.
-                object minValue;
-                object maxValue;
-                object defaultValue;
-                GetStandardValues(registerType, out minValue, out maxValue, out defaultValue);
+                GetStandardValues(registerType, out object minValue, out object maxValue, out object defaultValue);
 
                 // Allow the user to override the defaults with values from their comments.
                 ConvertValue(match.Groups["minValue"].Value, registerType, ref minValue);
@@ -364,7 +361,7 @@
         /// </summary>
         private static void ParseInitializerValue(string initializerValueText, Type registerType, ref object initializerValue)
         {
-            double[] numbers = ParseNumbers(initializerValueText);
+            var numbers = ParseNumbers(initializerValueText);
             if (registerType == typeof(double) && numbers.Length >= 1)
             {
                 initializerValue = numbers[0];
@@ -413,15 +410,14 @@
             text = Regex.Replace(text, @"^\s*float[1234]?\s*\((.*)\)\s*$", @"$1");
 
             // Split at commas.
-            string[] textValues = text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var textValues = text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
             // Parse the numbers.
-            List<double> numbers = new List<double>();
-            foreach (string textValue in textValues)
+            var numbers = new List<double>();
+            foreach (var textValue in textValues)
             {
-                string trimmedValue = textValue.Trim();
-                double number;
-                if (double.TryParse(trimmedValue, out number))
+                var trimmedValue = textValue.Trim();
+                if (double.TryParse(trimmedValue, out double number))
                 {
                     numbers.Add(number);
                 }
@@ -452,8 +448,8 @@
                 firstChoice = secondChoice;
             }
 
-            StringBuilder stringBuilder = new StringBuilder();
-            foreach (char c in firstChoice)
+            var stringBuilder = new StringBuilder();
+            foreach (var c in firstChoice)
             {
                 if (c == '_' || char.IsLetter(c) || (stringBuilder.Length > 0 && (char.IsDigit(c) || (c == '.' && isDotAllowed))))
                 {

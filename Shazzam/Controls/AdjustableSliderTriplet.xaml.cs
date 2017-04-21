@@ -114,8 +114,8 @@
         /// </summary>
         public Point3D Value
         {
-            get { return (Point3D)this.GetValue(ValueProperty); }
-            set { this.SetValue(ValueProperty, value); }
+            get => (Point3D)this.GetValue(ValueProperty);
+            set => this.SetValue(ValueProperty, value);
         }
 
         /// <summary>
@@ -124,8 +124,8 @@
         /// </summary>
         public Point3D Minimum
         {
-            get { return (Point3D)this.GetValue(MinimumProperty); }
-            set { this.SetValue(MinimumProperty, value); }
+            get => (Point3D)this.GetValue(MinimumProperty);
+            set => this.SetValue(MinimumProperty, value);
         }
 
         /// <summary>
@@ -134,8 +134,8 @@
         /// </summary>
         public Point3D Maximum
         {
-            get { return (Point3D)this.GetValue(MaximumProperty); }
-            set { this.SetValue(MaximumProperty, value); }
+            get => (Point3D)this.GetValue(MaximumProperty);
+            set => this.SetValue(MaximumProperty, value);
         }
 
         /// <summary>

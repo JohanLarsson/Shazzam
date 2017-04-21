@@ -290,8 +290,8 @@
         /// </summary>
         public Point4D Value
         {
-            get { return (Point4D)this.GetValue(ValueProperty); }
-            set { this.SetValue(ValueProperty, value); }
+            get => (Point4D)this.GetValue(ValueProperty);
+            set => this.SetValue(ValueProperty, value);
         }
 
         /// <summary>
@@ -329,8 +329,8 @@
         /// </summary>
         public Point4D Minimum
         {
-            get { return (Point4D)this.GetValue(MinimumProperty); }
-            set { this.SetValue(MinimumProperty, value); }
+            get => (Point4D)this.GetValue(MinimumProperty);
+            set => this.SetValue(MinimumProperty, value);
         }
 
         /// <summary>
@@ -369,8 +369,8 @@
         /// </summary>
         public Point4D Maximum
         {
-            get { return (Point4D)this.GetValue(MaximumProperty); }
-            set { this.SetValue(MaximumProperty, value); }
+            get => (Point4D)this.GetValue(MaximumProperty);
+            set => this.SetValue(MaximumProperty, value);
         }
 
         /// <summary>
