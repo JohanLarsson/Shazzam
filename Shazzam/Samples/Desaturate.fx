@@ -1,4 +1,4 @@
-﻿/// <class>FadeToMonochrome</class>
+﻿/// <class>Desaturate</class>
 /// <description>An effect that turns the input into shades of a single color.</description>
 
 sampler2D  inputSampler : register(S0);
@@ -7,7 +7,7 @@ sampler2D  inputSampler : register(S0);
 // Shader constant register mappings (scalars - float, double, Point, Color, Point3D, etc.)
 //-----------------------------------------------------------------------------------------
 
-/// <summary>The strength of the effect.</summary>
+/// <summary>Desaturates an image. the value can be betwen 0 and 1. 0 means the origianl image is returned. 1 means a monochrome image is produced.</summary>
 /// <minValue>0</minValue>
 /// <maxValue>1</maxValue>
 /// <defaultValue>0</defaultValue>
