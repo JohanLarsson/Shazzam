@@ -154,7 +154,7 @@ namespace Shaders
         
         public static readonly DependencyProperty BarProperty = DependencyProperty.Register(""Bar"", typeof(double), typeof(Foo), new UIPropertyMetadata(0D, PixelShaderConstantCallback(1)));
         
-        private static readonly PixelShader Shader = new PixelShader { UriSource = new Uri(""pack://application:,,,/[assemblyname];component/Effects/Foo.ps"", UriKind.Absolute) };
+        private static readonly PixelShader Shader = new PixelShader { UriSource = new Uri(""pack://application:,,,/[assemblyname];component/[folder]/Foo.cs.ps"", UriKind.Absolute) };
         
         public Foo()
         {

@@ -3,7 +3,6 @@
     using System;
     using System.CodeDom;
     using System.CodeDom.Compiler;
-    using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
     using System.Text.RegularExpressions;
@@ -18,12 +17,15 @@
     {
         public static string GetSourceText(CodeDomProvider currentProvider, ShaderModel shaderModel, bool includePixelShaderConstructor)
         {
-            return GenerateCode(currentProvider, BuildPixelShaderGraph(shaderModel, includePixelShaderConstructor));
+            return GenerateCode(
+                currentProvider,
+                BuildPixelShaderGraph(shaderModel, includePixelShaderConstructor),
+                shaderModel);
         }
 
         public static Assembly CompileInMemory(string code)
         {
-            using (var provider = new CSharpCodeProvider(new Dictionary<string, string> { { "CompilerVersion", "v3.5" } }))
+            using (var provider = new CSharpCodeProvider())
             {
                 var options = new CompilerParameters();
                 options.ReferencedAssemblies.Add("System.dll");
@@ -80,10 +82,28 @@
                 shader.Members.Add(CreateClrProperty(register.RegisterName, register.RegisterType, register.Description));
             }
 
+            if (!includePixelShaderConstructor)
+            {
+                shader.Members.Add(CreateShaderField());
+            }
+
             // Add the new type to the namespace.
             codeNamespace.Types.Add(shader);
 
             return codeGraph;
+        }
+
+        private static CodeMemberField CreateShaderField()
+        {
+            var typeReference = new CodeTypeReference("PixelShader");
+            return new CodeMemberField
+            {
+                Type = typeReference,
+                Name = "Shader",
+                //// ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
+                Attributes = MemberAttributes.Static | MemberAttributes.Private,
+                InitExpression = new CodeObjectCreateExpression { CreateType = typeReference }
+            };
         }
 
         private static CodeMemberField CreateSamplerDependencyProperty(string className, string propertyName)
@@ -328,39 +348,16 @@
 
         private static CodeConstructor CreateDefaultConstructor(ShaderModel shaderModel)
         {
-            // Create a default constructor.
-            var shaderRelativeUri =
-                $"/{shaderModel.GeneratedNamespace};component/{shaderModel.GeneratedClassName}.ps";
             var constructor = new CodeConstructor
             {
                 Attributes = MemberAttributes.Public,
                 Statements =
                 {
-                    new CodeVariableDeclarationStatement
-                    {
-                        Type = new CodeTypeReference("PixelShader"),
-                        Name = "pixelShader",
-                        InitExpression = new CodeObjectCreateExpression("PixelShader")
-                    },
-                    new CodeAssignStatement
-                    {
-                        Left = new CodePropertyReferenceExpression(new CodeVariableReferenceExpression("pixelShader"), "UriSource"),
-                        Right = new CodeObjectCreateExpression
-                        {
-                            CreateType = new CodeTypeReference("Uri"),
-                            Parameters =
-                            {
-                                new CodePrimitiveExpression(shaderRelativeUri),
-                                new CodeFieldReferenceExpression(new CodeTypeReferenceExpression("UriKind"), "Relative")
-                            }
-                        }
-                    },
                     new CodeAssignStatement
                     {
                         Left = new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), "PixelShader"),
-                        Right = new CodeArgumentReferenceExpression("pixelShader")
+                        Right = new CodeFieldReferenceExpression(null, "Shader")
                     },
-                    new CodeSnippetStatement(string.Empty),
                     CreateUpdateMethod("Input")
                 }
             };
@@ -388,22 +385,23 @@
         {
             var ns = new CodeNamespace(namespaceName);
             codeGraph.Namespaces.Add(ns);
-            codeGraph.Namespaces.Add(new CodeNamespace
-            {
-                Imports =
-                                                 {
-                                                     new CodeNamespaceImport("System"),
-                                                     new CodeNamespaceImport("System.Windows"),
-                                                     new CodeNamespaceImport("System.Windows.Media"),
-                                                     new CodeNamespaceImport("System.Windows.Media.Effects"),
-                                                     new CodeNamespaceImport("System.Windows.Media.Media3D")
-                                                 }
-            });
+            codeGraph.Namespaces.Add(
+                new CodeNamespace
+                    {
+                        Imports =
+                            {
+                                new CodeNamespaceImport("System"),
+                                new CodeNamespaceImport("System.Windows"),
+                                new CodeNamespaceImport("System.Windows.Media"),
+                                new CodeNamespaceImport("System.Windows.Media.Effects"),
+                                new CodeNamespaceImport("System.Windows.Media.Media3D")
+                            }
+                    });
 
             return ns;
         }
 
-        private static string GenerateCode(CodeDomProvider provider, CodeCompileUnit compileUnit)
+        private static string GenerateCode(CodeDomProvider provider, CodeCompileUnit compileUnit, ShaderModel model)
         {
             // Generate source code using the code generator.
             using (var writer = new StringWriter())
@@ -419,6 +417,9 @@
                 };
                 provider.GenerateCodeFromCompileUnit(compileUnit, writer, options);
                 var text = writer.ToString();
+                text = text.Replace(
+                    "private static PixelShader Shader = new PixelShader()",
+                    $"private static readonly PixelShader Shader = new PixelShader {{ UriSource = new Uri(\"pack://application:,,,/[assemblyname];component/[folder]/{model.ShaderFileName}.ps\", UriKind.Absolute) }}");
                 //// Fix up code: make static DP fields readonly, and use triple-slash or triple-quote comments for XML doc comments.
                 if (provider.FileExtension == "cs")
                 {
