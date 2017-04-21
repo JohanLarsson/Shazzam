@@ -3,7 +3,9 @@
     using System;
     using System.CodeDom;
     using System.CodeDom.Compiler;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using System.Text.RegularExpressions;
     using System.Windows;
@@ -25,7 +27,7 @@
 
         public static Assembly CompileInMemory(string code)
         {
-            using (var provider = new CSharpCodeProvider())
+            using (var provider = new CSharpCodeProvider(new Dictionary<string, string> { { "CompilerVersion", "v3.5" } }))
             {
                 var options = new CompilerParameters
                 {
@@ -47,8 +49,7 @@
                     return compiled.CompiledAssembly;
                 }
 
-                var error = compiled.Errors[0];
-                throw new InvalidOperationException(error.ErrorText);
+                throw new InvalidOperationException(string.Join(Environment.NewLine, compiled.Errors.OfType<CompilerError>().Select(e => e.ErrorText)));
             }
         }
 
@@ -435,7 +436,7 @@
                 };
                 provider.GenerateCodeFromCompileUnit(compileUnit, writer, options);
                 var text = writer.ToString();
-               //// Fix up code: make static DP fields readonly, and use triple-slash or triple-quote comments for XML doc comments.
+                //// Fix up code: make static DP fields readonly, and use triple-slash or triple-quote comments for XML doc comments.
                 if (provider.FileExtension == "cs")
                 {
                     text = text.Replace(
