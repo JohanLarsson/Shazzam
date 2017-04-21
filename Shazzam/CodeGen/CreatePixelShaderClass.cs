@@ -65,7 +65,7 @@
                 {
                     constructor,
                     CreateSamplerDependencyProperty(shaderModel.GeneratedClassName, "Input"),
-                    CreateCLRProperty("Input", typeof(Brush), null)
+                    CreateClrProperty("Input", typeof(Brush), null)
                 },
             };
             if (!string.IsNullOrEmpty(shaderModel.Description))
@@ -77,7 +77,7 @@
             foreach (var register in shaderModel.Registers)
             {
                 shader.Members.Add(CreateShaderRegisterDependencyProperty(shaderModel, register));
-                shader.Members.Add(CreateCLRProperty(register.RegisterName, register.RegisterType, register.Description));
+                shader.Members.Add(CreateClrProperty(register.RegisterName, register.RegisterType, register.Description));
             }
 
             // Add the new type to the namespace.
@@ -92,6 +92,7 @@
             {
                 Type = new CodeTypeReference("DependencyProperty"),
                 Name = $"{propertyName}Property",
+                //// ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
                 Attributes = MemberAttributes.Static | MemberAttributes.Public,
                 InitExpression = new CodeMethodInvokeExpression
                 {
@@ -118,6 +119,7 @@
                 {
                     Type = new CodeTypeReference("DependencyProperty"),
                     Name = $"{register.RegisterName}Property",
+                    // ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
                     Attributes = MemberAttributes.Public | MemberAttributes.Static,
                     InitExpression = new CodeMethodInvokeExpression
                     {
@@ -140,6 +142,7 @@
             {
                 Type = new CodeTypeReference("DependencyProperty"),
                 Name = $"{register.RegisterName}Property",
+                //// ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
                 Attributes = MemberAttributes.Public | MemberAttributes.Static,
                 InitExpression = new CodeMethodInvokeExpression
                 {
@@ -233,12 +236,13 @@
             return new CodeDefaultValueExpression(codeTypeReference);
         }
 
-        private static CodeMemberProperty CreateCLRProperty(string propertyName, Type type, string description)
+        private static CodeMemberProperty CreateClrProperty(string propertyName, Type type, string description)
         {
             var property = new CodeMemberProperty
             {
                 Name = propertyName,
                 Type = CreateCodeTypeReference(type),
+                //// ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
                 Attributes = MemberAttributes.Public | MemberAttributes.Final,
                 HasGet = true,
                 GetStatements =
@@ -372,23 +376,20 @@
 
         private static CodeNamespace AssignNamespacesToGraph(CodeCompileUnit codeGraph, string namespaceName)
         {
-            // Add imports to the global (unnamed) namespace.
-            var globalNamespace = new CodeNamespace
-            {
-                Imports =
-                {
-                    new CodeNamespaceImport("System"),
-                    new CodeNamespaceImport("System.Windows"),
-                    new CodeNamespaceImport("System.Windows.Media"),
-                    new CodeNamespaceImport("System.Windows.Media.Effects"),
-                    new CodeNamespaceImport("System.Windows.Media.Media3D")
-                }
-            };
-            codeGraph.Namespaces.Add(globalNamespace);
-
-            // Create a named namespace.
             var ns = new CodeNamespace(namespaceName);
             codeGraph.Namespaces.Add(ns);
+            codeGraph.Namespaces.Add(new CodeNamespace
+                                         {
+                                             Imports =
+                                                 {
+                                                     new CodeNamespaceImport("System"),
+                                                     new CodeNamespaceImport("System.Windows"),
+                                                     new CodeNamespaceImport("System.Windows.Media"),
+                                                     new CodeNamespaceImport("System.Windows.Media.Effects"),
+                                                     new CodeNamespaceImport("System.Windows.Media.Media3D")
+                                                 }
+                                         });
+
             return ns;
         }
 
@@ -397,18 +398,26 @@
             // Generate source code using the code generator.
             using (var writer = new StringWriter())
             {
-                var indentString = Settings.Default.IndentUsingTabs ? "\t" : string.Format("{0," + Settings.Default.IndentSpaces + "}", " ");
-                var options = new CodeGeneratorOptions { IndentString = indentString, BlankLinesBetweenMembers = false };
+                var indentString = Settings.Default.IndentUsingTabs
+                                       ? "\t"
+                                       : new string(' ',  Settings.Default.IndentSpaces);
+                var options = new CodeGeneratorOptions
+                                  {
+                                      IndentString = indentString,
+                                      BlankLinesBetweenMembers = true,
+                                      BracingStyle = "C",
+                                  };
                 provider.GenerateCodeFromCompileUnit(compileUnit, writer, options);
                 var text = writer.ToString();
                 //// Fix up code: make static DP fields readonly, and use triple-slash or triple-quote comments for XML doc comments.
                 if (provider.FileExtension == "cs")
                 {
-                    text = text.Replace("public static DependencyProperty", "public static readonly DependencyProperty");
+                    text = text.Replace(
+                        "public static DependencyProperty",
+                        "public static readonly DependencyProperty");
                     text = Regex.Replace(text, @"// <(?!/?auto-generated)", @"/// <");
                 }
-                else
-                    if (provider.FileExtension == "vb")
+                else if (provider.FileExtension == "vb")
                 {
                     text = text.Replace("Public Shared ", "Public Shared ReadOnly ");
                     text = text.Replace("'<", "'''<");

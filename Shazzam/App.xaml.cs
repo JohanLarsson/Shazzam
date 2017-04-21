@@ -38,10 +38,10 @@
                 }
             }
             catch (ConfigurationErrorsException ex)
+                when (ex.InnerException is ConfigurationErrorsException inner)
             {
                 // (requires System.Configuration)
-                var filename = ((ConfigurationErrorsException)ex.InnerException).Filename;
-
+                var filename = inner.Filename;
                 if (MessageBox.Show(
                     "Shazzam has detected that your" +
                      " user settings file has become corrupted. " +
@@ -100,8 +100,9 @@
                 Settings.Default.Reload();
             }
             catch (ConfigurationErrorsException ex)
+                when (ex.InnerException is ConfigurationErrorsException inner)
             { // (requires System.Configuration)
-                var filename = ((ConfigurationErrorsException)ex.InnerException).Filename;
+                var filename = inner.Filename;
 
                 if (MessageBox.Show(
                     "Shazzam has detected that your" +
