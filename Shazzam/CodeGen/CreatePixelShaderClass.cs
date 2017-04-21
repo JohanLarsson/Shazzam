@@ -151,42 +151,31 @@
                         TargetObject = new CodeTypeReferenceExpression("DependencyProperty"),
                         MethodName = "Register"
                     },
-
-                }.WithRegisterParameters(shaderModel, register)
+                    Parameters =
+                        {
+                            new CodePrimitiveExpression(register.RegisterName),
+                            new CodeTypeOfExpression(CreateCodeTypeReference(register.RegisterType)),
+                            new CodeTypeOfExpression(shaderModel.GeneratedClassName),
+                            new CodeObjectCreateExpression
+                            {
+                                // Silverlight doesn't have UIPropertyMetadata.
+                                CreateType = new CodeTypeReference(shaderModel.TargetFramework == TargetFramework.WPF ? "UIPropertyMetadata" : "PropertyMetadata"),
+                                Parameters =
+                                {
+                                CreateDefaultValue(register.RegisterType, register.DefaultValue),
+                                new CodeMethodInvokeExpression
+                                    {
+                                        Method = new CodeMethodReferenceExpression(null, "PixelShaderConstantCallback"),
+                                        Parameters =
+                                            {
+                                                new CodePrimitiveExpression(register.RegisterNumber)
+                                            }
+                                    }
+                            }
+                        }
+                    }
+                }
             };
-        }
-
-        private static CodeMethodInvokeExpression WithRegisterParameters(this CodeMethodInvokeExpression method, ShaderModel shaderModel, ShaderModelConstantRegister register)
-        {
-            method.Parameters.Add(new CodePrimitiveExpression(register.RegisterName));
-            method.Parameters.Add(new CodeTypeOfExpression(CreateCodeTypeReference(register.RegisterType)));
-            method.Parameters.Add(new CodeTypeOfExpression(shaderModel.GeneratedClassName));
-            method.Parameters.Add(new CodeObjectCreateExpression
-            {
-                // Silverlight doesn't have UIPropertyMetadata.
-                CreateType = new CodeTypeReference(shaderModel.TargetFramework == TargetFramework.WPF ? "UIPropertyMetadata" : "PropertyMetadata"),
-                Parameters =
-                                              {
-                                                  CreateDefaultValue(register.RegisterType, register.DefaultValue),
-                                                  new CodeMethodInvokeExpression
-                                                      {
-                                                          Method = new CodeMethodReferenceExpression(null, "PixelShaderConstantCallback"),
-                                                          Parameters =
-                                                              {
-                                                                  new CodePrimitiveExpression(register.RegisterNumber)
-                                                              }
-                                                      }
-                                              }
-            });
-
-            return method;
-            if (register.MinValue == null && register.MaxValue == null)
-            {
-                return method;
-            }
-
-            method.Parameters.Add(new CodeMethodReferenceExpression(null, $"{register.RegisterName}ValidateValue"));
-            return method;
         }
 
         private static CodeExpression CreateDefaultValue(Type type, object defaultValue)
