@@ -151,44 +151,55 @@
                         TargetObject = new CodeTypeReferenceExpression("DependencyProperty"),
                         MethodName = "Register"
                     },
-                    Parameters =
-                    {
-                        new CodePrimitiveExpression(register.RegisterName),
-                        new CodeTypeOfExpression(CreateCodeTypeReference(register.RegisterType)),
-                        new CodeTypeOfExpression(shaderModel.GeneratedClassName),
-                        new CodeObjectCreateExpression
-                        {
-                            // Silverlight doesn't have UIPropertyMetadata.
-                            CreateType = new CodeTypeReference(shaderModel.TargetFramework == TargetFramework.WPF ? "UIPropertyMetadata" : "PropertyMetadata"),
-                            Parameters =
-                            {
-                                CreateDefaultValue(register.DefaultValue),
-                                new CodeMethodInvokeExpression
-                                {
-                                    Method = new CodeMethodReferenceExpression(null, "PixelShaderConstantCallback"),
-                                    Parameters =
-                                    {
-                                        new CodePrimitiveExpression(register.RegisterNumber)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+
+                }.WithRegisterParameters(shaderModel, register)
             };
         }
 
-        private static CodeExpression CreateDefaultValue(object defaultValue)
+        private static CodeMethodInvokeExpression WithRegisterParameters(this CodeMethodInvokeExpression method, ShaderModel shaderModel, ShaderModelConstantRegister register)
+        {
+            method.Parameters.Add(new CodePrimitiveExpression(register.RegisterName));
+            method.Parameters.Add(new CodeTypeOfExpression(CreateCodeTypeReference(register.RegisterType)));
+            method.Parameters.Add(new CodeTypeOfExpression(shaderModel.GeneratedClassName));
+            method.Parameters.Add(new CodeObjectCreateExpression
+            {
+                // Silverlight doesn't have UIPropertyMetadata.
+                CreateType = new CodeTypeReference(shaderModel.TargetFramework == TargetFramework.WPF ? "UIPropertyMetadata" : "PropertyMetadata"),
+                Parameters =
+                                              {
+                                                  CreateDefaultValue(register.RegisterType, register.DefaultValue),
+                                                  new CodeMethodInvokeExpression
+                                                      {
+                                                          Method = new CodeMethodReferenceExpression(null, "PixelShaderConstantCallback"),
+                                                          Parameters =
+                                                              {
+                                                                  new CodePrimitiveExpression(register.RegisterNumber)
+                                                              }
+                                                      }
+                                              }
+            });
+
+            return method;
+            if (register.MinValue == null && register.MaxValue == null)
+            {
+                return method;
+            }
+
+            method.Parameters.Add(new CodeMethodReferenceExpression(null, $"{register.RegisterName}ValidateValue"));
+            return method;
+        }
+
+        private static CodeExpression CreateDefaultValue(Type type, object defaultValue)
         {
             if (defaultValue == null)
             {
                 return new CodePrimitiveExpression(null);
             }
 
-            var codeTypeReference = CreateCodeTypeReference(defaultValue.GetType());
+            var codeTypeReference = CreateCodeTypeReference(type);
             if (defaultValue.GetType().IsPrimitive)
             {
-                return new CodeCastExpression(codeTypeReference, new CodePrimitiveExpression(defaultValue));
+                return new CodePrimitiveExpression(Convert.ChangeType(defaultValue, type));
             }
 
             if (defaultValue is Point || defaultValue is Vector || defaultValue is Size)
@@ -379,8 +390,8 @@
             var ns = new CodeNamespace(namespaceName);
             codeGraph.Namespaces.Add(ns);
             codeGraph.Namespaces.Add(new CodeNamespace
-                                         {
-                                             Imports =
+            {
+                Imports =
                                                  {
                                                      new CodeNamespaceImport("System"),
                                                      new CodeNamespaceImport("System.Windows"),
@@ -388,7 +399,7 @@
                                                      new CodeNamespaceImport("System.Windows.Media.Effects"),
                                                      new CodeNamespaceImport("System.Windows.Media.Media3D")
                                                  }
-                                         });
+            });
 
             return ns;
         }
@@ -400,13 +411,13 @@
             {
                 var indentString = Settings.Default.IndentUsingTabs
                                        ? "\t"
-                                       : new string(' ',  Settings.Default.IndentSpaces);
+                                       : new string(' ', Settings.Default.IndentSpaces);
                 var options = new CodeGeneratorOptions
-                                  {
-                                      IndentString = indentString,
-                                      BlankLinesBetweenMembers = true,
-                                      BracingStyle = "C",
-                                  };
+                {
+                    IndentString = indentString,
+                    BlankLinesBetweenMembers = true,
+                    BracingStyle = "C",
+                };
                 provider.GenerateCodeFromCompileUnit(compileUnit, writer, options);
                 var text = writer.ToString();
                 //// Fix up code: make static DP fields readonly, and use triple-slash or triple-quote comments for XML doc comments.

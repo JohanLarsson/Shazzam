@@ -19,17 +19,17 @@
                 shaderFileName: "Foo.cs",
                 generatedClassName: "Foo",
                 generatedNamespace: "Shaders",
-                description: "Description",
+                description: "This is Foo",
                 targetFramework: TargetFramework.WPF,
                 registers: new List<ShaderModelConstantRegister>
                     {
                         new ShaderModelConstantRegister(
-                            registerName: "A",
+                            registerName: "Bar",
                             registerType: typeof(double),
                             registerNumber: 1,
-                            description: "description",
-                            minValue: 0,
-                            maxValue: 1,
+                            description: "This is Bar",
+                            minValue: null,
+                            maxValue: null,
                             defaultValue: 0)
                     });
 
@@ -55,20 +55,20 @@ namespace Shaders
 {
     
     
-    /// <summary>Description</summary>
+    /// <summary>This is Foo</summary>
     public class Foo : ShaderEffect
     {
         
         public static readonly DependencyProperty InputProperty = ShaderEffect.RegisterPixelShaderSamplerProperty(""Input"", typeof(Foo), 0);
         
-        public static readonly DependencyProperty AProperty = DependencyProperty.Register(""A"", typeof(double), typeof(Foo), new UIPropertyMetadata(((int)(0)), PixelShaderConstantCallback(1)));
+        public static readonly DependencyProperty BarProperty = DependencyProperty.Register(""Bar"", typeof(double), typeof(Foo), new UIPropertyMetadata(0D, PixelShaderConstantCallback(1)));
         
         public Foo(PixelShader shader)
         {
             this.PixelShader = shader;
 
             this.UpdateShaderValue(InputProperty);
-            this.UpdateShaderValue(AProperty);
+            this.UpdateShaderValue(BarProperty);
         }
         
         public Brush Input
@@ -83,16 +83,16 @@ namespace Shaders
             }
         }
         
-        /// <summary>description</summary>
-        public double A
+        /// <summary>This is Bar</summary>
+        public double Bar
         {
             get
             {
-                return ((double)(this.GetValue(AProperty)));
+                return ((double)(this.GetValue(BarProperty)));
             }
             set
             {
-                this.SetValue(AProperty, value);
+                this.SetValue(BarProperty, value);
             }
         }
     }
@@ -109,17 +109,17 @@ namespace Shaders
                 shaderFileName: "Foo.cs",
                 generatedClassName: "Foo",
                 generatedNamespace: "Shaders",
-                description: "Description",
+                description: "This is Foo",
                 targetFramework: TargetFramework.WPF,
                 registers: new List<ShaderModelConstantRegister>
                                {
                                    new ShaderModelConstantRegister(
-                                       registerName: "A",
+                                       registerName: "Bar",
                                        registerType: typeof(double),
                                        registerNumber: 1,
-                                       description: "description",
-                                       minValue: 0,
-                                       maxValue: 1,
+                                       description: "This is Bar",
+                                       minValue: null,
+                                       maxValue: null,
                                        defaultValue: 0)
                                });
 
@@ -145,13 +145,13 @@ namespace Shaders
 {
     
     
-    /// <summary>Description</summary>
+    /// <summary>This is Foo</summary>
     public class Foo : ShaderEffect
     {
         
         public static readonly DependencyProperty InputProperty = ShaderEffect.RegisterPixelShaderSamplerProperty(""Input"", typeof(Foo), 0);
         
-        public static readonly DependencyProperty AProperty = DependencyProperty.Register(""A"", typeof(double), typeof(Foo), new UIPropertyMetadata(((int)(0)), PixelShaderConstantCallback(1)));
+        public static readonly DependencyProperty BarProperty = DependencyProperty.Register(""Bar"", typeof(double), typeof(Foo), new UIPropertyMetadata(0D, PixelShaderConstantCallback(1)));
         
         public Foo()
         {
@@ -160,7 +160,7 @@ namespace Shaders
             this.PixelShader = pixelShader;
 
             this.UpdateShaderValue(InputProperty);
-            this.UpdateShaderValue(AProperty);
+            this.UpdateShaderValue(BarProperty);
         }
         
         public Brush Input
@@ -175,16 +175,16 @@ namespace Shaders
             }
         }
         
-        /// <summary>description</summary>
-        public double A
+        /// <summary>This is Bar</summary>
+        public double Bar
         {
             get
             {
-                return ((double)(this.GetValue(AProperty)));
+                return ((double)(this.GetValue(BarProperty)));
             }
             set
             {
-                this.SetValue(AProperty, value);
+                this.SetValue(BarProperty, value);
             }
         }
     }
@@ -201,18 +201,18 @@ namespace Shaders
                 shaderFileName: "Foo.cs",
                 generatedClassName: "Foo",
                 generatedNamespace: "Shaders",
-                description: "Description",
+                description: "This is Foo",
                 targetFramework: TargetFramework.WPF,
                 registers: new List<ShaderModelConstantRegister>
                                {
                                    new ShaderModelConstantRegister(
-                                       registerName: "A",
+                                       registerName: "Bar",
                                        registerType: typeof(double),
                                        registerNumber: 1,
-                                       description: "description",
-                                       minValue: -1,
-                                       maxValue: 1,
-                                       defaultValue: 0)
+                                       description: "This is Bar",
+                                       minValue: -10,
+                                       maxValue: 10,
+                                       defaultValue: 1)
                                });
 
             var actual = CreatePixelShaderClass.GetSourceText(new CSharpCodeProvider(), shaderModel, includePixelShaderConstructor: false);
@@ -237,13 +237,13 @@ namespace Shaders
 {
     
     
-    /// <summary>Description</summary>
+    /// <summary>This is Foo</summary>
     public class Foo : ShaderEffect
     {
         
         public static readonly DependencyProperty InputProperty = ShaderEffect.RegisterPixelShaderSamplerProperty(""Input"", typeof(Foo), 0);
         
-        public static readonly DependencyProperty AProperty = DependencyProperty.Register(""A"", typeof(double), typeof(Foo), new UIPropertyMetadata(((int)(0)), PixelShaderConstantCallback(1)));
+        public static readonly DependencyProperty BarProperty = DependencyProperty.Register(""Bar"", typeof(double), typeof(Foo), new UIPropertyMetadata(1D, PixelShaderConstantCallback(1)));
         
         public Foo()
         {
@@ -252,7 +252,7 @@ namespace Shaders
             this.PixelShader = pixelShader;
 
             this.UpdateShaderValue(InputProperty);
-            this.UpdateShaderValue(AProperty);
+            this.UpdateShaderValue(BarProperty);
         }
         
         public Brush Input
@@ -267,16 +267,16 @@ namespace Shaders
             }
         }
         
-        /// <summary>description</summary>
-        public double A
+        /// <summary>This is Bar</summary>
+        public double Bar
         {
             get
             {
-                return ((double)(this.GetValue(AProperty)));
+                return ((double)(this.GetValue(BarProperty)));
             }
             set
             {
-                this.SetValue(AProperty, value);
+                this.SetValue(BarProperty, value);
             }
         }
     }
