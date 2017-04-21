@@ -84,7 +84,7 @@
 
             if (!includePixelShaderConstructor)
             {
-                shader.Members.Add(CreateShaderField());
+                shader.Members.Add(CreateShaderField(shaderModel));
             }
 
             // Add the new type to the namespace.
@@ -93,7 +93,7 @@
             return codeGraph;
         }
 
-        private static CodeMemberField CreateShaderField()
+        private static CodeMemberField CreateShaderField(ShaderModel model)
         {
             var typeReference = new CodeTypeReference("PixelShader");
             return new CodeMemberField
@@ -102,7 +102,14 @@
                 Name = "Shader",
                 //// ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
                 Attributes = MemberAttributes.Static | MemberAttributes.Private,
-                InitExpression = new CodeObjectCreateExpression { CreateType = typeReference }
+                InitExpression = new CodeObjectCreateExpression { CreateType = typeReference },
+                Comments =
+                {
+                    new CodeCommentStatement("<summary>", docComment: true),
+                    new CodeCommentStatement($"The uri should be something like pack://application:,,,/Gu.Wpf.Geometry;component/Effects/{model.GeneratedClassName}.ps", docComment: true),
+                    new CodeCommentStatement($"The file {model.GeneratedClassName}.ps should have BuildAction: Resource", docComment: true),
+                    new CodeCommentStatement("</summary>", docComment: true)
+                }
             };
         }
 
@@ -234,9 +241,8 @@
                     new CodePrimitiveExpression(point3D.Z));
             }
 
-            if (defaultValue is Point4D)
+            if (defaultValue is Point4D point4D)
             {
-                var point4D = (Point4D)defaultValue;
                 return new CodeObjectCreateExpression(
                     codeTypeReference,
                     new CodePrimitiveExpression(point4D.X),
@@ -245,9 +251,8 @@
                     new CodePrimitiveExpression(point4D.W));
             }
 
-            if (defaultValue is Color)
+            if (defaultValue is Color color)
             {
-                var color = (Color)defaultValue;
                 return new CodeMethodInvokeExpression(
                     new CodeTypeReferenceExpression(codeTypeReference),
                     "FromArgb",
@@ -301,7 +306,11 @@
 
             if (type == typeof(Brush))
             {
-                property.Comments.Add(new CodeCommentStatement($"<summary>There has to be a property of type Brush called \"Input\". This property contains the input image and it is usually not set directly - it is set automatically when our effect is applied to a control.</summary>"));
+                property.Comments.Add(new CodeCommentStatement("<summary>", docComment: true));
+                property.Comments.Add(new CodeCommentStatement(
+                    $"There has to be a property of type Brush called \"Input\". This property contains the input image and it is usually not set directly - it is set automatically when our effect is applied to a control.",
+                    docComment: true));
+                property.Comments.Add(new CodeCommentStatement("</summary>", docComment: true));
             }
 
             if (!string.IsNullOrEmpty(description))
@@ -387,8 +396,8 @@
             codeGraph.Namespaces.Add(ns);
             codeGraph.Namespaces.Add(
                 new CodeNamespace
-                    {
-                        Imports =
+                {
+                    Imports =
                             {
                                 new CodeNamespaceImport("System"),
                                 new CodeNamespaceImport("System.Windows"),
@@ -396,7 +405,7 @@
                                 new CodeNamespaceImport("System.Windows.Media.Effects"),
                                 new CodeNamespaceImport("System.Windows.Media.Media3D")
                             }
-                    });
+                });
 
             return ns;
         }
