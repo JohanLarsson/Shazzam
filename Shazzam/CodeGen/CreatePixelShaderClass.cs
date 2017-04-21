@@ -27,19 +27,28 @@
         {
             using (var provider = new CSharpCodeProvider())
             {
-                var options = new CompilerParameters();
-                options.ReferencedAssemblies.Add("System.dll");
-                options.ReferencedAssemblies.Add("System.Core.dll");
-                options.ReferencedAssemblies.Add("WindowsBase.dll");
-                options.ReferencedAssemblies.Add("PresentationFramework.dll");
-                options.ReferencedAssemblies.Add("PresentationCore.dll");
-                options.IncludeDebugInformation = false;
-                options.GenerateExecutable = false;
-                options.GenerateInMemory = true;
-                var results = provider.CompileAssemblyFromSource(options, code);
-                return results.Errors.Count == 0
-                           ? results.CompiledAssembly
-                           : null;
+                var options = new CompilerParameters
+                {
+                    ReferencedAssemblies =
+                    {
+                        "System.dll",
+                        "System.Core.dll",
+                        "WindowsBase.dll",
+                        "PresentationFramework.dll",
+                        "PresentationCore.dll",
+                    },
+                    IncludeDebugInformation = false,
+                    GenerateExecutable = false,
+                    GenerateInMemory = true
+                };
+                var compiled = provider.CompileAssemblyFromSource(options, code);
+                if (compiled.Errors.Count == 0)
+                {
+                    return compiled.CompiledAssembly;
+                }
+
+                var error = compiled.Errors[0];
+                throw new InvalidOperationException(error.ErrorText);
             }
         }
 
@@ -426,12 +435,13 @@
                 };
                 provider.GenerateCodeFromCompileUnit(compileUnit, writer, options);
                 var text = writer.ToString();
-                text = text.Replace(
-                    "private static PixelShader Shader = new PixelShader()",
-                    $"private static readonly PixelShader Shader = new PixelShader {{ UriSource = new Uri(\"pack://application:,,,/[assemblyname];component/[folder]/{model.ShaderFileName}.ps\", UriKind.Absolute) }}");
-                //// Fix up code: make static DP fields readonly, and use triple-slash or triple-quote comments for XML doc comments.
+               //// Fix up code: make static DP fields readonly, and use triple-slash or triple-quote comments for XML doc comments.
                 if (provider.FileExtension == "cs")
                 {
+                    text = text.Replace(
+                        "private static PixelShader Shader = new PixelShader()",
+                        $"private static readonly PixelShader Shader = new PixelShader {{ UriSource = new Uri(\"pack://application:,,,/[assemblyname];component/[folder]/{model.ShaderFileName}.ps\", UriKind.Absolute) }}");
+
                     text = text.Replace(
                         "public static DependencyProperty",
                         "public static readonly DependencyProperty");

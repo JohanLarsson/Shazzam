@@ -202,5 +202,30 @@ namespace Shaders
 ";
             Assert.AreEqual(expected.Replace("\r", string.Empty), actual.Replace("\r", string.Empty));
         }
+
+        [Test]
+        public void CompileInMemory()
+        {
+            var shaderModel = new ShaderModel(
+                shaderFileName: "Foo.cs",
+                generatedClassName: "Foo",
+                generatedNamespace: "Shaders",
+                description: "This is Foo",
+                targetFramework: TargetFramework.WPF,
+                registers: new List<ShaderModelConstantRegister>
+                {
+                    new ShaderModelConstantRegister(
+                        registerName: "Bar",
+                        registerType: typeof(double),
+                        registerNumber: 1,
+                        description: "This is Bar",
+                        minValue: null,
+                        maxValue: null,
+                        defaultValue: 0)
+                });
+
+            var code = CreatePixelShaderClass.GetSourceText(new CSharpCodeProvider(), shaderModel, includePixelShaderConstructor: false);
+            Assert.NotNull(CreatePixelShaderClass.CompileInMemory(code));
+        }
     }
 }
