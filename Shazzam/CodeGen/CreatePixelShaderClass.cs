@@ -117,9 +117,13 @@
             {
                 return new CodeMemberField
                 {
+                    Comments =
+                        {
+                            new CodeCommentStatement("<summary>The ShaderEffect.RegisterPixelShaderSamplerProperty() method must be used with this field as argument. Note the last parameter of this method: it is an integer and it corresponds to the S0 pixel shader register.</summary>"),
+                        },
                     Type = new CodeTypeReference("DependencyProperty"),
                     Name = $"{register.RegisterName}Property",
-                    // ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
+                    //// ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
                     Attributes = MemberAttributes.Public | MemberAttributes.Static,
                     InitExpression = new CodeMethodInvokeExpression
                     {
@@ -134,7 +138,7 @@
                             new CodeTypeOfExpression(shaderModel.GeneratedClassName),
                             new CodePrimitiveExpression(register.RegisterNumber)
                         }
-                    }
+                    },
                 };
             }
 
@@ -274,6 +278,12 @@
                     }
                 }
             };
+
+            if (type == typeof(Brush))
+            {
+                property.Comments.Add(new CodeCommentStatement($"<summary>There has to be a property of type Brush called \"Input\". This property contains the input image and it is usually not set directly - it is set automatically when our effect is applied to a control.</summary>"));
+            }
+
             if (!string.IsNullOrEmpty(description))
             {
                 property.Comments.Add(new CodeCommentStatement($"<summary>{description}</summary>"));
