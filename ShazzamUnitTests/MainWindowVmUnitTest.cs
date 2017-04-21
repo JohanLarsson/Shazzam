@@ -3,7 +3,8 @@
     using System.Windows;
     using System.Windows.Media;
     using NUnit.Framework;
-    using Shazzam.ViewModels;
+
+    using Shazzam;
 
     public class MainWindowVmUnitTest
     {

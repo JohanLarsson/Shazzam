@@ -1,4 +1,4 @@
-﻿namespace Shazzam.ViewModels
+﻿namespace Shazzam
 {
     using System;
     using System.ComponentModel;
@@ -7,6 +7,7 @@
     using System.Reflection;
     using System.Runtime.CompilerServices;
     using System.Windows;
+
     using Shazzam.Commands;
 
     public class MainWindowViewModel : INotifyPropertyChanged

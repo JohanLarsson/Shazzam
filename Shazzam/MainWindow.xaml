@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:Shazzam.Views"
-    xmlns:vms="clr-namespace:Shazzam.ViewModels"
+    xmlns:shazzam="clr-namespace:Shazzam"
     Title="Shazzam Shader Editor = V1.2"
     Background="Black"
     Icon="Images/star.png"
@@ -17,7 +17,7 @@
 
         <converters:StringToVisibilityConverter x:Key="visConverter" />
         <converters:StretchToIsCheckedConverter x:Key="checkedConverter" />
-        <vms:MainWindowViewModel x:Key="mainVM" />
+        <shazzam:MainWindowViewModel x:Key="mainVM" />
         <SolidColorBrush x:Key="ImageBorderBrush" Color="#FF16404C" />
         <DrawingBrush
             x:Key="AlphaGrid"

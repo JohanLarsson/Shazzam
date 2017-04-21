@@ -75,14 +75,22 @@
     <Reference Include="System.IdentityModel" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\AlphaChooser.cs" />
+    <Compile Include="Controls\ColorChangedEventArgs.cs" />
     <Compile Include="Controls\ColorPicker.cs" />
+    <Compile Include="Controls\ColorPickerUtil.cs" />
+    <Compile Include="Controls\ColorTextBox.cs" />
+    <Compile Include="Controls\CursorAdorner.cs" />
     <Compile Include="Controls\DoubleDragBox.cs" />
+    <Compile Include="Controls\DropDownColorPicker.cs" />
     <Compile Include="Controls\ElementCursorDecorator.cs" />
+    <Compile Include="Controls\HueChooser.cs" />
+    <Compile Include="Controls\SaturationBrightnessChooser.cs" />
     <Compile Include="Controls\TextDragger.cs" />
-    <Compile Include="Converters.cs" />
+    <Compile Include="RoundConverter.cs" />
     <Compile Include="IKaxamlInfoTextEditor.cs" />
     <Compile Include="KaxamlInfo.cs" />
-    <Compile Include="KaxamlPluginAttribute.cs" />
+    <Compile Include="PluginAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

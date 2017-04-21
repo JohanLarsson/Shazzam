@@ -1,11 +1,10 @@
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows.Controls;
-using KaxamlPlugins;
-
-namespace Kaxaml.Plugins.Controls
+namespace KaxamlPlugins.Controls
 {
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+
     public class TextDragger : Decorator
     {
         static TextDragger()

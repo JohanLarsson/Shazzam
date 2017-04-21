@@ -7,8 +7,9 @@ namespace Shazzam.Plugins
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Threading;
-    using Kaxaml.Plugins.Controls;
+
     using KaxamlPlugins;
+    using KaxamlPlugins.Controls;
 
     public partial class ColorPickerPlugin : UserControl
     {
@@ -128,7 +129,7 @@ namespace Shazzam.Plugins
             try
             {
                 var c = ColorConverter.ConvertFromString(KaxamlInfo.Editor.SelectedText);
-                this.C.SetCurrentValue(Kaxaml.Plugins.Controls.ColorPicker.ColorProperty, c);
+                this.C.SetCurrentValue(ColorPicker.ColorProperty, c);
 
                 this.C.ColorChanged += this.CColorChanged;
             }
@@ -205,7 +206,7 @@ namespace Shazzam.Plugins
 
         private void SwatchMouseDown(object o, MouseEventArgs e)
         {
-            this.C.SetCurrentValue(Kaxaml.Plugins.Controls.ColorPicker.ColorProperty, (o as FrameworkElement)?.DataContext);
+            this.C.SetCurrentValue(ColorPicker.ColorProperty, (o as FrameworkElement)?.DataContext);
         }
 
         private void CCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

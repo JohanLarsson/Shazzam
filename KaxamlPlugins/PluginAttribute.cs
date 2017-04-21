@@ -1,8 +1,8 @@
-using System;
-using System.Windows.Input;
-
-namespace Kaxaml.Plugins
+namespace KaxamlPlugins
 {
+    using System;
+    using System.Windows.Input;
+
     [AttributeUsage(AttributeTargets.Class)]
 
     public class PluginAttribute : Attribute

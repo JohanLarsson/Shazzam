@@ -9,7 +9,6 @@
     using System.Windows.Media.Imaging;
     using Microsoft.Win32;
     using Shazzam.Helpers;
-    using Shazzam.ViewModels;
 
     // Images
     //  creative commons license
