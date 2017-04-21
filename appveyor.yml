@@ -1,7 +1,7 @@
 version: 1.0.{build}
 os: Visual Studio 2017
 configuration: Release
-platform: Any CPU
+platform: x86
 cache: packages -> paket.lock
 build:
   verbosity: minimal
