@@ -8,6 +8,33 @@
 
     public class RegisterValueConverter : IValueConverter
     {
+        public static object ConvertToUsualType(object value)
+        {
+            // Convert float to double, Vector to Point, Size to Point, and Vector3D to Point3D.
+            // Leave anything else unchanged.
+            if (value is float f)
+            {
+                return (double)f;
+            }
+
+            if (value is Vector v)
+            {
+                return (Point)v;
+            }
+
+            if (value is Size size)
+            {
+                return (Point)size;
+            }
+
+            if (value is Vector3D v3D)
+            {
+                return (Point3D)v3D;
+            }
+
+            return value;
+        }
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             // Convert double to float, Point to Vector, Point to Size, and Point3D to Vector3D.
@@ -39,30 +66,6 @@
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return ConvertToUsualType(value);
-        }
-
-        public static object ConvertToUsualType(object value)
-        {
-            // Convert float to double, Vector to Point, Size to Point, and Vector3D to Point3D.
-            // Leave anything else unchanged.
-            if (value.GetType() == typeof(float))
-            {
-                return (double)(float)value;
-            }
-            else if (value.GetType() == typeof(Vector))
-            {
-                return (Point)(Vector)value;
-            }
-            else if (value.GetType() == typeof(Size))
-            {
-                return (Point)(Size)value;
-            }
-            else if (value.GetType() == typeof(Vector3D))
-            {
-                return (Point3D)(Vector3D)value;
-            }
-
-            return value;
         }
     }
 }

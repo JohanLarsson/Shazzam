@@ -22,6 +22,7 @@
             try
             {
                 Settings.Default.Reload();
+
                 // attempt to load from config
                 // string result = Shazzam.Properties.Settings.Default.FolderFX;
                 if (string.IsNullOrEmpty(Settings.Default.FolderPath_Output))
@@ -37,8 +38,9 @@
                 }
             }
             catch (ConfigurationErrorsException ex)
-            { // (requires System.Configuration)
-                string filename = ((ConfigurationErrorsException)ex.InnerException).Filename;
+            {
+                // (requires System.Configuration)
+                var filename = ((ConfigurationErrorsException)ex.InnerException).Filename;
 
                 if (MessageBox.Show(
                     "Shazzam has detected that your" +
@@ -63,10 +65,6 @@
                     Process.GetCurrentProcess().Kill();
                     //// avoid the inevitable crash
                 }
-            }
-            catch (Exception ex)
-            {
-                throw;
             }
 
             try
@@ -108,7 +106,7 @@
             }
             catch (ConfigurationErrorsException ex)
             { // (requires System.Configuration)
-                string filename = ((ConfigurationErrorsException)ex.InnerException).Filename;
+                var filename = ((ConfigurationErrorsException)ex.InnerException).Filename;
 
                 if (MessageBox.Show(
                     "Shazzam has detected that your" +

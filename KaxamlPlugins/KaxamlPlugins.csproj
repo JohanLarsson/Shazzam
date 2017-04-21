@@ -75,7 +75,6 @@
     <Reference Include="System.IdentityModel" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
     <Compile Include="Controls\ColorPicker.cs" />
     <Compile Include="Controls\DoubleDragBox.cs" />
     <Compile Include="Controls\ElementCursorDecorator.cs" />

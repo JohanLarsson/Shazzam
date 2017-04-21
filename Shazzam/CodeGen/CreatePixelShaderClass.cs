@@ -23,26 +23,21 @@
 
         public static Assembly CompileInMemory(string code)
         {
-            var provider = new CSharpCodeProvider(new Dictionary<string, string>() { { "CompilerVersion", "v3.5" } });
-
-            CompilerParameters options = new CompilerParameters();
-            options.ReferencedAssemblies.Add("System.dll");
-            options.ReferencedAssemblies.Add("System.Core.dll");
-            options.ReferencedAssemblies.Add("WindowsBase.dll");
-            options.ReferencedAssemblies.Add("PresentationFramework.dll");
-            options.ReferencedAssemblies.Add("PresentationCore.dll");
-            options.IncludeDebugInformation = false;
-            options.GenerateExecutable = false;
-            options.GenerateInMemory = true;
-            CompilerResults results = provider.CompileAssemblyFromSource(options, code);
-            provider.Dispose();
-            if (results.Errors.Count == 0)
+            using (var provider = new CSharpCodeProvider(new Dictionary<string, string> { { "CompilerVersion", "v3.5" } }))
             {
-                return results.CompiledAssembly;
-            }
-            else
-            {
-                return null;
+                var options = new CompilerParameters();
+                options.ReferencedAssemblies.Add("System.dll");
+                options.ReferencedAssemblies.Add("System.Core.dll");
+                options.ReferencedAssemblies.Add("WindowsBase.dll");
+                options.ReferencedAssemblies.Add("PresentationFramework.dll");
+                options.ReferencedAssemblies.Add("PresentationCore.dll");
+                options.IncludeDebugInformation = false;
+                options.GenerateExecutable = false;
+                options.GenerateInMemory = true;
+                var results = provider.CompileAssemblyFromSource(options, code);
+                return results.Errors.Count == 0
+                           ? results.CompiledAssembly
+                           : null;
             }
         }
 
@@ -50,16 +45,16 @@
         {
             // Create a new CodeCompileUnit to contain
             // the program graph.
-            CodeCompileUnit codeGraph = new CodeCompileUnit();
+            var codeGraph = new CodeCompileUnit();
 
             // Create the namespace.
-            CodeNamespace codeNamespace = AssignNamespacesToGraph(codeGraph, shaderModel.GeneratedNamespace);
+            var codeNamespace = AssignNamespacesToGraph(codeGraph, shaderModel.GeneratedNamespace);
 
             // Create the appropriate constructor.
-            CodeConstructor constructor = includePixelShaderConstructor ? CreatePixelShaderConstructor(shaderModel) : CreateDefaultConstructor(shaderModel);
+            var constructor = includePixelShaderConstructor ? CreatePixelShaderConstructor(shaderModel) : CreateDefaultConstructor(shaderModel);
 
             // Declare a new type.
-            CodeTypeDeclaration shader = new CodeTypeDeclaration
+            var shader = new CodeTypeDeclaration
             {
                 Name = shaderModel.GeneratedClassName,
                 BaseTypes =
@@ -79,7 +74,7 @@
             }
 
             // Add a dependency property and a CLR property for each of the shader's register variables.
-            foreach (ShaderModelConstantRegister register in shaderModel.Registers)
+            foreach (var register in shaderModel.Registers)
             {
                 shader.Members.Add(CreateShaderRegisterDependencyProperty(shaderModel, register));
                 shader.Members.Add(CreateCLRProperty(register.RegisterName, register.RegisterType, register.Description));
@@ -186,61 +181,61 @@
             {
                 return new CodePrimitiveExpression(null);
             }
-            else
+
+            var codeTypeReference = CreateCodeTypeReference(defaultValue.GetType());
+            if (defaultValue.GetType().IsPrimitive)
             {
-                CodeTypeReference codeTypeReference = CreateCodeTypeReference(defaultValue.GetType());
-                if (defaultValue.GetType().IsPrimitive)
-                {
-                    return new CodeCastExpression(codeTypeReference, new CodePrimitiveExpression(defaultValue));
-                }
-                else if (defaultValue is Point || defaultValue is Vector || defaultValue is Size)
-                {
-                    Point point = (Point)RegisterValueConverter.ConvertToUsualType(defaultValue);
-                    return new CodeObjectCreateExpression(
-                        codeTypeReference,
-                            new CodePrimitiveExpression(point.X),
-                            new CodePrimitiveExpression(point.Y));
-                }
-                else if (defaultValue is Point3D || defaultValue is Vector3D)
-                {
-                    Point3D point3D = (Point3D)RegisterValueConverter.ConvertToUsualType(defaultValue);
-                    return new CodeObjectCreateExpression(
-                        codeTypeReference,
-                        new CodePrimitiveExpression(point3D.X),
-                        new CodePrimitiveExpression(point3D.Y),
-                        new CodePrimitiveExpression(point3D.Z));
-                }
-                else if (defaultValue is Point4D)
-                {
-                    Point4D point4D = (Point4D)defaultValue;
-                    return new CodeObjectCreateExpression(
-                        codeTypeReference,
-                        new CodePrimitiveExpression(point4D.X),
-                        new CodePrimitiveExpression(point4D.Y),
-                        new CodePrimitiveExpression(point4D.Z),
-                        new CodePrimitiveExpression(point4D.W));
-                }
-                else if (defaultValue is Color)
-                {
-                    Color color = (Color)defaultValue;
-                    return new CodeMethodInvokeExpression(
-                        new CodeTypeReferenceExpression(codeTypeReference),
-                            "FromArgb",
-                            new CodePrimitiveExpression(color.A),
-                            new CodePrimitiveExpression(color.R),
-                            new CodePrimitiveExpression(color.G),
-                            new CodePrimitiveExpression(color.B));
-                }
-                else
-                {
-                    return new CodeDefaultValueExpression(codeTypeReference);
-                }
+                return new CodeCastExpression(codeTypeReference, new CodePrimitiveExpression(defaultValue));
             }
+
+            if (defaultValue is Point || defaultValue is Vector || defaultValue is Size)
+            {
+                var point = (Point)RegisterValueConverter.ConvertToUsualType(defaultValue);
+                return new CodeObjectCreateExpression(
+                    codeTypeReference,
+                    new CodePrimitiveExpression(point.X),
+                    new CodePrimitiveExpression(point.Y));
+            }
+
+            if (defaultValue is Point3D || defaultValue is Vector3D)
+            {
+                var point3D = (Point3D)RegisterValueConverter.ConvertToUsualType(defaultValue);
+                return new CodeObjectCreateExpression(
+                    codeTypeReference,
+                    new CodePrimitiveExpression(point3D.X),
+                    new CodePrimitiveExpression(point3D.Y),
+                    new CodePrimitiveExpression(point3D.Z));
+            }
+
+            if (defaultValue is Point4D)
+            {
+                var point4D = (Point4D)defaultValue;
+                return new CodeObjectCreateExpression(
+                    codeTypeReference,
+                    new CodePrimitiveExpression(point4D.X),
+                    new CodePrimitiveExpression(point4D.Y),
+                    new CodePrimitiveExpression(point4D.Z),
+                    new CodePrimitiveExpression(point4D.W));
+            }
+
+            if (defaultValue is Color)
+            {
+                var color = (Color)defaultValue;
+                return new CodeMethodInvokeExpression(
+                    new CodeTypeReferenceExpression(codeTypeReference),
+                    "FromArgb",
+                    new CodePrimitiveExpression(color.A),
+                    new CodePrimitiveExpression(color.R),
+                    new CodePrimitiveExpression(color.G),
+                    new CodePrimitiveExpression(color.B));
+            }
+
+            return new CodeDefaultValueExpression(codeTypeReference);
         }
 
         private static CodeMemberProperty CreateCLRProperty(string propertyName, Type type, string description)
         {
-            CodeMemberProperty property = new CodeMemberProperty
+            var property = new CodeMemberProperty
             {
                 Name = propertyName,
                 Type = CreateCodeTypeReference(type),
@@ -291,7 +286,7 @@
         private static CodeConstructor CreatePixelShaderConstructor(ShaderModel shaderModel)
         {
             // Create a constructor that takes a PixelShader as its only parameter.
-            CodeConstructor constructor = new CodeConstructor
+            var constructor = new CodeConstructor
             {
                 Attributes = MemberAttributes.Public,
                 Parameters =
@@ -309,7 +304,7 @@
                     CreateUpdateMethod("Input")
                 }
             };
-            foreach (ShaderModelConstantRegister register in shaderModel.Registers)
+            foreach (var register in shaderModel.Registers)
             {
                 constructor.Statements.Add(CreateUpdateMethod(register.RegisterName));
             }
@@ -320,9 +315,9 @@
         private static CodeConstructor CreateDefaultConstructor(ShaderModel shaderModel)
         {
             // Create a default constructor.
-            string shaderRelativeUri =
+            var shaderRelativeUri =
                 $"/{shaderModel.GeneratedNamespace};component/{shaderModel.GeneratedClassName}.ps";
-            CodeConstructor constructor = new CodeConstructor
+            var constructor = new CodeConstructor
             {
                 Attributes = MemberAttributes.Public,
                 Statements =
@@ -355,7 +350,7 @@
                     CreateUpdateMethod("Input")
                 }
             };
-            foreach (ShaderModelConstantRegister register in shaderModel.Registers)
+            foreach (var register in shaderModel.Registers)
             {
                 constructor.Statements.Add(CreateUpdateMethod(register.RegisterName));
             }
@@ -378,7 +373,7 @@
         private static CodeNamespace AssignNamespacesToGraph(CodeCompileUnit codeGraph, string namespaceName)
         {
             // Add imports to the global (unnamed) namespace.
-            CodeNamespace globalNamespace = new CodeNamespace
+            var globalNamespace = new CodeNamespace
             {
                 Imports =
                 {
@@ -392,7 +387,7 @@
             codeGraph.Namespaces.Add(globalNamespace);
 
             // Create a named namespace.
-            CodeNamespace ns = new CodeNamespace(namespaceName);
+            var ns = new CodeNamespace(namespaceName);
             codeGraph.Namespaces.Add(ns);
             return ns;
         }
@@ -402,10 +397,10 @@
             // Generate source code using the code generator.
             using (var writer = new StringWriter())
             {
-                string indentString = Settings.Default.IndentUsingTabs ? "\t" : string.Format("{0," + Settings.Default.IndentSpaces.ToString() + "}", " ");
-                CodeGeneratorOptions options = new CodeGeneratorOptions { IndentString = indentString, BlankLinesBetweenMembers = false };
+                var indentString = Settings.Default.IndentUsingTabs ? "\t" : string.Format("{0," + Settings.Default.IndentSpaces.ToString() + "}", " ");
+                var options = new CodeGeneratorOptions { IndentString = indentString, BlankLinesBetweenMembers = false };
                 provider.GenerateCodeFromCompileUnit(compileUnit, writer, options);
-                string text = writer.ToString();
+                var text = writer.ToString();
                 //// Fix up code: make static DP fields readonly, and use triple-slash or triple-quote comments for XML doc comments.
                 if (provider.FileExtension == "cs")
                 {
@@ -414,10 +409,10 @@
                 }
                 else
                     if (provider.FileExtension == "vb")
-                    {
-                        text = text.Replace("Public Shared ", "Public Shared ReadOnly ");
-                        text = text.Replace("'<", "'''<");
-                    }
+                {
+                    text = text.Replace("Public Shared ", "Public Shared ReadOnly ");
+                    text = text.Replace("'<", "'''<");
+                }
 
                 return text;
             }

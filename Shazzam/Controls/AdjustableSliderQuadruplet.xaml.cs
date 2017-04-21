@@ -14,10 +14,37 @@
     /// </summary>
     public partial class AdjustableSliderQuadruplet : UserControl
     {
+        /// <summary>
+        /// Value Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
+            "Value",
+            typeof(Point4D),
+            typeof(AdjustableSliderQuadruplet),
+            new FrameworkPropertyMetadata(new Point4D(0, 0, 0, 0), OnValueChanged));
+
+        /// <summary>
+        /// Minimum Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
+            "Minimum",
+            typeof(Point4D),
+            typeof(AdjustableSliderQuadruplet),
+            new FrameworkPropertyMetadata(new Point4D(0, 0, 0, 0), OnMinimumChanged));
+
+        /// <summary>
+        /// Maximum Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
+            "Maximum",
+            typeof(Point4D),
+            typeof(AdjustableSliderQuadruplet),
+            new FrameworkPropertyMetadata(new Point4D(100, 100, 100, 100), OnMaximumChanged));
+
         private const double DefaultDuration = 0.5;
 
-        private Storyboard storyboard = new Storyboard();
-        private DoubleAnimation xSliderValueAnimation = new DoubleAnimation
+        private readonly Storyboard storyboard = new Storyboard();
+        private readonly DoubleAnimation xSliderValueAnimation = new DoubleAnimation
         {
             Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
             RepeatBehavior = RepeatBehavior.Forever,
@@ -26,7 +53,7 @@
             DecelerationRatio = 0.25
         };
 
-        private DoubleAnimation ySliderValueAnimation = new DoubleAnimation
+        private readonly DoubleAnimation ySliderValueAnimation = new DoubleAnimation
         {
             Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
             RepeatBehavior = RepeatBehavior.Forever,
@@ -35,7 +62,7 @@
             DecelerationRatio = 0.25
         };
 
-        private DoubleAnimation zSliderValueAnimation = new DoubleAnimation
+        private readonly DoubleAnimation zSliderValueAnimation = new DoubleAnimation
         {
             Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
             RepeatBehavior = RepeatBehavior.Forever,
@@ -44,7 +71,7 @@
             DecelerationRatio = 0.25
         };
 
-        private DoubleAnimation wSliderValueAnimation = new DoubleAnimation
+        private readonly DoubleAnimation wSliderValueAnimation = new DoubleAnimation
         {
             Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
             RepeatBehavior = RepeatBehavior.Forever,
@@ -73,216 +100,32 @@
             Storyboard.SetTargetProperty(this.wSliderValueAnimation, new PropertyPath(RangeBase.ValueProperty));
             this.storyboard.Children.Add(this.wSliderValueAnimation);
 
-            this.mainPanel.PreviewKeyDown += this.mainStackPanel_PreviewKeyDown;
+            this.mainPanel.PreviewKeyDown += this.MainStackPanelPreviewKeyDown;
 
-            this.xMinTextBox.LostFocus += this.xMinTextBox_LostFocus;
-            this.xMaxTextBox.LostFocus += this.xMaxTextBox_LostFocus;
-            this.xSlider.ValueChanged += this.XSlider_ValueChanged;
+            this.xMinTextBox.LostFocus += this.XMinTextBoxLostFocus;
+            this.xMaxTextBox.LostFocus += this.XMaxTextBoxLostFocus;
+            this.xSlider.ValueChanged += this.XSliderValueChanged;
 
-            this.yMinTextBox.LostFocus += this.yMinTextBox_LostFocus;
-            this.yMaxTextBox.LostFocus += this.yMaxTextBox_LostFocus;
-            this.ySlider.ValueChanged += this.YSlider_ValueChanged;
+            this.yMinTextBox.LostFocus += this.YMinTextBoxLostFocus;
+            this.yMaxTextBox.LostFocus += this.YMaxTextBoxLostFocus;
+            this.ySlider.ValueChanged += this.YSliderValueChanged;
 
-            this.zMinTextBox.LostFocus += this.zMinTextBox_LostFocus;
-            this.zMaxTextBox.LostFocus += this.zMaxTextBox_LostFocus;
-            this.zSlider.ValueChanged += this.ZSlider_ValueChanged;
+            this.zMinTextBox.LostFocus += this.ZMinTextBoxLostFocus;
+            this.zMaxTextBox.LostFocus += this.ZMaxTextBoxLostFocus;
+            this.zSlider.ValueChanged += this.ZSliderValueChanged;
 
             // this.wMinTextBox.TextChanged += this.WMinTextBox_TextChanged;
             // this.wMaxTextBox.TextChanged += this.WMaxTextBox_TextChanged;
-            this.wMinTextBox.LostFocus += this.wMinTextBox_LostFocus;
-            this.wMaxTextBox.LostFocus += this.wMaxTextBox_LostFocus;
-            this.wSlider.ValueChanged += this.WSlider_ValueChanged;
+            this.wMinTextBox.LostFocus += this.WMinTextBoxLostFocus;
+            this.wMaxTextBox.LostFocus += this.WMaxTextBoxLostFocus;
+            this.wSlider.ValueChanged += this.WSliderValueChanged;
 
-            this.noAnimationToggleButton.Click += this.AnimationToggleButton_Click;
-            this.linearAnimationToggleButton.Click += this.AnimationToggleButton_Click;
-            this.circularAnimationToggleButton.Click += this.AnimationToggleButton_Click;
-            this.durationTextBox.TextChanged += this.DurationTextBox_TextChanged;
-            this.durationTextBox.Text = Properties.Settings.Default.AnimationLengthDefault.ToString();
+            this.noAnimationToggleButton.Click += this.AnimationToggleButtonClick;
+            this.linearAnimationToggleButton.Click += this.AnimationToggleButtonClick;
+            this.circularAnimationToggleButton.Click += this.AnimationToggleButtonClick;
+            this.durationTextBox.TextChanged += this.DurationTextBoxTextChanged;
+            this.durationTextBox.Text = Properties.Settings.Default.AnimationLengthDefault.ToString(CultureInfo.InvariantCulture);
         }
-
-        private void mainStackPanel_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            // pressing the enter key will move focus to next control
-            var uie = e.OriginalSource as UIElement;
-            if (e.Key == Key.Enter)
-            {
-                e.Handled = true;
-                uie.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-            }
-        }
-
-        private void xMinTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            double number;
-            if (double.TryParse(this.xMinTextBox.Text, NumberStyles.Any, null, out number))
-            {
-                this.Minimum = new Point4D(number, this.Minimum.Y, this.Minimum.Z, this.Minimum.W);
-            }
-        }
-
-        private void xMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            double number;
-            if (double.TryParse(this.xMaxTextBox.Text, NumberStyles.Any, null, out number))
-            {
-                this.Maximum = new Point4D(number, this.Maximum.Y, this.Maximum.Z, this.Maximum.W);
-            }
-        }
-
-        private void XSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            this.Value = new Point4D(e.NewValue, this.Value.Y, this.Value.Z, this.Value.W);
-        }
-
-        private void yMinTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            double number;
-            if (double.TryParse(this.yMinTextBox.Text, NumberStyles.Any, null, out number))
-            {
-                this.Minimum = new Point4D(this.Minimum.X, number, this.Minimum.Z, this.Minimum.W);
-            }
-        }
-
-        private void yMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            double number;
-            if (double.TryParse(this.yMaxTextBox.Text, NumberStyles.Any, null, out number))
-            {
-                this.Maximum = new Point4D(this.Maximum.X, number, this.Maximum.Z, this.Maximum.W);
-            }
-        }
-
-        private void YSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            this.Value = new Point4D(this.Value.X, e.NewValue, this.Value.Z, this.Value.W);
-        }
-
-        private void zMinTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            double number;
-            if (double.TryParse(this.zMinTextBox.Text, NumberStyles.Any, null, out number))
-            {
-                this.Minimum = new Point4D(this.Minimum.X, this.Minimum.Y, number, this.Minimum.W);
-            }
-        }
-
-        private void zMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            double number;
-            if (double.TryParse(this.zMaxTextBox.Text, NumberStyles.Any, null, out number))
-            {
-                this.Maximum = new Point4D(this.Maximum.X, this.Maximum.Y, number, this.Maximum.W);
-            }
-        }
-
-        private void ZSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            this.Value = new Point4D(this.Value.X, this.Value.Y, e.NewValue, this.Value.W);
-        }
-
-        private void wMinTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            double number;
-            if (double.TryParse(this.wMinTextBox.Text, NumberStyles.Any, null, out number))
-            {
-                this.Minimum = new Point4D(this.Minimum.X, this.Minimum.Y, this.Minimum.Z, number);
-            }
-        }
-
-        private void wMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            double number;
-            if (double.TryParse(this.wMaxTextBox.Text, NumberStyles.Any, null, out number))
-            {
-                this.Maximum = new Point4D(this.Maximum.X, this.Maximum.Y, this.Maximum.Z, number);
-            }
-        }
-
-        private void WSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            this.Value = new Point4D(this.Value.X, this.Value.Y, this.Value.Z, e.NewValue);
-        }
-
-        private void AnimationToggleButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.noAnimationToggleButton.IsChecked = sender == this.noAnimationToggleButton;
-            this.linearAnimationToggleButton.IsChecked = sender == this.linearAnimationToggleButton;
-            this.circularAnimationToggleButton.IsChecked = sender == this.circularAnimationToggleButton;
-            this.UpdateAnimation();
-        }
-
-        private void DurationTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            double number;
-            if (double.TryParse(this.durationTextBox.Text, out number))
-            {
-                TimeSpan duration = TimeSpan.FromSeconds(Math.Max(0, number));
-                this.xSliderValueAnimation.Duration = duration;
-                this.ySliderValueAnimation.Duration = duration;
-                this.zSliderValueAnimation.Duration = duration;
-                this.wSliderValueAnimation.Duration = duration;
-                this.UpdateAnimation();
-            }
-        }
-
-        private void UpdateAnimation()
-        {
-            Point4D minimum = this.Minimum;
-            Point4D maximum = this.Maximum;
-            this.xSliderValueAnimation.From = minimum.X;
-            this.xSliderValueAnimation.To = maximum.X;
-
-            this.ySliderValueAnimation.From = minimum.Y;
-            this.ySliderValueAnimation.To = maximum.Y;
-
-            this.zSliderValueAnimation.From = minimum.Z;
-            this.zSliderValueAnimation.To = maximum.Z;
-
-            this.wSliderValueAnimation.From = minimum.W;
-            this.wSliderValueAnimation.To = maximum.W;
-
-            if (this.noAnimationToggleButton.IsChecked.GetValueOrDefault() ||
-                this.xSliderValueAnimation.Duration.TimeSpan == TimeSpan.Zero)
-            {
-                this.storyboard.Stop(this);
-                this.xSlider.Visibility = Visibility.Visible;
-                this.xSliderText.Visibility = Visibility.Collapsed;
-                this.ySlider.Visibility = Visibility.Visible;
-                this.ySliderText.Visibility = Visibility.Collapsed;
-                this.zSlider.Visibility = Visibility.Visible;
-                this.zSliderText.Visibility = Visibility.Collapsed;
-                this.wSlider.Visibility = Visibility.Visible;
-                this.wSliderText.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                double duration = this.xSliderValueAnimation.Duration.TimeSpan.TotalSeconds;
-                double yBeginTime = this.circularAnimationToggleButton.IsChecked.GetValueOrDefault() ? duration / 4 : 0;
-                double zBeginTime = this.circularAnimationToggleButton.IsChecked.GetValueOrDefault() ? 2 * duration / 4 : 0;
-                double wBeginTime = this.circularAnimationToggleButton.IsChecked.GetValueOrDefault() ? 3 * duration / 4 : 0;
-                this.ySliderValueAnimation.BeginTime = TimeSpan.FromSeconds(yBeginTime);
-                this.zSliderValueAnimation.BeginTime = TimeSpan.FromSeconds(zBeginTime);
-                this.wSliderValueAnimation.BeginTime = TimeSpan.FromSeconds(wBeginTime);
-                this.storyboard.Begin(this, true);
-                this.xSlider.Visibility = Visibility.Collapsed;
-                this.xSliderText.Visibility = Visibility.Visible;
-                this.ySlider.Visibility = Visibility.Collapsed;
-                this.ySliderText.Visibility = Visibility.Visible;
-                this.zSlider.Visibility = Visibility.Collapsed;
-                this.zSliderText.Visibility = Visibility.Visible;
-                this.wSlider.Visibility = Visibility.Collapsed;
-                this.wSliderText.Visibility = Visibility.Visible;
-            }
-        }
-
-        /// <summary>
-        /// Value Dependency Property
-        /// </summary>
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            "Value",
-            typeof(Point4D),
-            typeof(AdjustableSliderQuadruplet),
-            new FrameworkPropertyMetadata(new Point4D(0, 0, 0, 0), OnValueChanged));
 
         /// <summary>
         /// Gets or sets the Value property.  This dependency property
@@ -295,35 +138,6 @@
         }
 
         /// <summary>
-        /// Handles changes to the Value property.
-        /// </summary>
-        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((AdjustableSliderQuadruplet)d).OnValueChanged(e);
-        }
-
-        /// <summary>
-        /// Provides derived classes an opportunity to handle changes to the Value property.
-        /// </summary>
-        protected virtual void OnValueChanged(DependencyPropertyChangedEventArgs e)
-        {
-            Point4D point = (Point4D)e.NewValue;
-            this.xSlider.Value = point.X;
-            this.ySlider.Value = point.Y;
-            this.zSlider.Value = point.Z;
-            this.wSlider.Value = point.W;
-        }
-
-        /// <summary>
-        /// Minimum Dependency Property
-        /// </summary>
-        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
-            "Minimum",
-            typeof(Point4D),
-            typeof(AdjustableSliderQuadruplet),
-            new FrameworkPropertyMetadata(new Point4D(0, 0, 0, 0), OnMinimumChanged));
-
-        /// <summary>
         /// Gets or sets the Minimum property.  This dependency property
         /// indicates Minimum allowed value for the control.
         /// </summary>
@@ -332,36 +146,6 @@
             get => (Point4D)this.GetValue(MinimumProperty);
             set => this.SetValue(MinimumProperty, value);
         }
-
-        /// <summary>
-        /// Handles changes to the Minimum property.
-        /// </summary>
-        private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((AdjustableSliderQuadruplet)d).OnMinimumChanged(e);
-        }
-
-        /// <summary>
-        /// Provides derived classes an opportunity to handle changes to the Minimum property.
-        /// </summary>
-        protected virtual void OnMinimumChanged(DependencyPropertyChangedEventArgs e)
-        {
-            Point4D point = (Point4D)e.NewValue;
-            this.xMinTextBox.Text = point.X.ToString();
-            this.yMinTextBox.Text = point.Y.ToString();
-            this.zMinTextBox.Text = point.Z.ToString();
-            this.wMinTextBox.Text = point.W.ToString();
-            this.UpdateAnimation();
-        }
-
-        /// <summary>
-        /// Maximum Dependency Property
-        /// </summary>
-        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
-            "Maximum",
-            typeof(Point4D),
-            typeof(AdjustableSliderQuadruplet),
-            new FrameworkPropertyMetadata(new Point4D(100, 100, 100, 100), OnMaximumChanged));
 
         /// <summary>
         /// Gets or sets the Maximum property.  This dependency property
@@ -374,11 +158,28 @@
         }
 
         /// <summary>
-        /// Handles changes to the Maximum property.
+        /// Provides derived classes an opportunity to handle changes to the Value property.
         /// </summary>
-        private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        protected virtual void OnValueChanged(DependencyPropertyChangedEventArgs e)
         {
-            ((AdjustableSliderQuadruplet)d).OnMaximumChanged(e);
+            var point = (Point4D)e.NewValue;
+            this.xSlider.SetCurrentValue(RangeBase.ValueProperty, point.X);
+            this.ySlider.SetCurrentValue(RangeBase.ValueProperty, point.Y);
+            this.zSlider.SetCurrentValue(RangeBase.ValueProperty, point.Z);
+            this.wSlider.SetCurrentValue(RangeBase.ValueProperty, point.W);
+        }
+
+        /// <summary>
+        /// Provides derived classes an opportunity to handle changes to the Minimum property.
+        /// </summary>
+        protected virtual void OnMinimumChanged(DependencyPropertyChangedEventArgs e)
+        {
+            var point = (Point4D)e.NewValue;
+            this.xMinTextBox.SetCurrentValue(TextBox.TextProperty, point.X.ToString(CultureInfo.InvariantCulture));
+            this.yMinTextBox.SetCurrentValue(TextBox.TextProperty, point.Y.ToString(CultureInfo.InvariantCulture));
+            this.zMinTextBox.SetCurrentValue(TextBox.TextProperty, point.Z.ToString(CultureInfo.InvariantCulture));
+            this.wMinTextBox.SetCurrentValue(TextBox.TextProperty, point.W.ToString(CultureInfo.InvariantCulture));
+            this.UpdateAnimation();
         }
 
         /// <summary>
@@ -386,12 +187,202 @@
         /// </summary>
         protected virtual void OnMaximumChanged(DependencyPropertyChangedEventArgs e)
         {
-            Point4D point = (Point4D)e.NewValue;
-            this.xMaxTextBox.Text = point.X.ToString();
-            this.yMaxTextBox.Text = point.Y.ToString();
-            this.zMaxTextBox.Text = point.Z.ToString();
-            this.wMaxTextBox.Text = point.W.ToString();
+            var point = (Point4D)e.NewValue;
+            this.xMaxTextBox.SetCurrentValue(TextBox.TextProperty, point.X.ToString(CultureInfo.InvariantCulture));
+            this.yMaxTextBox.SetCurrentValue(TextBox.TextProperty, point.Y.ToString(CultureInfo.InvariantCulture));
+            this.zMaxTextBox.SetCurrentValue(TextBox.TextProperty, point.Z.ToString(CultureInfo.InvariantCulture));
+            this.wMaxTextBox.SetCurrentValue(TextBox.TextProperty, point.W.ToString(CultureInfo.InvariantCulture));
             this.UpdateAnimation();
+        }
+
+        /// <summary>
+        /// Handles changes to the Value property.
+        /// </summary>
+        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((AdjustableSliderQuadruplet)d).OnValueChanged(e);
+        }
+
+        /// <summary>
+        /// Handles changes to the Minimum property.
+        /// </summary>
+        private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((AdjustableSliderQuadruplet)d).OnMinimumChanged(e);
+        }
+
+        /// <summary>
+        /// Handles changes to the Maximum property.
+        /// </summary>
+        private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((AdjustableSliderQuadruplet)d).OnMaximumChanged(e);
+        }
+
+        private void MainStackPanelPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // pressing the enter key will move focus to next control
+            if (e.OriginalSource is UIElement uie &&
+                e.Key == Key.Enter)
+            {
+                e.Handled = true;
+                uie.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+            }
+        }
+
+        private void XMinTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (double.TryParse(this.xMinTextBox.Text, NumberStyles.Any, null, out double number))
+            {
+                this.SetCurrentValue(MinimumProperty, new Point4D(number, this.Minimum.Y, this.Minimum.Z, this.Minimum.W));
+            }
+        }
+
+        private void XMaxTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (double.TryParse(this.xMaxTextBox.Text, NumberStyles.Any, null, out double number))
+            {
+                this.SetCurrentValue(MaximumProperty, new Point4D(number, this.Maximum.Y, this.Maximum.Z, this.Maximum.W));
+            }
+        }
+
+        private void XSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.SetCurrentValue(ValueProperty, new Point4D(e.NewValue, this.Value.Y, this.Value.Z, this.Value.W));
+        }
+
+        private void YMinTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (double.TryParse(this.yMinTextBox.Text, NumberStyles.Any, null, out double number))
+            {
+                this.SetCurrentValue(MinimumProperty, new Point4D(this.Minimum.X, number, this.Minimum.Z, this.Minimum.W));
+            }
+        }
+
+        private void YMaxTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (double.TryParse(this.yMaxTextBox.Text, NumberStyles.Any, null, out double number))
+            {
+                this.SetCurrentValue(MaximumProperty, new Point4D(this.Maximum.X, number, this.Maximum.Z, this.Maximum.W));
+            }
+        }
+
+        private void YSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.SetCurrentValue(ValueProperty, new Point4D(this.Value.X, e.NewValue, this.Value.Z, this.Value.W));
+        }
+
+        private void ZMinTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (double.TryParse(this.zMinTextBox.Text, NumberStyles.Any, null, out double number))
+            {
+                this.SetCurrentValue(MinimumProperty, new Point4D(this.Minimum.X, this.Minimum.Y, number, this.Minimum.W));
+            }
+        }
+
+        private void ZMaxTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (double.TryParse(this.zMaxTextBox.Text, NumberStyles.Any, null, out double number))
+            {
+                this.SetCurrentValue(MaximumProperty, new Point4D(this.Maximum.X, this.Maximum.Y, number, this.Maximum.W));
+            }
+        }
+
+        private void ZSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.SetCurrentValue(ValueProperty, new Point4D(this.Value.X, this.Value.Y, e.NewValue, this.Value.W));
+        }
+
+        private void WMinTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (double.TryParse(this.wMinTextBox.Text, NumberStyles.Any, null, out double number))
+            {
+                this.SetCurrentValue(MinimumProperty, new Point4D(this.Minimum.X, this.Minimum.Y, this.Minimum.Z, number));
+            }
+        }
+
+        private void WMaxTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (double.TryParse(this.wMaxTextBox.Text, NumberStyles.Any, null, out double number))
+            {
+                this.SetCurrentValue(MaximumProperty, new Point4D(this.Maximum.X, this.Maximum.Y, this.Maximum.Z, number));
+            }
+        }
+
+        private void WSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.SetCurrentValue(ValueProperty, new Point4D(this.Value.X, this.Value.Y, this.Value.Z, e.NewValue));
+        }
+
+        private void AnimationToggleButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.noAnimationToggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, ReferenceEquals(sender, this.noAnimationToggleButton));
+            this.linearAnimationToggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, ReferenceEquals(sender, this.linearAnimationToggleButton));
+            this.circularAnimationToggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, ReferenceEquals(sender, this.circularAnimationToggleButton));
+            this.UpdateAnimation();
+        }
+
+        private void DurationTextBoxTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (double.TryParse(this.durationTextBox.Text, out double number))
+            {
+                var duration = TimeSpan.FromSeconds(Math.Max(0, number));
+                this.xSliderValueAnimation.SetCurrentValue(Timeline.DurationProperty, (System.Windows.Duration)duration);
+                this.ySliderValueAnimation.SetCurrentValue(Timeline.DurationProperty, (System.Windows.Duration)duration);
+                this.zSliderValueAnimation.SetCurrentValue(Timeline.DurationProperty, (System.Windows.Duration)duration);
+                this.wSliderValueAnimation.SetCurrentValue(Timeline.DurationProperty, (System.Windows.Duration)duration);
+                this.UpdateAnimation();
+            }
+        }
+
+        private void UpdateAnimation()
+        {
+            var minimum = this.Minimum;
+            var maximum = this.Maximum;
+            this.xSliderValueAnimation.SetCurrentValue(DoubleAnimation.FromProperty, minimum.X);
+            this.xSliderValueAnimation.SetCurrentValue(DoubleAnimation.ToProperty, maximum.X);
+
+            this.ySliderValueAnimation.SetCurrentValue(DoubleAnimation.FromProperty, minimum.Y);
+            this.ySliderValueAnimation.SetCurrentValue(DoubleAnimation.ToProperty, maximum.Y);
+
+            this.zSliderValueAnimation.SetCurrentValue(DoubleAnimation.FromProperty, minimum.Z);
+            this.zSliderValueAnimation.SetCurrentValue(DoubleAnimation.ToProperty, maximum.Z);
+
+            this.wSliderValueAnimation.SetCurrentValue(DoubleAnimation.FromProperty, minimum.W);
+            this.wSliderValueAnimation.SetCurrentValue(DoubleAnimation.ToProperty, maximum.W);
+
+            if (this.noAnimationToggleButton.IsChecked.GetValueOrDefault() ||
+                this.xSliderValueAnimation.Duration.TimeSpan == TimeSpan.Zero)
+            {
+                this.storyboard.Stop(this);
+                this.xSlider.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.xSliderText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.ySlider.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.ySliderText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.zSlider.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.zSliderText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.wSlider.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.wSliderText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+            }
+            else
+            {
+                var duration = this.xSliderValueAnimation.Duration.TimeSpan.TotalSeconds;
+                var yBeginTime = this.circularAnimationToggleButton.IsChecked.GetValueOrDefault() ? duration / 4 : 0;
+                var zBeginTime = this.circularAnimationToggleButton.IsChecked.GetValueOrDefault() ? 2 * duration / 4 : 0;
+                var wBeginTime = this.circularAnimationToggleButton.IsChecked.GetValueOrDefault() ? 3 * duration / 4 : 0;
+                this.ySliderValueAnimation.SetCurrentValue(Timeline.BeginTimeProperty, TimeSpan.FromSeconds(yBeginTime));
+                this.zSliderValueAnimation.SetCurrentValue(Timeline.BeginTimeProperty, TimeSpan.FromSeconds(zBeginTime));
+                this.wSliderValueAnimation.SetCurrentValue(Timeline.BeginTimeProperty, TimeSpan.FromSeconds(wBeginTime));
+                this.storyboard.Begin(this, isControllable: true);
+                this.xSlider.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.xSliderText.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.ySlider.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.ySliderText.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.zSlider.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.zSliderText.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.wSlider.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.wSliderText.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+            }
         }
     }
 }

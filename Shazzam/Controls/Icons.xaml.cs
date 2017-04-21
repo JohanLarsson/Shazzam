@@ -1,4 +1,4 @@
-﻿namespace Shazzam
+﻿namespace Shazzam.Controls
 {
     using System.Windows;
 

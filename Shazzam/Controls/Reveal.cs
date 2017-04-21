@@ -90,9 +90,51 @@ namespace Shazzam.Controls
             set => this.SetValue(AnimationProgressProperty, value);
         }
 
+        protected override Size MeasureOverride(Size constraint)
+        {
+            var child = this.Child;
+            if (child != null)
+            {
+                child.Measure(constraint);
+
+                var percent = this.AnimationProgress;
+                var width = CalculateWidth(child.DesiredSize.Width, percent, this.HorizontalReveal);
+                var height = CalculateHeight(child.DesiredSize.Height, percent, this.VerticalReveal);
+                return new Size(width, height);
+            }
+
+            return default(Size);
+        }
+
+        protected override Size ArrangeOverride(Size arrangeSize)
+        {
+            var child = this.Child;
+            if (child != null)
+            {
+                var percent = this.AnimationProgress;
+                var horizontalReveal = this.HorizontalReveal;
+                var verticalReveal = this.VerticalReveal;
+
+                var childWidth = child.DesiredSize.Width;
+                var childHeight = child.DesiredSize.Height;
+                var x = CalculateLeft(childWidth, percent, horizontalReveal);
+                var y = CalculateTop(childHeight, percent, verticalReveal);
+
+                child.Arrange(new Rect(x, y, childWidth, childHeight));
+
+                childWidth = child.RenderSize.Width;
+                childHeight = child.RenderSize.Height;
+                var width = CalculateWidth(childWidth, percent, horizontalReveal);
+                var height = CalculateHeight(childHeight, percent, verticalReveal);
+                return new Size(width, height);
+            }
+
+            return default(Size);
+        }
+
         private static object CoerceAnimationProgress(DependencyObject d, object baseValue)
         {
-            double num = (double)baseValue;
+            var num = (double)baseValue;
             if (num < 0.0)
             {
                 return 0.0;
@@ -103,48 +145,6 @@ namespace Shazzam.Controls
             }
 
             return baseValue;
-        }
-
-        protected override Size MeasureOverride(Size constraint)
-        {
-            UIElement child = this.Child;
-            if (child != null)
-            {
-                child.Measure(constraint);
-
-                double percent = this.AnimationProgress;
-                double width = CalculateWidth(child.DesiredSize.Width, percent, this.HorizontalReveal);
-                double height = CalculateHeight(child.DesiredSize.Height, percent, this.VerticalReveal);
-                return new Size(width, height);
-            }
-
-            return default(Size);
-        }
-
-        protected override Size ArrangeOverride(Size arrangeSize)
-        {
-            UIElement child = this.Child;
-            if (child != null)
-            {
-                double percent = this.AnimationProgress;
-                HorizontalRevealMode horizontalReveal = this.HorizontalReveal;
-                VerticalRevealMode verticalReveal = this.VerticalReveal;
-
-                double childWidth = child.DesiredSize.Width;
-                double childHeight = child.DesiredSize.Height;
-                double x = CalculateLeft(childWidth, percent, horizontalReveal);
-                double y = CalculateTop(childHeight, percent, verticalReveal);
-
-                child.Arrange(new Rect(x, y, childWidth, childHeight));
-
-                childWidth = child.RenderSize.Width;
-                childHeight = child.RenderSize.Height;
-                double width = CalculateWidth(childWidth, percent, horizontalReveal);
-                double height = CalculateHeight(childHeight, percent, verticalReveal);
-                return new Size(width, height);
-            }
-
-            return default(Size);
         }
 
         private static void OnIsExpandedChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -211,64 +211,22 @@ namespace Shazzam.Controls
         private void SetupAnimation(bool isExpanded)
         {
             // Adjust the time if the animation is already in progress
-            double currentProgress = this.AnimationProgress;
+            var currentProgress = this.AnimationProgress;
             if (isExpanded)
             {
                 currentProgress = 1.0 - currentProgress;
             }
 
-            DoubleAnimation animation = new DoubleAnimation();
-            animation.To = isExpanded ? 1.0 : 0.0;
-            animation.Duration = TimeSpan.FromMilliseconds(this.Duration * currentProgress);
-            animation.FillBehavior = FillBehavior.HoldEnd;
+            var animation = new DoubleAnimation
+                                {
+                                    To = isExpanded
+                                             ? 1.0
+                                             : 0.0,
+                                    Duration = TimeSpan.FromMilliseconds(this.Duration * currentProgress),
+                                    FillBehavior = FillBehavior.HoldEnd
+                                };
 
             this.BeginAnimation(AnimationProgressProperty, animation);
         }
-    }
-
-    public enum HorizontalRevealMode
-    {
-        /// <summary>
-        ///     No horizontal reveal animation.
-        /// </summary>
-        None,
-
-        /// <summary>
-        ///     Reveal from the left to the right.
-        /// </summary>
-        FromLeftToRight,
-
-        /// <summary>
-        ///     Reveal from the right to the left.
-        /// </summary>
-        FromRightToLeft,
-
-        /// <summary>
-        ///     Reveal from the center to the bounding edge.
-        /// </summary>
-        FromCenterToEdge,
-    }
-
-    public enum VerticalRevealMode
-    {
-        /// <summary>
-        ///     No vertical reveal animation.
-        /// </summary>
-        None,
-
-        /// <summary>
-        ///     Reveal from top to bottom.
-        /// </summary>
-        FromTopToBottom,
-
-        /// <summary>
-        ///     Reveal from bottom to top.
-        /// </summary>
-        FromBottomToTop,
-
-        /// <summary>
-        ///     Reveal from the center to the bounding edge.
-        /// </summary>
-        FromCenterToEdge,
     }
 }

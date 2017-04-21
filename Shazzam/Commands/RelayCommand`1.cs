@@ -15,8 +15,8 @@ namespace Shazzam.Commands
     /// </summary>
     public class RelayCommand<T> : ICommand
     {
-        private readonly Action<T> execute = null;
-        private readonly Predicate<T> canExecute = null;
+        private readonly Action<T> execute;
+        private readonly Predicate<T> canExecute;
 
         public RelayCommand(Action<T> execute)
         : this(execute, null)

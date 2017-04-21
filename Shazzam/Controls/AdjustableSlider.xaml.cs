@@ -61,15 +61,15 @@
             this.storyboard.Children.Add(this.sliderValueAnimation);
             this.mainPanel.PreviewKeyDown += this.MainStackPanel_PreviewKeyDown;
             //// this.minTextBox.TextChanged += this.MinTextBox_TextChanged;
-            this.minTextBox.LostFocus += this.MinTextBox_LostFocus;
-            this.maxTextBox.LostFocus += this.MaxTextBox_LostFocus;
+            this.minTextBox.LostFocus += this.MinTextBoxLostFocus;
+            this.maxTextBox.LostFocus += this.MaxTextBoxLostFocus;
             //// this.maxTextBox.TextChanged += this.MaxTextBox_TextChanged;
-            this.slider.ValueChanged += this.Slider_ValueChanged;
+            this.slider.ValueChanged += this.SliderValueChanged;
 
-            this.noAnimationToggleButton.Click += this.AnimationToggleButton_Click;
-            this.linearAnimationToggleButton.Click += this.AnimationToggleButton_Click;
+            this.noAnimationToggleButton.Click += this.AnimationToggleButtonClick;
+            this.linearAnimationToggleButton.Click += this.AnimationToggleButtonClick;
 
-            this.durationTextBox.TextChanged += this.DurationTextBox_TextChanged;
+            this.durationTextBox.TextChanged += this.DurationTextBoxTextChanged;
             this.durationTextBox.Text = Properties.Settings.Default.AnimationLengthDefault.ToString(CultureInfo.InvariantCulture);
         }
 
@@ -109,7 +109,7 @@
         /// </summary>
         protected virtual void OnValueChanged(DependencyPropertyChangedEventArgs e)
         {
-            this.slider.Value = (double)e.NewValue;
+            this.slider.SetCurrentValue(RangeBase.ValueProperty, (double)e.NewValue);
         }
 
         /// <summary>
@@ -117,7 +117,7 @@
         /// </summary>
         protected virtual void OnMinimumChanged(DependencyPropertyChangedEventArgs e)
         {
-            this.minTextBox.Text = e.NewValue.ToString();
+            this.minTextBox.SetCurrentValue(TextBox.TextProperty, e.NewValue.ToString());
             this.UpdateAnimation();
         }
 
@@ -126,7 +126,7 @@
         /// </summary>
         protected virtual void OnMaximumChanged(DependencyPropertyChangedEventArgs e)
         {
-            this.maxTextBox.Text = e.NewValue.ToString();
+            this.maxTextBox.SetCurrentValue(TextBox.TextProperty, e.NewValue.ToString());
             this.UpdateAnimation();
         }
 
@@ -148,23 +148,23 @@
         private void MainStackPanel_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // pressing the enter key will move focus to next control
-            var uie = e.OriginalSource as UIElement;
-            if (uie != null && e.Key == Key.Enter)
+            if (e.Key == Key.Enter &&
+                e.OriginalSource is UIElement uie)
             {
                 e.Handled = true;
                 uie.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             }
         }
 
-        private void MinTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void MinTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
             if (double.TryParse(this.minTextBox.Text, NumberStyles.Any, null, out double number))
             {
-                this.Minimum = number;
+                this.SetCurrentValue(MinimumProperty, number);
             }
         }
 
-        private void MaxTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void MaxTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
             if (double.TryParse(this.maxTextBox.Text, NumberStyles.Any, null, out double number))
             {
@@ -172,24 +172,24 @@
             }
         }
 
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void SliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            this.Value = e.NewValue;
+            this.SetCurrentValue(ValueProperty, e.NewValue);
         }
 
-        private void AnimationToggleButton_Click(object sender, RoutedEventArgs e)
+        private void AnimationToggleButtonClick(object sender, RoutedEventArgs e)
         {
             this.noAnimationToggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, ReferenceEquals(sender, this.noAnimationToggleButton));
             this.linearAnimationToggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, ReferenceEquals(sender, this.linearAnimationToggleButton));
             this.UpdateAnimation();
         }
 
-        private void DurationTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void DurationTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
             if (double.TryParse(this.durationTextBox.Text, out double number))
             {
-                TimeSpan duration = TimeSpan.FromSeconds(Math.Max(0, number));
-                this.sliderValueAnimation.Duration = duration;
+                var duration = TimeSpan.FromSeconds(Math.Max(0, number));
+                this.sliderValueAnimation.SetCurrentValue(Timeline.DurationProperty, (System.Windows.Duration)duration);
 
                 this.UpdateAnimation();
             }
@@ -197,23 +197,24 @@
 
         private void UpdateAnimation()
         {
-            this.sliderValueAnimation.From = this.Minimum;
-            this.sliderValueAnimation.To = this.Maximum;
+            this.sliderValueAnimation.SetCurrentValue(DoubleAnimation.FromProperty, this.Minimum);
+            this.sliderValueAnimation.SetCurrentValue(DoubleAnimation.ToProperty, this.Maximum);
 
             if (this.noAnimationToggleButton.IsChecked.GetValueOrDefault() ||
                 this.sliderValueAnimation.Duration.TimeSpan == TimeSpan.Zero)
             {
                 this.storyboard.Stop(this);
 
-                this.slider.Visibility = Visibility.Visible;
-                this.sliderText.Visibility = Visibility.Collapsed;
+                this.slider.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.sliderText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
             }
             else
             {
-                this.storyboard.Begin(this, true);
+                this.storyboard.Begin(this, isControllable: true);
+
                 // moving the slider is distracting
-                this.slider.Visibility = Visibility.Collapsed;
-                this.sliderText.Visibility = Visibility.Visible;
+                this.slider.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.sliderText.SetCurrentValue(VisibilityProperty, Visibility.Visible);
 
                 // get binding for reuse
 

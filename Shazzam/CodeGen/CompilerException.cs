@@ -2,7 +2,7 @@
 {
     using System;
 
-    [Serializable()]
+    [Serializable]
     public class CompilerException : Exception
     {
         public CompilerException()

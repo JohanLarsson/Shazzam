@@ -9,10 +9,10 @@
         public SettingsPlugin()
         {
             this.InitializeComponent();
-            this.Loaded += this.SettingsPlugin_Loaded;
+            this.Loaded += this.SettingsPluginLoaded;
         }
 
-        private void SettingsPlugin_Loaded(object sender, RoutedEventArgs e)
+        private void SettingsPluginLoaded(object sender, RoutedEventArgs e)
         {
             if (RenderCapability.IsPixelShaderVersionSupported(3, 0))
             {

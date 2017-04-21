@@ -4,16 +4,32 @@
 
     public class ShaderModel
     {
-        public string ShaderFileName { get; set; }
+        public ShaderModel(
+            string shaderFileName,
+            string generatedClassName,
+            string generatedNamespace,
+            string description,
+            TargetFramework targetFramework,
+            List<ShaderModelConstantRegister> registers)
+        {
+            this.ShaderFileName = shaderFileName;
+            this.GeneratedClassName = generatedClassName;
+            this.GeneratedNamespace = generatedNamespace;
+            this.Description = description;
+            this.TargetFramework = targetFramework;
+            this.Registers = registers;
+        }
 
-        public string GeneratedClassName { get; set; }
+        public string ShaderFileName { get; }
 
-        public string GeneratedNamespace { get; set; }
+        public string GeneratedClassName { get; }
 
-        public string Description { get; set; }
+        public string GeneratedNamespace { get; }
 
-        public TargetFramework TargetFramework { get; set; }
+        public string Description { get; }
 
-        public List<ShaderModelConstantRegister> Registers { get; set; }
+        public TargetFramework TargetFramework { get; }
+
+        public List<ShaderModelConstantRegister> Registers { get; }
     }
 }

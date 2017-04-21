@@ -24,70 +24,61 @@
 
             // this is fragile as it depends the tab order not changing
             // rewrite to use references instead
+            var file = Path.GetFileName(Properties.Settings.Default.FilePath_LastFx);
             switch (Properties.Settings.Default.TabIndex_LastLoader)
             {
                 case 0:
-                    this.fileListBox.SelectedItem = Path.GetFileName(Properties.Settings.Default.FilePath_LastFx);
+                    this.fileListBox.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, file);
                     this.fileListBox.ScrollIntoView(this.fileListBox.SelectedItem);
                     break;
                 case 1:
-                    this.sampleListBox.SelectedItem = Path.GetFileName(Properties.Settings.Default.FilePath_LastFx);
+                    this.sampleListBox.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, file);
                     this.sampleListBox.ScrollIntoView(this.sampleListBox.SelectedItem);
                     break;
                 case 2:
-                    this.tutorialListBox.SelectedItem = Path.GetFileName(Properties.Settings.Default.FilePath_LastFx);
+                    this.tutorialListBox.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, file);
                     this.tutorialListBox.ScrollIntoView(this.tutorialListBox.SelectedItem);
-                    break;
-                default:
                     break;
             }
 
-            this.sampleListBox.SelectionChanged += this.sampleListBox_SelectionChanged;
-            this.fileListBox.SelectionChanged += this.fileListBox_SelectionChanged;
-            this.tutorialListBox.SelectionChanged += this.tutorialListBox_SelectionChanged;
-            this.loaderTab.SelectionChanged += this.loaderTab_SelectionChanged;
-        }
-
-        private void loaderTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Properties.Settings.Default.TabIndex_LastLoader = this.loaderTab.SelectedIndex;
-            Properties.Settings.Default.Save();
+            this.sampleListBox.SelectionChanged += this.SampleListBoxSelectionChanged;
+            this.fileListBox.SelectionChanged += this.FileListBoxSelectionChanged;
+            this.tutorialListBox.SelectionChanged += this.TutorialListBoxSelectionChanged;
+            this.loaderTab.SelectionChanged += this.LoaderTabSelectionChanged;
         }
 
         public CodeTabView CodeTabView { get; set; }
 
         public void Update()
         {
-            this.fileListBox.SelectedItem = null;
-            this.sampleListBox.SelectedItem = null;
+            this.fileListBox.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, null);
+            this.sampleListBox.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, null);
             this.FillList();
             this.FillSampleList();
             this.FillTutorialList();
         }
 
-        private void FillList()
+        private void LoaderTabSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Directory.Exists(Properties.Settings.Default.FolderPath_FX))
-            {
-                this.fileListBox.ItemsSource = Directory.GetFiles(Properties.Settings.Default.FolderPath_FX, "*.fx").Select(filename => Path.GetFileName(filename));
-            }
+            Properties.Settings.Default.TabIndex_LastLoader = this.loaderTab.SelectedIndex;
+            Properties.Settings.Default.Save();
         }
 
-        private void fileListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void FileListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (this.fileListBox.SelectedItem == null)
             {
                 return;
             }
 
-            string path = Path.Combine(Properties.Settings.Default.FolderPath_FX, this.fileListBox.SelectedItem.ToString());
+            var path = Path.Combine(Properties.Settings.Default.FolderPath_FX, this.fileListBox.SelectedItem.ToString());
 
             ShazzamSwitchboard.CodeTabView.OpenFile(path);
             Properties.Settings.Default.FilePath_LastFx = path;
             Properties.Settings.Default.Save();
         }
 
-        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        private void HyperlinkClick(object sender, RoutedEventArgs e)
         {
             using (var ofd = new System.Windows.Forms.FolderBrowserDialog())
             {
@@ -105,57 +96,65 @@
             }
         }
 
-        private void FillSampleList()
+        private void SampleListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string path = Path.Combine(this.exePath, "samples");
-            if (Directory.Exists(path))
-            {
-                this.sampleListBox.ItemsSource = Directory.GetFiles(path, "*.fx").Select(filename => Path.GetFileName(filename));
-            }
-        }
-
-        private void FillTutorialList()
-        {
-            string path = Path.Combine(this.exePath, "tutorials");
-            if (Directory.Exists(path))
-            {
-                this.tutorialListBox.ItemsSource = Directory.GetFiles(path, "*.fx").Select(filename => Path.GetFileName(filename));
-            }
-        }
-
-        private void sampleListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string samplesPath = Path.Combine(this.exePath, "samples");
+            var samplesPath = Path.Combine(this.exePath, "samples");
             if (this.sampleListBox.SelectedItem == null)
             {
                 return;
             }
 
-            string path = Path.Combine(samplesPath, this.sampleListBox.SelectedItem.ToString());
+            var path = Path.Combine(samplesPath, this.sampleListBox.SelectedItem.ToString());
 
             ShazzamSwitchboard.CodeTabView.OpenFile(path);
             Properties.Settings.Default.FilePath_LastFx = path;
             Properties.Settings.Default.Save();
         }
 
-        private void tutorialListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TutorialListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string tutorialsPath = Path.Combine(this.exePath, "tutorials");
+            var tutorialsPath = Path.Combine(this.exePath, "tutorials");
             if (this.tutorialListBox.SelectedItem == null)
             {
                 return;
             }
 
-            string path = Path.Combine(tutorialsPath, this.tutorialListBox.SelectedItem.ToString());
+            var path = Path.Combine(tutorialsPath, this.tutorialListBox.SelectedItem.ToString());
 
             ShazzamSwitchboard.CodeTabView.OpenFile(path);
             Properties.Settings.Default.FilePath_LastFx = path;
             Properties.Settings.Default.Save();
         }
 
-        private void locationHyperlink_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void LocationHyperlinkMouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            this.locationHyperlink.ToolTip = Properties.Settings.Default.FolderPath_FX;
+            this.locationHyperlink.SetCurrentValue(FrameworkContentElement.ToolTipProperty, Properties.Settings.Default.FolderPath_FX);
+        }
+
+        private void FillList()
+        {
+            if (Directory.Exists(Properties.Settings.Default.FolderPath_FX))
+            {
+                this.fileListBox.SetCurrentValue(ItemsControl.ItemsSourceProperty, Directory.GetFiles(Properties.Settings.Default.FolderPath_FX, "*.fx").Select(Path.GetFileName));
+            }
+        }
+
+        private void FillSampleList()
+        {
+            var path = Path.Combine(this.exePath, "samples");
+            if (Directory.Exists(path))
+            {
+                this.sampleListBox.SetCurrentValue(ItemsControl.ItemsSourceProperty, Directory.GetFiles(path, "*.fx").Select(Path.GetFileName));
+            }
+        }
+
+        private void FillTutorialList()
+        {
+            var path = Path.Combine(this.exePath, "tutorials");
+            if (Directory.Exists(path))
+            {
+                this.tutorialListBox.SetCurrentValue(ItemsControl.ItemsSourceProperty, Directory.GetFiles(path, "*.fx").Select(Path.GetFileName));
+            }
         }
     }
 }

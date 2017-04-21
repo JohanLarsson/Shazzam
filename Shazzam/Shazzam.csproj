@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Shazzam</RootNamespace>
     <AssemblyName>Shazzam</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -47,6 +47,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>Shazzam.ruleset</CodeAnalysisRuleSet>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -58,6 +59,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <CodeAnalysisRuleSet>Shazzam.ruleset</CodeAnalysisRuleSet>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationFramework.Aero">
@@ -198,19 +200,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DynamicInputView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Plugins\FileLoaderViewer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ImageTabView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <Generator>MSBuild:Compile</Generator>
@@ -252,12 +242,18 @@
     <Compile Include="Controls\AdjustableSliderQuadruplet.xaml.cs">
       <DependentUpon>AdjustableSliderQuadruplet.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\HorizontalRevealMode.cs" />
     <Compile Include="Controls\Icons.xaml.cs">
       <DependentUpon>Icons.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\IndexOddEven.cs" />
+    <Compile Include="Controls\SelectionLocation.cs" />
+    <Compile Include="Controls\StackLocation.cs" />
+    <Compile Include="Controls\TextureMapLocator.cs" />
     <Compile Include="Controls\TexturePicker.xaml.cs">
       <DependentUpon>TexturePicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\VerticalRevealMode.cs" />
     <Compile Include="Converters\EqualityConverter.cs" />
     <Compile Include="Converters\StretchToIsCheckedConverter.cs" />
     <Compile Include="Converters\RegisterValueConverter.cs" />
@@ -267,8 +263,11 @@
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\VersionHelper.cs" />
-    <Compile Include="IndexingStackPanel.cs" />
+    <Compile Include="Controls\IndexingStackPanel.cs" />
     <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindowViewModel.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Plugin.cs" />
@@ -294,7 +293,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Reveal.cs" />
+    <Compile Include="Controls\Reveal.cs" />
     <Compile Include="RoutedEventHelper.cs" />
     <Content Include="d3dx10_40.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -445,10 +444,10 @@
     <Content Include="Samples\Circles.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Samples\FadeToBlack.fx">
+    <Content Include="Samples\Fade.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Samples\FadeToMonochrome.fx">
+    <Content Include="Samples\Desaturate.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Samples\Generative_Star.fx">
@@ -577,7 +576,6 @@
     <Content Include="Samples\GlassTiles.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Services\ReadAboutCinch.txt" />
     <Content Include="Tutorials\04c_TexturesVia_S_Registers.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -678,32 +676,20 @@
     <Content Include="Samples\SketchPencilStroke.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Include="Services\IMessageBoxService.cs" />
-    <Compile Include="Services\IOpenFileService.cs" />
-    <Compile Include="Services\ISaveFileService.cs" />
-    <Compile Include="Services\WPFMessageBoxService.cs" />
-    <Compile Include="Services\WPFOpenFileService.cs" />
-    <Compile Include="Services\WPFSaveFileService.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="Properties\Settings.cs" />
     <Compile Include="ShaderModel.cs" />
     <Compile Include="ShaderModelConstantRegister.cs" />
     <Compile Include="ShazzamSwitchboard.cs" />
     <Compile Include="TargetFramework.cs" />
-    <Compile Include="ViewModels\CodeTabViewModel.cs" />
-    <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\VMBase.cs" />
     <Compile Include="Views\CodeTabsView.xaml.cs">
       <DependentUpon>CodeTabsView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\DynamicInputView.xaml.cs">
-      <DependentUpon>DynamicInputView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Plugins\FileLoaderViewer.xaml.cs">
       <DependentUpon>FileLoaderViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ImageTabView.xaml.cs">
-      <DependentUpon>ImageTabView.xaml</DependentUpon>
+    <Compile Include="Views\CodeTabViewModel.cs">
+      <DependentUpon>CodeTabsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PluginView.xaml.cs">
       <DependentUpon>PluginView.xaml</DependentUpon>
@@ -992,6 +978,9 @@
     <Analyzer Include="..\packages\analyzers\WpfAnalyzers\analyzers\dotnet\cs\WpfAnalyzers.CodeFixes.dll">
       <Paket>True</Paket>
     </Analyzer>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v3.5'">

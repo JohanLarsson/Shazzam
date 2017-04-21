@@ -29,8 +29,13 @@ namespace Shazzam.CodeGen
 
             set
             {
+                if (value == this.errorText)
+                {
+                    return;
+                }
+
                 this.errorText = value;
-                this.RaiseNotifyChanged("ErrorText");
+                this.RaiseNotifyChanged();
             }
         }
 
@@ -40,8 +45,13 @@ namespace Shazzam.CodeGen
 
             set
             {
+                if (value == this.isCompiled)
+                {
+                    return;
+                }
+
                 this.isCompiled = value;
-                this.RaiseNotifyChanged("IsCompiled");
+                this.RaiseNotifyChanged();
             }
         }
 
@@ -52,7 +62,6 @@ namespace Shazzam.CodeGen
 
             var defines = IntPtr.Zero;
             var includes = IntPtr.Zero;
-            var ppConstantTable = IntPtr.Zero;
             ID3DXBuffer ppShader;
             ID3DXBuffer ppErrorMsgs;
 
@@ -91,6 +100,7 @@ namespace Shazzam.CodeGen
             }
             else
             {
+                IntPtr ppConstantTable;
                 if (IntPtr.Size == 8)
                 {
                     // 64 bit
@@ -126,9 +136,6 @@ namespace Shazzam.CodeGen
             if (hr != 0)
             {
                 var errors = ppErrorMsgs.GetBufferPointer();
-
-                var size = ppErrorMsgs.GetBufferSize();
-
                 this.ErrorText = Marshal.PtrToStringAnsi(errors);
                 this.IsCompiled = false;
                 goto finished;
@@ -222,12 +229,9 @@ namespace Shazzam.CodeGen
             // for instrumentation
         }
 
-        private void RaiseNotifyChanged(string propName)
+        private void RaiseNotifyChanged([System.Runtime.CompilerServices.CallerMemberName] string propName = null)
         {
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
-            }
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

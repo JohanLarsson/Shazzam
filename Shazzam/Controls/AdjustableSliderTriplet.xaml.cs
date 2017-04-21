@@ -89,22 +89,22 @@
 
             this.mainPanel.PreviewKeyDown += this.MainStackPanel_PreviewKeyDown;
 
-            this.xMinTextBox.LostFocus += this.XMinTextBox_LostFocus;
-            this.xMaxTextBox.LostFocus += this.XMaxTextBox_LostFocus;
-            this.xSlider.ValueChanged += this.XSlider_ValueChanged;
+            this.xMinTextBox.LostFocus += this.XMinTextBoxLostFocus;
+            this.xMaxTextBox.LostFocus += this.XMaxTextBoxLostFocus;
+            this.xSlider.ValueChanged += this.XSliderValueChanged;
 
-            this.yMinTextBox.LostFocus += this.YMinTextBox_LostFocus;
-            this.yMaxTextBox.LostFocus += this.YMaxTextBox_LostFocus;
-            this.ySlider.ValueChanged += this.YSlider_ValueChanged;
+            this.yMinTextBox.LostFocus += this.YMinTextBoxLostFocus;
+            this.yMaxTextBox.LostFocus += this.YMaxTextBoxLostFocus;
+            this.ySlider.ValueChanged += this.YSliderValueChanged;
 
-            this.zMinTextBox.LostFocus += this.ZMinTextBox_LostFocus;
-            this.zMaxTextBox.LostFocus += this.ZMaxTextBox_LostFocus;
-            this.zSlider.ValueChanged += this.ZSlider_ValueChanged;
+            this.zMinTextBox.LostFocus += this.ZMinTextBoxLostFocus;
+            this.zMaxTextBox.LostFocus += this.ZMaxTextBoxLostFocus;
+            this.zSlider.ValueChanged += this.ZSliderValueChanged;
 
-            this.noAnimationToggleButton.Click += this.AnimationToggleButton_Click;
-            this.linearAnimationToggleButton.Click += this.AnimationToggleButton_Click;
-            this.circularAnimationToggleButton.Click += this.AnimationToggleButton_Click;
-            this.durationTextBox.TextChanged += this.DurationTextBox_TextChanged;
+            this.noAnimationToggleButton.Click += this.AnimationToggleButtonClick;
+            this.linearAnimationToggleButton.Click += this.AnimationToggleButtonClick;
+            this.circularAnimationToggleButton.Click += this.AnimationToggleButtonClick;
+            this.durationTextBox.TextChanged += this.DurationTextBoxTextChanged;
             this.durationTextBox.Text = Properties.Settings.Default.AnimationLengthDefault.ToString(CultureInfo.InvariantCulture);
         }
 
@@ -143,10 +143,10 @@
         /// </summary>
         protected virtual void OnValueChanged(DependencyPropertyChangedEventArgs e)
         {
-            Point3D point = (Point3D)e.NewValue;
-            this.xSlider.Value = point.X;
-            this.ySlider.Value = point.Y;
-            this.zSlider.Value = point.Z;
+            var point = (Point3D)e.NewValue;
+            this.xSlider.SetCurrentValue(RangeBase.ValueProperty, point.X);
+            this.ySlider.SetCurrentValue(RangeBase.ValueProperty, point.Y);
+            this.zSlider.SetCurrentValue(RangeBase.ValueProperty, point.Z);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@
         /// </summary>
         protected virtual void OnMaximumChanged(DependencyPropertyChangedEventArgs e)
         {
-            Point3D point = (Point3D)e.NewValue;
+            var point = (Point3D)e.NewValue;
             this.xMaxTextBox.SetCurrentValue(TextBox.TextProperty, point.X.ToString(CultureInfo.InvariantCulture));
             this.yMaxTextBox.SetCurrentValue(TextBox.TextProperty, point.Y.ToString(CultureInfo.InvariantCulture));
             this.zMaxTextBox.SetCurrentValue(TextBox.TextProperty, point.Z.ToString(CultureInfo.InvariantCulture));
@@ -166,7 +166,7 @@
         /// </summary>
         protected virtual void OnMinimumChanged(DependencyPropertyChangedEventArgs e)
         {
-            Point3D point = (Point3D)e.NewValue;
+            var point = (Point3D)e.NewValue;
             this.xMinTextBox.SetCurrentValue(TextBox.TextProperty, point.X.ToString(CultureInfo.InvariantCulture));
             this.yMinTextBox.SetCurrentValue(TextBox.TextProperty, point.Y.ToString(CultureInfo.InvariantCulture));
             this.zMinTextBox.SetCurrentValue(TextBox.TextProperty, point.Z.ToString(CultureInfo.InvariantCulture));
@@ -208,134 +208,127 @@
             }
         }
 
-        private void XMinTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void XMinTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(this.xMinTextBox.Text, NumberStyles.Any, null, out number))
+            if (double.TryParse(this.xMinTextBox.Text, NumberStyles.Any, null, out double number))
             {
-                this.Minimum = new Point3D(number, this.Minimum.Y, this.Minimum.Z);
+                this.SetCurrentValue(MinimumProperty, new Point3D(number, this.Minimum.Y, this.Minimum.Z));
             }
         }
 
-        private void XMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void XMaxTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(this.xMaxTextBox.Text, NumberStyles.Any, null, out number))
+            if (double.TryParse(this.xMaxTextBox.Text, NumberStyles.Any, null, out double number))
             {
-                this.Maximum = new Point3D(number, this.Maximum.Y, this.Maximum.Z);
+                this.SetCurrentValue(MaximumProperty, new Point3D(number, this.Maximum.Y, this.Maximum.Z));
             }
         }
 
-        private void XSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void XSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            this.Value = new Point3D(e.NewValue, this.Value.Y, this.Value.Z);
+            this.SetCurrentValue(ValueProperty, new Point3D(e.NewValue, this.Value.Y, this.Value.Z));
         }
 
-        private void YMinTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void YMinTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(this.yMinTextBox.Text, NumberStyles.Any, null, out number))
+            if (double.TryParse(this.yMinTextBox.Text, NumberStyles.Any, null, out double number))
             {
-                this.Minimum = new Point3D(this.Minimum.X, number, this.Minimum.Z);
+                this.SetCurrentValue(MinimumProperty, new Point3D(this.Minimum.X, number, this.Minimum.Z));
             }
         }
 
-        private void YMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void YMaxTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(this.yMaxTextBox.Text, NumberStyles.Any, null, out number))
+            if (double.TryParse(this.yMaxTextBox.Text, NumberStyles.Any, null, out double number))
             {
-                this.Maximum = new Point3D(this.Maximum.X, number, this.Maximum.Z);
+                this.SetCurrentValue(MaximumProperty, new Point3D(this.Maximum.X, number, this.Maximum.Z));
             }
         }
 
-        private void YSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void YSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            this.Value = new Point3D(this.Value.X, e.NewValue, this.Value.Z);
+            this.SetCurrentValue(ValueProperty, new Point3D(this.Value.X, e.NewValue, this.Value.Z));
         }
 
-        private void ZMinTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void ZMinTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(this.zMinTextBox.Text, NumberStyles.Any, null, out number))
+            if (double.TryParse(this.zMinTextBox.Text, NumberStyles.Any, null, out double number))
             {
-                this.Minimum = new Point3D(this.Minimum.X, this.Minimum.Y, number);
+                this.SetCurrentValue(MinimumProperty, new Point3D(this.Minimum.X, this.Minimum.Y, number));
             }
         }
 
-        private void ZMaxTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void ZMaxTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            double number;
-            if (double.TryParse(this.zMaxTextBox.Text, NumberStyles.Any, null, out number))
+            if (double.TryParse(this.zMaxTextBox.Text, NumberStyles.Any, null, out double number))
             {
-                this.Maximum = new Point3D(this.Maximum.X, this.Maximum.Y, number);
+                this.SetCurrentValue(MaximumProperty, new Point3D(this.Maximum.X, this.Maximum.Y, number));
             }
         }
 
-        private void ZSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ZSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            this.Value = new Point3D(this.Value.X, this.Value.Y, e.NewValue);
+            this.SetCurrentValue(ValueProperty, new Point3D(this.Value.X, this.Value.Y, e.NewValue));
         }
 
-        private void AnimationToggleButton_Click(object sender, RoutedEventArgs e)
+        private void AnimationToggleButtonClick(object sender, RoutedEventArgs e)
         {
-            this.noAnimationToggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, sender == this.noAnimationToggleButton);
-            this.linearAnimationToggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, sender == this.linearAnimationToggleButton);
-            this.circularAnimationToggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, sender == this.circularAnimationToggleButton);
+            this.noAnimationToggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, ReferenceEquals(sender, this.noAnimationToggleButton));
+            this.linearAnimationToggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, ReferenceEquals(sender, this.linearAnimationToggleButton));
+            this.circularAnimationToggleButton.SetCurrentValue(ToggleButton.IsCheckedProperty, ReferenceEquals(sender, this.circularAnimationToggleButton));
             this.UpdateAnimation();
         }
 
-        private void DurationTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void DurationTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            double number;
-            if (double.TryParse(this.durationTextBox.Text, out number))
+            if (double.TryParse(this.durationTextBox.Text, out double number))
             {
-                TimeSpan duration = TimeSpan.FromSeconds(Math.Max(0, number));
-                this.xSliderValueAnimation.Duration = duration;
-                this.ySliderValueAnimation.Duration = duration;
-                this.zSliderValueAnimation.Duration = duration;
+                var duration = TimeSpan.FromSeconds(Math.Max(0, number));
+                this.xSliderValueAnimation.SetCurrentValue(Timeline.DurationProperty, (System.Windows.Duration)duration);
+                this.ySliderValueAnimation.SetCurrentValue(Timeline.DurationProperty, (System.Windows.Duration)duration);
+                this.zSliderValueAnimation.SetCurrentValue(Timeline.DurationProperty, (System.Windows.Duration)duration);
                 this.UpdateAnimation();
             }
         }
 
         private void UpdateAnimation()
         {
-            Point3D minimum = this.Minimum;
-            Point3D maximum = this.Maximum;
-            this.xSliderValueAnimation.From = minimum.X;
-            this.xSliderValueAnimation.To = maximum.X;
+            var minimum = this.Minimum;
+            var maximum = this.Maximum;
+            this.xSliderValueAnimation.SetCurrentValue(DoubleAnimation.FromProperty, minimum.X);
+            this.xSliderValueAnimation.SetCurrentValue(DoubleAnimation.ToProperty, maximum.X);
 
-            this.ySliderValueAnimation.From = minimum.Y;
-            this.ySliderValueAnimation.To = maximum.Y;
+            this.ySliderValueAnimation.SetCurrentValue(DoubleAnimation.FromProperty, minimum.Y);
+            this.ySliderValueAnimation.SetCurrentValue(DoubleAnimation.ToProperty, maximum.Y);
 
-            this.zSliderValueAnimation.From = minimum.Z;
-            this.zSliderValueAnimation.To = maximum.Z;
+            this.zSliderValueAnimation.SetCurrentValue(DoubleAnimation.FromProperty, minimum.Z);
+            this.zSliderValueAnimation.SetCurrentValue(DoubleAnimation.ToProperty, maximum.Z);
 
             if (this.noAnimationToggleButton.IsChecked.GetValueOrDefault() ||
                 this.xSliderValueAnimation.Duration.TimeSpan == TimeSpan.Zero)
             {
                 this.storyboard.Stop(this);
-                this.xSlider.Visibility = Visibility.Visible;
-                this.xSliderText.Visibility = Visibility.Collapsed;
-                this.ySlider.Visibility = Visibility.Visible;
-                this.ySliderText.Visibility = Visibility.Collapsed;
-                this.zSlider.Visibility = Visibility.Visible;
-                this.zSliderText.Visibility = Visibility.Collapsed;
+                this.xSlider.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.xSliderText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.ySlider.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.ySliderText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.zSlider.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.zSliderText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
             }
             else
             {
-                double duration = this.xSliderValueAnimation.Duration.TimeSpan.TotalSeconds;
-                double yBeginTime = this.circularAnimationToggleButton.IsChecked.GetValueOrDefault() ? duration / 3 : 0;
-                double zBeginTime = this.circularAnimationToggleButton.IsChecked.GetValueOrDefault() ? 2 * duration / 3 : 0;
-                this.ySliderValueAnimation.BeginTime = TimeSpan.FromSeconds(yBeginTime);
-                this.zSliderValueAnimation.BeginTime = TimeSpan.FromSeconds(zBeginTime);
+                var duration = this.xSliderValueAnimation.Duration.TimeSpan.TotalSeconds;
+                var yBeginTime = this.circularAnimationToggleButton.IsChecked.GetValueOrDefault() ? duration / 3 : 0;
+                var zBeginTime = this.circularAnimationToggleButton.IsChecked.GetValueOrDefault() ? 2 * duration / 3 : 0;
+                this.ySliderValueAnimation.SetCurrentValue(Timeline.BeginTimeProperty, TimeSpan.FromSeconds(yBeginTime));
+                this.zSliderValueAnimation.SetCurrentValue(Timeline.BeginTimeProperty, TimeSpan.FromSeconds(zBeginTime));
                 this.storyboard.Begin(this, isControllable: true);
-                this.xSlider.Visibility = Visibility.Collapsed;
-                this.xSliderText.Visibility = Visibility.Visible;
-                this.ySlider.Visibility = Visibility.Collapsed;
-                this.ySliderText.Visibility = Visibility.Visible;
-                this.zSlider.Visibility = Visibility.Collapsed;
-                this.zSliderText.Visibility = Visibility.Visible;
+                this.xSlider.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.xSliderText.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.ySlider.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.ySliderText.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.zSlider.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.zSliderText.SetCurrentValue(VisibilityProperty, Visibility.Visible);
             }
         }
     }

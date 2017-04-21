@@ -1,21 +1,121 @@
-namespace Kaxaml
+namespace Shazzam
 {
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
 
-    public class Plugin
+    public class Plugin : INotifyPropertyChanged
     {
-        public UserControl Root { get; set; }
+        private UserControl root;
+        private string name;
+        private string description;
+        private Key key;
+        private ModifierKeys modifierKeys;
+        private ImageSource icon;
 
-        public string Name { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Description { get; set; }
+        public UserControl Root
+        {
+            get => this.root;
 
-        public Key Key { get; set; }
+            set
+            {
+                if (ReferenceEquals(value, this.root))
+                {
+                    return;
+                }
 
-        public ModifierKeys ModifierKeys { get; set; }
+                this.root = value;
+                this.OnPropertyChanged();
+            }
+        }
 
-        public ImageSource Icon { get; set; }
+        public string Name
+        {
+            get => this.name;
+
+            set
+            {
+                if (value == this.name)
+                {
+                    return;
+                }
+
+                this.name = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public string Description
+        {
+            get => this.description;
+
+            set
+            {
+                if (value == this.description)
+                {
+                    return;
+                }
+
+                this.description = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public Key Key
+        {
+            get => this.key;
+
+            set
+            {
+                if (value == this.key)
+                {
+                    return;
+                }
+
+                this.key = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public ModifierKeys ModifierKeys
+        {
+            get => this.modifierKeys;
+
+            set
+            {
+                if (value == this.modifierKeys)
+                {
+                    return;
+                }
+
+                this.modifierKeys = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public ImageSource Icon
+        {
+            get => this.icon;
+
+            set
+            {
+                if (ReferenceEquals(value, this.icon))
+                {
+                    return;
+                }
+
+                this.icon = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

@@ -77,19 +77,11 @@ namespace KaxamlPlugins
             ContentLoaded();
         }
 
-
-        #region INotifyPropertyChanged
-
         public static event PropertyChangedEventHandler PropertyChanged;
 
         private static void NotifyPropertyChanged(string info)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(null, new PropertyChangedEventArgs(info));
-            }
+            PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(info));
         }
-
-        #endregion
     }
 }

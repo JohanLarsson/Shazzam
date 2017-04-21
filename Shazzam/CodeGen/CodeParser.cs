@@ -13,20 +13,12 @@
 
     internal static class CodeParser
     {
-        // Regular expression that matches a comment from double-slash to end-of-line (but not a triple-slash comment):
-        private static readonly Regex CommentRegex = new Regex(@"(?<!/)//$|(?<!/)//[^/].*?$", RegexOptions.Compiled | RegexOptions.Multiline);
-
         // Patterns that match special triple-slash comments in the header:
         private const string ClassPattern = @"<class>(?<class>.*)</class>";
         private const string NamespacePattern = @"<namespace>(?<namespace>.*)</namespace>";
         private const string DescriptionPattern = @"<description>(?<description>.*)</description>";
         private const string TargetPattern = @"<target>(?<target>.*)</target>";
-        private const string HeaderCommentPattern = @"^///\s*(" + ClassPattern + @"|" +
-          NamespacePattern + @"|" + DescriptionPattern + @"|" + TargetPattern + @")\s*?$\s*";
-
-        private static readonly Regex HeaderCommentsRegex = new Regex(
-            @"(" + HeaderCommentPattern + @")+",
-          RegexOptions.Compiled | RegexOptions.Multiline);
+        private const string HeaderCommentPattern = @"^///\s*(" + ClassPattern + @"|" + NamespacePattern + @"|" + DescriptionPattern + @"|" + TargetPattern + @")\s*?$\s*";
 
         // Patterns that match special triple-slash comments before each register declaration:
         private const string SummaryPattern = @"<summary>(?<summary>.*)</summary>";
@@ -34,9 +26,7 @@
         private const string MinValuePattern = @"<minValue>(?<minValue>.*)</minValue>";
         private const string MaxValuePattern = @"<maxValue>(?<maxValue>.*)</maxValue>";
         private const string DefaultValuePattern = @"<defaultValue>(?<defaultValue>.*)</defaultValue>";
-        private const string SpecialCommentPattern = @"^///\s*(" + SummaryPattern + @"|" + TypePattern + @"|" +
-            MinValuePattern + @"|" + MaxValuePattern + @"|" + DefaultValuePattern + @")\s*?$\s*";
-
+        private const string SpecialCommentPattern = @"^///\s*(" + SummaryPattern + @"|" + TypePattern + @"|" + MinValuePattern + @"|" + MaxValuePattern + @"|" + DefaultValuePattern + @")\s*?$\s*";
         private const string SpecialCommentsPattern = @"(" + SpecialCommentPattern + @")*";
 
         // Patterns used in a constant register declaration in HLSL:
@@ -47,6 +37,10 @@
         private const string RegisterConstantNumberPattern = @"[CcSs](?<registerNumber>\d+)";
         private const string InitializerValuePattern = @"(?<initializerValue>[^;]+)";
         private const string OptionalInitializerPattern = @"(?<initializer>=" + OptionalWhitespacePattern + InitializerValuePattern + OptionalWhitespacePattern + @")?";
+
+        // Regular expression that matches a comment from double-slash to end-of-line (but not a triple-slash comment):
+        private static readonly Regex CommentRegex = new Regex(@"(?<!/)//$|(?<!/)//[^/].*?$", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static readonly Regex HeaderCommentsRegex = new Regex(@"(" + HeaderCommentPattern + @")+", RegexOptions.Compiled | RegexOptions.Multiline);
 
         // Regular expression that matches an entire constant register declaration, including the preceding special comments:
         private static readonly Regex RegisterConstantDeclarationRegex = new Regex(
@@ -93,15 +87,13 @@
             }
 
             // Return a new shader model.
-            return new ShaderModel
-            {
-                ShaderFileName = shaderFileName,
-                GeneratedClassName = className,
-                GeneratedNamespace = namespaceName,
-                Description = description,
-                TargetFramework = targetFramework,
-                Registers = registers
-            };
+            return new ShaderModel(
+                shaderFileName: shaderFileName,
+                generatedClassName: className,
+                generatedNamespace: namespaceName,
+                description: description,
+                targetFramework: targetFramework,
+                registers: registers);
         }
 
         /// <summary>
@@ -113,8 +105,8 @@
             ShaderModelConstantRegister register = null;
 
             // Figure out the .NET type that corresponds to the register type.
-            var registerTypeInHLSL = match.Groups["registerType"].Value;
-            var registerType = GetRegisterType(targetFramework, registerTypeInHLSL);
+            var registerTypeInHlsl = match.Groups["registerType"].Value;
+            var registerType = GetRegisterType(targetFramework, registerTypeInHlsl);
             if (registerType != null)
             {
                 // See if the user prefers to specify a different type in a comment.
@@ -168,9 +160,9 @@
         /// <summary>
         /// Returns the CLR type used to represent the given HLSL register type.
         /// </summary>
-        private static Type GetRegisterType(TargetFramework targetFramework, string registerTypeInHLSL)
+        private static Type GetRegisterType(TargetFramework targetFramework, string registerTypeInHlsl)
         {
-            switch (registerTypeInHLSL.ToLower())
+            switch (registerTypeInHlsl.ToLower())
             {
                 case "float":
                 case "float1":
@@ -311,47 +303,46 @@
         /// </summary>
         private static void ConvertValue(string valueText, Type type, ref object value)
         {
-            try
+            if (string.IsNullOrEmpty(valueText))
             {
-                if (type == typeof(double))
-                {
-                    value = double.Parse(valueText, NumberStyles.Any, NumberFormatInfo.InvariantInfo);
-                }
-                else if (type == typeof(float))
-                {
-                    value = float.Parse(valueText, NumberStyles.Any, NumberFormatInfo.InvariantInfo);
-                }
-                else if (type == typeof(Point))
-                {
-                    value = Point.Parse(valueText);
-                }
-                else if (type == typeof(Size))
-                {
-                    value = Size.Parse(valueText);
-                }
-                else if (type == typeof(Vector))
-                {
-                    value = Vector.Parse(valueText);
-                }
-                else if (type == typeof(Point3D))
-                {
-                    value = Point3D.Parse(valueText);
-                }
-                else if (type == typeof(Vector3D))
-                {
-                    value = Vector3D.Parse(valueText);
-                }
-                else if (type == typeof(Point4D))
-                {
-                    value = Point4D.Parse(valueText);
-                }
-                else if (type == typeof(Color))
-                {
-                    value = ColorConverter.ConvertFromString(valueText);
-                }
+                return;
             }
-            catch
+
+            if (type == typeof(double))
             {
+                value = double.Parse(valueText, NumberStyles.Any, NumberFormatInfo.InvariantInfo);
+            }
+            else if (type == typeof(float))
+            {
+                value = float.Parse(valueText, NumberStyles.Any, NumberFormatInfo.InvariantInfo);
+            }
+            else if (type == typeof(Point))
+            {
+                value = Point.Parse(valueText);
+            }
+            else if (type == typeof(Size))
+            {
+                value = Size.Parse(valueText);
+            }
+            else if (type == typeof(Vector))
+            {
+                value = Vector.Parse(valueText);
+            }
+            else if (type == typeof(Point3D))
+            {
+                value = Point3D.Parse(valueText);
+            }
+            else if (type == typeof(Vector3D))
+            {
+                value = Vector3D.Parse(valueText);
+            }
+            else if (type == typeof(Point4D))
+            {
+                value = Point4D.Parse(valueText);
+            }
+            else if (type == typeof(Color))
+            {
+                value = ColorConverter.ConvertFromString(valueText);
             }
         }
 
@@ -410,7 +401,7 @@
             text = Regex.Replace(text, @"^\s*float[1234]?\s*\((.*)\)\s*$", @"$1");
 
             // Split at commas.
-            var textValues = text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var textValues = text.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
             // Parse the numbers.
             var numbers = new List<double>();

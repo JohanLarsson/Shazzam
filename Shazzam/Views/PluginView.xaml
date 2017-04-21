@@ -1,15 +1,12 @@
-﻿<UserControl x:Class="Shazzam.Views.PluginView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:a="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
-             xmlns:c="clr-namespace:Shazzam.Controls"
-             x:Name="This">
+﻿<UserControl
+    x:Class="Shazzam.Views.PluginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="clr-namespace:Shazzam.Controls"
+    x:Name="This">
 
     <UserControl.Resources>
         <ResourceDictionary>
-
-            <ResourceDictionary.MergedDictionaries />
-
             <Style x:Key="PluginTabItem" TargetType="{x:Type TabItem}">
                 <Setter Property="OverridesDefaultStyle" Value="True" />
                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -18,12 +15,11 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type TabItem}">
-                            <Expander Content="{TemplateBinding Content}"
-                                      Foreground="{TemplateBinding Foreground}"
-                                      Header="{TemplateBinding Header}"
-                                      IsExpanded="{Binding RelativeSource={RelativeSource TemplatedParent},
-                                                           Path=IsSelected,
-                                                           Mode=TwoWay}">
+                            <Expander
+                                Content="{TemplateBinding Content}"
+                                Foreground="{TemplateBinding Foreground}"
+                                Header="{TemplateBinding Header}"
+                                IsExpanded="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsSelected, Mode=TwoWay}">
                                 <Expander.Template>
                                     <ControlTemplate TargetType="{x:Type Expander}">
                                         <Grid x:Name="OuterGrid">
@@ -32,39 +28,43 @@
                                                 <RowDefinition Height="Auto" />
                                             </Grid.RowDefinitions>
 
-                                            <Border x:Name="Border"
-                                                    Background="#00FFFFFF"
-                                                    ToolTip="{Binding Description}">
-                                                <StackPanel Margin="7,0,0,0"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Center"
-                                                            Orientation="Horizontal">
+                                            <Border
+                                                x:Name="Border"
+                                                Background="#00FFFFFF"
+                                                ToolTip="{Binding Description}">
+                                                <StackPanel
+                                                    Margin="7,0,0,0"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    Orientation="Horizontal">
                                                     <!--<Image Source="{Binding Icon}"
                                  Width="16"
                                  Height="16"
                                  Margin="0,0,6,0"
                                  VerticalAlignment="Center" />-->
-                                                    <TextBlock x:Name="ItemHeader"
-                                                               VerticalAlignment="Center"
-                                                               Foreground="White"
-                                                               Text="{Binding Name}" />
+                                                    <TextBlock
+                                                        x:Name="ItemHeader"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="White"
+                                                        Text="{Binding Name}" />
                                                 </StackPanel>
                                             </Border>
 
                                             <!--<Border Height="1" BorderBrush="#00000000" BorderThickness="1,1,1,0" CornerRadius="0" SnapsToDevicePixels="True" VerticalAlignment="Top" />
                       <Border Height="1" BorderBrush="#00FFFFFF" BorderThickness="1,1,1,0" CornerRadius="0" SnapsToDevicePixels="True" VerticalAlignment="Top" Margin="0,1,0,0"  />-->
 
-                                            <Image Name="checkIcon"
-                                                   Width="18"
-                                                   Height="18"
-                                                   Margin="8,0,8,0"
-                                                   HorizontalAlignment="Right"
-                                                   VerticalAlignment="Center"
-                                                   IsHitTestVisible="False"
-                                                   RenderTransformOrigin="0.5,0.5"
-                                                   SnapsToDevicePixels="True"
-                                                   Source="greentarget.png"
-                                                   Stretch="Uniform">
+                                            <Image
+                                                Name="checkIcon"
+                                                Width="18"
+                                                Height="18"
+                                                Margin="8,0,8,0"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center"
+                                                IsHitTestVisible="False"
+                                                RenderTransformOrigin="0.5,0.5"
+                                                SnapsToDevicePixels="True"
+                                                Source="greentarget.png"
+                                                Stretch="Uniform">
                                                 <Image.RenderTransform>
                                                     <TransformGroup>
                                                         <RotateTransform Angle="0" />
@@ -74,16 +74,17 @@
 
                                                 </Image.RenderTransform>
                                             </Image>
-                                            <Image Name="Arrow"
-                                                   Width="18"
-                                                   Height="18"
-                                                   Margin="8,0,8,0"
-                                                   HorizontalAlignment="Right"
-                                                   VerticalAlignment="Center"
-                                                   IsHitTestVisible="False"
-                                                   RenderTransformOrigin="0.5,0.5"
-                                                   SnapsToDevicePixels="True"
-                                                   Source="fav2.png">
+                                            <Image
+                                                Name="Arrow"
+                                                Width="18"
+                                                Height="18"
+                                                Margin="8,0,8,0"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center"
+                                                IsHitTestVisible="False"
+                                                RenderTransformOrigin="0.5,0.5"
+                                                SnapsToDevicePixels="True"
+                                                Source="fav2.png">
                                                 <Image.RenderTransform>
                                                     <TransformGroup>
                                                         <RotateTransform Angle="0" />
@@ -94,27 +95,31 @@
                                                 </Image.RenderTransform>
                                             </Image>
 
-                                            <c:Reveal x:Name="ContentReveal"
-                                                      Grid.Row="1"
-                                                      HorizontalReveal="None"
-                                                      VerticalReveal="FromTopToBottom">
+                                            <c:Reveal
+                                                x:Name="ContentReveal"
+                                                Grid.Row="1"
+                                                HorizontalReveal="None"
+                                                VerticalReveal="FromTopToBottom">
                                                 <!--  the extra border here is required because Reveal doesn't account for margins  -->
                                                 <Border>
-                                                    <Border Width="240"
-                                                            Margin="7,0,7,6"
-                                                            HorizontalAlignment="Center"
-                                                            Background="#10FFFFFF"
-                                                            BorderBrush="#6000"
-                                                            BorderThickness="0.5,1,0,0"
-                                                            CornerRadius="2,3,2,2"
-                                                            SnapsToDevicePixels="True">
-                                                        <Border BorderBrush="#20FFFFFF"
-                                                                BorderThickness="0,0,0.5,1"
-                                                                CornerRadius="2,3,2,2">
-                                                            <ContentPresenter x:Name="PART_ContentPresenter"
-                                                                              Width="240"
-                                                                              Content="{TemplateBinding Content}"
-                                                                              ToolTipService.IsEnabled="False" />
+                                                    <Border
+                                                        Width="240"
+                                                        Margin="7,0,7,6"
+                                                        HorizontalAlignment="Center"
+                                                        Background="#10FFFFFF"
+                                                        BorderBrush="#6000"
+                                                        BorderThickness="0.5,1,0,0"
+                                                        CornerRadius="2,3,2,2"
+                                                        SnapsToDevicePixels="True">
+                                                        <Border
+                                                            BorderBrush="#20FFFFFF"
+                                                            BorderThickness="0,0,0.5,1"
+                                                            CornerRadius="2,3,2,2">
+                                                            <ContentPresenter
+                                                                x:Name="PART_ContentPresenter"
+                                                                Width="240"
+                                                                Content="{TemplateBinding Content}"
+                                                                ToolTipService.IsEnabled="False" />
                                                         </Border>
                                                     </Border>
                                                 </Border>
@@ -134,97 +139,111 @@
                                                 <Trigger.EnterActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <DoubleAnimation BeginTime="0:0:0.4"
-                                                                             DecelerationRatio="1"
-                                                                             Storyboard.TargetName="ContentReveal"
-                                                                             Storyboard.TargetProperty="AnimationProgress"
-                                                                             To="1"
-                                                                             Duration="0:0:0.4" />
-                                                            <DoubleAnimation DecelerationRatio="1"
-                                                                             Storyboard.TargetName="Arrow"
-                                                                             Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[0].(RotateTransform.Angle)"
-                                                                             To="135"
-                                                                             Duration="0:0:0.4" />
-                                                            <DoubleAnimation AccelerationRatio=".5"
-                                                                             DecelerationRatio=".5"
-                                                                             Storyboard.TargetName="Arrow"
-                                                                             Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
-                                                                             To="0"
-                                                                             Duration="0:0:0.4" />
-                                                            <DoubleAnimation AccelerationRatio=".5"
-                                                                             DecelerationRatio=".5"
-                                                                             Storyboard.TargetName="Arrow"
-                                                                             Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleX)"
-                                                                             To="0"
-                                                                             Duration="0:0:0.4" />
-                                                            <DoubleAnimation AccelerationRatio=".5"
-                                                                             DecelerationRatio=".5"
-                                                                             Storyboard.TargetName="Arrow"
-                                                                             Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleY)"
-                                                                             To=".1"
-                                                                             Duration="0:0:0.4" />
+                                                            <DoubleAnimation
+                                                                BeginTime="0:0:0.4"
+                                                                DecelerationRatio="1"
+                                                                Storyboard.TargetName="ContentReveal"
+                                                                Storyboard.TargetProperty="AnimationProgress"
+                                                                To="1"
+                                                                Duration="0:0:0.4" />
+                                                            <DoubleAnimation
+                                                                DecelerationRatio="1"
+                                                                Storyboard.TargetName="Arrow"
+                                                                Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[0].(RotateTransform.Angle)"
+                                                                To="135"
+                                                                Duration="0:0:0.4" />
+                                                            <DoubleAnimation
+                                                                AccelerationRatio=".5"
+                                                                DecelerationRatio=".5"
+                                                                Storyboard.TargetName="Arrow"
+                                                                Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
+                                                                To="0"
+                                                                Duration="0:0:0.4" />
+                                                            <DoubleAnimation
+                                                                AccelerationRatio=".5"
+                                                                DecelerationRatio=".5"
+                                                                Storyboard.TargetName="Arrow"
+                                                                Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleX)"
+                                                                To="0"
+                                                                Duration="0:0:0.4" />
+                                                            <DoubleAnimation
+                                                                AccelerationRatio=".5"
+                                                                DecelerationRatio=".5"
+                                                                Storyboard.TargetName="Arrow"
+                                                                Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleY)"
+                                                                To=".1"
+                                                                Duration="0:0:0.4" />
                                                             <!--<ColorAnimation Storyboard.TargetName="ItemHeader"
                                               Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
                                               Duration="0:0:0.2"
                                               To="Gold"
                                               DecelerationRatio="1" />-->
-                                                            <DoubleAnimation AccelerationRatio=".5"
-                                                                             BeginTime="0:0:0.2"
-                                                                             DecelerationRatio=".5"
-                                                                             Storyboard.TargetName="checkIcon"
-                                                                             Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleY)"
-                                                                             To="1"
-                                                                             Duration="0:0:0.4" />
-                                                            <DoubleAnimation AccelerationRatio=".5"
-                                                                             BeginTime="0:0:0.2"
-                                                                             DecelerationRatio=".5"
-                                                                             Storyboard.TargetName="checkIcon"
-                                                                             Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleX)"
-                                                                             To="1"
-                                                                             Duration="0:0:0.4" />
+                                                            <DoubleAnimation
+                                                                AccelerationRatio=".5"
+                                                                BeginTime="0:0:0.2"
+                                                                DecelerationRatio=".5"
+                                                                Storyboard.TargetName="checkIcon"
+                                                                Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleY)"
+                                                                To="1"
+                                                                Duration="0:0:0.4" />
+                                                            <DoubleAnimation
+                                                                AccelerationRatio=".5"
+                                                                BeginTime="0:0:0.2"
+                                                                DecelerationRatio=".5"
+                                                                Storyboard.TargetName="checkIcon"
+                                                                Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleX)"
+                                                                To="1"
+                                                                Duration="0:0:0.4" />
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </Trigger.EnterActions>
                                                 <Trigger.ExitActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <DoubleAnimation Storyboard.TargetName="ContentReveal"
-                                                                             Storyboard.TargetProperty="AnimationProgress"
-                                                                             Duration="0:0:0.4" />
-                                                            <DoubleAnimation Storyboard.TargetName="Arrow"
-                                                                             Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[0].(RotateTransform.Angle)"
-                                                                             Duration="0:0:0.4" />
-                                                            <DoubleAnimation Storyboard.TargetName="Arrow"
-                                                                             Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
-                                                                             To="0"
-                                                                             Duration="0:0:0.4" />
-                                                            <DoubleAnimation Storyboard.TargetName="Arrow"
-                                                                             Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleX)"
-                                                                             To="1"
-                                                                             Duration="0:0:0.4" />
-                                                            <DoubleAnimation Storyboard.TargetName="Arrow"
-                                                                             Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleY)"
-                                                                             To="1"
-                                                                             Duration="0:0:0.4" />
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="ContentReveal"
+                                                                Storyboard.TargetProperty="AnimationProgress"
+                                                                Duration="0:0:0.4" />
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="Arrow"
+                                                                Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[0].(RotateTransform.Angle)"
+                                                                Duration="0:0:0.4" />
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="Arrow"
+                                                                Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
+                                                                To="0"
+                                                                Duration="0:0:0.4" />
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="Arrow"
+                                                                Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleX)"
+                                                                To="1"
+                                                                Duration="0:0:0.4" />
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetName="Arrow"
+                                                                Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleY)"
+                                                                To="1"
+                                                                Duration="0:0:0.4" />
                                                             <!--<ColorAnimation Storyboard.TargetName="ItemHeader"
                                               Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
                                               Duration="0:0:0.2"
                                               To="White"
                                               DecelerationRatio="1" />-->
-                                                            <DoubleAnimation AccelerationRatio=".5"
-                                                                             BeginTime="0:0:0.2"
-                                                                             DecelerationRatio=".5"
-                                                                             Storyboard.TargetName="checkIcon"
-                                                                             Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleY)"
-                                                                             To="0"
-                                                                             Duration="0:0:0.4" />
-                                                            <DoubleAnimation AccelerationRatio=".5"
-                                                                             BeginTime="0:0:0.2"
-                                                                             DecelerationRatio=".5"
-                                                                             Storyboard.TargetName="checkIcon"
-                                                                             Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleX)"
-                                                                             To="0"
-                                                                             Duration="0:0:0.4" />
+                                                            <DoubleAnimation
+                                                                AccelerationRatio=".5"
+                                                                BeginTime="0:0:0.2"
+                                                                DecelerationRatio=".5"
+                                                                Storyboard.TargetName="checkIcon"
+                                                                Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleY)"
+                                                                To="0"
+                                                                Duration="0:0:0.4" />
+                                                            <DoubleAnimation
+                                                                AccelerationRatio=".5"
+                                                                BeginTime="0:0:0.2"
+                                                                DecelerationRatio=".5"
+                                                                Storyboard.TargetName="checkIcon"
+                                                                Storyboard.TargetProperty="(FrameworkElement.RenderTransform).(TransformGroup.Children)[2].(ScaleTransform.ScaleX)"
+                                                                To="0"
+                                                                Duration="0:0:0.4" />
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </Trigger.ExitActions>
@@ -258,13 +277,13 @@
 
     </UserControl.Resources>
 
-    <TabControl x:Name="PluginTabControl"
-                ItemsSource="{Binding ElementName=This,
-                                      Path=Plugins}"
-                Style="{StaticResource PluginTabControl}">
+    <TabControl
+        x:Name="PluginTabControl"
+        ItemsSource="{Binding ElementName=This, Path=Plugins}"
+        Style="{StaticResource PluginTabControl}">
         <TabControl.ItemContainerStyle>
             <Style BasedOn="{StaticResource PluginTabItem}" TargetType="{x:Type TabItem}">
-                <Setter Property="Header" Value="{Binding .}" />
+                <Setter Property="Header" Value="{Binding}" />
                 <Setter Property="Content" Value="{Binding Root}" />
             </Style>
         </TabControl.ItemContainerStyle>

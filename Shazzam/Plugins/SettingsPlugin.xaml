@@ -1,157 +1,167 @@
-﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:settings="clr-namespace:Shazzam.Properties"
-             xmlns:converters="clr-namespace:Shazzam.Converters"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             x:Class="Shazzam.Plugins.SettingsPlugin"
-             Height="360"
-             mc:Ignorable="d">
-  <UserControl.Resources>
-    <converters:EqualityConverter x:Key="equalityConverter" />
-    <converters:InvertBooleanConverter x:Key="invertBooleanConverter" />
-    <converters:DoubleToStringConverter x:Key='doubleConverter' />
-  </UserControl.Resources>
+﻿<UserControl
+    x:Class="Shazzam.Plugins.SettingsPlugin"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Shazzam.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:settings="clr-namespace:Shazzam.Properties"
+    Height="360"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:EqualityConverter x:Key="equalityConverter" />
+        <converters:InvertBooleanConverter x:Key="invertBooleanConverter" />
+        <converters:DoubleToStringConverter x:Key="doubleConverter" />
+    </UserControl.Resources>
 
-  <Grid Margin="10"
-        Background="Black"
-        MinHeight="400">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="12" />
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="12" />
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="12" />
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="12" />
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="12" />
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="12" />
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="12" />
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="12" />
-      <RowDefinition Height="Auto" />
+    <Grid
+        MinHeight="400"
+        Margin="10"
+        Background="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
 
-    </Grid.RowDefinitions>
+        </Grid.RowDefinitions>
 
-    <StackPanel Grid.Row="2"
-                Margin='3,0,0,0'>
-      <TextBlock Foreground="{StaticResource NeutralWhiteBrush}"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Center"
-                 Margin="0,0,0,0"
-                 Text="Target framework:" />
-      <StackPanel Orientation='Horizontal'>
-        <RadioButton Foreground="#FFF"
-                     HorizontalAlignment="Left"
-                     Margin="10,10,0,0"
-                     Content="WPF PS__3"
-                     ToolTip='Target Pixel Shader 3.  Permits up to 512 instructions for your HLSL '
-                     IsChecked="{Binding TargetFramework, Converter={StaticResource equalityConverter}, ConverterParameter=WPF_PS3, Source={x:Static settings:Settings.Default}}"
-                     Name='radioButtonPs3' />
-        <TextBlock x:Name='notAvailable'
-                   Foreground='Red'
-                   Text='*'
-                   VerticalAlignment='Center'
-                   Margin="3,0,0,0"
-                   RenderTransformOrigin="0.5,0.5">
-        	<TextBlock.RenderTransform>
-        		<TransformGroup>
-        			<ScaleTransform ScaleX="2"
-                              ScaleY="1.95" />
-        			<SkewTransform />
-        			<RotateTransform />
-        			<TranslateTransform Y="5"
-                                  X="2" />
-        		</TransformGroup>
-        	</TextBlock.RenderTransform>
-        </TextBlock>
-      </StackPanel>
-      <RadioButton Foreground="#FFF"
-                   HorizontalAlignment="Left"
-                   Margin="10,2,26,0"
-                   Content="WPF PS__2"
-                   ToolTip='Target Pixel Shader 2.  Permits up to 64 instructions for your HLSL '
-                   IsChecked="{Binding TargetFramework, Converter={StaticResource equalityConverter}, ConverterParameter=WPF, Source={x:Static settings:Settings.Default}}" />
-      <RadioButton Foreground="{StaticResource NeutralWhiteBrush}"
-                   HorizontalAlignment="Left"
-                   Margin="10,2,26,0"
-                   Content="Silverlight"
-                   ToolTip='Makes Silverlight friendly code.  Supports Pixel Shader 2'
-                   IsChecked="{Binding TargetFramework, Converter={StaticResource equalityConverter}, ConverterParameter=Silverlight, Source={x:Static settings:Settings.Default}}" />
-    </StackPanel>
-
-    <StackPanel Grid.Row="4"
-                Margin='3,0,0,0'>
-      <TextBlock Foreground="{StaticResource NeutralWhiteBrush}"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Center"
-                 Margin="0,0,0,0"
-                 Text="Generated namespace:" />
-      <TextBox Margin="10,10,26,0"
-               ToolTip='Choose a namespace for your generated class.  '
-               Text="{Binding GeneratedNamespace, Source={x:Static settings:Settings.Default}}" />
-    </StackPanel>
-
-    <StackPanel Grid.Row="6"
-                Margin='3,0,0,0'>
-      <TextBlock Foreground="{StaticResource NeutralWhiteBrush}"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Center"
-                 Margin="0,0,0,0"
-                 Text="Indentation:" />
-      <RadioButton Foreground="{StaticResource NeutralWhiteBrush}"
-                   HorizontalAlignment="Left"
-                   Margin="10,10,26,0"
-                   Content="Use tabs"
-                   IsChecked="{Binding IndentUsingTabs, Source={x:Static settings:Settings.Default}}" />
-      <RadioButton x:Name="indentUsingSpacesRadioButton"
-                   Foreground="{StaticResource NeutralWhiteBrush}"
-                   HorizontalAlignment="Left"
-                   Margin="10,2,26,0"
-                   IsChecked="{Binding IndentUsingTabs, Converter={StaticResource invertBooleanConverter}, Source={x:Static settings:Settings.Default}}">
-        <StackPanel Orientation="Horizontal">
-          <TextBlock Text="Use spaces:"
-                     VerticalAlignment="Center" />
-          <TextBox Width="30"
-                   Margin="5,0,0,0"
-                   VerticalAlignment="Center"
-                   Text="{Binding IndentSpaces, Source={x:Static settings:Settings.Default}}"
-                   IsEnabled="{Binding IsChecked, ElementName=indentUsingSpacesRadioButton}" />
+        <StackPanel Grid.Row="2" Margin="3,0,0,0">
+            <TextBlock
+                Margin="0,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Foreground="{StaticResource NeutralWhiteBrush}"
+                Text="Target framework:" />
+            <StackPanel Orientation="Horizontal">
+                <RadioButton
+                    Name="radioButtonPs3"
+                    Margin="10,10,0,0"
+                    HorizontalAlignment="Left"
+                    Content="WPF PS__3"
+                    Foreground="#FFF"
+                    IsChecked="{Binding TargetFramework, Converter={StaticResource equalityConverter}, ConverterParameter=WPF_PS3, Source={x:Static settings:Settings.Default}}"
+                    ToolTip="Target Pixel Shader 3.  Permits up to 512 instructions for your HLSL " />
+                <TextBlock
+                    x:Name="notAvailable"
+                    Margin="3,0,0,0"
+                    VerticalAlignment="Center"
+                    Foreground="Red"
+                    RenderTransformOrigin="0.5,0.5"
+                    Text="*">
+                    <TextBlock.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="2" ScaleY="1.95" />
+                            <SkewTransform />
+                            <RotateTransform />
+                            <TranslateTransform X="2" Y="5" />
+                        </TransformGroup>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+            </StackPanel>
+            <RadioButton
+                Margin="10,2,26,0"
+                HorizontalAlignment="Left"
+                Content="WPF PS__2"
+                Foreground="#FFF"
+                IsChecked="{Binding TargetFramework, Converter={StaticResource equalityConverter}, ConverterParameter=WPF, Source={x:Static settings:Settings.Default}}"
+                ToolTip="Target Pixel Shader 2.  Permits up to 64 instructions for your HLSL " />
+            <RadioButton
+                Margin="10,2,26,0"
+                HorizontalAlignment="Left"
+                Content="Silverlight"
+                Foreground="{StaticResource NeutralWhiteBrush}"
+                IsChecked="{Binding TargetFramework, Converter={StaticResource equalityConverter}, ConverterParameter=Silverlight, Source={x:Static settings:Settings.Default}}"
+                ToolTip="Makes Silverlight friendly code.  Supports Pixel Shader 2" />
         </StackPanel>
-      </RadioButton>
-    </StackPanel>
-    <StackPanel Grid.Row="8"
-                Margin='3,0,0,0'>
-      <TextBlock Foreground="{StaticResource NeutralWhiteBrush}"
-                 HorizontalAlignment="Left"
-                 VerticalAlignment="Center"
-                 Margin="0,0,0,0"
-                 Text="Default Animation Length (seconds):" />
-      <StackPanel HorizontalAlignment="Left"
-                  Margin="10,0,25,0"
-                  Orientation="Horizontal">
-        <Slider x:Name='slider'
-                Minimum='.5'
-                Maximum='10'
-                SmallChange='.25'
-                AutoToolTipPlacement='TopLeft'
-                AutoToolTipPrecision='3'
-                IsMoveToPointEnabled='True'
-                IsSnapToTickEnabled='True'
-                Width='90'
-                TickFrequency='.25'
-                Value='{Binding AnimationLengthDefault, Source={x:Static settings:Settings.Default}}'
-                ToolTip='{Binding Value, Converter={StaticResource doubleConverter}, RelativeSource={RelativeSource Self}}'
-                VerticalAlignment="Center" />
-        <TextBlock Margin="10,10,26,0"
-                   Text="{Binding AnimationLengthDefault, Source={x:Static settings:Settings.Default}}"
-                   VerticalAlignment="Center" />
-      </StackPanel>
-    </StackPanel>
-  </Grid>
+
+        <StackPanel Grid.Row="4" Margin="3,0,0,0">
+            <TextBlock
+                Margin="0,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Foreground="{StaticResource NeutralWhiteBrush}"
+                Text="Generated namespace:" />
+            <TextBox
+                Margin="10,10,26,0"
+                Text="{Binding GeneratedNamespace, Source={x:Static settings:Settings.Default}}"
+                ToolTip="Choose a namespace for your generated class.  " />
+        </StackPanel>
+
+        <StackPanel Grid.Row="6" Margin="3,0,0,0">
+            <TextBlock
+                Margin="0,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Foreground="{StaticResource NeutralWhiteBrush}"
+                Text="Indentation:" />
+            <RadioButton
+                Margin="10,10,26,0"
+                HorizontalAlignment="Left"
+                Content="Use tabs"
+                Foreground="{StaticResource NeutralWhiteBrush}"
+                IsChecked="{Binding IndentUsingTabs, Source={x:Static settings:Settings.Default}}" />
+            <RadioButton
+                x:Name="indentUsingSpacesRadioButton"
+                Margin="10,2,26,0"
+                HorizontalAlignment="Left"
+                Foreground="{StaticResource NeutralWhiteBrush}"
+                IsChecked="{Binding IndentUsingTabs, Converter={StaticResource invertBooleanConverter}, Source={x:Static settings:Settings.Default}}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="Use spaces:" />
+                    <TextBox
+                        Width="30"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        IsEnabled="{Binding IsChecked, ElementName=indentUsingSpacesRadioButton}"
+                        Text="{Binding IndentSpaces, Source={x:Static settings:Settings.Default}}" />
+                </StackPanel>
+            </RadioButton>
+        </StackPanel>
+        <StackPanel Grid.Row="8" Margin="3,0,0,0">
+            <TextBlock
+                Margin="0,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Foreground="{StaticResource NeutralWhiteBrush}"
+                Text="Default Animation Length (seconds):" />
+            <StackPanel
+                Margin="10,0,25,0"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal">
+                <Slider
+                    x:Name="slider"
+                    Width="90"
+                    VerticalAlignment="Center"
+                    AutoToolTipPlacement="TopLeft"
+                    AutoToolTipPrecision="3"
+                    IsMoveToPointEnabled="True"
+                    IsSnapToTickEnabled="True"
+                    Maximum="10"
+                    Minimum=".5"
+                    SmallChange=".25"
+                    TickFrequency=".25"
+                    ToolTip="{Binding Value, Converter={StaticResource doubleConverter}, RelativeSource={RelativeSource Self}}"
+                    Value="{Binding AnimationLengthDefault, Source={x:Static settings:Settings.Default}}" />
+                <TextBlock
+                    Margin="10,10,26,0"
+                    VerticalAlignment="Center"
+                    Text="{Binding AnimationLengthDefault, Source={x:Static settings:Settings.Default}}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
 
 </UserControl>

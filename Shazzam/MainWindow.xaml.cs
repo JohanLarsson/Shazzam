@@ -27,8 +27,8 @@
 
             ShazzamSwitchboard.MainWindow = this;
             ShazzamSwitchboard.CodeTabView = this.codeTabView;
-            this.codeTabView.ShaderEffectChanged += this.CodeTabView_ShaderEffectChanged;
-            this.imageTabControl.SelectionChanged += this.CodeTabControl_SelectionChanged;
+            this.codeTabView.ShaderEffectChanged += this.CodeTabViewShaderEffectChanged;
+            this.imageTabControl.SelectionChanged += this.CodeTabControlSelectionChanged;
 
             if (Properties.Settings.Default.FilePath_LastImage != string.Empty)
             {
@@ -41,8 +41,11 @@
                     var resourceUri = new Uri("images/ColorRange.png", UriKind.Relative);
                     var streamInfo = Application.GetResourceStream(resourceUri);
 
-                    var temp = BitmapFrame.Create(streamInfo.Stream);
-                    this.userImage.SetCurrentValue(Image.SourceProperty, temp);
+                    if (streamInfo != null)
+                    {
+                        var temp = BitmapFrame.Create(streamInfo.Stream);
+                        this.userImage.SetCurrentValue(Image.SourceProperty, temp);
+                    }
                 }
             }
 
@@ -77,11 +80,22 @@
                 }
             }
 
-            this.Loaded += this.MainWindow_Loaded;
-            this.Closing += this.MainWindow_Closing;
+            this.Loaded += this.MainWindowLoaded;
+            this.Closing += this.MainWindowClosing;
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private static bool IsValidFileName(string filename)
+        {
+            if (string.Equals(filename, Constants.FileNames.TempShaderFx, StringComparison.OrdinalIgnoreCase))
+            {
+                MessageBox.Show($"'{Constants.FileNames.TempShaderFx}' not allowed for file name as it is reserved for Shazzam.");
+                return false;
+            }
+
+            return true;
+        }
+
+        private void MainWindowLoaded(object sender, RoutedEventArgs e)
         {
             this.plugin1.SelectedIndex = 0;
             this.SetupMenuBindings();
@@ -94,39 +108,26 @@
             ICommand fullCodeCommand = ((MainWindowViewModel)this.mainGrid.DataContext).FullScreenCodeCommand;
             ICommand fullImageCommand = ((MainWindowViewModel)this.mainGrid.DataContext).FullScreenImageCommand;
 
-            KeyBinding kb;
-
-            kb = new KeyBinding(fullImageCommand, Key.F9, ModifierKeys.None);
-            this.InputBindings.Add(kb);
-
-            kb = new KeyBinding(fullCodeCommand, Key.F11, ModifierKeys.None);
-            this.InputBindings.Add(kb);
-
-            kb = new KeyBinding(isCommand, Key.F5, ModifierKeys.Control) { CommandParameter = "none" };
-            this.InputBindings.Add(kb);
-
-            kb = new KeyBinding(isCommand, Key.F6, ModifierKeys.Control) { CommandParameter = "fill" };
-            this.InputBindings.Add(kb);
-
-            kb = new KeyBinding(isCommand, Key.F7, ModifierKeys.Control) { CommandParameter = "uniform" };
-            this.InputBindings.Add(kb);
-
-            kb = new KeyBinding(isCommand, Key.F8, ModifierKeys.Control) { CommandParameter = "uniformtofill" };
-            this.InputBindings.Add(kb);
+            this.InputBindings.Add(new KeyBinding(fullImageCommand, Key.F9, ModifierKeys.None));
+            this.InputBindings.Add(new KeyBinding(fullCodeCommand, Key.F11, ModifierKeys.None));
+            this.InputBindings.Add(new KeyBinding(isCommand, Key.F5, ModifierKeys.Control) { CommandParameter = "none" });
+            this.InputBindings.Add(new KeyBinding(isCommand, Key.F6, ModifierKeys.Control) { CommandParameter = "fill" });
+            this.InputBindings.Add(new KeyBinding(isCommand, Key.F7, ModifierKeys.Control) { CommandParameter = "uniform" });
+            this.InputBindings.Add(new KeyBinding(isCommand, Key.F8, ModifierKeys.Control) { CommandParameter = "uniformtofill" });
         }
 
-        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void MainWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             ShazzamSwitchboard.CodeTabView.SaveFileFirst();
         }
 
-        private void CodeTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CodeTabControlSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Properties.Settings.Default.TabIndex_SelectedImage = this.imageTabControl.SelectedIndex;
             Properties.Settings.Default.Save();
         }
 
-        private void CodeTabView_ShaderEffectChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void CodeTabViewShaderEffectChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             this.ApplyEffect(this.codeTabView.CurrentShaderEffect);
         }
@@ -139,8 +140,8 @@
 
         private void LoadMedia(string fileName)
         {
-            this.mediaUI.Source = null;
-            this.mediaUI.Source = new Uri(fileName);
+            this.mediaUI.SetCurrentValue(MediaElement.SourceProperty, null);
+            this.mediaUI.SetCurrentValue(MediaElement.SourceProperty, new Uri(fileName));
         }
 
         private void ApplyEffect(ShaderEffect se)
@@ -155,7 +156,7 @@
             this.mediaUI.SetCurrentValue(EffectProperty, se);
         }
 
-        private void New_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void NewExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             // codeTabView.NewShader();
             var dialog = new SaveFileDialog { Title = "New File Name" };
@@ -183,17 +184,6 @@
             }
         }
 
-        private static bool IsValidFileName(string filename)
-        {
-            if (string.Equals(filename, Constants.FileNames.TempShaderFx, StringComparison.OrdinalIgnoreCase))
-            {
-                MessageBox.Show($"'{Constants.FileNames.TempShaderFx}' not allowed for file name as it is reserved for Shazzam.");
-                return false;
-            }
-
-            return true;
-        }
-
         private void LoadShaderEditor(FileDialog ofd)
         {
             this.codeTabView.OpenFile(ofd.FileName);
@@ -207,7 +197,7 @@
             }
         }
 
-        private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void OpenExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             var dialog = new OpenFileDialog { Filter = "Shader Files (*.fx)|*.fx|All Files|*.*" };
             if (Properties.Settings.Default.FolderPath_FX != string.Empty)
@@ -226,7 +216,7 @@
             }
         }
 
-        private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void SaveExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             try
             {
@@ -235,11 +225,11 @@
             catch (UnauthorizedAccessException exception)
             {
                 MessageBox.Show(this, exception.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                this.SaveAs_Executed(sender, e);
+                this.SaveAsExecuted(sender, e);
             }
         }
 
-        private void SaveAs_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void SaveAsExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             var sfd = new SaveFileDialog
             {
@@ -261,79 +251,36 @@
             }
         }
 
-        private void Exit_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void ExitExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
-        private void ApplyShader_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void ApplyShaderExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             this.codeTabView.RenderShader();
         }
 
-        private void CompileShader_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void CompileShaderExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             this.codeTabView.CompileShader();
         }
 
-        private void RemoveShader_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void RemoveShaderExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            this.userImage.Effect = null;
-            this.sampleImage1.Effect = null;
-            this.sampleImage2.Effect = null;
-            this.sampleImage3.Effect = null;
-            this.sampleImage4.Effect = null;
-            this.sampleImage5.Effect = null;
-            this.sampleUI.Effect = null;
-            this.mediaUI.Effect = null;
+            this.userImage.SetCurrentValue(EffectProperty, null);
+            this.sampleImage1.SetCurrentValue(EffectProperty, null);
+            this.sampleImage2.SetCurrentValue(EffectProperty, null);
+            this.sampleImage3.SetCurrentValue(EffectProperty, null);
+            this.sampleImage4.SetCurrentValue(EffectProperty, null);
+            this.sampleImage5.SetCurrentValue(EffectProperty, null);
+            this.sampleUI.SetCurrentValue(EffectProperty, null);
+            this.mediaUI.SetCurrentValue(EffectProperty, null);
         }
 
-        // private void ExploreCompiledShaders_Executed(object sender, System.Windows.RoutedEventArgs e)
-        // {
-        //  string path = Properties.Settings.Default.FolderPath_Output;
-        //  System.Diagnostics.Process.Start(path);
-        // }
-        // private void ExploreTextureMaps_Executed(object sender, System.Windows.RoutedEventArgs e)
-        // {
-        //  string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        //  System.Diagnostics.Process.Start(path + Constants.Paths.TextureMaps);
-        // }
-
-        // private void FullScreenImage_Executed(object sender, ExecutedRoutedEventArgs e)
-        // {
-        //  if (codeRow.Height != new GridLength(0, GridUnitType.Pixel))
-        //  {
-
-        // codeRow.Height = new GridLength(0, GridUnitType.Pixel);
-        //    imageRow.Height = new GridLength(5, GridUnitType.Star);
-        //  }
-        //  else
-        //  {
-
-        // codeRow.Height = new GridLength(5, GridUnitType.Star);
-        //    imageRow.Height = new GridLength(5, GridUnitType.Star);
-        //  }
-        // }
-
-        // private void FullScreenCode_Executed(object sender, ExecutedRoutedEventArgs e)
-        // {
-
-        // if (imageRow.Height != new GridLength(0, GridUnitType.Pixel))
-        //  {
-        //    imageRow.Height = new GridLength(0, GridUnitType.Pixel);
-        //    codeRow.Height = new GridLength(5, GridUnitType.Star);
-        //  }
-        //  else
-        //  {
-        //    imageRow.Height = new GridLength(5, GridUnitType.Star);
-
-        // }
-
-        // }
-        private void OpenImage_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void OpenImageExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var ofd = new OpenFileDialog();
-            ofd.Filter = "Images|*.jpg;*.png;*.bmp;*.gif|All Files|*.*";
+            var ofd = new OpenFileDialog { Filter = "Images|*.jpg;*.png;*.bmp;*.gif|All Files|*.*" };
 
             if (Properties.Settings.Default.FolderPath_Images != string.Empty)
             {
@@ -349,10 +296,9 @@
             }
         }
 
-        private void OpenMedia_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void OpenMediaExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var ofd = new OpenFileDialog();
-            ofd.Filter = "Video|*.wmv;*.wma|All Files|*.*";
+            var ofd = new OpenFileDialog { Filter = "Video|*.wmv;*.wma|All Files|*.*" };
 
             if (Properties.Settings.Default.FolderPath_Images != string.Empty)
             {
@@ -368,53 +314,19 @@
             }
         }
 
-        private void ShaderCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        private void ShaderCommandCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
-            // string fxcPath = Environment.ExpandEnvironmentVariables(Properties.Settings.Default.DirectX_FxcPath);
-            // e.CanExecute = File.Exists(fxcPath);
+            //// string fxcPath = Environment.ExpandEnvironmentVariables(Properties.Settings.Default.DirectX_FxcPath);
+            //// e.CanExecute = File.Exists(fxcPath);
         }
 
-        //// private void ImageStretch_Executed(object sender, ExecutedRoutedEventArgs e)
-        //// {
-        ////  //switch (e.Parameter.ToString())
-        ////  //{
-        ////  //  case "none":
-        ////  //    SetStretchMode(System.Windows.Media.Stretch.None);
-        ////  //    break;
-        ////  //  case "fill":
-        ////  //    SetStretchMode(System.Windows.Media.Stretch.Fill);
-        ////  //    break;
-        ////  //  case "uniform":
-        ////  //    SetStretchMode(System.Windows.Media.Stretch.Uniform);
-        ////  //    break;
-        ////  //  case "uniformtofill":
-        ////  //    SetStretchMode(System.Windows.Media.Stretch.UniformToFill);
-        ////  //    break;
-        ////  //  default:
-        ////  //    SetStretchMode(System.Windows.Media.Stretch.Uniform);
-
-        //// //    break;
-        ////  //}
-        //// }
-
-        private void SetStretchMode(System.Windows.Media.Stretch stretchMode)
-        {
-            this.userImage.Stretch = stretchMode;
-            this.sampleImage1.Stretch = stretchMode;
-            this.sampleImage2.Stretch = stretchMode;
-            this.sampleImage3.Stretch = stretchMode;
-            this.sampleImage4.Stretch = stretchMode;
-            this.sampleImage5.Stretch = stretchMode;
-            this.mediaUI.Stretch = stretchMode;
-        }
-
-        private void MediaUI_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void MediaUiMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             this.mediaUI.Position = TimeSpan.Zero;
         }
 
-        private void MediaUI_MediaEnded(object sender, RoutedEventArgs e)
+        private void MediaUiMediaEnded(object sender, RoutedEventArgs e)
         {
             if (this.autoPlayCheckBox.IsChecked == true)
             {
@@ -422,12 +334,12 @@
             }
         }
 
-        private void MediaUI_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        private void MediaUiMediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
-            this.videoMessage.Text = "Cannot play the specified media.";
+            this.videoMessage.SetCurrentValue(TextBlock.TextProperty, "Cannot play the specified media.");
         }
 
-        private void AutoPlayCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void AutoPlayCheckBoxChecked(object sender, RoutedEventArgs e)
         {
             if (this.mediaUI != null)
             {
@@ -435,9 +347,9 @@
             }
         }
 
-        private void ImageTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ImageTabControlSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.imageTabControl.SelectedItem == this.mediaTab)
+            if (ReferenceEquals(this.imageTabControl.SelectedItem, this.mediaTab))
             {
                 this.mediaUI.Play();
             }
@@ -447,14 +359,14 @@
             }
         }
 
-        private void Button1_Click(object sender, RoutedEventArgs e)
+        private void Button1Click(object sender, RoutedEventArgs e)
         {
-            this.fruitListBox.SelectedIndex = 1;
+            this.fruitListBox.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedIndexProperty, 1);
         }
 
-        private void Button2_Click(object sender, RoutedEventArgs e)
+        private void Button2Click(object sender, RoutedEventArgs e)
         {
-            this.fruitListBox.SelectedIndex = 2;
+            this.fruitListBox.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedIndexProperty, 2);
         }
     }
 }

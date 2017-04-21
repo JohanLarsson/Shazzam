@@ -1,28 +1,30 @@
-﻿<Window x:Class="Shazzam.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:commands="clr-namespace:Shazzam.Commands"
-        xmlns:converters="clr-namespace:Shazzam.Converters"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:view="clr-namespace:Shazzam.Views"
-        xmlns:vms="clr-namespace:Shazzam.ViewModels"
-        Title="Shazzam Shader Editor = V1.2"
-        Background="Black"
-        Icon="Images/star.png"
-        WindowState="Maximized"
-        mc:Ignorable="d">
+﻿<Window
+    x:Class="Shazzam.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:commands="clr-namespace:Shazzam.Commands"
+    xmlns:converters="clr-namespace:Shazzam.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Shazzam.Views"
+    xmlns:vms="clr-namespace:Shazzam.ViewModels"
+    Title="Shazzam Shader Editor = V1.2"
+    Background="Black"
+    Icon="Images/star.png"
+    WindowState="Maximized"
+    mc:Ignorable="d">
     <Window.Resources>
 
         <converters:StringToVisibilityConverter x:Key="visConverter" />
         <converters:StretchToIsCheckedConverter x:Key="checkedConverter" />
         <vms:MainWindowViewModel x:Key="mainVM" />
         <SolidColorBrush x:Key="ImageBorderBrush" Color="#FF16404C" />
-        <DrawingBrush x:Key="AlphaGrid"
-                      Stretch="UniformToFill"
-                      TileMode="Tile"
-                      Viewport="0 0 8 8"
-                      ViewportUnits="Absolute">
+        <DrawingBrush
+            x:Key="AlphaGrid"
+            Stretch="UniformToFill"
+            TileMode="Tile"
+            Viewport="0 0 8 8"
+            ViewportUnits="Absolute">
             <DrawingBrush.Drawing>
                 <DrawingGroup>
                     <GeometryDrawing Brush="Gray">
@@ -39,21 +41,23 @@
 
     </Window.Resources>
     <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.New" Executed="New_Executed" />
-        <CommandBinding Command="ApplicationCommands.Open" Executed="Open_Executed" />
-        <CommandBinding Command="commands:AppCommands.OpenImage" Executed="OpenImage_Executed" />
-        <CommandBinding Command="commands:AppCommands.OpenMedia" Executed="OpenMedia_Executed" />
-        <CommandBinding Command="ApplicationCommands.Save" Executed="Save_Executed" />
-        <CommandBinding Command="ApplicationCommands.SaveAs" Executed="SaveAs_Executed" />
-        <CommandBinding Command="commands:AppCommands.Exit" Executed="Exit_Executed" />
+        <CommandBinding Command="ApplicationCommands.New" Executed="NewExecuted" />
+        <CommandBinding Command="ApplicationCommands.Open" Executed="OpenExecuted" />
+        <CommandBinding Command="commands:AppCommands.OpenImage" Executed="OpenImageExecuted" />
+        <CommandBinding Command="commands:AppCommands.OpenMedia" Executed="OpenMediaExecuted" />
+        <CommandBinding Command="ApplicationCommands.Save" Executed="SaveExecuted" />
+        <CommandBinding Command="ApplicationCommands.SaveAs" Executed="SaveAsExecuted" />
+        <CommandBinding Command="commands:AppCommands.Exit" Executed="ExitExecuted" />
 
-        <CommandBinding CanExecute="ShaderCommand_CanExecute"
-                        Command="commands:AppCommands.ApplyShader"
-                        Executed="ApplyShader_Executed" />
-        <CommandBinding Command="commands:AppCommands.RemoveShader" Executed="RemoveShader_Executed" />
-        <CommandBinding CanExecute="ShaderCommand_CanExecute"
-                        Command="commands:AppCommands.CompileShader"
-                        Executed="CompileShader_Executed" />
+        <CommandBinding
+            CanExecute="ShaderCommandCanExecute"
+            Command="commands:AppCommands.ApplyShader"
+            Executed="ApplyShaderExecuted" />
+        <CommandBinding Command="commands:AppCommands.RemoveShader" Executed="RemoveShaderExecuted" />
+        <CommandBinding
+            CanExecute="ShaderCommandCanExecute"
+            Command="commands:AppCommands.CompileShader"
+            Executed="CompileShaderExecuted" />
         <!--<CommandBinding Command='commands:AppCommands.ExploreCompiledShaders'
                     Executed='ExploreCompiledShaders_Executed' />-->
         <!--<CommandBinding Command='commands:AppCommands.ExploreTextureMaps'
@@ -68,9 +72,10 @@
 
     </Window.CommandBindings>
 
-    <Grid x:Name="mainGrid"
-          Background="#101010"
-          DataContext="{StaticResource mainVM}">
+    <Grid
+        x:Name="mainGrid"
+        Background="#101010"
+        DataContext="{StaticResource mainVM}">
         <Grid.Resources />
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="PluginsColumn" Width="Auto" />
@@ -80,9 +85,10 @@
             <Grid x:Name="menuContainer">
 
                 <Grid Margin="0,5,0,5">
-                    <Border BorderBrush="#484848"
-                            BorderThickness="0,0,1,0"
-                            CornerRadius="0,4,4,0">
+                    <Border
+                        BorderBrush="#484848"
+                        BorderThickness="0,0,1,0"
+                        CornerRadius="0,4,4,0">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                 <GradientStop Offset="0.0" Color="#484848" />
@@ -91,11 +97,12 @@
                         </Border.Background>
                     </Border>
 
-                    <Border Height="25"
-                            VerticalAlignment="Top"
-                            BorderBrush="{StaticResource HighlightBrush}"
-                            BorderThickness="0,1,0,0"
-                            CornerRadius="0,4,0,0">
+                    <Border
+                        Height="25"
+                        VerticalAlignment="Top"
+                        BorderBrush="{StaticResource HighlightBrush}"
+                        BorderThickness="0,1,0,0"
+                        CornerRadius="0,4,0,0">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                 <GradientStop Offset="0.0" Color="#505050" />
@@ -104,18 +111,21 @@
                         </Border.Background>
                     </Border>
 
-                    <Border BorderBrush="#777"
-                            BorderThickness="0,1,0,0"
-                            CornerRadius="0,4,4,0" />
-                    <Border BorderBrush="#404040"
-                            BorderThickness="0,0,0,1"
-                            CornerRadius="0,4,4,0" />
-                    <Border Height="33"
-                            VerticalAlignment="Bottom"
-                            BorderBrush="{StaticResource HighlightBrush}"
-                            BorderThickness="0,1,0,0"
-                            CornerRadius="0,0,4,0"
-                            Opacity=".4">
+                    <Border
+                        BorderBrush="#777"
+                        BorderThickness="0,1,0,0"
+                        CornerRadius="0,4,4,0" />
+                    <Border
+                        BorderBrush="#404040"
+                        BorderThickness="0,0,0,1"
+                        CornerRadius="0,4,4,0" />
+                    <Border
+                        Height="33"
+                        VerticalAlignment="Bottom"
+                        BorderBrush="{StaticResource HighlightBrush}"
+                        BorderThickness="0,1,0,0"
+                        CornerRadius="0,0,4,0"
+                        Opacity=".4">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                 <GradientStop Offset="0" Color="#10FFFFFF" />
@@ -125,11 +135,12 @@
                     </Border>
                 </Grid>
 
-                <Menu Grid.Column="0"
-                      Height="24"
-                      Margin="0,6,1,0"
-                      VerticalAlignment="Top"
-                      Background="Black">
+                <Menu
+                    Grid.Column="0"
+                    Height="24"
+                    Margin="0,6,1,0"
+                    VerticalAlignment="Top"
+                    Background="Black">
                     <MenuItem Header="_File">
                         <MenuItem Command="ApplicationCommands.New" Header="_New_Shader File..." />
                         <MenuItem Command="ApplicationCommands.Open" Header="Open _Shader File..." />
@@ -163,84 +174,91 @@
                     </MenuItem>
 
                     <MenuItem Header="_View">
-                        <MenuItem Command="{Binding FullScreenImageCommand}"
-                                  Header="Full Screen _Image"
-                                  InputGestureText="F9" />
-                        <MenuItem Command="{Binding FullScreenCodeCommand}"
-                                  Header="Full Screen _Code"
-                                  InputGestureText="F11" />
+                        <MenuItem
+                            Command="{Binding FullScreenImageCommand}"
+                            Header="Full Screen _Image"
+                            InputGestureText="F9" />
+                        <MenuItem
+                            Command="{Binding FullScreenCodeCommand}"
+                            Header="Full Screen _Code"
+                            InputGestureText="F11" />
                         <Separator />
                         <MenuItem Header="Image _Stretch">
-                            <MenuItem Command="{Binding ImageStretchCommand}"
-                                      CommandParameter="none"
-                                      Header="_None"
-                                      InputGestureText="Ctrl+F5"
-                                      IsCheckable="True"
-                                      IsChecked="{Binding ImageStretch,
-                                                          ConverterParameter=none,
-                                                          Converter={StaticResource checkedConverter}}" />
-                            <MenuItem Command="{Binding ImageStretchCommand}"
-                                      CommandParameter="fill"
-                                      Header="_Fill"
-                                      InputGestureText="Ctrl+F6"
-                                      IsCheckable="True"
-                                      IsChecked="{Binding ImageStretch,
-                                                          ConverterParameter=fill,
-                                                          Converter={StaticResource checkedConverter}}" />
-                            <MenuItem Command="{Binding ImageStretchCommand}"
-                                      CommandParameter="uniform"
-                                      Header="_Uniform"
-                                      InputGestureText="Ctrl+F7"
-                                      IsCheckable="True"
-                                      IsChecked="{Binding ImageStretch,
-                                                          ConverterParameter=uniform,
-                                                          Converter={StaticResource checkedConverter}}" />
-                            <MenuItem Command="{Binding ImageStretchCommand}"
-                                      CommandParameter="uniformtofill"
-                                      Header="Uniform_ToFill"
-                                      InputGestureText="Ctrl+F8"
-                                      IsCheckable="True"
-                                      IsChecked="{Binding ImageStretch,
-                                                          ConverterParameter=uniformtofill,
-                                                          Converter={StaticResource checkedConverter}}" />
+                            <MenuItem
+                                Command="{Binding ImageStretchCommand}"
+                                CommandParameter="none"
+                                Header="_None"
+                                InputGestureText="Ctrl+F5"
+                                IsCheckable="True"
+                                IsChecked="{Binding ImageStretch, ConverterParameter=none, Converter={StaticResource checkedConverter}}" />
+                            <MenuItem
+                                Command="{Binding ImageStretchCommand}"
+                                CommandParameter="fill"
+                                Header="_Fill"
+                                InputGestureText="Ctrl+F6"
+                                IsCheckable="True"
+                                IsChecked="{Binding ImageStretch, ConverterParameter=fill, Converter={StaticResource checkedConverter}}" />
+                            <MenuItem
+                                Command="{Binding ImageStretchCommand}"
+                                CommandParameter="uniform"
+                                Header="_Uniform"
+                                InputGestureText="Ctrl+F7"
+                                IsCheckable="True"
+                                IsChecked="{Binding ImageStretch, ConverterParameter=uniform, Converter={StaticResource checkedConverter}}" />
+                            <MenuItem
+                                Command="{Binding ImageStretchCommand}"
+                                CommandParameter="uniformtofill"
+                                Header="Uniform_ToFill"
+                                InputGestureText="Ctrl+F8"
+                                IsCheckable="True"
+                                IsChecked="{Binding ImageStretch, ConverterParameter=uniformtofill, Converter={StaticResource checkedConverter}}" />
 
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="_Help">
 
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://blog.shazzam-tool.com/"
-                                  Header="What's New" />
+                        <MenuItem
+                            Command="{Binding Path=BrowseToSiteCommand}"
+                            CommandParameter="http://blog.shazzam-tool.com/"
+                            Header="What's New" />
                         <Separator />
 
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://shazzam.codeplex.com/WorkItem/List.aspx"
-                                  Header="Report a bug" />
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://shazzam.codeplex.com/Thread/List.aspx"
-                                  Header="Forums" />
+                        <MenuItem
+                            Command="{Binding Path=BrowseToSiteCommand}"
+                            CommandParameter="http://shazzam.codeplex.com/WorkItem/List.aspx"
+                            Header="Report a bug" />
+                        <MenuItem
+                            Command="{Binding Path=BrowseToSiteCommand}"
+                            CommandParameter="http://shazzam.codeplex.com/Thread/List.aspx"
+                            Header="Forums" />
                         <Separator />
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://twitter.com/shazzamtool"
-                                  Header="Twitter" />
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://blog.shazzam-tool.com/"
-                                  Header="Blog" />
+                        <MenuItem
+                            Command="{Binding Path=BrowseToSiteCommand}"
+                            CommandParameter="http://twitter.com/shazzamtool"
+                            Header="Twitter" />
+                        <MenuItem
+                            Command="{Binding Path=BrowseToSiteCommand}"
+                            CommandParameter="http://blog.shazzam-tool.com/"
+                            Header="Blog" />
                         <Separator />
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://blog.xamlwonderland.com/"
-                                  Header="XAML Wonderland" />
-                        <MenuItem Command="{Binding BrowseToSiteCommand}"
-                                  CommandParameter="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=UMKJV7XEKWPV8"
-                                  Header="Contribute" />
+                        <MenuItem
+                            Command="{Binding Path=BrowseToSiteCommand}"
+                            CommandParameter="http://blog.xamlwonderland.com/"
+                            Header="XAML Wonderland" />
+                        <MenuItem
+                            Command="{Binding BrowseToSiteCommand}"
+                            CommandParameter="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=UMKJV7XEKWPV8"
+                            Header="Contribute" />
                         <!--<MenuItem Header="Check for Update" />-->
                         <Separator />
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://amazon.com/"
-                                  Header="HLSL and Pixel Shader for .NET Developers Book" />
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://lynda.com/waltritscher"
-                                  Header="Video Training" />
+                        <MenuItem
+                            Command="{Binding Path=BrowseToSiteCommand}"
+                            CommandParameter="http://amazon.com/"
+                            Header="HLSL and Pixel Shader for .NET Developers Book" />
+                        <MenuItem
+                            Command="{Binding Path=BrowseToSiteCommand}"
+                            CommandParameter="http://lynda.com/waltritscher"
+                            Header="Video Training" />
                     </MenuItem>
 
                 </Menu>
@@ -258,19 +276,22 @@
                 <RowDefinition x:Name="codeRow" Height="{Binding CodeRowHeight}" />
             </Grid.RowDefinitions>
 
-            <GridSplitter Grid.Row="1"
-                          Grid.ColumnSpan="1"
-                          Width="Auto"
-                          HorizontalAlignment="Stretch"
-                          ResizeDirection="Rows" />
+            <GridSplitter
+                Grid.Row="1"
+                Grid.ColumnSpan="1"
+                Width="Auto"
+                HorizontalAlignment="Stretch"
+                ResizeDirection="Rows" />
 
-            <view:CodeTabView x:Name="codeTabView"
-                              Grid.Row="2"
-                              DockPanel.Dock="Bottom" />
-            <TabControl x:Name="imageTabControl"
-                        Grid.Row="0"
-                        Background="{DynamicResource NeutralDarkBrush}"
-                        SelectionChanged="ImageTabControl_SelectionChanged">
+            <view:CodeTabView
+                x:Name="codeTabView"
+                Grid.Row="2"
+                DockPanel.Dock="Bottom" />
+            <TabControl
+                x:Name="imageTabControl"
+                Grid.Row="0"
+                Background="{DynamicResource NeutralDarkBrush}"
+                SelectionChanged="ImageTabControlSelectionChanged">
 
                 <TabItem Header="Custom Image">
                     <Border Style="{DynamicResource ImageOutsideBorder}">
@@ -278,11 +299,12 @@
                             <!--  checkered background  -->
                             <Border Background="{StaticResource AlphaGrid}">
 
-                                <Image x:Name="userImage"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Source="Images/ColorRange.png"
-                                       Stretch="{Binding ImageStretch}" />
+                                <Image
+                                    x:Name="userImage"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Source="Images/ColorRange.png"
+                                    Stretch="{Binding ImageStretch}" />
                             </Border>
                         </Border>
                     </Border>
@@ -292,11 +314,12 @@
                     <Border Style="{DynamicResource ImageOutsideBorder}">
                         <Border Style="{DynamicResource ImageInsideBorder}">
                             <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="sampleImage1"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Source="Images/Fire1.jpg"
-                                       Stretch="{Binding ImageStretch}" />
+                                <Image
+                                    x:Name="sampleImage1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Source="Images/Fire1.jpg"
+                                    Stretch="{Binding ImageStretch}" />
                             </Border>
                         </Border>
                     </Border>
@@ -306,11 +329,12 @@
                     <Border Style="{DynamicResource ImageOutsideBorder}">
                         <Border Style="{DynamicResource ImageInsideBorder}">
                             <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="sampleImage2"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Source="Images/Light1.jpg"
-                                       Stretch="{Binding ImageStretch}" />
+                                <Image
+                                    x:Name="sampleImage2"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Source="Images/Light1.jpg"
+                                    Stretch="{Binding ImageStretch}" />
                             </Border>
 
                         </Border>
@@ -321,11 +345,12 @@
                     <Border Style="{DynamicResource ImageOutsideBorder}">
                         <Border Style="{DynamicResource ImageInsideBorder}">
                             <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="sampleImage3"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Source="Images/SpikeBalls.jpg"
-                                       Stretch="{Binding ImageStretch}" />
+                                <Image
+                                    x:Name="sampleImage3"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Source="Images/SpikeBalls.jpg"
+                                    Stretch="{Binding ImageStretch}" />
                             </Border>
                         </Border>
                     </Border>
@@ -335,11 +360,12 @@
                     <Border Style="{DynamicResource ImageOutsideBorder}">
                         <Border Style="{DynamicResource ImageInsideBorder}">
                             <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="sampleImage4"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Source="Images/lines.jpg"
-                                       Stretch="{Binding ImageStretch}" />
+                                <Image
+                                    x:Name="sampleImage4"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Source="Images/lines.jpg"
+                                    Stretch="{Binding ImageStretch}" />
                             </Border>
                         </Border>
                     </Border>
@@ -349,11 +375,12 @@
                     <Border Style="{DynamicResource ImageOutsideBorder}">
                         <Border Style="{DynamicResource ImageInsideBorder}">
                             <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="sampleImage5"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Source="Images/gears.jpg"
-                                       Stretch="{Binding ImageStretch}" />
+                                <Image
+                                    x:Name="sampleImage5"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Source="Images/gears.jpg"
+                                    Stretch="{Binding ImageStretch}" />
                             </Border>
 
                         </Border>
@@ -362,48 +389,54 @@
                 <TabItem Header="Sample UI">
 
                     <Border Background="{StaticResource AlphaGrid}">
-                        <DockPanel x:Name="sampleUI"
-                                   MinWidth="200"
-                                   MinHeight="200"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   LastChildFill="False"
-                                   TextElement.FontSize="14">
+                        <DockPanel
+                            x:Name="sampleUI"
+                            MinWidth="200"
+                            MinHeight="200"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            LastChildFill="False"
+                            TextElement.FontSize="14">
                             <DockPanel.Background>
                                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                     <GradientStop Offset="0" Color="#FFBCF3F1" />
                                     <GradientStop Offset="1" Color="#FF6558E0" />
                                 </LinearGradientBrush>
                             </DockPanel.Background>
-                            <TextBlock Margin="8"
-                                       HorizontalAlignment="Center"
-                                       DockPanel.Dock="Top"
-                                       FontSize="18"
-                                       Text="Sample UI" />
-                            <ListBox x:Name="fruitListBox"
-                                     Width="140"
-                                     Margin="8"
-                                     HorizontalAlignment="Center"
-                                     DockPanel.Dock="Top">
+                            <TextBlock
+                                Margin="8"
+                                HorizontalAlignment="Center"
+                                DockPanel.Dock="Top"
+                                FontSize="18"
+                                Text="Sample UI" />
+                            <ListBox
+                                x:Name="fruitListBox"
+                                Width="140"
+                                Margin="8"
+                                HorizontalAlignment="Center"
+                                DockPanel.Dock="Top">
                                 <TextBlock Text="Apple" />
                                 <TextBlock Text="Banana" />
                                 <TextBlock Text="Grapes" />
                                 <TextBlock Text="Peach" />
                                 <TextBlock Text="Strawberry" />
                             </ListBox>
-                            <StackPanel Height="42.5"
-                                        Margin="8"
-                                        HorizontalAlignment="Center"
-                                        DockPanel.Dock="Top"
-                                        Orientation="Horizontal">
-                                <Button Margin="4"
-                                        HorizontalAlignment="Left"
-                                        Click="Button1_Click"
-                                        Content="Sample 1" />
-                                <Button Margin="4"
-                                        HorizontalAlignment="Left"
-                                        Click="Button2_Click"
-                                        Content="Sample 2" />
+                            <StackPanel
+                                Height="42.5"
+                                Margin="8"
+                                HorizontalAlignment="Center"
+                                DockPanel.Dock="Top"
+                                Orientation="Horizontal">
+                                <Button
+                                    Margin="4"
+                                    HorizontalAlignment="Left"
+                                    Click="Button1Click"
+                                    Content="Sample 1" />
+                                <Button
+                                    Margin="4"
+                                    HorizontalAlignment="Left"
+                                    Click="Button2Click"
+                                    Content="Sample 2" />
                             </StackPanel>
                         </DockPanel>
                     </Border>
@@ -414,37 +447,42 @@
                     <Border Style="{DynamicResource ImageOutsideBorder}">
                         <Border Style="{DynamicResource ImageInsideBorder}">
                             <Border Background="{StaticResource AlphaGrid}">
-                                <DockPanel MinWidth="200"
-                                           MinHeight="200"
-                                           HorizontalAlignment="Stretch"
-                                           VerticalAlignment="Stretch"
-                                           Background="White"
-                                           TextElement.FontSize="16">
-                                    <StackPanel Margin="10"
-                                                DockPanel.Dock="Top"
-                                                Orientation="Horizontal">
+                                <DockPanel
+                                    MinWidth="200"
+                                    MinHeight="200"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Background="White"
+                                    TextElement.FontSize="16">
+                                    <StackPanel
+                                        Margin="10"
+                                        DockPanel.Dock="Top"
+                                        Orientation="Horizontal">
                                         <!--<TextBlock Text='Click the video to replay.'
                                Margin='5,0' />-->
-                                        <CheckBox x:Name="autoPlayCheckBox"
-                                                  Margin="5,0"
-                                                  Checked="AutoPlayCheckBox_Checked"
-                                                  Content="Auto replay the video."
-                                                  IsChecked="True" />
+                                        <CheckBox
+                                            x:Name="autoPlayCheckBox"
+                                            Margin="5,0"
+                                            Checked="AutoPlayCheckBoxChecked"
+                                            Content="Auto replay the video."
+                                            IsChecked="True" />
                                     </StackPanel>
-                                    <TextBlock x:Name="videoMessage"
-                                               Margin="10"
-                                               DockPanel.Dock="Top" />
+                                    <TextBlock
+                                        x:Name="videoMessage"
+                                        Margin="10"
+                                        DockPanel.Dock="Top" />
                                     <Border Style="{DynamicResource ImageOutsideBorder}">
                                         <Border Style="{DynamicResource ImageInsideBorder}">
-                                            <MediaElement x:Name="mediaUI"
-                                                          DockPanel.Dock="Top"
-                                                          LoadedBehavior="Manual"
-                                                          MediaEnded="MediaUI_MediaEnded"
-                                                          MediaFailed="MediaUI_MediaFailed"
-                                                          MouseLeftButtonUp="MediaUI_MouseLeftButtonUp"
-                                                          Source="Images/plasma.wmv"
-                                                          Stretch="{Binding ImageStretch}"
-                                                          ToolTip="Click video to replay." />
+                                            <MediaElement
+                                                x:Name="mediaUI"
+                                                DockPanel.Dock="Top"
+                                                LoadedBehavior="Manual"
+                                                MediaEnded="MediaUiMediaEnded"
+                                                MediaFailed="MediaUiMediaFailed"
+                                                MouseLeftButtonUp="MediaUiMouseLeftButtonUp"
+                                                Source="Images/plasma.wmv"
+                                                Stretch="{Binding ImageStretch}"
+                                                ToolTip="Click video to replay." />
                                         </Border>
                                     </Border>
                                 </DockPanel>

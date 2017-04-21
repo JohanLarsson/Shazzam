@@ -12,13 +12,13 @@
         /// <param name="args">RoutedEventArgs to use when raising the event</param>
         internal static void RaiseEvent(DependencyObject target, RoutedEventArgs args)
         {
-            if (target is UIElement)
+            if (target is UIElement uiElement)
             {
-                (target as UIElement).RaiseEvent(args);
+                uiElement.RaiseEvent(args);
             }
-            else if (target is ContentElement)
+            else if (target is ContentElement contentElement)
             {
-                (target as ContentElement).RaiseEvent(args);
+                contentElement.RaiseEvent(args);
             }
         }
 
@@ -31,18 +31,13 @@
         /// <param name="handler">Event handler to be added</param>
         internal static void AddHandler(DependencyObject element, RoutedEvent routedEvent, Delegate handler)
         {
-            UIElement uie = element as UIElement;
-            if (uie != null)
+            if (element is UIElement uiElement)
             {
-                uie.AddHandler(routedEvent, handler);
+                uiElement.AddHandler(routedEvent, handler);
             }
-            else
+            else if (element is ContentElement contentElement)
             {
-                ContentElement ce = element as ContentElement;
-                if (ce != null)
-                {
-                    ce.AddHandler(routedEvent, handler);
-                }
+                contentElement.AddHandler(routedEvent, handler);
             }
         }
 
@@ -55,18 +50,13 @@
         /// <param name="handler">Event handler to be removed</param>
         internal static void RemoveHandler(DependencyObject element, RoutedEvent routedEvent, Delegate handler)
         {
-            UIElement uie = element as UIElement;
-            if (uie != null)
+            if (element is UIElement uiElement)
             {
-                uie.RemoveHandler(routedEvent, handler);
+                uiElement.RemoveHandler(routedEvent, handler);
             }
-            else
+            else if (element is ContentElement contentElement)
             {
-                ContentElement ce = element as ContentElement;
-                if (ce != null)
-                {
-                    ce.RemoveHandler(routedEvent, handler);
-                }
+                contentElement.RemoveHandler(routedEvent, handler);
             }
         }
     }

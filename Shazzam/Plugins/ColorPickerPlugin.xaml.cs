@@ -12,8 +12,26 @@ namespace Shazzam.Plugins
 
     public partial class ColorPickerPlugin : UserControl
     {
-        private const char DELIMITER = '|';
-        private bool updateInternal = false;
+        /// <summary>
+        /// DependencyProperty for Colors
+        /// </summary>
+        public static readonly DependencyProperty ColorsProperty = DependencyProperty.Register(
+            "Colors",
+            typeof(ObservableCollection<Color>),
+            typeof(ColorPickerPlugin),
+            new FrameworkPropertyMetadata(default(ObservableCollection<Color>), OnColorsChanged));
+
+        /// <summary>
+        /// DependencyProperty for ColorString
+        /// </summary>
+        public static readonly DependencyProperty ColorStringProperty = DependencyProperty.Register(
+            "ColorString",
+            typeof(string),
+            typeof(ColorPickerPlugin),
+            new FrameworkPropertyMetadata(default(string), OnColorStringChanged));
+
+        private const char Delimiter = '|';
+        private bool updateInternal;
         private DispatcherTimer colorChangedTimer;
         private Color colorChangedColor;
 
@@ -23,15 +41,79 @@ namespace Shazzam.Plugins
             this.Colors = new ObservableCollection<Color>();
             this.ColorString = Shazzam.Properties.Settings.Default.ColorPickerColors;
 
-            KaxamlInfo.EditSelectionChanged += this.KaxamlInfo_EditSelectionChanged;
+            KaxamlInfo.EditSelectionChanged += this.KaxamlInfoEditSelectionChanged;
         }
 
-        private void KaxamlInfo_EditSelectionChanged(string selectedText)
+        /// <summary>
+        /// description of the property
+        /// </summary>
+        public ObservableCollection<Color> Colors
+        {
+            get => (ObservableCollection<Color>)this.GetValue(ColorsProperty);
+            set => this.SetValue(ColorsProperty, value);
+        }
+
+        /// <summary>
+        /// description of the property
+        /// </summary>
+        public string ColorString
+        {
+            get => (string)this.GetValue(ColorStringProperty);
+            set => this.SetValue(ColorStringProperty, value);
+        }
+
+        private static void OnColorsChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            if (obj is ColorPickerPlugin owner)
+            {
+                var c = args.NewValue as ObservableCollection<Color>;
+                if (c != null)
+                {
+                    c.CollectionChanged += owner.CCollectionChanged;
+                }
+            }
+        }
+
+        private static void OnColorStringChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            if (obj is ColorPickerPlugin plugin)
+            {
+                var owner = plugin;
+                Shazzam.Properties.Settings.Default.ColorPickerColors = args.NewValue as string;
+
+                if (!owner.updateInternal)
+                {
+                    owner.updateInternal = true;
+
+                    owner.Colors.Clear();
+                    var colors = ((string)args.NewValue).Split(Delimiter);
+
+                    foreach (var s in colors)
+                    {
+                        try
+                        {
+                            if (s.Length > 3)
+                            {
+                                var c = ColorPickerUtil.ColorFromString(s);
+                                owner.Colors.Add(c);
+                            }
+                        }
+                        catch
+                        {
+                        }
+                    }
+
+                    owner.updateInternal = false;
+                }
+            }
+        }
+
+        private void KaxamlInfoEditSelectionChanged(string selectedText)
         {
             // wish we could do this without a try catch!
             try
             {
-                var c = (Color)ColorConverter.ConvertFromString(KaxamlInfo.Editor.SelectedText);
+                ColorConverter.ConvertFromString(KaxamlInfo.Editor.SelectedText);
                 this.SyncButton.SetCurrentValue(IsEnabledProperty, true);
             }
             catch
@@ -48,7 +130,7 @@ namespace Shazzam.Plugins
                 var c = ColorConverter.ConvertFromString(KaxamlInfo.Editor.SelectedText);
                 this.C.SetCurrentValue(Kaxaml.Plugins.Controls.ColorPicker.ColorProperty, c);
 
-                this.C.ColorChanged += this.C_ColorChanged;
+                this.C.ColorChanged += this.CColorChanged;
             }
             catch
             {
@@ -60,7 +142,7 @@ namespace Shazzam.Plugins
         {
             try
             {
-                this.C.ColorChanged -= this.C_ColorChanged;
+                this.C.ColorChanged -= this.CColorChanged;
             }
             catch
             {
@@ -68,15 +150,16 @@ namespace Shazzam.Plugins
             }
         }
 
-        private void C_ColorChanged(object sender, ColorChangedEventArgs e)
+        private void CColorChanged(object sender, ColorChangedEventArgs e)
         {
-            if ((bool)this.SyncButton.IsChecked)
+            if (this.SyncButton.IsChecked is bool isChecked &&
+                isChecked)
             {
                 try
                 {
                     if (this.colorChangedTimer == null)
                     {
-                        this.colorChangedTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(200), DispatcherPriority.Background, this._ColorChangedTimer_Tick, this.Dispatcher);
+                        this.colorChangedTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(200), DispatcherPriority.Background, this.ColorChangedTimerTick, this.Dispatcher);
                     }
 
                     this.colorChangedTimer.Stop();
@@ -90,7 +173,7 @@ namespace Shazzam.Plugins
             }
         }
 
-        private void _ColorChangedTimer_Tick(object sender, EventArgs e)
+        private void ColorChangedTimerTick(object sender, EventArgs e)
         {
             this.colorChangedTimer.Stop();
 
@@ -122,43 +205,10 @@ namespace Shazzam.Plugins
 
         private void SwatchMouseDown(object o, MouseEventArgs e)
         {
-            var c = (Color)(o as FrameworkElement).DataContext;
-            this.C.Color = c;
+            this.C.SetCurrentValue(Kaxaml.Plugins.Controls.ColorPicker.ColorProperty, (o as FrameworkElement)?.DataContext);
         }
 
-        /// <summary>
-        /// description of the property
-        /// </summary>
-        public ObservableCollection<Color> Colors
-        {
-            get => (ObservableCollection<Color>)this.GetValue(ColorsProperty);
-            set => this.SetValue(ColorsProperty, value);
-        }
-
-        /// <summary>
-        /// DependencyProperty for Colors
-        /// </summary>
-        public static readonly DependencyProperty ColorsProperty =
-            DependencyProperty.Register("Colors", typeof(ObservableCollection<Color>), typeof(ColorPickerPlugin), new FrameworkPropertyMetadata(default(ObservableCollection<Color>), OnColorsChanged));
-
-        /// <summary>
-        /// PropertyChangedCallback for Colors
-        /// </summary>
-        private static void OnColorsChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-        {
-            if (obj is ColorPickerPlugin)
-            {
-                var owner = (ColorPickerPlugin)obj;
-
-                var c = args.NewValue as ObservableCollection<Color>;
-                if (c != null)
-                {
-                    c.CollectionChanged += owner.c_CollectionChanged;
-                }
-            }
-        }
-
-        private void c_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void CCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (!this.updateInternal)
             {
@@ -167,67 +217,12 @@ namespace Shazzam.Plugins
                 var s = string.Empty;
                 foreach (var c in this.Colors)
                 {
-                    s = s + c.ToString() + DELIMITER;
+                    s = s + c.ToString() + Delimiter;
                 }
 
-                this.ColorString = s;
+                this.SetCurrentValue(ColorStringProperty, s);
 
                 this.updateInternal = false;
-            }
-        }
-
-        /// <summary>
-        /// description of the property
-        /// </summary>
-        public string ColorString
-        {
-            get => (string)this.GetValue(ColorStringProperty);
-            set => this.SetValue(ColorStringProperty, value);
-        }
-
-        /// <summary>
-        /// DependencyProperty for ColorString
-        /// </summary>
-        public static readonly DependencyProperty ColorStringProperty = DependencyProperty.Register(
-            "ColorString",
-            typeof(string),
-            typeof(ColorPickerPlugin),
-            new FrameworkPropertyMetadata(default(string), OnColorStringChanged));
-
-        /// <summary>
-        /// PropertyChangedCallback for ColorString
-        /// </summary>
-        private static void OnColorStringChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-        {
-            if (obj is ColorPickerPlugin)
-            {
-                var owner = (ColorPickerPlugin)obj;
-                Shazzam.Properties.Settings.Default.ColorPickerColors = args.NewValue as string;
-
-                if (!owner.updateInternal)
-                {
-                    owner.updateInternal = true;
-
-                    owner.Colors.Clear();
-                    var colors = (args.NewValue as string).Split(DELIMITER);
-
-                    foreach (var s in colors)
-                    {
-                        try
-                        {
-                            if (s.Length > 3)
-                            {
-                                var c = ColorPickerUtil.ColorFromString(s);
-                                owner.Colors.Add(c);
-                            }
-                        }
-                        catch
-                        {
-                        }
-                    }
-
-                    owner.updateInternal = false;
-                }
             }
         }
     }
