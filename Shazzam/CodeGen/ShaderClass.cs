@@ -353,7 +353,6 @@
                         Left = new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), "PixelShader"),
                         Right = new CodeArgumentReferenceExpression("shader")
                     },
-                    new CodeSnippetStatement(string.Empty),
                     CreateUpdateMethod("Input")
                 }
             };
@@ -447,9 +446,11 @@
                                    $"        }}")
                                .Replace(
                                    "public static DependencyProperty",
-                                   "public static readonly DependencyProperty");
-
-                    //text = Regex.Replace(text, @"// <(?!/?auto-generated)", @"/// <");
+                                   "public static readonly DependencyProperty")
+                               .Replace($"{writer.NewLine}    {writer.NewLine}", $"{writer.NewLine}{writer.NewLine}")
+                               .Replace($"{writer.NewLine}        {writer.NewLine}", $"{writer.NewLine}{writer.NewLine}")
+                               .Replace($"{writer.NewLine}{writer.NewLine}{writer.NewLine}", $"{writer.NewLine}{writer.NewLine}")
+                               .Replace($"{{{writer.NewLine}{writer.NewLine}", $"{{{writer.NewLine}");
                 }
                 else if (provider.FileExtension == "vb")
                 {

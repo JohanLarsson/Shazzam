@@ -54,23 +54,20 @@ using System.Windows.Media.Media3D;
 namespace Shaders
 {
     
-    
     /// <summary>This is Foo</summary>
     public class Foo : ShaderEffect
     {
-        
         public static readonly DependencyProperty InputProperty = ShaderEffect.RegisterPixelShaderSamplerProperty(""Input"", typeof(Foo), 0);
-        
+
         public static readonly DependencyProperty BarProperty = DependencyProperty.Register(""Bar"", typeof(double), typeof(Foo), new UIPropertyMetadata(0D, PixelShaderConstantCallback(1)));
-        
+
         public Foo(PixelShader shader)
         {
             this.PixelShader = shader;
-
             this.UpdateShaderValue(InputProperty);
             this.UpdateShaderValue(BarProperty);
         }
-        
+
         /// <summary>
         /// There has to be a property of type Brush called ""Input"". This property contains the input image and it is usually not set directly - it is set automatically when our effect is applied to a control.
         /// </summary>
@@ -85,7 +82,7 @@ namespace Shaders
                 this.SetValue(InputProperty, value);
             }
         }
-        
+
         /// <summary>This is Bar</summary>
         public double Bar
         {
@@ -147,15 +144,13 @@ using System.Windows.Media.Media3D;
 namespace Shaders
 {
     
-    
     /// <summary>This is Foo</summary>
     public class Foo : ShaderEffect
     {
-        
         public static readonly DependencyProperty InputProperty = ShaderEffect.RegisterPixelShaderSamplerProperty(""Input"", typeof(Foo), 0);
-        
+
         public static readonly DependencyProperty BarProperty = DependencyProperty.Register(""Bar"", typeof(double), typeof(Foo), new UIPropertyMetadata(0D, PixelShaderConstantCallback(1)));
-        
+
         /// <summary>
         /// The uri should be something like pack://application:,,,/Gu.Wpf.Geometry;component/Effects/Foo.ps
         /// The file Foo.ps should have BuildAction: Resource
@@ -164,14 +159,14 @@ namespace Shaders
         {
             UriSource = new Uri(""pack://application:,,,/[assemblyname];component/[folder]/Foo.ps"", UriKind.Absolute)
         };
-        
+
         public Foo()
         {
             this.PixelShader = Shader;
             this.UpdateShaderValue(InputProperty);
             this.UpdateShaderValue(BarProperty);
         }
-        
+
         /// <summary>
         /// There has to be a property of type Brush called ""Input"". This property contains the input image and it is usually not set directly - it is set automatically when our effect is applied to a control.
         /// </summary>
@@ -186,7 +181,7 @@ namespace Shaders
                 this.SetValue(InputProperty, value);
             }
         }
-        
+
         /// <summary>This is Bar</summary>
         public double Bar
         {
