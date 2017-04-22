@@ -67,8 +67,7 @@ namespace Shazzam.Plugins
         {
             if (obj is ColorPickerPlugin owner)
             {
-                var c = args.NewValue as ObservableCollection<Color>;
-                if (c != null)
+                if (args.NewValue is ObservableCollection<Color> c)
                 {
                     c.CollectionChanged += owner.CCollectionChanged;
                 }

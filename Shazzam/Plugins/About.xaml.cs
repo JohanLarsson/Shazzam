@@ -18,8 +18,7 @@
 
         private static void HandleRequestNavigate(object sender, RoutedEventArgs e)
         {
-            var hl = e.OriginalSource as Hyperlink;
-            if (hl != null)
+            if (e.OriginalSource is Hyperlink hl)
             {
                 var navigateUri = hl.NavigateUri.ToString();
                 Process.Start(new ProcessStartInfo(navigateUri));
