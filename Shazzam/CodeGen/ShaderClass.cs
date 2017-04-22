@@ -15,7 +15,7 @@
     using Shazzam.Converters;
     using Shazzam.Properties;
 
-    internal static class CreatePixelShaderClass
+    internal static class ShaderClass
     {
         public static string GetSourceText(CodeDomProvider currentProvider, ShaderModel shaderModel, bool includePixelShaderConstructor)
         {
@@ -441,7 +441,7 @@
                 {
                     text = text.Replace(
                         "private static PixelShader Shader = new PixelShader()",
-                        $"private static readonly PixelShader Shader = new PixelShader {{ UriSource = new Uri(\"pack://application:,,,/[assemblyname];component/[folder]/{model.ShaderFileName}.ps\", UriKind.Absolute) }}");
+                        $"private static readonly PixelShader Shader = new PixelShader {{ UriSource = new Uri(\"pack://application:,,,/[assemblyname];component/[folder]/{model.GeneratedClassName}.ps\", UriKind.Absolute) }}");
 
                     text = text.Replace(
                         "public static DependencyProperty",

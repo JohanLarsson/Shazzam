@@ -220,7 +220,7 @@
   <ItemGroup>
     <Compile Include="CodeGen\CodeParser.cs" />
     <Compile Include="CodeGen\CompilerException.cs" />
-    <Compile Include="CodeGen\CreatePixelShaderClass.cs" />
+    <Compile Include="CodeGen\ShaderClass.cs" />
     <Compile Include="CodeGen\ShaderProfile.cs" />
     <Compile Include="Commands\AppCommands.cs">
       <SubType>Code</SubType>
@@ -876,9 +876,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="..\.paket\paket.targets" />
   <ItemGroup>
     <Analyzer Include="..\packages\analyzers\Gu.Analyzers\analyzers\dotnet\cs\Gu.Analyzers.Analyzers.dll">

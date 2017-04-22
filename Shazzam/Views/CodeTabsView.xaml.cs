@@ -31,7 +31,6 @@
 
         private readonly ICSharpCode.TextEditor.TextEditorControl shaderTextEditor;
         private readonly ICSharpCode.TextEditor.TextEditorControl csTextEditor;
-        private readonly ICSharpCode.TextEditor.TextEditorControl vbTextEditor;
 
         private readonly Storyboard blurStoryBoard = new Storyboard();
         private readonly DoubleAnimation blurAnimation = new DoubleAnimation();
@@ -73,9 +72,6 @@
 
             this.csTextEditor = this.CreateTextEditor();
             this.formsHostCs.Child = this.csTextEditor;
-
-            this.vbTextEditor = this.CreateTextEditor();
-            this.formsHostVb.Child = this.vbTextEditor;
 
             this.compiler = new ShaderCompiler();
             this.compiler.Reset();
@@ -200,8 +196,8 @@
                 var ps = new PixelShader { UriSource = new Uri(path + Constants.FileNames.TempShaderPs) };
 
                 this.shaderModel = CodeGen.CodeParser.ParseShader(this.shaderTextEditor.FileName, this.CodeText);
-                var codeString = CreatePixelShaderClass.GetSourceText(new CSharpCodeProvider(), this.shaderModel, includePixelShaderConstructor: true);
-                var autoAssembly = CreatePixelShaderClass.CompileInMemory(codeString);
+                var code = ShaderClass.GetSourceText(new CSharpCodeProvider(), this.shaderModel, includePixelShaderConstructor: true);
+                var autoAssembly = ShaderClass.CompileInMemory(code);
 
                 if (autoAssembly == null)
                 {
@@ -219,10 +215,9 @@
                 }
 
                 this.csTextEditor.SaveFile($"{outputFolder}\\{this.shaderModel.GeneratedClassName}.cs");
-                this.vbTextEditor.SaveFile($"{outputFolder}\\{this.shaderModel.GeneratedClassName}.vb");
-
+                File.Copy(this.shaderTextEditor.FileName, $"{outputFolder}\\{Path.GetFileName(this.shaderTextEditor.FileName)}", overwrite: true);
                 this.CreateFileCopies(outputFolder + @"\", this.shaderModel.GeneratedClassName);
-                this.CurrentShaderEffect = (ShaderEffect)Activator.CreateInstance(t, new object[] { ps });
+                this.CurrentShaderEffect = (ShaderEffect)Activator.CreateInstance(t, ps);
                 this.InputControlsTab.SetCurrentValue(IsEnabledProperty, true);
             }
             catch (Exception)
@@ -234,7 +229,6 @@
         public void SaveFile()
         {
             this.ResetDirty();
-            //// _dirtyCounter = 2;
             this.storedDocHash = this.shaderTextEditor.Document.TextContent.GetHashCode();
             this.shaderTextEditor.SaveFile(this.shaderTextEditor.FileName);
         }
@@ -278,7 +272,6 @@
         {
             this.shaderTextEditor?.Dispose();
             this.csTextEditor?.Dispose();
-            this.vbTextEditor?.Dispose();
         }
 
         protected virtual void OnShaderEffectChanged(object oldItem, object newItem)
@@ -375,20 +368,21 @@
 
         private ICSharpCode.TextEditor.TextEditorControl CreateTextEditor()
         {
-            var currentEditor = new ICSharpCode.TextEditor.TextEditorControl();
-            currentEditor.ShowLineNumbers = true;
-            currentEditor.ShowInvalidLines = false; // don't show error squiggle on empty lines
-            currentEditor.ShowEOLMarkers = false;
-            currentEditor.ShowSpaces = false;
-            currentEditor.ShowTabs = false;
-            currentEditor.ShowVRuler = false;
-            currentEditor.ShowMatchingBracket = true;
-            currentEditor.AutoScroll = true;
+            var currentEditor = new ICSharpCode.TextEditor.TextEditorControl
+            {
+                ShowLineNumbers = true,
+                ShowInvalidLines = false,
+                ShowEOLMarkers = false,
+                ShowSpaces = false,
+                ShowTabs = false,
+                ShowVRuler = false,
+                ShowMatchingBracket = true,
+                AutoScroll = true
+            };
 
-            currentEditor.Document.TextEditorProperties.IndentationSize = 2;
+            currentEditor.Document.TextEditorProperties.IndentationSize = 4;
             currentEditor.EnableFolding = true;
             currentEditor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-
             currentEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             currentEditor.Font = new System.Drawing.Font("Consolas", 10);
             return currentEditor;
@@ -522,8 +516,7 @@
                         var fieldInfo = shaderEffect.GetType().GetField($"{register.RegisterName}Property", BindingFlags.Public | BindingFlags.Static);
                         if (fieldInfo != null)
                         {
-                            var dependencyProperty = fieldInfo.GetValue(null) as DependencyProperty;
-                            if (dependencyProperty != null)
+                            if (fieldInfo.GetValue(null) is DependencyProperty dependencyProperty)
                             {
                                 var controlPropertyName = "Value";
 
@@ -549,12 +542,8 @@
             }
 
             this.shaderModel.Registers.ForEach(this.GenerateShaderInputControl);
-
-            this.csTextEditor.Text = CreatePixelShaderClass.GetSourceText(CodeDomProvider.CreateProvider("CSharp"), this.shaderModel, includePixelShaderConstructor: false);
+            this.csTextEditor.Text = ShaderClass.GetSourceText(CodeDomProvider.CreateProvider("CSharp"), this.shaderModel, includePixelShaderConstructor: false);
             this.csTextEditor.Document.HighlightingStrategy = HighlightingManager.Manager.FindHighlighterForFile(".cs");
-
-            this.vbTextEditor.Text = CreatePixelShaderClass.GetSourceText(CodeDomProvider.CreateProvider("VisualBasic"), this.shaderModel, includePixelShaderConstructor: false);
-            this.vbTextEditor.Document.HighlightingStrategy = HighlightingManager.Manager.FindHighlighterForFile(".vb");
         }
     }
 }
