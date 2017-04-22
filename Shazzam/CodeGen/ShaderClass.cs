@@ -82,7 +82,7 @@
             };
             if (!string.IsNullOrEmpty(shaderModel.Description))
             {
-                shader.Comments.Add(new CodeCommentStatement($"<summary>{shaderModel.Description}</summary>"));
+                shader.Comments.Add(new CodeCommentStatement($"<summary>{shaderModel.Description}</summary>", docComment: true));
             }
 
             // Add a dependency property and a CLR property for each of the shader's register variables.
@@ -325,7 +325,7 @@
 
             if (!string.IsNullOrEmpty(description))
             {
-                property.Comments.Add(new CodeCommentStatement($"<summary>{description}</summary>"));
+                property.Comments.Add(new CodeCommentStatement($"<summary>{description}</summary>", docComment: true));
             }
 
             return property;
@@ -440,13 +440,16 @@
                 if (provider.FileExtension == "cs")
                 {
                     text = text.Replace(
-                        "private static PixelShader Shader = new PixelShader()",
-                        $"private static readonly PixelShader Shader = new PixelShader {{ UriSource = new Uri(\"pack://application:,,,/[assemblyname];component/[folder]/{model.GeneratedClassName}.ps\", UriKind.Absolute) }}");
+                                   "private static PixelShader Shader = new PixelShader()",
+                                   $"private static readonly PixelShader Shader = new PixelShader{Environment.NewLine}" +
+                                   $"        {{{Environment.NewLine}" +
+                                   $"            UriSource = new Uri(\"pack://application:,,,/[assemblyname];component/[folder]/{model.GeneratedClassName}.ps\", UriKind.Absolute){Environment.NewLine}" +
+                                   $"        }}")
+                               .Replace(
+                                   "public static DependencyProperty",
+                                   "public static readonly DependencyProperty");
 
-                    text = text.Replace(
-                        "public static DependencyProperty",
-                        "public static readonly DependencyProperty");
-                    text = Regex.Replace(text, @"// <(?!/?auto-generated)", @"/// <");
+                    //text = Regex.Replace(text, @"// <(?!/?auto-generated)", @"/// <");
                 }
                 else if (provider.FileExtension == "vb")
                 {

@@ -82,7 +82,6 @@ namespace Shazzam.Controls
                 {
                     var selectorParent = this.TemplatedParent as Selector;
 
-
                     if (selectorParent?.ItemContainerGenerator.ContainerFromItem(selectorParent.SelectedItem) is UIElement selectedElement)
                     {
                         if (ReferenceEquals(element, selectedElement))

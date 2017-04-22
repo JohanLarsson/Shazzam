@@ -71,9 +71,9 @@ namespace Shaders
             this.UpdateShaderValue(BarProperty);
         }
         
-        //// <summary>
+        /// <summary>
         /// There has to be a property of type Brush called ""Input"". This property contains the input image and it is usually not set directly - it is set automatically when our effect is applied to a control.
-        //// </summary>
+        /// </summary>
         public Brush Input
         {
             get
@@ -156,11 +156,14 @@ namespace Shaders
         
         public static readonly DependencyProperty BarProperty = DependencyProperty.Register(""Bar"", typeof(double), typeof(Foo), new UIPropertyMetadata(0D, PixelShaderConstantCallback(1)));
         
-        //// <summary>
+        /// <summary>
         /// The uri should be something like pack://application:,,,/Gu.Wpf.Geometry;component/Effects/Foo.ps
         /// The file Foo.ps should have BuildAction: Resource
-        //// </summary>
-        private static readonly PixelShader Shader = new PixelShader { UriSource = new Uri(""pack://application:,,,/[assemblyname];component/[folder]/Foo.ps"", UriKind.Absolute) };
+        /// </summary>
+        private static readonly PixelShader Shader = new PixelShader
+        {
+            UriSource = new Uri(""pack://application:,,,/[assemblyname];component/[folder]/Foo.ps"", UriKind.Absolute)
+        };
         
         public Foo()
         {
@@ -169,9 +172,9 @@ namespace Shaders
             this.UpdateShaderValue(BarProperty);
         }
         
-        //// <summary>
+        /// <summary>
         /// There has to be a property of type Brush called ""Input"". This property contains the input image and it is usually not set directly - it is set automatically when our effect is applied to a control.
-        //// </summary>
+        /// </summary>
         public Brush Input
         {
             get
