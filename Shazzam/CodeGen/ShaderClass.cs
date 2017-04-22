@@ -7,7 +7,6 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using System.Text.RegularExpressions;
     using System.Windows;
     using System.Windows.Media;
     using System.Windows.Media.Media3D;
