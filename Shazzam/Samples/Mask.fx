@@ -9,6 +9,12 @@
 /// <defaultValue>#66FF0000</defaultValue>
 float4 Color : register(C0);
 
+/// <summary>The tolerance for what to treat as black.</summary>
+/// <minValue>0</minValue>
+/// <maxValue>1</maxValue>
+/// <defaultValue>0.1</defaultValue>
+float Tolerance : register(C1);
+
 //--------------------------------------------------------------------------------------
 // Sampler Inputs (Brushes, including Texture1)
 //--------------------------------------------------------------------------------------
@@ -17,7 +23,7 @@ sampler2D Texture1Sampler : register(S0);
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
     float4 color = tex2D(Texture1Sampler, uv);
-    if (all(color.rgb < 0.1))
+    if (all(color.rgb < Tolerance))
     {
         return Color;
     }
