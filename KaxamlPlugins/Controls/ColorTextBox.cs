@@ -8,13 +8,13 @@ namespace KaxamlPlugins.Controls
     public class ColorTextBox : TextBox
     {
         public static readonly DependencyProperty ColorBrushProperty = DependencyProperty.Register(
-            "ColorBrush",
+            nameof(ColorBrush),
             typeof(SolidColorBrush),
             typeof(ColorTextBox),
             new UIPropertyMetadata(Brushes.Black));
 
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
-            "Color",
+            nameof(Color),
             typeof(Color),
             typeof(ColorTextBox),
             new UIPropertyMetadata(Colors.Black));

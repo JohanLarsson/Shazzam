@@ -8,31 +8,31 @@ namespace KaxamlPlugins.Controls
     public class HueChooser : FrameworkElement
     {
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
-            "Orientation",
+            nameof(Orientation),
             typeof(Orientation),
             typeof(HueChooser),
             new UIPropertyMetadata(Orientation.Vertical));
 
         public static readonly DependencyProperty HueProperty = DependencyProperty.Register(
-            "Hue",
+            nameof(Hue),
             typeof(double),
             typeof(HueChooser),
             new FrameworkPropertyMetadata(0.0, OnHueChanged, CoerceHue));
 
         public static readonly DependencyProperty HueOffsetProperty = DependencyProperty.Register(
-            "HueOffset",
+            nameof(HueOffset),
             typeof(double),
             typeof(HueChooser),
             new UIPropertyMetadata(0.0));
 
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
-            "Color",
+            nameof(Color),
             typeof(Color),
             typeof(HueChooser),
             new UIPropertyMetadata(Colors.Red));
 
         public static readonly DependencyProperty ColorBrushProperty = DependencyProperty.Register(
-            "ColorBrush",
+            nameof(ColorBrush),
             typeof(SolidColorBrush),
             typeof(HueChooser),
             new UIPropertyMetadata(Brushes.Red));

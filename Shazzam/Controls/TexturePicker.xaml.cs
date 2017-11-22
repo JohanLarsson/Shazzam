@@ -16,7 +16,7 @@
         /// Value Dependency Property
         /// </summary>
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            "Value",
+            nameof(Value),
             typeof(ImageBrush),
             typeof(TexturePicker),
             new FrameworkPropertyMetadata(null, OnValueChanged));
@@ -70,11 +70,16 @@
 
         private void BtnOpenImageClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.DefaultExt = ".jpg"; // Default file extension
-            dialog.Filter = "JPEG Images (.jpg); PNG files(.png)|*.jpg;*.png|All Files(*.*)|*.*"; // Filter files by extension
-            dialog.CheckFileExists = true;
-            dialog.CheckPathExists = true;
+            var dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                DefaultExt = ".jpg",
+                Filter = "JPEG Images (.jpg); PNG files(.png)|*.jpg;*.png|All Files(*.*)|*.*",
+                CheckFileExists = true,
+                CheckPathExists = true
+            };
+
+            // Default file extension
+            // Filter files by extension
             if (dialog.ShowDialog() == true)
             {
                 var filename = dialog.FileName;
@@ -208,11 +213,11 @@
             foreach (var file in System.IO.Directory.GetFiles(path))
             {
                 this.IncludedTexturesList.Items.Add(new TextureMapLocator
-                                                        {
-                                                            ShortFileName = System.IO.Path.GetFileNameWithoutExtension(file),
-                                                            LongFileName = file,
-                                                            TrimmedFileName = AssemblyPrefix + System.IO.Path.GetFileName(file)
-                                                        });
+                {
+                    ShortFileName = System.IO.Path.GetFileNameWithoutExtension(file),
+                    LongFileName = file,
+                    TrimmedFileName = AssemblyPrefix + System.IO.Path.GetFileName(file)
+                });
             }
         }
     }

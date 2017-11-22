@@ -8,67 +8,67 @@ namespace KaxamlPlugins.Controls
     public class ColorPicker : Control
     {
         public static readonly RoutedEvent ColorChangedEvent = EventManager.RegisterRoutedEvent(
-            "ColorChanged",
+            nameof(ColorChanged),
             RoutingStrategy.Bubble,
             typeof(ColorChangedEventHandler),
             typeof(ColorPicker));
 
         public static readonly DependencyProperty ColorBrushProperty = DependencyProperty.Register(
-            "ColorBrush",
+            nameof(ColorBrush),
             typeof(SolidColorBrush),
             typeof(ColorPicker),
             new UIPropertyMetadata(Brushes.Black));
 
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
-            "Color",
+            nameof(Color),
             typeof(Color),
             typeof(ColorPicker),
             new UIPropertyMetadata(Colors.Black, OnColorChanged));
 
         public static readonly DependencyProperty HueProperty = DependencyProperty.Register(
-            "Hue",
+            nameof(Hue),
             typeof(double),
             typeof(ColorPicker),
             new FrameworkPropertyMetadata(0.0, (o, _) => OnHsbaChanged(o), CoerceHue));
 
         public static readonly DependencyProperty SaturationProperty = DependencyProperty.Register(
-            "Saturation",
+            nameof(Saturation),
             typeof(double),
             typeof(ColorPicker),
             new FrameworkPropertyMetadata(0.0, (o, _) => OnHsbaChanged(o), CoerceSaturation));
 
         public static readonly DependencyProperty BrightnessProperty = DependencyProperty.Register(
-            "Brightness",
+            nameof(Brightness),
             typeof(double),
             typeof(ColorPicker),
             new FrameworkPropertyMetadata(0.0, (o, _) => OnHsbaChanged(o), CoerceBrightness));
 
         public static readonly DependencyProperty AlphaProperty = DependencyProperty.Register(
-            "Alpha",
+            nameof(Alpha),
             typeof(double),
             typeof(ColorPicker),
             new FrameworkPropertyMetadata(1.0, (o, _) => OnHsbaChanged(o), CoerceAlpha));
 
         public static readonly DependencyProperty RProperty = DependencyProperty.Register(
-            "R",
+            nameof(R),
             typeof(int),
             typeof(ColorPicker),
             new FrameworkPropertyMetadata(default(int), (o, _) => OnRgbaChanged(o), (_, o) => CoerceRgba(o)));
 
         public static readonly DependencyProperty GProperty = DependencyProperty.Register(
-            "G",
+            nameof(G),
             typeof(int),
             typeof(ColorPicker),
             new FrameworkPropertyMetadata(default(int), (o, _) => OnRgbaChanged(o), (_, o) => CoerceRgba(o)));
 
         public static readonly DependencyProperty BProperty = DependencyProperty.Register(
-            "B",
+            nameof(B),
             typeof(int),
             typeof(ColorPicker),
             new FrameworkPropertyMetadata(default(int), (o, _) => OnRgbaChanged(o), (_, o) => CoerceRgba(o)));
 
         public static readonly DependencyProperty AProperty = DependencyProperty.Register(
-            "A",
+            nameof(A),
             typeof(int),
             typeof(ColorPicker),
             new FrameworkPropertyMetadata(255, (o, _) => OnRgbaChanged(o), (_, o) => CoerceRgba(o)));

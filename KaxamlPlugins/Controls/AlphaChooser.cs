@@ -9,31 +9,31 @@ namespace KaxamlPlugins.Controls
     public class AlphaChooser : FrameworkElement
     {
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
-            "Orientation",
+            nameof(Orientation),
             typeof(Orientation),
             typeof(AlphaChooser),
             new UIPropertyMetadata(Orientation.Vertical));
 
         public static readonly DependencyProperty AlphaProperty = DependencyProperty.Register(
-            "Alpha",
+            nameof(Alpha),
             typeof(double),
             typeof(AlphaChooser),
             new FrameworkPropertyMetadata(1.0, OnAlphaChanged, CoerceAlpha));
 
         public static readonly DependencyProperty AlphaOffsetProperty = DependencyProperty.Register(
-            "AlphaOffset",
+            nameof(AlphaOffset),
             typeof(double),
             typeof(AlphaChooser),
             new UIPropertyMetadata(0.0));
 
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
-            "Color",
+            nameof(Color),
             typeof(Color),
             typeof(AlphaChooser),
             new UIPropertyMetadata(Colors.Red));
 
         public static readonly DependencyProperty ColorBrushProperty = DependencyProperty.Register(
-            "ColorBrush",
+            nameof(ColorBrush),
             typeof(SolidColorBrush),
             typeof(AlphaChooser),
             new UIPropertyMetadata(Brushes.Red));

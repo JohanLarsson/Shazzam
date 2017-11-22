@@ -8,13 +8,13 @@ namespace KaxamlPlugins.Controls
     public class TextDragger : Decorator
     {
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
-            "Text",
+            nameof(Text),
             typeof(string),
             typeof(TextDragger),
             new UIPropertyMetadata(string.Empty));
 
         public static readonly DependencyProperty DataProperty = DependencyProperty.Register(
-            "Data",
+            nameof(Data),
             typeof(object),
             typeof(TextDragger),
             new UIPropertyMetadata(null));

@@ -7,49 +7,49 @@ namespace KaxamlPlugins.Controls
     public class SaturationBrightnessChooser : FrameworkElement
     {
         public static readonly DependencyProperty OffsetPaddingProperty = DependencyProperty.Register(
-            "OffsetPadding",
+            nameof(OffsetPadding),
             typeof(Thickness),
             typeof(SaturationBrightnessChooser),
             new UIPropertyMetadata(new Thickness(0.0)));
 
         public static readonly DependencyProperty HueProperty = DependencyProperty.Register(
-            "Hue",
+            nameof(Hue),
             typeof(double),
             typeof(SaturationBrightnessChooser),
             new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender, OnHueChanged));
 
         public static readonly DependencyProperty SaturationOffsetProperty = DependencyProperty.Register(
-            "SaturationOffset",
+            nameof(SaturationOffset),
             typeof(double),
             typeof(SaturationBrightnessChooser),
             new UIPropertyMetadata(0.0));
 
         public static readonly DependencyProperty SaturationProperty = DependencyProperty.Register(
-            "Saturation",
+            nameof(Saturation),
             typeof(double),
             typeof(SaturationBrightnessChooser),
             new FrameworkPropertyMetadata(0.0, OnSaturationChanged, CoerceSaturation));
 
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
-            "Color",
+            nameof(Color),
             typeof(Color),
             typeof(SaturationBrightnessChooser),
             new UIPropertyMetadata(Colors.Red));
 
         public static readonly DependencyProperty ColorBrushProperty = DependencyProperty.Register(
-            "ColorBrush",
+            nameof(ColorBrush),
             typeof(SolidColorBrush),
             typeof(SaturationBrightnessChooser),
             new UIPropertyMetadata(Brushes.Red));
 
         public static readonly DependencyProperty BrightnessOffsetProperty = DependencyProperty.Register(
-            "BrightnessOffset",
+            nameof(BrightnessOffset),
             typeof(double),
             typeof(SaturationBrightnessChooser),
             new UIPropertyMetadata(0.0));
 
         public static readonly DependencyProperty BrightnessProperty = DependencyProperty.Register(
-            "Brightness",
+            nameof(Brightness),
             typeof(double),
             typeof(SaturationBrightnessChooser),
             new FrameworkPropertyMetadata(0.0, OnBrightnessChanged, CoerceBrightness));

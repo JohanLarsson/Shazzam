@@ -9,7 +9,7 @@ namespace KaxamlPlugins.Controls
     public class ElementCursorDecorator : Decorator
     {
         public static readonly DependencyProperty CursorElementProperty = DependencyProperty.Register(
-            "CursorElement",
+            nameof(CursorElement),
             typeof(UIElement),
             typeof(ElementCursorDecorator),
             new UIPropertyMetadata(null));

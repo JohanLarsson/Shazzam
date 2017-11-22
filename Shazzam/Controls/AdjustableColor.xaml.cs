@@ -15,7 +15,7 @@
         /// Value Dependency Property
         /// </summary>
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            "Value",
+            nameof(Value),
             typeof(Color),
             typeof(AdjustableColor),
             new FrameworkPropertyMetadata(Colors.LightYellow, OnValueChanged));

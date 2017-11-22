@@ -17,7 +17,7 @@ namespace Shazzam.Plugins
         /// DependencyProperty for Colors
         /// </summary>
         public static readonly DependencyProperty ColorsProperty = DependencyProperty.Register(
-            "Colors",
+            nameof(Colors),
             typeof(ObservableCollection<Color>),
             typeof(ColorPickerPlugin),
             new FrameworkPropertyMetadata(default(ObservableCollection<Color>), OnColorsChanged));
@@ -26,7 +26,7 @@ namespace Shazzam.Plugins
         /// DependencyProperty for ColorString
         /// </summary>
         public static readonly DependencyProperty ColorStringProperty = DependencyProperty.Register(
-            "ColorString",
+            nameof(ColorString),
             typeof(string),
             typeof(ColorPickerPlugin),
             new FrameworkPropertyMetadata(default(string), OnColorStringChanged));

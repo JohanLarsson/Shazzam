@@ -51,7 +51,7 @@ namespace KaxamlPlugins
             set
             {
                 mainWindow = value;
-                NotifyPropertyChanged("MainWindow");
+                NotifyPropertyChanged(nameof(MainWindow));
             }
         }
 
@@ -63,7 +63,7 @@ namespace KaxamlPlugins
                 if (!ReferenceEquals(frame, value))
                 {
                     frame = value;
-                    NotifyPropertyChanged("Frame");
+                    NotifyPropertyChanged(nameof(Frame));
                 }
             }
         }

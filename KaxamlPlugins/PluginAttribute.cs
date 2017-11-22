@@ -1,4 +1,3 @@
-#pragma warning disable WPF1011 // Implement INotifyPropertyChanged.
 namespace KaxamlPlugins
 {
     using System;

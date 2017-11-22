@@ -18,7 +18,7 @@
         /// Value Dependency Property
         /// </summary>
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            "Value",
+            nameof(Value),
             typeof(Point3D),
             typeof(AdjustableSliderTriplet),
             new FrameworkPropertyMetadata(new Point3D(0, 0, 0), OnValueChanged));
@@ -27,7 +27,7 @@
         /// Minimum Dependency Property
         /// </summary>
         public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
-            "Minimum",
+            nameof(Minimum),
             typeof(Point3D),
             typeof(AdjustableSliderTriplet),
             new FrameworkPropertyMetadata(new Point3D(0, 0, 0), OnMinimumChanged));
@@ -36,7 +36,7 @@
         /// Maximum Dependency Property
         /// </summary>
         public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
-            "Maximum",
+            nameof(Maximum),
             typeof(Point3D),
             typeof(AdjustableSliderTriplet),
             new FrameworkPropertyMetadata(new Point3D(100, 100, 100), OnMaximumChanged));

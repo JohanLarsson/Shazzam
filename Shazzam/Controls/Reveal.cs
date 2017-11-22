@@ -8,35 +8,35 @@ namespace Shazzam.Controls
     {
         // Using a DependencyProperty as the backing store for IsExpanded.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register(
-            "IsExpanded",
+            nameof(IsExpanded),
             typeof(bool),
             typeof(Reveal),
             new UIPropertyMetadata(false, OnIsExpandedChanged));
 
         // Using a DependencyProperty as the backing store for Duration.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DurationProperty = DependencyProperty.Register(
-            "Duration",
+            nameof(Duration),
             typeof(double),
             typeof(Reveal),
             new UIPropertyMetadata(250.0));
 
         // Using a DependencyProperty as the backing store for HorizontalReveal.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HorizontalRevealProperty = DependencyProperty.Register(
-            "HorizontalReveal",
+            nameof(HorizontalReveal),
             typeof(HorizontalRevealMode),
             typeof(Reveal),
             new UIPropertyMetadata(HorizontalRevealMode.None));
 
         // Using a DependencyProperty as the backing store for VerticalReveal.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty VerticalRevealProperty = DependencyProperty.Register(
-            "VerticalReveal",
+            nameof(VerticalReveal),
             typeof(VerticalRevealMode),
             typeof(Reveal),
             new UIPropertyMetadata(VerticalRevealMode.FromTopToBottom));
 
         // Using a DependencyProperty as the backing store for AnimationProgress.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty AnimationProgressProperty = DependencyProperty.Register(
-            "AnimationProgress",
+            nameof(AnimationProgress),
             typeof(double),
             typeof(Reveal),
             new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsMeasure, null, CoerceAnimationProgress));

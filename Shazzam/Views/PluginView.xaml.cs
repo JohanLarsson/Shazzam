@@ -11,7 +11,7 @@ namespace Shazzam.Views
         public const string PluginSubDir = "\\plugins";
 
         public static readonly DependencyProperty PluginsProperty = DependencyProperty.Register(
-            "Plugins",
+            nameof(Plugins),
             typeof(List<Plugin>),
             typeof(PluginView),
             new UIPropertyMetadata(null));
@@ -43,10 +43,12 @@ namespace Shazzam.Views
 
         private void LoadPlugins()
         {
-            var fileLoader = new Plugin();
-            fileLoader.Root = new Plugins.FileLoaderPlugin();
-            fileLoader.Name = "Shader Loader";
-            fileLoader.Description = "Pick a shader file to open";
+            var fileLoader = new Plugin
+            {
+                Root = new Plugins.FileLoaderPlugin(),
+                Name = "Shader Loader",
+                Description = "Pick a shader file to open"
+            };
 
             this.Plugins.Add(fileLoader);
 
@@ -58,20 +60,24 @@ namespace Shazzam.Views
             this.AddSettingsPlugin();
 
             //// add the about plugin
-            var about = new Plugin();
-            about.Root = new About();
-            about.Name = "About Shazzam";
-            about.Description = "About Shazzam";
+            var about = new Plugin
+            {
+                Root = new About(),
+                Name = "About Shazzam",
+                Description = "About Shazzam"
+            };
             this.Plugins.Add(about);
             //// SelectedPlugin = colorLoader;
         }
 
         private void AddSettingsPlugin()
         {
-            var settings = new Plugin();
-            settings.Root = new SettingsPlugin();
-            settings.Name = "Settings";
-            settings.Description = "Modify program settings and options";
+            var settings = new Plugin
+            {
+                Root = new SettingsPlugin(),
+                Name = "Settings",
+                Description = "Modify program settings and options"
+            };
             //// settings.Key = Key.E;
             //// settings.ModifierKeys = ModifierKeys.Control;
             this.Plugins.Add(settings);

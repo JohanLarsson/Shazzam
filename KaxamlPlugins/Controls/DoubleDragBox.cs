@@ -12,7 +12,7 @@ namespace KaxamlPlugins.Controls
         /// Indicates the number of digits that are displayed (beyond 0).
         /// </summary>
         public static readonly DependencyProperty PrecisionProperty = DependencyProperty.Register(
-            "Precision",
+            nameof(Precision),
             typeof(int),
             typeof(DoubleDragBox),
             new UIPropertyMetadata(2));
@@ -21,7 +21,7 @@ namespace KaxamlPlugins.Controls
         /// A string corresponding to the value of the Current property.
         /// </summary>
         public static readonly DependencyProperty CurrentTextProperty = DependencyProperty.Register(
-            "CurrentText",
+            nameof(CurrentText),
             typeof(string),
             typeof(DoubleDragBox),
             new UIPropertyMetadata(string.Empty));
@@ -30,31 +30,31 @@ namespace KaxamlPlugins.Controls
         /// The current value.
         /// </summary>
         public static readonly DependencyProperty CurrentProperty = DependencyProperty.Register(
-            "Current",
+            nameof(Current),
             typeof(double),
             typeof(DoubleDragBox),
             new FrameworkPropertyMetadata(double.MinValue, OnCurrentChanged, CoerceCurrent));
 
         public static readonly DependencyProperty IntervalProperty = DependencyProperty.Register(
-            "Interval",
+            nameof(Interval),
             typeof(double),
             typeof(DoubleDragBox),
             new UIPropertyMetadata(0.05));
 
         public static readonly DependencyProperty SensitivityProperty = DependencyProperty.Register(
-            "Sensitivity",
+            nameof(Sensitivity),
             typeof(double),
             typeof(DoubleDragBox),
             new UIPropertyMetadata(20.0));
 
         public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
-            "Minimum",
+            nameof(Minimum),
             typeof(double),
             typeof(DoubleDragBox),
             new UIPropertyMetadata(0.0));
 
         public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
-            "Maximum",
+            nameof(Maximum),
             typeof(double),
             typeof(DoubleDragBox),
             new UIPropertyMetadata(1.0));
