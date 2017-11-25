@@ -13,8 +13,15 @@ float Strength : register(C0);
 /// <defaultValue>Black</defaultValue>
 float4 To : register(C2);
 
+float4 lerp_rgba(float4 x, float4 y, float s)
+{
+    float a = lerp(x.a, y.a, s);
+    float3 rgb = lerp(x.rgb, y.rgb, s) * a;
+    return float4(rgb.r, rgb.g, rgb.b, a);
+}
+
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
     float4 src = tex2D(inputSampler, uv);
-    return lerp(src, To, Strength);
+    return lerp_rgba(src, To, Strength);
 }
