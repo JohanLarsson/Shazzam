@@ -34,6 +34,21 @@ float angle(in float2 v1, in float2 v2, in bool clockWise)
     return a;
 }
 
+float interpolate(float min, float max, float value)
+{
+    if (min == max)
+    {
+        return 0.5;
+    }
+
+    if (min < max)
+    {
+        return clamp((value - min) / (max - min), 0, 1);
+    }
+
+    return interpolate(max, min, value);
+}
+
 float3 HUEtoRGB(in float H)
 {
     float R = abs(H * 6 - 3) - 1;
@@ -58,7 +73,7 @@ float4 main(float2 uv : TEXCOORD) : COLOR
     if (r >= ir && r <= 0.5)
     {
         float h = angle(rv, xv, false) / (2 * Pi);
-        float s = lerp(InnerSaturation, 1, smoothstep(ir, 0.5, r));
+        float s = lerp(InnerSaturation, 1, interpolate(ir, 0.5, r));
         float l = Lightness;
         return float4(HSLtoRGB(float3(h, s, l)), 1);
     }
