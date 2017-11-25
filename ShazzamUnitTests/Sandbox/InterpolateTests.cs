@@ -1,4 +1,6 @@
 ﻿// ReSharper disable InconsistentNaming
+// ReSharper disable ArrangeThisQualifier
+// ReSharper disable ArrangeTypeMemberModifiers
 #pragma warning disable SA1101 // Prefix local calls with this
 #pragma warning disable SA1300 // Element must begin with upper-case letter
 #pragma warning disable IDE1006 // Naming Styles
