@@ -46,7 +46,7 @@ float interpolate(float min, float max, float value)
         return clamp((value - min) / (max - min), 0, 1);
     }
 
-    return interpolate(max, min, value);
+    return clamp((value - max) / (min - max), 0, 1);
 }
 
 float3 HUEtoRGB(in float H)

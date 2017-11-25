@@ -56,6 +56,9 @@
     <Compile Include="CodeGen\ShaderClassTests.cs" />
     <Compile Include="MainWindowVmUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sandbox\Hlsl.cs" />
+    <Compile Include="Sandbox\InterpolateTests.cs" />
+    <Compile Include="Sandbox\LerpRgbaTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shazzam\Shazzam.csproj">
