@@ -444,7 +444,7 @@
     <Content Include="Samples\Circles.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Samples\Lib.fx">
+    <Content Include="Samples\shared.hlsli">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Samples\LinearGradient.fx">

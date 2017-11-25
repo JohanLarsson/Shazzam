@@ -82,7 +82,6 @@
         public event RoutedPropertyChangedEventHandler<object> ShaderEffectChanged
         {
             add => this.AddHandler(ShaderEffectChangedEvent, value);
-
             remove => this.RemoveHandler(ShaderEffectChangedEvent, value);
         }
 
@@ -95,15 +94,12 @@
         public string OutputText
         {
             get => this.outputTextBox.Text;
-            set => this.outputTextBox.SetCurrentValue(TextBlock.TextProperty, value);
+            set => this.outputTextBox.SetValue(TextBlock.TextProperty, value);
         }
 
         internal ShaderEffect CurrentShaderEffect
         {
-            get
-            {
-                return this.currentShaderEffect;
-            }
+            get => this.currentShaderEffect;
 
             private set
             {
