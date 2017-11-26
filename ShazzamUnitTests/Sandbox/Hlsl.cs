@@ -133,12 +133,17 @@ namespace ShazzamUnitTests.Sandbox
 
                 public bool Equals(string other)
                 {
-                    var x = Parse(other);
-                    return Math.Abs(this.r - x.r) < 0.001 &&
-                           Math.Abs(this.g - x.g) < 0.001 &&
-                           Math.Abs(this.b - x.b) < 0.001 &&
-                           Math.Abs(this.a - x.a) < 0.001;
+                    return ToString() == other;
+                }
 
+                public override string ToString()
+                {
+                    return Color.FromArgb(
+                                    (byte)(byte.MaxValue * this.a),
+                                     (byte)(byte.MaxValue * this.r),
+                                     (byte)(byte.MaxValue * this.g),
+                                     (byte)(byte.MaxValue * this.b))
+                                .ToString();
                 }
             }
         }

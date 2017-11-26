@@ -3,6 +3,7 @@
     using System;
     using System.CodeDom.Compiler;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using System.Text.RegularExpressions;
     using System.Windows;
@@ -113,6 +114,27 @@
             }
         }
 
+        private string MergedText
+        {
+            get
+            {
+                string ReadHlsli(string name)
+                {
+                    var file = Directory.EnumerateFiles(
+                                              Directory.GetCurrentDirectory(),
+                                              "*.hlsli",
+                                              SearchOption.AllDirectories)
+                                          .Single(x => x.EndsWith(name));
+                    return File.ReadAllText(file);
+                }
+
+                return Regex.Replace(
+                    this.CodeText,
+                    @"#include <(?<hlsli>\w+.hlsli)>",
+                    x => ReadHlsli(x.Groups["hlsli"].Value));
+            }
+        }
+
         public void SetupBlurAnimation()
         {
             var duration = new Duration(TimeSpan.FromSeconds(1.2));
@@ -146,21 +168,18 @@
 
                 if (Properties.Settings.Default.TargetFramework == "WPF_PS3")
                 {
-                    if (RenderCapability.IsPixelShaderVersionSupported(3, 0))
-                    {
-                        this.versionNotSupported.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
-                    }
-                    else
-                    {
-                        this.versionNotSupported.SetCurrentValue(VisibilityProperty, Visibility.Visible);
-                    }
+                    this.versionNotSupported.SetCurrentValue(
+                        VisibilityProperty,
+                        RenderCapability.IsPixelShaderVersionSupported(3, 0)
+                            ? Visibility.Hidden
+                            : Visibility.Visible);
 
-                    this.compiler.Compile(this.CodeText, ShaderProfile.PixelShader3);
+                    this.compiler.Compile(this.MergedText, ShaderProfile.PixelShader3);
                     //// _compiler.Compile(this.CodeText);
                 }
                 else
                 {
-                    this.compiler.Compile(this.CodeText, ShaderProfile.PixelShader2);
+                    this.compiler.Compile(this.MergedText, ShaderProfile.PixelShader2);
                     //// _compiler.Compile(this.CodeText);
                 }
 

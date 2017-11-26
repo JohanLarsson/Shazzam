@@ -65,17 +65,11 @@ namespace Shazzam.CodeGen
             ID3DXBuffer ppShader;
             ID3DXBuffer ppErrorMsgs;
 
-            var methodName = "main";
+            var entryPoint = "main";
 
-            var targetProfile = "ps_2_0";
-            if (shaderProfile == ShaderProfile.PixelShader3)
-            {
-                targetProfile = "ps_3_0";
-            }
-            else
-            {
-                targetProfile = "ps_2_0";
-            }
+            var targetProfile = shaderProfile == ShaderProfile.PixelShader3
+                ? "ps_3_0"
+                : "ps_2_0";
 
             var useDx10 = false;
 
@@ -89,7 +83,7 @@ namespace Shazzam.CodeGen
                     string.Empty,
                     IntPtr.Zero,
                     IntPtr.Zero,
-                    methodName,
+                    entryPoint,
                     targetProfile,
                     0,
                     0,
@@ -109,7 +103,7 @@ namespace Shazzam.CodeGen
                         codeText.Length,
                         defines,
                         includes,
-                        methodName,
+                        entryPoint,
                         targetProfile,
                         0,
                         out ppShader,
@@ -124,7 +118,7 @@ namespace Shazzam.CodeGen
                         codeText.Length,
                         defines,
                         includes,
-                        methodName,
+                        entryPoint,
                         targetProfile,
                         0,
                         out ppShader,

@@ -12,12 +12,15 @@ namespace ShazzamUnitTests.Sandbox
     internal class LerpRgbaTests : Hlsl
     {
         [TestCase("#FFFF0000", "#00FFFFFF", 0, "#FFFF0000")]
-        [TestCase("#FFFF0000", "#00FFFFFF", 1, "#00FFFFFF")]
+        [TestCase("#FFFF0000", "#00FFFFFF", 1, "#00000000")]
+        [TestCase("#FFFF0000", "#FFFFFFFF", 0, "#FFFF0000")]
+        [TestCase("#FFFF0000", "#FFFFFFFF", 1, "#FFFFFFFF")]
         public void Test(string x, string y, float s, string expected)
         {
-            Assert.Inconclusive("Fix this");
-            //Assert.AreEqual(expected, lerp_rgba(float4(x), Parse(y), s));
+            Assert.AreEqual(expected, lerp_rgba(Parse(x), Parse(y), s));
         }
+
+        private static float4 Parse(string text) => Types.float4.Parse(text);
 
         float4 lerp_rgba(float4 x, float4 y, float s)
         {
