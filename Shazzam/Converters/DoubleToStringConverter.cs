@@ -4,8 +4,11 @@
     using System.Globalization;
     using System.Windows.Data;
 
-    public class DoubleToStringConverter : IValueConverter
+    [ValueConversion(typeof(double), typeof(string))]
+    public sealed class DoubleToStringConverter : IValueConverter
     {
+        public static readonly DoubleToStringConverter Default = new DoubleToStringConverter();
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var number = (double)value;
