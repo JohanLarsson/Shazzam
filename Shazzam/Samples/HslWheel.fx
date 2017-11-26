@@ -1,6 +1,6 @@
-﻿static float Pi = 3.141592f;
-static float2 cp = float2(0.5, 0.5);
+﻿static float2 cp = float2(0.5, 0.5);
 static float2 xv = float2(1, 0);
+#include <shared.hlsli>
 
 /// <summary>The inner radius.</summary>
 /// <minValue>0</minValue>
@@ -19,35 +19,6 @@ float InnerSaturation : register(C1);
 /// <maxValue>1</maxValue>
 /// <defaultValue>0.5</defaultValue>
 float Lightness : register(C2);
-
-float angle(in float2 v1, in float2 v2, in bool clockWise)
-{
-    int sign = clockWise ? -1 : 1;
-    float a1 = atan2(v1.y, v1.x) * sign;
-    float a2 = atan2(v2.y, v2.x) * sign;
-    float a = a2 - a1;
-    if (a < 0)
-    {
-        return 2 * Pi + a;;
-    }
-
-    return a;
-}
-
-float interpolate(float min, float max, float value)
-{
-    if (min == max)
-    {
-        return 0.5;
-    }
-
-    if (min < max)
-    {
-        return clamp((value - min) / (max - min), 0, 1);
-    }
-
-    return clamp((value - max) / (min - max), 0, 1);
-}
 
 float3 HUEtoRGB(in float H)
 {
@@ -72,7 +43,7 @@ float4 main(float2 uv : TEXCOORD) : COLOR
     float ir = InnerRadius / 2;
     if (r >= ir && r <= 0.5)
     {
-        float h = angle(rv, xv, false) / (2 * Pi);
+        float h = signed_angle(rv, xv, false) / (2 * Pi);
         float s = lerp(InnerSaturation, 1, interpolate(ir, 0.5, r));
         float l = Lightness;
         return float4(HSLtoRGB(float3(h, s, l)), 1);

@@ -135,6 +135,10 @@
                                               Margin="12,0,12,3"
                                               VerticalAlignment="Center"
                                               ContentSource="Header" />
+                            <ContentPresenter x:Name="ContentArea"
+                                              Margin="12,0,12,3"
+                                              VerticalAlignment="Center"
+                                              ContentSource="Content" />
                             <Rectangle x:Name="Highlight"
                                        Grid.Column="0"
                                        Width="1"
@@ -155,10 +159,6 @@
                                     VerticalAlignment="Center"
                                     Cursor="Hand"
                                     Style="{StaticResource EditorTabControlCloseButton}" />
-                            <ContentPresenter x:Name="ContentArea"
-                                              Margin="12,0,12,3"
-                                              VerticalAlignment="Center"
-                                              ContentSource="Content" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>

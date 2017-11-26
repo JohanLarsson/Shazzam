@@ -6,6 +6,7 @@
 namespace ShazzamUnitTests.Sandbox
 {
     using System;
+    using System.Globalization;
     using System.Windows.Media;
     using static Hlsl.Types;
 
@@ -31,14 +32,22 @@ namespace ShazzamUnitTests.Sandbox
             return Math.Abs(f);
         }
 
-        protected double abs(double f)
+        protected float abs(double f)
         {
-            return Math.Abs(f);
+            return (float)Math.Abs(f);
         }
+
+        protected float degrees(float value) => (float)(value * 180 / Math.PI);
+
+        protected float radians(float value) => (float)(value * Math.PI / 180);
+
+        protected float atan2(float y, float x) => (float)Math.Atan2(y, x);
 
         protected float lerp(float x, float y, float s) => x + (s * (y - x));
 
         protected float3 lerp(float3 x, float3 y, float s) => x + (s * (y - x));
+
+        protected float2 float2(float x, float y) => new float2(x, y);
 
         protected float3 float3(float r, float g, float b) => new float3(r, g, b);
 
@@ -46,6 +55,46 @@ namespace ShazzamUnitTests.Sandbox
 
         internal class Types
         {
+            public struct float2
+            {
+                public float2(float x, float y)
+                {
+                    this.x = x;
+                    this.y = y;
+                }
+
+                public float x { get; }
+
+                public float y { get; }
+
+                public static float2 operator +(float2 left, float2 right) => new float2(
+                    left.x + right.x,
+                    left.y + right.y);
+
+                public static float2 operator -(float2 left, float2 right) => new float2(
+                    left.x - right.x,
+                    left.y - right.y);
+
+                public static float2 operator *(float left, float2 right) => new float2(
+                    left * right.x,
+                    left * right.y);
+
+                public static float2 operator *(float2 left, float right) => right * left;
+
+                public static float2 Parse(string text)
+                {
+                    var parts = text.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    if (parts.Length != 2)
+                    {
+                        throw new ArgumentException(nameof(text));
+                    }
+
+                    return new float2(
+                        float.Parse(parts[0], CultureInfo.InvariantCulture),
+                        float.Parse(parts[1], CultureInfo.InvariantCulture));
+                }
+            }
+
             public struct float3
             {
                 public float3(float r, float g, float b)

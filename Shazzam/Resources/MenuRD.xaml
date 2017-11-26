@@ -274,6 +274,24 @@
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   ContentSource="Icon" />
+                <Popup Name="Popup"
+                       AllowsTransparency="True"
+                       Focusable="False"
+                       HorizontalOffset="-4"
+                       IsOpen="{TemplateBinding IsSubmenuOpen}"
+                       Placement="Right"
+                       PopupAnimation="Fade">
+                    <a:SystemDropShadowChrome Margin="0,0,5,5" CornerRadius="4">
+                        <Border Name="SubmenuBorder"
+                                Background="#585858"
+                                CornerRadius="4,4,4,4"
+                                SnapsToDevicePixels="True">
+                            <controls:IndexingStackPanel Grid.IsSharedSizeScope="True"
+                                                         IsItemsHost="True"
+                                                         KeyboardNavigation.DirectionalNavigation="Cycle" />
+                        </Border>
+                    </a:SystemDropShadowChrome>
+                </Popup>
                 <ContentPresenter Name="HeaderHost"
                                   Grid.Column="1"
                                   Margin="0,4"
@@ -293,24 +311,6 @@
                       VerticalAlignment="Center"
                       Data="M 0 0 L 0 7 L 4 3.5 Z"
                       Fill="White" />
-                <Popup Name="Popup"
-                       AllowsTransparency="True"
-                       Focusable="False"
-                       HorizontalOffset="-4"
-                       IsOpen="{TemplateBinding IsSubmenuOpen}"
-                       Placement="Right"
-                       PopupAnimation="Fade">
-                    <a:SystemDropShadowChrome Margin="0,0,5,5" CornerRadius="4">
-                        <Border Name="SubmenuBorder"
-                                Background="#585858"
-                                CornerRadius="4,4,4,4"
-                                SnapsToDevicePixels="True">
-                            <controls:IndexingStackPanel Grid.IsSharedSizeScope="True"
-                                                         IsItemsHost="True"
-                                                         KeyboardNavigation.DirectionalNavigation="Cycle" />
-                        </Border>
-                    </a:SystemDropShadowChrome>
-                </Popup>
             </Grid>
         </Border>
         <ControlTemplate.Triggers>
