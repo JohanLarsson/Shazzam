@@ -114,7 +114,7 @@
             }
         }
 
-        private string MergedText
+        private string MergedCode
         {
             get
             {
@@ -174,12 +174,12 @@
                             ? Visibility.Hidden
                             : Visibility.Visible);
 
-                    this.compiler.Compile(this.MergedText, ShaderProfile.PixelShader3);
+                    this.compiler.Compile(this.MergedCode, ShaderProfile.PixelShader3);
                     //// _compiler.Compile(this.CodeText);
                 }
                 else
                 {
-                    this.compiler.Compile(this.MergedText, ShaderProfile.PixelShader2);
+                    this.compiler.Compile(this.MergedCode, ShaderProfile.PixelShader2);
                     //// _compiler.Compile(this.CodeText);
                 }
 

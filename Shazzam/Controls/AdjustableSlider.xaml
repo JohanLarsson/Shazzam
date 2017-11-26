@@ -26,7 +26,7 @@
                      Width="40"
                      Margin="5,0,0,0"
                      VerticalAlignment="Center"
-                     Text="{Binding ElementName=Root, Path=Minimum, UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{Binding ElementName=Root, Path=Minimum, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
 
             <TextBlock Margin="5,0,0,0"
                        VerticalAlignment="Center"
@@ -36,7 +36,7 @@
                      Width="40"
                      Margin="5,0,0,0"
                      VerticalAlignment="Center"
-                     Text="{Binding ElementName=Root, Path=Maximum, UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{Binding ElementName=Root, Path=Maximum, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
 
             <TextBlock Margin="5,0,0,0"
                        VerticalAlignment="Center"
@@ -47,7 +47,7 @@
                      Width="40"
                      Margin="5,0,0,0"
                      VerticalAlignment="Center"
-                     Text="{Binding ElementName=Root, Path=Value, UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{Binding ElementName=Root, Path=Value, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
 
             <Slider x:Name="Slider"
                     Width="90"
@@ -56,10 +56,10 @@
                     AutoToolTipPlacement="TopLeft"
                     AutoToolTipPrecision="3"
                     IsMoveToPointEnabled="True"
-                    Value="{Binding ElementName=Root, Path=Value}"
                     Maximum="{Binding ElementName=Root, Path=Maximum}"
                     Minimum="{Binding ElementName=Root, Path=Minimum}"
-                    ToolTip="{Binding ElementName=Root, Path=Value, Converter={x:Static converters:DoubleToStringConverter.Default}}" />
+                    ToolTip="{Binding ElementName=Root, Path=Value, Converter={x:Static converters:DoubleToStringConverter.F2}}"
+                    Value="{Binding ElementName=Root, Path=Value}" />
 
         </StackPanel>
         <Rectangle Width="1"

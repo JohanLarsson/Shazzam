@@ -7,12 +7,20 @@
     [ValueConversion(typeof(double), typeof(string))]
     public sealed class DoubleToStringConverter : IValueConverter
     {
-        public static readonly DoubleToStringConverter Default = new DoubleToStringConverter();
+        public static readonly DoubleToStringConverter F1 = new DoubleToStringConverter("F1");
+        public static readonly DoubleToStringConverter F2 = new DoubleToStringConverter("F2");
+
+        private readonly string format;
+
+        public DoubleToStringConverter(string format)
+        {
+            this.format = format;
+        }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var number = (double)value;
-            return number.ToString("F2", CultureInfo.InvariantCulture);
+            return number.ToString(this.format, CultureInfo.InvariantCulture);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
