@@ -4,8 +4,11 @@
     using System.Globalization;
     using System.Windows.Data;
 
-    public class EqualityConverter : IValueConverter
+    [ValueConversion(typeof(object), typeof(bool))]
+    public sealed class EqualityConverter : IValueConverter
     {
+        public static readonly EqualityConverter Default = new EqualityConverter();
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value != null && value.ToString() == parameter.ToString();

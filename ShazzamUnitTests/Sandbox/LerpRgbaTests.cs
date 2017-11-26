@@ -17,7 +17,7 @@ namespace ShazzamUnitTests.Sandbox
         [TestCase("#FFFF0000", "#00FFFFFF", 1, "#00000000")]
         [TestCase("#FFFF0000", "#FFFFFFFF", 0, "#FFFF0000")]
         [TestCase("#FFFF0000", "#FFFFFFFF", 1, "#FFFFFFFF")]
-        public void Test(string x, string y, float s, string expected)
+        public void LerpRgba(string x, string y, float s, string expected)
         {
             Assert.AreEqual(expected, lerp_rgba(Parse(x), Parse(y), s));
         }
