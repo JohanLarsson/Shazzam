@@ -120,12 +120,7 @@
             {
                 string ReadHlsli(string name)
                 {
-                    var file = Directory.EnumerateFiles(
-                                              Directory.GetCurrentDirectory(),
-                                              "*.hlsli",
-                                              SearchOption.AllDirectories)
-                                          .Single(x => x.EndsWith(name));
-                    return File.ReadAllText(file);
+                   return File.ReadAllText(FindHlsli(name).FullName);
                 }
 
                 return Regex.Replace(
@@ -163,9 +158,7 @@
             {
                 ShazzamSwitchboard.MainWindow.SetCurrentValue(EffectProperty, this.blur);
                 this.versionNotSupported.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
-
                 this.blurStoryBoard.Begin(this, isControllable: true);
-
                 if (Properties.Settings.Default.TargetFramework == "WPF_PS3")
                 {
                     this.versionNotSupported.SetCurrentValue(
@@ -175,12 +168,10 @@
                             : Visibility.Visible);
 
                     this.compiler.Compile(this.MergedCode, ShaderProfile.PixelShader3);
-                    //// _compiler.Compile(this.CodeText);
                 }
                 else
                 {
                     this.compiler.Compile(this.MergedCode, ShaderProfile.PixelShader2);
-                    //// _compiler.Compile(this.CodeText);
                 }
 
                 this.compileStatusText.SetCurrentValue(TextBlock.TextProperty, $"Last Compiled at: {DateTime.Now.ToLongTimeString()}");
@@ -209,7 +200,6 @@
                 }
 
                 var ps = new PixelShader { UriSource = new Uri(path + Constants.FileNames.TempShaderPs) };
-
                 this.shaderModel = CodeGen.CodeParser.ParseShader(this.shaderTextEditor.FileName, this.MergedCode);
                 var code = ShaderClass.GetSourceText(new CSharpCodeProvider(), this.shaderModel, includePixelShaderConstructor: true);
                 var autoAssembly = ShaderClass.CompileInMemory(code);
@@ -223,7 +213,6 @@
                 var t = autoAssembly.GetType($"{this.shaderModel.GeneratedNamespace}.{this.shaderModel.GeneratedClassName}");
                 this.FillEditControls();
                 var outputFolder = $"{Properties.Settings.Default.FolderPath_Output}{this.shaderModel.GeneratedClassName}";
-
                 if (!Directory.Exists(outputFolder))
                 {
                     Directory.CreateDirectory(outputFolder);
@@ -231,6 +220,14 @@
 
                 this.csTextEditor.SaveFile($"{outputFolder}\\{this.shaderModel.GeneratedClassName}.cs");
                 File.Copy(this.shaderTextEditor.FileName, $"{outputFolder}\\{Path.GetFileName(this.shaderTextEditor.FileName)}", overwrite: true);
+                foreach (var match in Regex.Matches(this.CodeText, @"#include <(?<hlsli>\w+.hlsli)>").OfType<Match>())
+                {
+                    File.Copy(
+                        FindHlsli(match.Groups["hlsli"].Value).FullName,
+                        $"{outputFolder}\\{match.Groups["hlsli"].Value}",
+                        overwrite: true);
+                }
+
                 this.CreateFileCopies(outputFolder + @"\", this.shaderModel.GeneratedClassName);
                 this.CurrentShaderEffect = (ShaderEffect)Activator.CreateInstance(t, ps);
                 this.InputControlsTab.SetCurrentValue(IsEnabledProperty, true);
@@ -298,6 +295,16 @@
         {
             var args = new RoutedPropertyChangedEventArgs<object>(oldItem, newItem) { RoutedEvent = ShaderEffectChangedEvent };
             this.RaiseEvent(args);
+        }
+
+        private static FileInfo FindHlsli(string include)
+        {
+            var fileName = Directory.EnumerateFiles(
+                    Directory.GetCurrentDirectory(),
+                    "*.hlsli",
+                    SearchOption.AllDirectories)
+                .Single(x => x.EndsWith(include));
+            return new FileInfo(fileName);
         }
 
         private void OutputTextBoxMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
