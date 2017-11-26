@@ -1,6 +1,5 @@
-﻿static float2 cp = float2(0.5, 0.5);
-static float2 xv = float2(1, 0);
-#include <shared.hlsli>
+﻿#include <shared.hlsli>
+static float2 cp = float2(0.5, 0.5);
 
 /// <summary>The inner radius.</summary>
 /// <minValue>0</minValue>
@@ -19,6 +18,18 @@ float InnerSaturation : register(C1);
 /// <maxValue>1</maxValue>
 /// <defaultValue>0.5</defaultValue>
 float Lightness : register(C2);
+
+/// <summary>The starting angle of the gradient, clockwise from X-axis</summary>
+/// <minValue>-360</minValue>
+/// <maxValue>360</maxValue>
+/// <defaultValue>0</defaultValue>
+float StartAngle : register(C3);
+
+/// <summary>The central angle of the gradient, positive value for clockwise.</summary>
+/// <minValue>-360</minValue>
+/// <maxValue>360</maxValue>
+/// <defaultValue>360</defaultValue>
+float CentralAngle : register(C4);
 
 float3 HUEtoRGB(in float H)
 {
@@ -43,7 +54,12 @@ float4 main(float2 uv : TEXCOORD) : COLOR
     float ir = InnerRadius / 2;
     if (r >= ir && r <= 0.5)
     {
-        float h = signed_angle(rv, xv, false) / (2 * Pi);
+        float sa = radians(StartAngle);
+        float ca = radians(CentralAngle);
+        float h = interpolate(
+            0,
+            abs(ca),
+            angle_from_start(uv, cp, sa, ca));
         float s = lerp(InnerSaturation, 1, interpolate(ir, 0.5, r));
         float l = Lightness;
         return float4(HSLtoRGB(float3(h, s, l)), 1);

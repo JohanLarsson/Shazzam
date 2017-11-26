@@ -1,6 +1,6 @@
-﻿/// <class>Fade</class>
+﻿#include <shared.hlsli>
+/// <class>FadeEffect</class>
 /// <description>Fade to a colour by animating the strength.</description>
-
 sampler2D inputSampler : register(S0);
 
 /// <summary>The color used to tint the input.</summary>
@@ -12,13 +12,6 @@ float Strength : register(C0);
 /// <summary>The colour to fade to.</summary>
 /// <defaultValue>Black</defaultValue>
 float4 To : register(C2);
-
-float4 lerp_rgba(float4 x, float4 y, float s)
-{
-    float a = lerp(x.a, y.a, s);
-    float3 rgb = lerp(x.rgb, y.rgb, s) * a;
-    return float4(rgb.r, rgb.g, rgb.b, a);
-}
 
 float4 main(float2 uv : TEXCOORD) : COLOR
 {
