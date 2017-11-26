@@ -24,25 +24,8 @@ float interpolate(float min, float max, float value)
 }
 
 
-float clamp_angle(float angle, bool clockwise)
+float clamp_angle_positive(float a)
 {
-    angle %= PI2;
-    if (clockwise && angle < 0)
-    {
-        return angle + PI2;
-    }
-
-    if (!clockwise && angle > 0)
-    {
-        return angle - PI2;
-    }
-
-    return angle;
-}
-
-float clockwise_angle(float2 v)
-{
-    float a = atan2(v.y, v.x);
     if (a < 0)
     {
         return a + PI2;
@@ -51,19 +34,20 @@ float clockwise_angle(float2 v)
     return a;
 }
 
-float angle_from_start(float clockwise_angle, float start_angle, bool clockwise)
+float clamp_angle_negative(float a)
 {
-    return clamp_angle(clockwise_angle - start_angle, clockwise);
+    if (a > 0)
+    {
+        return a - PI2;
+    }
+
+    return a;
 }
 
 float angle_from_start(float2 uv, float2 center_point, float start_angle, float central_angle)
 {
     float2 v = uv - center_point;
-    bool clockwise = central_angle > 0;
-    return angle_from_start(
-                clockwise_angle(v),
-                start_angle,
-                clockwise);
+    return central_angle > 0
+        ? clamp_angle_positive(clamp_angle_positive(atan2(v.x, -v.y)) - clamp_angle_positive(start_angle))
+        : abs(clamp_angle_negative(clamp_angle_negative(atan2(v.x, -v.y)) - clamp_angle_negative(start_angle)));
 }
-
-

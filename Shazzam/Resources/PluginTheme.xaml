@@ -731,16 +731,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
                     <Grid>
-                        <ToggleButton Name="ToggleButton"
-                                      Grid.Column="2"
-                                      MinWidth="0"
-                                      ClickMode="Press"
-                                      Focusable="false"
-                                      Foreground="{TemplateBinding Foreground}"
-                                      IsChecked="{Binding Path=IsDropDownOpen,
-                                                          Mode=TwoWay,
-                                                          RelativeSource={RelativeSource TemplatedParent}}"
-                                      Template="{StaticResource ComboBoxToggleButton}" />
                         <ContentPresenter Name="ContentSite"
                                           Margin="6,0,23,2"
                                           HorizontalAlignment="Left"
@@ -780,6 +770,14 @@
                                 </Grid>
                             </a:SystemDropShadowChrome>
                         </Popup>
+                        <ToggleButton Name="ToggleButton"
+                                      Grid.Column="2"
+                                      MinWidth="0"
+                                      ClickMode="Press"
+                                      Focusable="false"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Template="{StaticResource ComboBoxToggleButton}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="HasItems" Value="false">
@@ -1221,9 +1219,7 @@
                                    Minimum="0"
                                    ViewportSize="{TemplateBinding ViewportHeight}"
                                    Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
-                                   Value="{Binding Path=VerticalOffset,
-                                                   Mode=OneWay,
-                                                   RelativeSource={RelativeSource TemplatedParent}}" />
+                                   Value="{Binding Path=VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger SourceName="PART_VerticalScrollBar" Property="Visibility" Value="Visible">

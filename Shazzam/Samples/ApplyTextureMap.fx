@@ -16,8 +16,6 @@ float HorizontalSize : register(c0);
 /// <defaultValue>1</defaultValue>
 float VerticalSize : register(c3);
 
-
-
 float verticalOffset: register(C1);
 float horizontalOffset: register(C4);
 

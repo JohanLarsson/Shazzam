@@ -210,7 +210,7 @@
 
                 var ps = new PixelShader { UriSource = new Uri(path + Constants.FileNames.TempShaderPs) };
 
-                this.shaderModel = CodeGen.CodeParser.ParseShader(this.shaderTextEditor.FileName, this.CodeText);
+                this.shaderModel = CodeGen.CodeParser.ParseShader(this.shaderTextEditor.FileName, this.MergedCode);
                 var code = ShaderClass.GetSourceText(new CSharpCodeProvider(), this.shaderModel, includePixelShaderConstructor: true);
                 var autoAssembly = ShaderClass.CompileInMemory(code);
 
@@ -235,9 +235,14 @@
                 this.CurrentShaderEffect = (ShaderEffect)Activator.CreateInstance(t, ps);
                 this.InputControlsTab.SetCurrentValue(IsEnabledProperty, true);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                MessageBox.Show(ShazzamSwitchboard.MainWindow, "Cannot create a WPF shader from the code snippet.", "Compile error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(
+                    owner: ShazzamSwitchboard.MainWindow,
+                    messageBoxText: e.Message,
+                    caption: "Compile error:",
+                    button: MessageBoxButton.OK,
+                    icon: MessageBoxImage.Error);
             }
         }
 
@@ -476,26 +481,11 @@
             else if (register.RegisterType == typeof(Color))
             {
                 var defaultValue = (Color)register.DefaultValue;
-                //// control = new Telerik.Windows.Controls.RadColorEditor
-                //// {
-
-                //// HorizontalAlignment = HorizontalAlignment.Left,
-                ////  SelectedColor = defaultValue
-                //// };
-
                 control = new AdjustableColor
                 {
                     HorizontalAlignment = HorizontalAlignment.Left,
                     Value = defaultValue
                 };
-                //// ((control) as AdjustableColor).;
-                //// control = new TextBox
-                //// {
-                ////  Background = Brushes.LightYellow,
-                ////  Width = 150,
-                ////  HorizontalAlignment = HorizontalAlignment.Left,
-                ////  Text = defaultValue.ToString()
-                //// };
             }
             else if (register.RegisterType == typeof(Point4D))
             {
