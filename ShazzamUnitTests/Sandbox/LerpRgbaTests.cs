@@ -12,6 +12,8 @@ namespace ShazzamUnitTests.Sandbox
     internal class LerpRgbaTests : Hlsl
     {
         [TestCase("#FFFF0000", "#00FFFFFF", 0, "#FFFF0000")]
+        [TestCase("#FFFF0000", "#00FFFFFF", 0.5f, "#7F7F3F3F")]
+        [TestCase("#FFFF0000", "#00FF0000", 0.5f, "#7F7F0000")]
         [TestCase("#FFFF0000", "#00FFFFFF", 1, "#00000000")]
         [TestCase("#FFFF0000", "#FFFFFFFF", 0, "#FFFF0000")]
         [TestCase("#FFFF0000", "#FFFFFFFF", 1, "#FFFFFFFF")]
