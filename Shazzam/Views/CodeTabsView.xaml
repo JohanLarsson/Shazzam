@@ -160,7 +160,7 @@
                                 <views:ShaderModelConstantRegisterTemplateSelector>
                                     <views:ShaderModelConstantRegisterTemplateSelector.BrushTemplate>
                                         <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
-                                            <controls:AdjustableColor Value="{Binding Value, Mode=TwoWay}"/>
+                                            <controls:AdjustableColor Value="{Binding Value}" />
                                         </DataTemplate>
                                     </views:ShaderModelConstantRegisterTemplateSelector.BrushTemplate>
 
@@ -168,13 +168,15 @@
                                         <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
                                             <controls:AdjustableSlider Maximum="{Binding MaxValue, Mode=OneTime}"
                                                                        Minimum="{Binding MinValue, Mode=OneTime}"
-                                                                       Value="{Binding Value, Mode=TwoWay}" />
+                                                                       Value="{Binding Value}" />
                                         </DataTemplate>
                                     </views:ShaderModelConstantRegisterTemplateSelector.SingleTemplate>
 
                                     <views:ShaderModelConstantRegisterTemplateSelector.PairTemplate>
-                                        <DataTemplate>
-                                            <controls:AdjustableSliderPair />
+                                        <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
+                                            <controls:AdjustableSliderPair Maximum="{Binding MaxValue, Mode=OneTime}"
+                                                                           Minimum="{Binding MinValue, Mode=OneTime}"
+                                                                           Value="{Binding Value}" />
                                         </DataTemplate>
                                     </views:ShaderModelConstantRegisterTemplateSelector.PairTemplate>
 

@@ -28,8 +28,8 @@
             <TextBlock Grid.Column="0"
                        VerticalAlignment="Center"
                        Foreground="{StaticResource HighlightBrush}">
-                <Run Text="{Binding RegisterName, Mode=OneTime}" />
-                <Run Text="{Binding RegisterType, Mode=OneTime, StringFormat='{} ({0})'}" />
+                <Run Text="{Binding RegisterName, Mode=OneTime, FallbackValue='name'}" />
+                <Run Text="{Binding RegisterType, Mode=OneTime, StringFormat='{} ({0})', FallbackValue='(type)'}" />
             </TextBlock>
 
             <TextBlock Grid.Column="1"
@@ -83,6 +83,7 @@
                            Height="16"
                            Fill="{StaticResource HorizontalAnimationIconBrush}" />
             </ToggleButton>
+            <FrameworkElement Width="27" />
         </StackPanel>
 
         <Grid Grid.Row="1"
@@ -154,7 +155,7 @@
                      MinWidth="40"
                      Margin="5,0,0,0"
                      VerticalAlignment="Center"
-                     Text="0.5" />
+                     Text="2.0" />
             <TextBlock Margin="5,0,0,0"
                        VerticalAlignment="Center"
                        Foreground="{StaticResource NeutralWhiteBrush}"

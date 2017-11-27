@@ -20,7 +20,7 @@
             nameof(Value),
             typeof(Point),
             typeof(AdjustableSliderPair),
-            new FrameworkPropertyMetadata(new Point(0, 0), OnValueChanged));
+            new FrameworkPropertyMetadata(new Point(0, 0), OnValueChanged) { BindsTwoWayByDefault = true });
 
         /// <summary>
         /// Minimum Dependency Property
@@ -29,7 +29,7 @@
             nameof(Minimum),
             typeof(Point),
             typeof(AdjustableSliderPair),
-            new FrameworkPropertyMetadata(new Point(0, 0), OnMinimumChanged));
+            new FrameworkPropertyMetadata(new Point(double.NaN, double.NaN), OnMinimumChanged));
 
         /// <summary>
         /// Maximum Dependency Property
@@ -38,9 +38,9 @@
             nameof(Maximum),
             typeof(Point),
             typeof(AdjustableSliderPair),
-            new FrameworkPropertyMetadata(new Point(100, 100), OnMaximumChanged));
+            new FrameworkPropertyMetadata(new Point(double.NaN, double.NaN), OnMaximumChanged));
 
-        private const double DefaultDuration = 0.5;
+        private const double DefaultDuration = 2.0;
 
         private readonly Storyboard storyboard = new Storyboard();
         private readonly DoubleAnimation xSliderValueAnimation = new DoubleAnimation
@@ -243,6 +243,12 @@
         {
             var minimum = this.Minimum;
             var maximum = this.Maximum;
+            if (IsNaN(minimum) ||
+                IsNaN(maximum))
+            {
+                return;
+            }
+
             this.xSliderValueAnimation.SetCurrentValue(DoubleAnimation.FromProperty, minimum.X);
             this.xSliderValueAnimation.SetCurrentValue(DoubleAnimation.ToProperty, maximum.X);
 
@@ -254,9 +260,7 @@
             {
                 this.storyboard.Stop(this);
                 this.XSlider.SetCurrentValue(VisibilityProperty, Visibility.Visible);
-                this.XSliderText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
                 this.YSlider.SetCurrentValue(VisibilityProperty, Visibility.Visible);
-                this.YSliderText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
             }
             else
             {
@@ -265,10 +269,10 @@
                 this.ySliderValueAnimation.SetCurrentValue(Timeline.BeginTimeProperty, TimeSpan.FromSeconds(yBeginTime));
                 this.storyboard.Begin(this, isControllable: true);
                 this.XSlider.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
-                this.XSliderText.SetCurrentValue(VisibilityProperty, Visibility.Visible);
                 this.YSlider.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
-                this.YSliderText.SetCurrentValue(VisibilityProperty, Visibility.Visible);
             }
         }
+
+        private static bool IsNaN(Point p) => double.IsNaN(p.X) || double.IsNaN(p.Y);
     }
 }

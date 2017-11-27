@@ -20,7 +20,7 @@
             typeof(AdjustableColor),
             new FrameworkPropertyMetadata(Colors.LightYellow, OnValueChanged) { BindsTwoWayByDefault = true });
 
-        private const double DefaultDuration = 0.5;
+        private const double DefaultDuration = 2.0;
 
         private readonly Storyboard storyboard = new Storyboard();
         private readonly ColorAnimation colorValueAnimation = new ColorAnimation
@@ -73,11 +73,6 @@
                 e.Handled = true;
                 uie.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
             }
-        }
-
-        private void ColorPicker1SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e)
-        {
-            this.SetCurrentValue(ValueProperty, e.NewValue);
         }
 
         private void DurationTextBoxTextChanged(object sender, TextChangedEventArgs e)

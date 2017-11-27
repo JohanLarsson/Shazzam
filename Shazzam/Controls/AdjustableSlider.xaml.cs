@@ -40,7 +40,7 @@
             typeof(AdjustableSlider),
             new FrameworkPropertyMetadata(100.0, OnMaximumChanged));
 
-        private const double DefaultDuration = 0.5;
+        private const double DefaultDuration = 2.0;
 
         private readonly Storyboard storyboard = new Storyboard();
         private readonly DoubleAnimation sliderValueAnimation = new DoubleAnimation
