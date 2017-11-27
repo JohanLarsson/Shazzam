@@ -1,103 +1,87 @@
-﻿<UserControl
-    x:Class="Shazzam.Controls.AdjustableColor"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:Shazzam.Converters"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:extended="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit/extended"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+﻿<UserControl x:Class="Shazzam.Controls.AdjustableColor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:Shazzam.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:extended="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit/extended"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
 
-    <WrapPanel
-        x:Name="mainPanel"
-        Margin="0,3"
-        Background="{StaticResource VeryDarkBrush}">
-        <StackPanel
-            MinWidth="290"
-            Margin="5,0,0,0"
-            Orientation="Horizontal">
-            <TextBlock
-                Width="12"
-                Margin="0"
-                VerticalAlignment="Center"
-                Foreground="{StaticResource HighlightBrush}"
-                Text="͏"
-                TextAlignment="Center" />
-            <extended:ColorPicker
-                x:Name="colorPicker1"
-                Width="70"
-                Margin="5,0,0,0"
-                VerticalAlignment="Center"
-                SelectedColorChanged="ColorPicker1SelectedColorChanged" />
+    <WrapPanel x:Name="mainPanel"
+               Margin="0,3"
+               Background="{StaticResource VeryDarkBrush}">
+        <StackPanel MinWidth="290"
+                    Margin="5,0,0,0"
+                    Orientation="Horizontal">
+            <TextBlock Width="12"
+                       Margin="0"
+                       VerticalAlignment="Center"
+                       Foreground="{StaticResource HighlightBrush}"
+                       Text="͏"
+                       TextAlignment="Center" />
+            <extended:ColorPicker x:Name="colorPicker1"
+                                  Width="70"
+                                  Margin="5,0,0,0"
+                                  VerticalAlignment="Center"
+                                  SelectedColorChanged="ColorPicker1SelectedColorChanged" />
 
-            <TextBlock
-                x:Name="endColorTextBlock"
-                Margin="15,0,0,0"
-                VerticalAlignment="Center"
-                Foreground="{StaticResource NeutralWhiteBrush}"
-                Text="Animate To Value:" />
+            <TextBlock x:Name="endColorTextBlock"
+                       Margin="15,0,0,0"
+                       VerticalAlignment="Center"
+                       Foreground="{StaticResource NeutralWhiteBrush}"
+                       Text="Animate To Value:" />
 
-            <extended:ColorPicker
-                Name="endColorPicker"
-                Width="70"
-                Margin="5,0,0,0"
-                VerticalAlignment="Center" />
+            <extended:ColorPicker Name="endColorPicker"
+                                  Width="70"
+                                  Margin="5,0,0,0"
+                                  VerticalAlignment="Center" />
         </StackPanel>
-        <Rectangle
-            Width="1"
-            Margin="0,3,-1,3"
-            Fill="{StaticResource NeutralDarkBrush}"
-            SnapsToDevicePixels="True" />
+        <Rectangle Width="1"
+                   Margin="0,3,-1,3"
+                   Fill="{StaticResource NeutralDarkBrush}"
+                   SnapsToDevicePixels="True" />
         <StackPanel VerticalAlignment="Center">
             <StackPanel Margin="5,3,5,3" Orientation="Horizontal">
-                <TextBlock
-                    MinWidth="55"
-                    VerticalAlignment="Center"
-                    Foreground="{StaticResource NeutralWhiteBrush}"
-                    Text="Animation:" />
-                <ToggleButton
-                    x:Name="noAnimationToggleButton"
-                    Width="22"
-                    Height="22"
-                    Margin="5,0,0,0"
-                    VerticalAlignment="Center"
-                    IsChecked="True"
-                    ToolTip="None">
-                    <Rectangle
-                        Width="16"
-                        Height="16"
-                        Fill="{StaticResource NoAnimationIconBrush}" />
+                <TextBlock MinWidth="55"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource NeutralWhiteBrush}"
+                           Text="Animation:" />
+                <ToggleButton x:Name="noAnimationToggleButton"
+                              Width="22"
+                              Height="22"
+                              Margin="5,0,0,0"
+                              VerticalAlignment="Center"
+                              IsChecked="True"
+                              ToolTip="None">
+                    <Rectangle Width="16"
+                               Height="16"
+                               Fill="{StaticResource NoAnimationIconBrush}" />
                 </ToggleButton>
-                <ToggleButton
-                    x:Name="linearAnimationToggleButton"
-                    Width="22"
-                    Height="22"
-                    Margin="5,0,0,0"
-                    VerticalAlignment="Center"
-                    ToolTip="Linear">
-                    <Rectangle
-                        Width="16"
-                        Height="16"
-                        Fill="{StaticResource HorizontalAnimationIconBrush}" />
+                <ToggleButton x:Name="linearAnimationToggleButton"
+                              Width="22"
+                              Height="22"
+                              Margin="5,0,0,0"
+                              VerticalAlignment="Center"
+                              ToolTip="Linear">
+                    <Rectangle Width="16"
+                               Height="16"
+                               Fill="{StaticResource HorizontalAnimationIconBrush}" />
                 </ToggleButton>
             </StackPanel>
             <StackPanel Margin="5,3,5,3" Orientation="Horizontal">
-                <TextBlock
-                    MinWidth="55"
-                    VerticalAlignment="Center"
-                    Foreground="{StaticResource NeutralWhiteBrush}"
-                    Text="Duration:" />
-                <TextBox
-                    x:Name="durationTextBox"
-                    MinWidth="40"
-                    Margin="5,0,0,0"
-                    VerticalAlignment="Center"
-                    Text="0.5" />
-                <TextBlock
-                    Margin="5,0,0,0"
-                    VerticalAlignment="Center"
-                    Foreground="{StaticResource NeutralWhiteBrush}"
-                    Text="seconds" />
+                <TextBlock MinWidth="55"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource NeutralWhiteBrush}"
+                           Text="Duration:" />
+                <TextBox x:Name="durationTextBox"
+                         MinWidth="40"
+                         Margin="5,0,0,0"
+                         VerticalAlignment="Center"
+                         Text="0.5" />
+                <TextBlock Margin="5,0,0,0"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource NeutralWhiteBrush}"
+                           Text="seconds" />
             </StackPanel>
         </StackPanel>
     </WrapPanel>
