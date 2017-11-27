@@ -13,11 +13,8 @@
         WindowState="Maximized"
         mc:Ignorable="d">
     <Window.Resources>
-
-        <converters:StringToVisibilityConverter x:Key="visConverter" />
-        <converters:StretchToIsCheckedConverter x:Key="checkedConverter" />
-        <shazzam:MainWindowViewModel x:Key="mainVM" />
-        <SolidColorBrush x:Key="ImageBorderBrush" Color="#FF16404C" />
+        <converters:StretchToIsCheckedConverter x:Key="CheckedConverter" />
+        <shazzam:MainWindowViewModel x:Key="MainVm" />
         <DrawingBrush x:Key="AlphaGrid"
                       Stretch="UniformToFill"
                       TileMode="Tile"
@@ -36,7 +33,6 @@
                 </DrawingGroup>
             </DrawingBrush.Drawing>
         </DrawingBrush>
-
     </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.New" Executed="NewExecuted" />
@@ -68,16 +64,16 @@
 
     </Window.CommandBindings>
 
-    <Grid x:Name="mainGrid"
+    <Grid x:Name="MainGrid"
           Background="#101010"
-          DataContext="{StaticResource mainVM}">
+          DataContext="{StaticResource MainVm}">
         <Grid.Resources />
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="PluginsColumn" Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
-            <Grid x:Name="menuContainer">
+            <Grid x:Name="MenuContainer">
 
                 <Grid Margin="0,5,0,5">
                     <Border BorderBrush="#484848"
@@ -178,7 +174,7 @@
                                       IsCheckable="True"
                                       IsChecked="{Binding ImageStretch,
                                                           ConverterParameter=none,
-                                                          Converter={StaticResource checkedConverter}}" />
+                                                          Converter={StaticResource CheckedConverter}}" />
                             <MenuItem Command="{Binding ImageStretchCommand}"
                                       CommandParameter="fill"
                                       Header="_Fill"
@@ -186,7 +182,7 @@
                                       IsCheckable="True"
                                       IsChecked="{Binding ImageStretch,
                                                           ConverterParameter=fill,
-                                                          Converter={StaticResource checkedConverter}}" />
+                                                          Converter={StaticResource CheckedConverter}}" />
                             <MenuItem Command="{Binding ImageStretchCommand}"
                                       CommandParameter="uniform"
                                       Header="_Uniform"
@@ -194,7 +190,7 @@
                                       IsCheckable="True"
                                       IsChecked="{Binding ImageStretch,
                                                           ConverterParameter=uniform,
-                                                          Converter={StaticResource checkedConverter}}" />
+                                                          Converter={StaticResource CheckedConverter}}" />
                             <MenuItem Command="{Binding ImageStretchCommand}"
                                       CommandParameter="uniformtofill"
                                       Header="Uniform_ToFill"
@@ -202,7 +198,7 @@
                                       IsCheckable="True"
                                       IsChecked="{Binding ImageStretch,
                                                           ConverterParameter=uniformtofill,
-                                                          Converter={StaticResource checkedConverter}}" />
+                                                          Converter={StaticResource CheckedConverter}}" />
 
                         </MenuItem>
                     </MenuItem>
@@ -246,16 +242,16 @@
                 </Menu>
             </Grid>
             <!--<view:MenuView x:Name='menuView'></view:MenuView>-->
-            <view:PluginView x:Name="plugin1" Margin="10" />
+            <view:PluginView x:Name="Plugin1" Margin="10" />
 
             <!-- <view:DynamicInputView Margin='10' x:Name='dynamicView' />-->
-            <StackPanel x:Name="testStack" />
+            <StackPanel x:Name="TestStack" />
         </StackPanel>
         <Grid Grid.Column="1" Margin="3,6,0,0">
             <Grid.RowDefinitions>
-                <RowDefinition x:Name="imageRow" Height="{Binding ImageRowHeight}" />
-                <RowDefinition x:Name="splitterRow" Height="4" />
-                <RowDefinition x:Name="codeRow" Height="{Binding CodeRowHeight}" />
+                <RowDefinition x:Name="ImageRow" Height="{Binding ImageRowHeight}" />
+                <RowDefinition x:Name="SplitterRow" Height="4" />
+                <RowDefinition x:Name="CodeRow" Height="{Binding CodeRowHeight}" />
             </Grid.RowDefinitions>
 
             <GridSplitter Grid.Row="1"
@@ -264,10 +260,10 @@
                           HorizontalAlignment="Stretch"
                           ResizeDirection="Rows" />
 
-            <view:CodeTabView x:Name="codeTabView"
+            <view:CodeTabView x:Name="CodeTabView"
                               Grid.Row="2"
                               DockPanel.Dock="Bottom" />
-            <TabControl x:Name="imageTabControl"
+            <TabControl x:Name="ImageTabControl"
                         Grid.Row="0"
                         Background="{DynamicResource NeutralDarkBrush}"
                         SelectionChanged="ImageTabControlSelectionChanged">
@@ -278,7 +274,7 @@
                             <!--  checkered background  -->
                             <Border Background="{StaticResource AlphaGrid}">
 
-                                <Image x:Name="userImage"
+                                <Image x:Name="UserImage"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Source="Images/ColorRange.png"
@@ -292,7 +288,7 @@
                     <Border Style="{DynamicResource ImageOutsideBorder}">
                         <Border Style="{DynamicResource ImageInsideBorder}">
                             <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="sampleImage1"
+                                <Image x:Name="SampleImage1"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Source="Images/Fire1.jpg"
@@ -306,7 +302,7 @@
                     <Border Style="{DynamicResource ImageOutsideBorder}">
                         <Border Style="{DynamicResource ImageInsideBorder}">
                             <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="sampleImage2"
+                                <Image x:Name="SampleImage2"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Source="Images/Light1.jpg"
@@ -321,7 +317,7 @@
                     <Border Style="{DynamicResource ImageOutsideBorder}">
                         <Border Style="{DynamicResource ImageInsideBorder}">
                             <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="sampleImage3"
+                                <Image x:Name="SampleImage3"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Source="Images/SpikeBalls.jpg"
@@ -335,7 +331,7 @@
                     <Border Style="{DynamicResource ImageOutsideBorder}">
                         <Border Style="{DynamicResource ImageInsideBorder}">
                             <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="sampleImage4"
+                                <Image x:Name="SampleImage4"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Source="Images/lines.jpg"
@@ -349,7 +345,7 @@
                     <Border Style="{DynamicResource ImageOutsideBorder}">
                         <Border Style="{DynamicResource ImageInsideBorder}">
                             <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="sampleImage5"
+                                <Image x:Name="SampleImage5"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Source="Images/gears.jpg"
@@ -362,7 +358,7 @@
                 <TabItem Header="Sample UI">
 
                     <Border Background="{StaticResource AlphaGrid}">
-                        <DockPanel x:Name="sampleUI"
+                        <DockPanel x:Name="SampleUi"
                                    MinWidth="200"
                                    MinHeight="200"
                                    HorizontalAlignment="Stretch"
@@ -380,7 +376,7 @@
                                        DockPanel.Dock="Top"
                                        FontSize="18"
                                        Text="Sample UI" />
-                            <ListBox x:Name="fruitListBox"
+                            <ListBox x:Name="FruitListBox"
                                      Width="140"
                                      Margin="8"
                                      HorizontalAlignment="Center"
@@ -409,7 +405,7 @@
                     </Border>
 
                 </TabItem>
-                <TabItem x:Name="mediaTab" Header="Media">
+                <TabItem x:Name="MediaTab" Header="Media">
 
                     <Border Style="{DynamicResource ImageOutsideBorder}">
                         <Border Style="{DynamicResource ImageInsideBorder}">
@@ -425,18 +421,18 @@
                                                 Orientation="Horizontal">
                                         <!--<TextBlock Text='Click the video to replay.'
                                Margin='5,0' />-->
-                                        <CheckBox x:Name="autoPlayCheckBox"
+                                        <CheckBox x:Name="AutoPlayCheckBox"
                                                   Margin="5,0"
                                                   Checked="AutoPlayCheckBoxChecked"
                                                   Content="Auto replay the video."
                                                   IsChecked="True" />
                                     </StackPanel>
-                                    <TextBlock x:Name="videoMessage"
+                                    <TextBlock x:Name="VideoMessage"
                                                Margin="10"
                                                DockPanel.Dock="Top" />
                                     <Border Style="{DynamicResource ImageOutsideBorder}">
                                         <Border Style="{DynamicResource ImageInsideBorder}">
-                                            <MediaElement x:Name="mediaUI"
+                                            <MediaElement x:Name="MediaUi"
                                                           DockPanel.Dock="Top"
                                                           LoadedBehavior="Manual"
                                                           MediaEnded="MediaUiMediaEnded"

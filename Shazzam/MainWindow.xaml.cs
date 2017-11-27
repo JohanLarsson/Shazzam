@@ -25,9 +25,9 @@
             this.InitializeComponent();
 
             ShazzamSwitchboard.MainWindow = this;
-            ShazzamSwitchboard.CodeTabView = this.codeTabView;
-            this.codeTabView.ShaderEffectChanged += this.CodeTabViewShaderEffectChanged;
-            this.imageTabControl.SelectionChanged += this.CodeTabControlSelectionChanged;
+            ShazzamSwitchboard.CodeTabView = this.CodeTabView;
+            this.CodeTabView.ShaderEffectChanged += this.CodeTabViewShaderEffectChanged;
+            this.ImageTabControl.SelectionChanged += this.CodeTabControlSelectionChanged;
 
             if (Properties.Settings.Default.FilePath_LastImage != string.Empty)
             {
@@ -43,7 +43,7 @@
                     if (streamInfo != null)
                     {
                         var temp = BitmapFrame.Create(streamInfo.Stream);
-                        this.userImage.SetCurrentValue(Image.SourceProperty, temp);
+                        this.UserImage.SetCurrentValue(Image.SourceProperty, temp);
                     }
                 }
             }
@@ -59,18 +59,18 @@
                     var resourceUri = new Uri("images/plasma.wmv", UriKind.Relative);
                     //// System.Windows.Resources.StreamResourceInfo streamInfo = Application.GetResourceStream(resourceUri);
                     //// BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
-                    this.mediaUI.SetCurrentValue(MediaElement.SourceProperty, resourceUri);
+                    this.MediaUi.SetCurrentValue(MediaElement.SourceProperty, resourceUri);
                 }
             }
 
-            this.imageTabControl.SelectedIndex = Properties.Settings.Default.TabIndex_SelectedImage;
+            this.ImageTabControl.SelectedIndex = Properties.Settings.Default.TabIndex_SelectedImage;
 
             if (!string.IsNullOrEmpty(Properties.Settings.Default.FilePath_LastFx))
             {
                 if (File.Exists(Properties.Settings.Default.FilePath_LastFx))
                 {
-                    this.codeTabView.OpenFile(Properties.Settings.Default.FilePath_LastFx);
-                    this.ApplyEffect(this.codeTabView.CurrentShaderEffect);
+                    this.CodeTabView.OpenFile(Properties.Settings.Default.FilePath_LastFx);
+                    this.ApplyEffect(this.CodeTabView.CurrentShaderEffect);
                 }
                 else
                 {
@@ -96,16 +96,16 @@
 
         private void MainWindowLoaded(object sender, RoutedEventArgs e)
         {
-            this.plugin1.SelectedIndex = 0;
+            this.Plugin1.SelectedIndex = 0;
             this.SetupMenuBindings();
             this.SetCurrentValue(TitleProperty, "Shazzam Shader Editor - v" + VersionHelper.GetShortVersionNumber());
         }
 
         private void SetupMenuBindings()
         {
-            ICommand isCommand = ((MainWindowViewModel)this.mainGrid.DataContext).ImageStretchCommand;
-            ICommand fullCodeCommand = ((MainWindowViewModel)this.mainGrid.DataContext).FullScreenCodeCommand;
-            ICommand fullImageCommand = ((MainWindowViewModel)this.mainGrid.DataContext).FullScreenImageCommand;
+            ICommand isCommand = ((MainWindowViewModel)this.MainGrid.DataContext).ImageStretchCommand;
+            ICommand fullCodeCommand = ((MainWindowViewModel)this.MainGrid.DataContext).FullScreenCodeCommand;
+            ICommand fullImageCommand = ((MainWindowViewModel)this.MainGrid.DataContext).FullScreenImageCommand;
 
             this.InputBindings.Add(new KeyBinding(fullImageCommand, Key.F9, ModifierKeys.None));
             this.InputBindings.Add(new KeyBinding(fullCodeCommand, Key.F11, ModifierKeys.None));
@@ -122,37 +122,37 @@
 
         private void CodeTabControlSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Properties.Settings.Default.TabIndex_SelectedImage = this.imageTabControl.SelectedIndex;
+            Properties.Settings.Default.TabIndex_SelectedImage = this.ImageTabControl.SelectedIndex;
             Properties.Settings.Default.Save();
         }
 
         private void CodeTabViewShaderEffectChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            this.ApplyEffect(this.codeTabView.CurrentShaderEffect);
+            this.ApplyEffect(this.CodeTabView.CurrentShaderEffect);
         }
 
         private void LoadImage(string fileName)
         {
-            this.userImage.SetCurrentValue(Image.SourceProperty, null);
-            this.userImage.SetCurrentValue(Image.SourceProperty, new BitmapImage(new Uri(fileName)));
+            this.UserImage.SetCurrentValue(Image.SourceProperty, null);
+            this.UserImage.SetCurrentValue(Image.SourceProperty, new BitmapImage(new Uri(fileName)));
         }
 
         private void LoadMedia(string fileName)
         {
-            this.mediaUI.SetCurrentValue(MediaElement.SourceProperty, null);
-            this.mediaUI.SetCurrentValue(MediaElement.SourceProperty, new Uri(fileName));
+            this.MediaUi.SetCurrentValue(MediaElement.SourceProperty, null);
+            this.MediaUi.SetCurrentValue(MediaElement.SourceProperty, new Uri(fileName));
         }
 
         private void ApplyEffect(ShaderEffect se)
         {
-            this.userImage.SetCurrentValue(EffectProperty, se);
-            this.sampleImage1.SetCurrentValue(EffectProperty, se);
-            this.sampleImage2.SetCurrentValue(EffectProperty, se);
-            this.sampleImage3.SetCurrentValue(EffectProperty, se);
-            this.sampleImage4.SetCurrentValue(EffectProperty, se);
-            this.sampleImage5.SetCurrentValue(EffectProperty, se);
-            this.sampleUI.SetCurrentValue(EffectProperty, se);
-            this.mediaUI.SetCurrentValue(EffectProperty, se);
+            this.UserImage.SetCurrentValue(EffectProperty, se);
+            this.SampleImage1.SetCurrentValue(EffectProperty, se);
+            this.SampleImage2.SetCurrentValue(EffectProperty, se);
+            this.SampleImage3.SetCurrentValue(EffectProperty, se);
+            this.SampleImage4.SetCurrentValue(EffectProperty, se);
+            this.SampleImage5.SetCurrentValue(EffectProperty, se);
+            this.SampleUi.SetCurrentValue(EffectProperty, se);
+            this.MediaUi.SetCurrentValue(EffectProperty, se);
         }
 
         private void NewExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -185,7 +185,7 @@
 
         private void LoadShaderEditor(FileDialog ofd)
         {
-            this.codeTabView.OpenFile(ofd.FileName);
+            this.CodeTabView.OpenFile(ofd.FileName);
             Properties.Settings.Default.FolderPath_FX = Path.GetDirectoryName(ofd.FileName);
             Properties.Settings.Default.FilePath_LastFx = ofd.FileName;
             Properties.Settings.Default.Save();
@@ -219,7 +219,7 @@
         {
             try
             {
-                this.codeTabView.SaveFile();
+                this.CodeTabView.SaveFile();
             }
             catch (UnauthorizedAccessException exception)
             {
@@ -238,7 +238,7 @@
 
             if (sfd.ShowDialog() == true)
             {
-                this.codeTabView.SaveFile(sfd.FileName);
+                this.CodeTabView.SaveFile(sfd.FileName);
                 Properties.Settings.Default.FolderPath_FX = Path.GetDirectoryName(sfd.FileName);
                 Properties.Settings.Default.FilePath_LastFx = sfd.FileName;
                 Properties.Settings.Default.Save();
@@ -257,24 +257,24 @@
 
         private void ApplyShaderExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            this.codeTabView.RenderShader();
+            this.CodeTabView.RenderShader();
         }
 
         private void CompileShaderExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            this.codeTabView.CompileShader();
+            this.CodeTabView.CompileShader();
         }
 
         private void RemoveShaderExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            this.userImage.SetCurrentValue(EffectProperty, null);
-            this.sampleImage1.SetCurrentValue(EffectProperty, null);
-            this.sampleImage2.SetCurrentValue(EffectProperty, null);
-            this.sampleImage3.SetCurrentValue(EffectProperty, null);
-            this.sampleImage4.SetCurrentValue(EffectProperty, null);
-            this.sampleImage5.SetCurrentValue(EffectProperty, null);
-            this.sampleUI.SetCurrentValue(EffectProperty, null);
-            this.mediaUI.SetCurrentValue(EffectProperty, null);
+            this.UserImage.SetCurrentValue(EffectProperty, null);
+            this.SampleImage1.SetCurrentValue(EffectProperty, null);
+            this.SampleImage2.SetCurrentValue(EffectProperty, null);
+            this.SampleImage3.SetCurrentValue(EffectProperty, null);
+            this.SampleImage4.SetCurrentValue(EffectProperty, null);
+            this.SampleImage5.SetCurrentValue(EffectProperty, null);
+            this.SampleUi.SetCurrentValue(EffectProperty, null);
+            this.MediaUi.SetCurrentValue(EffectProperty, null);
         }
 
         private void OpenImageExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -322,50 +322,50 @@
 
         private void MediaUiMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            this.mediaUI.Position = TimeSpan.Zero;
+            this.MediaUi.Position = TimeSpan.Zero;
         }
 
         private void MediaUiMediaEnded(object sender, RoutedEventArgs e)
         {
-            if (this.autoPlayCheckBox.IsChecked == true)
+            if (this.AutoPlayCheckBox.IsChecked == true)
             {
-                this.mediaUI.Position = TimeSpan.Zero;
+                this.MediaUi.Position = TimeSpan.Zero;
             }
         }
 
         private void MediaUiMediaFailed(object sender, ExceptionRoutedEventArgs e)
         {
-            this.videoMessage.SetCurrentValue(TextBlock.TextProperty, "Cannot play the specified media.");
+            this.VideoMessage.SetCurrentValue(TextBlock.TextProperty, "Cannot play the specified media.");
         }
 
         private void AutoPlayCheckBoxChecked(object sender, RoutedEventArgs e)
         {
-            if (this.mediaUI != null)
+            if (this.MediaUi != null)
             {
-                this.mediaUI.Position = TimeSpan.Zero;
+                this.MediaUi.Position = TimeSpan.Zero;
             }
         }
 
         private void ImageTabControlSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ReferenceEquals(this.imageTabControl.SelectedItem, this.mediaTab))
+            if (ReferenceEquals(this.ImageTabControl.SelectedItem, this.MediaTab))
             {
-                this.mediaUI.Play();
+                this.MediaUi.Play();
             }
             else
             {
-                this.mediaUI.Stop();
+                this.MediaUi.Stop();
             }
         }
 
         private void Button1Click(object sender, RoutedEventArgs e)
         {
-            this.fruitListBox.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedIndexProperty, 1);
+            this.FruitListBox.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedIndexProperty, 1);
         }
 
         private void Button2Click(object sender, RoutedEventArgs e)
         {
-            this.fruitListBox.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedIndexProperty, 2);
+            this.FruitListBox.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedIndexProperty, 2);
         }
     }
 }

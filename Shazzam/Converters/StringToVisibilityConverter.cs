@@ -4,8 +4,10 @@
     using System.Windows;
     using System.Windows.Data;
 
-    public class StringToVisibilityConverter : IValueConverter
+    public sealed class StringToVisibilityConverter : IValueConverter
     {
+        public static readonly StringToVisibilityConverter Default = new StringToVisibilityConverter();
+
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             var temp = value.ToString();

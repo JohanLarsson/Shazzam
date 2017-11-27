@@ -37,17 +37,16 @@
         public AdjustableColor()
         {
             this.InitializeComponent();
-
-            Storyboard.SetTarget(this.colorValueAnimation, this.colorPicker1);
+            Storyboard.SetTarget(this.colorValueAnimation, this.ColorPicker1);
             Storyboard.SetTargetProperty(this.colorValueAnimation, new PropertyPath(ColorPicker.SelectedColorProperty));
             this.storyboard.Children.Add(this.colorValueAnimation);
-            this.mainPanel.PreviewKeyDown += MainStackPanelPreviewKeyDown;
+            this.MainPanel.PreviewKeyDown += MainStackPanelPreviewKeyDown;
 
-            this.noAnimationToggleButton.Click += this.AnimationToggleButtonClick;
-            this.linearAnimationToggleButton.Click += this.AnimationToggleButtonClick;
+            this.NoAnimationToggleButton.Click += this.AnimationToggleButtonClick;
+            this.LinearAnimationToggleButton.Click += this.AnimationToggleButtonClick;
 
-            this.durationTextBox.TextChanged += this.DurationTextBoxTextChanged;
-            this.durationTextBox.Text = Properties.Settings.Default.AnimationLengthDefault.ToString(CultureInfo.InvariantCulture);
+            this.DurationTextBox.TextChanged += this.DurationTextBoxTextChanged;
+            this.DurationTextBox.Text = Properties.Settings.Default.AnimationLengthDefault.ToString(CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -83,7 +82,7 @@
 
         private void DurationTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (double.TryParse(this.durationTextBox.Text, out double number))
+            if (double.TryParse(this.DurationTextBox.Text, out double number))
             {
                 var duration = TimeSpan.FromSeconds(Math.Max(0, number));
                 this.colorValueAnimation.SetCurrentValue(Timeline.DurationProperty, (System.Windows.Duration)duration);
@@ -93,15 +92,15 @@
 
         private void AnimationToggleButtonClick(object sender, RoutedEventArgs e)
         {
-            this.noAnimationToggleButton.SetCurrentValue(System.Windows.Controls.Primitives.ToggleButton.IsCheckedProperty, ReferenceEquals(sender, this.noAnimationToggleButton));
-            this.linearAnimationToggleButton.SetCurrentValue(System.Windows.Controls.Primitives.ToggleButton.IsCheckedProperty, ReferenceEquals(sender, this.linearAnimationToggleButton));
-            if (this.noAnimationToggleButton.IsChecked == true)
+            this.NoAnimationToggleButton.SetCurrentValue(System.Windows.Controls.Primitives.ToggleButton.IsCheckedProperty, ReferenceEquals(sender, this.NoAnimationToggleButton));
+            this.LinearAnimationToggleButton.SetCurrentValue(System.Windows.Controls.Primitives.ToggleButton.IsCheckedProperty, ReferenceEquals(sender, this.LinearAnimationToggleButton));
+            if (this.NoAnimationToggleButton.IsChecked == true)
             {
-                this.colorPicker1.SetCurrentValue(ColorPicker.SelectedColorProperty, this.startColor);
+                this.ColorPicker1.SetCurrentValue(ColorPicker.SelectedColorProperty, this.startColor);
             }
             else
             {
-                this.startColor = this.colorPicker1.SelectedColor;
+                this.startColor = this.ColorPicker1.SelectedColor;
             }
 
             this.UpdateAnimation();
@@ -111,23 +110,23 @@
         {
             // this.sliderValueAnimation.From = this.Minimum;
             // this.sliderValueAnimation.To = this.Maximum;
-            this.colorValueAnimation.SetCurrentValue(ColorAnimation.FromProperty, this.colorPicker1.SelectedColor);
-            this.colorValueAnimation.SetCurrentValue(ColorAnimation.ToProperty, this.endColorPicker.SelectedColor);
+            this.colorValueAnimation.SetCurrentValue(ColorAnimation.FromProperty, this.ColorPicker1.SelectedColor);
+            this.colorValueAnimation.SetCurrentValue(ColorAnimation.ToProperty, this.EndColorPicker.SelectedColor);
 
-            if (this.noAnimationToggleButton.IsChecked.GetValueOrDefault() ||
+            if (this.NoAnimationToggleButton.IsChecked.GetValueOrDefault() ||
                 this.colorValueAnimation.Duration.TimeSpan == TimeSpan.Zero)
             {
                 this.storyboard.Stop(this);
 
-                this.endColorPicker.SetCurrentValue(VisibilityProperty, Visibility.Visible);
-                this.endColorTextBlock.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.EndColorPicker.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                this.EndColorTextBlock.SetCurrentValue(VisibilityProperty, Visibility.Visible);
             }
             else
             {
                 this.storyboard.Begin(this, isControllable: true);
                 //// moving the slider is distracting
-                this.endColorPicker.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
-                this.endColorTextBlock.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.EndColorPicker.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                this.EndColorTextBlock.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
             }
         }
     }

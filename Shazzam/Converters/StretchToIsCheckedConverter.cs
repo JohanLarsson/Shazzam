@@ -4,8 +4,10 @@
     using System.Globalization;
     using System.Windows.Data;
 
-    public class StretchToIsCheckedConverter : IValueConverter
+    public sealed class StretchToIsCheckedConverter : IValueConverter
     {
+        public static readonly StretchToIsCheckedConverter Default = new StretchToIsCheckedConverter();
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var mode = (System.Windows.Media.Stretch)value;

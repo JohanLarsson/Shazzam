@@ -1,13 +1,11 @@
 ﻿<UserControl x:Class="Shazzam.Controls.AdjustableColor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters="clr-namespace:Shazzam.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:extended="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit/extended"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d">
-
-    <WrapPanel x:Name="mainPanel"
+    <WrapPanel x:Name="MainPanel"
                Margin="0,3"
                Background="{StaticResource VeryDarkBrush}">
         <StackPanel MinWidth="290"
@@ -19,19 +17,19 @@
                        Foreground="{StaticResource HighlightBrush}"
                        Text="͏"
                        TextAlignment="Center" />
-            <extended:ColorPicker x:Name="colorPicker1"
+            <extended:ColorPicker x:Name="ColorPicker1"
                                   Width="70"
                                   Margin="5,0,0,0"
                                   VerticalAlignment="Center"
                                   SelectedColorChanged="ColorPicker1SelectedColorChanged" />
 
-            <TextBlock x:Name="endColorTextBlock"
+            <TextBlock x:Name="EndColorTextBlock"
                        Margin="15,0,0,0"
                        VerticalAlignment="Center"
                        Foreground="{StaticResource NeutralWhiteBrush}"
                        Text="Animate To Value:" />
 
-            <extended:ColorPicker Name="endColorPicker"
+            <extended:ColorPicker Name="EndColorPicker"
                                   Width="70"
                                   Margin="5,0,0,0"
                                   VerticalAlignment="Center" />
@@ -46,7 +44,7 @@
                            VerticalAlignment="Center"
                            Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Animation:" />
-                <ToggleButton x:Name="noAnimationToggleButton"
+                <ToggleButton x:Name="NoAnimationToggleButton"
                               Width="22"
                               Height="22"
                               Margin="5,0,0,0"
@@ -57,7 +55,7 @@
                                Height="16"
                                Fill="{StaticResource NoAnimationIconBrush}" />
                 </ToggleButton>
-                <ToggleButton x:Name="linearAnimationToggleButton"
+                <ToggleButton x:Name="LinearAnimationToggleButton"
                               Width="22"
                               Height="22"
                               Margin="5,0,0,0"
@@ -73,7 +71,7 @@
                            VerticalAlignment="Center"
                            Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Duration:" />
-                <TextBox x:Name="durationTextBox"
+                <TextBox x:Name="DurationTextBox"
                          MinWidth="40"
                          Margin="5,0,0,0"
                          VerticalAlignment="Center"

@@ -69,14 +69,14 @@
             }
 
             this.shaderTextEditor.Document.HighlightingStrategy = this.hlslHs;
-            this.formsHost.Child = this.shaderTextEditor;
+            this.FormsHost.Child = this.shaderTextEditor;
 
             this.csTextEditor = this.CreateTextEditor();
-            this.formsHostCs.Child = this.csTextEditor;
+            this.FormsHostCs.Child = this.csTextEditor;
 
             this.compiler = new ShaderCompiler();
             this.compiler.Reset();
-            this.outputTextBox.DataContext = this.compiler;
+            this.OutputTextBox.DataContext = this.compiler;
             this.Loaded += this.CodeTabViewLoaded;
         }
 
@@ -94,8 +94,8 @@
 
         public string OutputText
         {
-            get => this.outputTextBox.Text;
-            set => this.outputTextBox.SetValue(TextBlock.TextProperty, value);
+            get => this.OutputTextBox.Text;
+            set => this.OutputTextBox.SetValue(TextBlock.TextProperty, value);
         }
 
         internal ShaderEffect CurrentShaderEffect
@@ -157,11 +157,11 @@
             try
             {
                 ShazzamSwitchboard.MainWindow.SetCurrentValue(EffectProperty, this.blur);
-                this.versionNotSupported.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
+                this.VersionNotSupported.SetCurrentValue(VisibilityProperty, Visibility.Hidden);
                 this.blurStoryBoard.Begin(this, isControllable: true);
                 if (Properties.Settings.Default.TargetFramework == "WPF_PS3")
                 {
-                    this.versionNotSupported.SetCurrentValue(
+                    this.VersionNotSupported.SetCurrentValue(
                         VisibilityProperty,
                         RenderCapability.IsPixelShaderVersionSupported(3, 0)
                             ? Visibility.Hidden
@@ -174,7 +174,7 @@
                     this.compiler.Compile(this.MergedCode, ShaderProfile.PixelShader2);
                 }
 
-                this.compileStatusText.SetCurrentValue(TextBlock.TextProperty, $"Last Compiled at: {DateTime.Now.ToLongTimeString()}");
+                this.CompileStatusText.SetCurrentValue(TextBlock.TextProperty, $"Last Compiled at: {DateTime.Now.ToLongTimeString()}");
             }
             catch (CompilerException ex)
             {
@@ -256,7 +256,7 @@
             //// _dirtyCounter = 2;
             this.storedDocHash = this.shaderTextEditor.Document.TextContent.GetHashCode();
             this.shaderTextEditor.SaveFile(fileName);
-            this.codeTabHeaderText.SetCurrentValue(TextBlock.TextProperty, Path.GetFileName(fileName));
+            this.CodeTabHeaderText.SetCurrentValue(TextBlock.TextProperty, Path.GetFileName(fileName));
         }
 
         public void OpenFile(string fileName)
@@ -264,8 +264,8 @@
             this.SaveFileFirst();
             this.ResetDirty();
             this.dirtyCounter = 0;
-            this.codeTab.Focus();
-            this.codeTabHeaderText.SetCurrentValue(TextBlock.TextProperty, Path.GetFileName(fileName));
+            this.CodeTab.Focus();
+            this.CodeTabHeaderText.SetCurrentValue(TextBlock.TextProperty, Path.GetFileName(fileName));
             this.shaderTextEditor.LoadFile(fileName);
             this.shaderTextEditor.Document.HighlightingStrategy = this.hlslHs;
             Properties.Settings.Default.FilePath_LastFx = fileName;
@@ -275,7 +275,7 @@
 
         public void SaveFileFirst()
         {
-            if (this.dirtyStatusText.Visibility == Visibility.Visible)
+            if (this.DirtyStatusText.Visibility == Visibility.Visible)
             {
                 var message = "The fx file has unsaved changes.  Would you like to save your work?";
                 if (MessageBox.Show(message, "Save file", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -328,7 +328,7 @@
         private void ResetDirty()
         {
             this.storedDocHash = 0;
-            this.dirtyStatusText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+            this.DirtyStatusText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
         }
 
         private void SetupInputBindings()
@@ -336,7 +336,7 @@
             var changeToCodeTab = new RoutedUICommand("Change To Code Tab", "ChangeToCodeTab", typeof(CodeTabView));
             var changeToEditTab = new RoutedUICommand("Change To Edit Tab", "ChangeToEditTab", typeof(CodeTabView));
 
-            var cb = new CommandBinding(changeToCodeTab, (s, e) => this.codeTabControl.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, this.codeTab));
+            var cb = new CommandBinding(changeToCodeTab, (s, e) => this.CodeTabControl.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, this.CodeTab));
             var kb = new KeyBinding(changeToCodeTab, Key.F9, ModifierKeys.Control);
 
             ShazzamSwitchboard.MainWindow.CommandBindings.Add(cb);
@@ -344,7 +344,7 @@
             ShazzamSwitchboard.MainWindow.InputBindings.Add(kb);
             //// this.InputBindings.Add(kb);
 
-            var cb2 = new CommandBinding(changeToEditTab, (s, e) => this.codeTabControl.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, this.InputControlsTab));
+            var cb2 = new CommandBinding(changeToEditTab, (s, e) => this.CodeTabControl.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, this.InputControlsTab));
             kb = new KeyBinding(changeToEditTab, Key.F10, ModifierKeys.Control);
 
             ShazzamSwitchboard.MainWindow.CommandBindings.Add(cb2);
@@ -365,11 +365,11 @@
 
             if (this.shaderTextEditor.Document.TextContent.GetHashCode() == this.storedDocHash)
             {
-                ShazzamSwitchboard.CodeTabView.dirtyStatusText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
+                ShazzamSwitchboard.CodeTabView.DirtyStatusText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
             }
             else
             {
-                ShazzamSwitchboard.CodeTabView.dirtyStatusText.SetCurrentValue(VisibilityProperty, Visibility.Visible);
+                ShazzamSwitchboard.CodeTabView.DirtyStatusText.SetCurrentValue(VisibilityProperty, Visibility.Visible);
             }
         }
 
@@ -423,7 +423,7 @@
                 Margin = new Thickness(5),
                 Text = "The current effect has no input parameters."
             };
-            this.inputControlPanel.Children.Add(textBlock);
+            this.InputControlPanel.Children.Add(textBlock);
         }
 
         private void GenerateShaderInputControl(ShaderModelConstantRegister register)
@@ -441,7 +441,7 @@
                                         },
                 ToolTip = toolTipText
             };
-            this.inputControlPanel.Children.Add(textBlock);
+            this.InputControlPanel.Children.Add(textBlock);
 
             Control control = null;
             if (register.RegisterType == typeof(Brush))
@@ -511,7 +511,7 @@
             {
                 control.SetCurrentValue(MarginProperty, new Thickness(15, 2, 25, 5));
                 control.SetCurrentValue(ToolTipProperty, toolTipText);
-                this.inputControlPanel.Children.Add(control);
+                this.InputControlPanel.Children.Add(control);
                 register.AffiliatedControl = control;
             }
         }
@@ -547,7 +547,7 @@
 
         private void FillEditControls()
         {
-            this.inputControlPanel.Children.Clear();
+            this.InputControlPanel.Children.Clear();
             if (this.shaderModel.Registers.Count == 0)
             {
                 this.GenerateBlankInputControls();

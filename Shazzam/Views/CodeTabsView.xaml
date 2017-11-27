@@ -7,14 +7,14 @@
              xmlns:views="clr-namespace:Shazzam.Views"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <converters:StringToVisibilityConverter x:Key="visConverter" />
-        <converters:VisibiltyToVisibilityConverter x:Key="visvisConverter" />
-        <views:CodeTabViewModel x:Key="codeVM" />
-        <LinearGradientBrush x:Key="tabBrush" StartPoint="0,0" EndPoint="1,0">
+        <converters:StringToVisibilityConverter x:Key="VisConverter" />
+        <converters:VisibiltyToVisibilityConverter x:Key="VisvisConverter" />
+        <views:CodeTabViewModel x:Key="CodeVm" />
+        <LinearGradientBrush x:Key="TabBrush" StartPoint="0,0" EndPoint="1,0">
             <GradientStop Offset="0" Color="{StaticResource Dark}" />
             <GradientStop Offset="1" Color="{StaticResource Light}" />
         </LinearGradientBrush>
-        <Style x:Key="tabItemBackground" TargetType="{x:Type TabItem}">
+        <Style x:Key="TabItemBackground" TargetType="{x:Type TabItem}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TabItem">
@@ -35,7 +35,7 @@
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource tabBrush}" />
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource TabBrush}" />
                                 <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource LightBrush}" />
                                 <Setter Property="Foreground" Value="{StaticResource DarkBrush}" />
                             </Trigger>
@@ -46,13 +46,13 @@
         </Style>
 
     </UserControl.Resources>
-    <TabControl x:Name="codeTabControl"
-                DataContext="{StaticResource codeVM}"
+    <TabControl x:Name="CodeTabControl"
+                DataContext="{StaticResource CodeVm}"
                 SnapsToDevicePixels="True">
-        <TabItem x:Name="codeTab">
+        <TabItem x:Name="CodeTab">
             <TabItem.Header>
                 <Grid ToolTip="Use Ctrl-F9 to move focus to this tab.">
-                    <TextBlock x:Name="codeTabHeaderText" Text="HLSL" />
+                    <TextBlock x:Name="CodeTabHeaderText" Text="HLSL" />
                 </Grid>
 
             </TabItem.Header>
@@ -64,27 +64,27 @@
                                     DockPanel.Dock="Bottom"
                                     Orientation="Horizontal">
 
-                            <TextBlock x:Name="outputTextBox"
-                                       Margin="5,3,5,8"
-                                       Padding="8,4"
-                                       Background="DarkRed"
-                                       DockPanel.Dock="Bottom"
-                                       Foreground="White"
-                                       MouseLeftButtonDown="OutputTextBoxMouseLeftButtonDown"
-                                       Text="{Binding ErrorText}"
-                                       ToolTip="Double-click here to goto error."
-                                       Visibility="{Binding Text,
-                                                            Converter={StaticResource visConverter},
-                                                            RelativeSource={RelativeSource Self}}">
+                            <TextBox x:Name="OutputTextBox"
+                                     Margin="5,3,5,8"
+                                     Padding="8,4"
+                                     Background="DarkRed"
+                                     DockPanel.Dock="Bottom"
+                                     Foreground="White"
+                                     IsReadOnly="True"
+                                     IsReadOnlyCaretVisible="True"
+                                     MouseLeftButtonDown="OutputTextBoxMouseLeftButtonDown"
+                                     ToolTip="Double-click here to goto error."
+                                     Visibility="{Binding Text, Converter={StaticResource VisConverter}, RelativeSource={RelativeSource Self}}">
 
-                                <TextBlock.Effect>
+                                <TextBox.Effect>
                                     <DropShadowEffect BlurRadius="9"
                                                       Direction="335"
                                                       Opacity="0.63"
                                                       Color="Black" />
-                                </TextBlock.Effect>
-                            </TextBlock>
-                            <TextBlock x:Name="compileStatusText"
+                                </TextBox.Effect>
+                            </TextBox>
+                            
+                            <TextBlock x:Name="CompileStatusText"
                                        Margin="5,3,5,8"
                                        Padding="8,4"
                                        Background="#FFC4FFC4"
@@ -96,7 +96,8 @@
                                                       Color="Black" />
                                 </TextBlock.Effect>
                             </TextBlock>
-                            <TextBlock x:Name="dirtyStatusText"
+                            
+                            <TextBlock x:Name="DirtyStatusText"
                                        Margin="5,3,5,8"
                                        Padding="8,4"
                                        Background="LightYellow"
@@ -110,7 +111,7 @@
                                                       Color="Black" />
                                 </TextBlock.Effect>
                             </TextBlock>
-                            <TextBlock x:Name="versionNotSupported"
+                            <TextBlock x:Name="VersionNotSupported"
                                        Margin="5,3,5,8"
                                        Padding="8,4"
                                        Background="#FFE4B85A"
@@ -125,13 +126,13 @@
                             </TextBlock>
                         </StackPanel>
                         <DockPanel LastChildFill="True">
-                            <WindowsFormsHost x:Name="formsHost" Margin="2,2,2,2" />
+                            <WindowsFormsHost x:Name="FormsHost" Margin="2,2,2,2" />
                         </DockPanel>
                     </DockPanel>
                 </Border>
             </Border>
         </TabItem>
-        <TabItem x:Name="InputControlsTab" Visibility="{Binding Visibility, Converter={StaticResource visvisConverter}, ElementName=outputTextBox}">
+        <TabItem x:Name="InputControlsTab" Visibility="{Binding Visibility, Converter={StaticResource VisvisConverter}, ElementName=OutputTextBox}">
             <TabItem.Header>
                 <Grid ToolTip="Use Ctrl-F10 to move focus to this tab.">
                     <TextBlock Text="Tryout (adjust settings)" />
@@ -292,7 +293,7 @@
                             </FlowDocumentScrollViewer>
                         </Expander>
                         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
-                            <StackPanel x:Name="inputControlPanel"
+                            <StackPanel x:Name="InputControlPanel"
                                         Margin="2,2,2,2"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
@@ -304,16 +305,14 @@
         </TabItem>
         <TabItem Header="   "
                  IsEnabled="False"
-                 Style="{StaticResource tabItemBackground}" />
-        <TabItem x:Name="csharpTab"
+                 Style="{StaticResource TabItemBackground}" />
+        <TabItem x:Name="CsharpTab"
                  Header="Generated Shader - C#"
-                 Visibility="{Binding Visibility,
-                                      Converter={StaticResource visvisConverter},
-                                      ElementName=outputTextBox}">
+                 Visibility="{Binding Visibility, Converter={StaticResource VisvisConverter}, ElementName=OutputTextBox}">
             <Border BorderBrush="{DynamicResource NeutralDarkBrush}" BorderThickness="9">
                 <Border BorderBrush="White" BorderThickness="1">
                     <DockPanel MinWidth="330" LastChildFill="True">
-                        <WindowsFormsHost x:Name="formsHostCs" Margin="2,2,2,2" />
+                        <WindowsFormsHost x:Name="FormsHostCs" Margin="2,2,2,2" />
                     </DockPanel>
                 </Border>
             </Border>

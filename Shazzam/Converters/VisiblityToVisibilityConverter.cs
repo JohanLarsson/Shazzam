@@ -4,12 +4,14 @@
     using System.Windows;
     using System.Windows.Data;
 
-    internal class VisibiltyToVisibilityConverter : IValueConverter
+    internal sealed class VisibiltyToVisibilityConverter : IValueConverter
     {
+        internal static readonly VisibiltyToVisibilityConverter Default = new VisibiltyToVisibilityConverter();
+
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var temp = (Visibility)value;
-            if (temp == Visibility.Visible)
+            if (value is Visibility visibility &&
+                visibility == Visibility.Visible)
             {
                 return Visibility.Collapsed;
             }
