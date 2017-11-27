@@ -158,11 +158,11 @@
                         <ItemsControl Grid.Column="0" ItemsSource="{Binding ShaderModel.Registers}">
                             <ItemsControl.ItemTemplateSelector>
                                 <views:ShaderModelConstantRegisterTemplateSelector>
-                                    <views:ShaderModelConstantRegisterTemplateSelector.BrushTemplate>
+                                    <views:ShaderModelConstantRegisterTemplateSelector.ColorTemplate>
                                         <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
                                             <controls:AdjustableColor Value="{Binding Value}" />
                                         </DataTemplate>
-                                    </views:ShaderModelConstantRegisterTemplateSelector.BrushTemplate>
+                                    </views:ShaderModelConstantRegisterTemplateSelector.ColorTemplate>
 
                                     <views:ShaderModelConstantRegisterTemplateSelector.SingleTemplate>
                                         <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
@@ -362,4 +362,6 @@
         </TabItem>
     </TabControl>
 </UserControl>
+
+
 

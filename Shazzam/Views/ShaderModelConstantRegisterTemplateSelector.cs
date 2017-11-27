@@ -15,7 +15,7 @@
 
         public DataTemplate QuadrupleTemplate { get; set; }
 
-        public DataTemplate BrushTemplate { get; set; }
+        public DataTemplate ColorTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -30,7 +30,7 @@
 
                 if (register.RegisterType == typeof(Color))
                 {
-                    return this.BrushTemplate;
+                    return this.ColorTemplate;
                 }
 
                 if (register.RegisterType == typeof(Point) ||
