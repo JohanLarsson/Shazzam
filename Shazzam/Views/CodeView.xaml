@@ -159,7 +159,8 @@
                         <ItemsControl Grid.Column="0" ItemsSource="{Binding ShaderModel.Registers}">
                             <ItemsControl.ItemTemplateSelector>
                                 <views:ShaderModelConstantRegisterTemplateSelector ColorTemplate="{StaticResource ShaderModelColorRegisterTemplate}"
-                                                                                   DoubleTemplate="{StaticResource ShaderModelDoubleRegisterTemplate}"/>
+                                                                                   DoubleTemplate="{StaticResource ShaderModelDoubleRegisterTemplate}"
+                                                                                   PairTemplate="{StaticResource ShaderModelPointRegisterTemplate}" />
                             </ItemsControl.ItemTemplateSelector>
                         </ItemsControl>
 

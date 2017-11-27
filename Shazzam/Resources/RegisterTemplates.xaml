@@ -109,10 +109,12 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Foreground="{StaticResource HighlightBrush}"
-                           Text="͏"
-                           Style="{StaticResource LabelStyle}" />
+                           Style="{StaticResource LabelStyle}"
+                           Text="͏" />
 
-                <TextBlock Grid.Column="1" Text="Min:"  Style="{StaticResource LabelStyle}"/>
+                <TextBlock Grid.Column="1"
+                           Style="{StaticResource LabelStyle}"
+                           Text="Min:" />
                 <TextBox x:Name="MinTextBox"
                          Grid.Column="2"
                          Text="{Binding Min, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
@@ -129,7 +131,9 @@
                         ToolTip="{Binding Value, Converter={x:Static converters:DoubleToStringConverter.F2}}"
                         Value="{Binding Value}" />
 
-                <TextBlock Grid.Column="4" Text="Max:"  Style="{StaticResource LabelStyle}"/>
+                <TextBlock Grid.Column="4"
+                           Style="{StaticResource LabelStyle}"
+                           Text="Max:" />
                 <TextBox x:Name="MaxTextBox"
                          Grid.Column="5"
                          Text="{Binding Max, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
@@ -165,6 +169,8 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0"
                            Foreground="{StaticResource HighlightBrush}"
@@ -183,6 +189,7 @@
                                         Margin="5,0,0,0"
                                         VerticalAlignment="Center"
                                         SelectedColor="{Binding Value}" />
+                <Button Grid.Column="3" Command="{Binding ResetCommand}" />
             </Grid>
 
             <Rectangle Grid.Row="0"
@@ -240,6 +247,161 @@
                 <TextBox x:Name="DurationTextBox" Text="{Binding AnimationDuration}" />
                 <TextBlock Style="{StaticResource LabelStyle}" Text="s" />
             </StackPanel>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ShaderModelPointRegisterTemplate" DataType="{x:Type shazzam:ShaderModelPointRegister}">
+        <Grid Margin="0,3" Background="{StaticResource VeryDarkBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           Foreground="{StaticResource HighlightBrush}"
+                           Style="{StaticResource LabelStyle}">
+                    <Run Text="{Binding RegisterName, Mode=OneTime, FallbackValue='name'}" />
+                    <Run Text="{Binding RegisterType, Mode=OneTime, StringFormat='{} ({0})', FallbackValue='(type)'}" />
+                </TextBlock>
+
+                <TextBlock Grid.Column="1"
+                           Style="{StaticResource LabelStyle}"
+                           Text="Value:" />
+                <TextBox x:Name="ValueTextBox"
+                         Grid.Column="2"
+                         Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Grid.Column="3" Command="{Binding ResetCommand}" />
+            </Grid>
+
+            <Rectangle Grid.Row="0"
+                       Grid.RowSpan="3"
+                       Grid.Column="1"
+                       Style="{StaticResource SeparatorRectangleStyle}" />
+
+            <StackPanel Grid.Row="0"
+                        Grid.Column="2"
+                        Margin="5,3"
+                        Orientation="Horizontal">
+                <TextBlock Style="{StaticResource LabelStyle}" Text="Animation:" />
+                <RadioButton x:Name="NoAnimationToggleButton"
+                             Background="{StaticResource NoAnimationIconBrush}"
+                             IsChecked="True"
+                             Style="{StaticResource AnimationButtonStyle}" />
+                <RadioButton x:Name="LinearAnimationToggleButton"
+                             Background="{StaticResource HorizontalAnimationIconBrush}"
+                             Style="{StaticResource AnimationButtonStyle}"
+                             ToolTip="Linear" />
+                <FrameworkElement Width="27" />
+            </StackPanel>
+
+            <Grid Grid.Row="1"
+                  Grid.Column="0"
+                  MinWidth="450"
+                  Margin="5,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Foreground="{StaticResource HighlightBrush}"
+                           Style="{StaticResource LabelStyle}"
+                           Text="{Binding Property1.Name}" />
+
+                <TextBlock Grid.Column="1"
+                           Style="{StaticResource LabelStyle}"
+                           Text="Min:" />
+                <TextBox x:Name="XMinTextBox"
+                         Grid.Column="2"
+                         Text="{Binding Property1.Min, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
+
+                <Slider x:Name="XSlider"
+                        Grid.Column="3"
+                        Margin="5,0"
+                        VerticalAlignment="Center"
+                        AutoToolTipPlacement="TopLeft"
+                        AutoToolTipPrecision="3"
+                        IsMoveToPointEnabled="True"
+                        Maximum="{Binding Property1.Max}"
+                        Minimum="{Binding Property1.Min}"
+                        ToolTip="{Binding Property1.Value, Converter={x:Static converters:DoubleToStringConverter.F2}}"
+                        Value="{Binding Property1.Value}" />
+
+                <TextBlock Grid.Column="4"
+                           Style="{StaticResource LabelStyle}"
+                           Text="Max:" />
+                <TextBox x:Name="XMaxTextBox"
+                         Grid.Column="5"
+                         Text="{Binding Property1.Max, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
+            </Grid>
+
+            <StackPanel Grid.Row="1"
+                        Grid.Column="2"
+                        Margin="5,3"
+                        Orientation="Horizontal">
+                <TextBlock Style="{StaticResource LabelStyle}" Text="Duration:" />
+                <TextBox x:Name="DurationTextBox" Text="{Binding AnimationDuration}" />
+                <TextBlock Style="{StaticResource LabelStyle}" Text="s" />
+            </StackPanel>
+
+            <Grid Grid.Row="2"
+                  Grid.Column="0"
+                  MinWidth="450"
+                  Margin="5,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Foreground="{StaticResource HighlightBrush}"
+                           Style="{StaticResource LabelStyle}"
+                           Text="{Binding Property2.Name}" />
+
+                <TextBlock Grid.Column="1"
+                           Style="{StaticResource LabelStyle}"
+                           Text="Min:" />
+                <TextBox x:Name="YMinTextBox"
+                         Grid.Column="2"
+                         Text="{Binding Property2.Min, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
+
+                <Slider x:Name="YSlider"
+                        Grid.Column="3"
+                        Margin="5,0"
+                        VerticalAlignment="Center"
+                        AutoToolTipPlacement="TopLeft"
+                        AutoToolTipPrecision="3"
+                        IsMoveToPointEnabled="True"
+                        Maximum="{Binding Property2.Max}"
+                        Minimum="{Binding Property2.Min}"
+                        ToolTip="{Binding Property2.Value, Converter={x:Static converters:DoubleToStringConverter.F2}}"
+                        Value="{Binding Property2.Value}" />
+
+                <TextBlock Grid.Column="4"
+                           Style="{StaticResource LabelStyle}"
+                           Text="Max:" />
+                <TextBox x:Name="YMaxTextBox"
+                         Grid.Column="5"
+                         Text="{Binding Property2.Max, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
+            </Grid>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
