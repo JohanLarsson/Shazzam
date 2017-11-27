@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Shazzam.Views.CodeTabView"
+﻿<UserControl x:Class="Shazzam.Views.CodeView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:Shazzam.Controls"
@@ -16,6 +16,7 @@
             <GradientStop Offset="0" Color="{StaticResource Dark}" />
             <GradientStop Offset="1" Color="{StaticResource Light}" />
         </LinearGradientBrush>
+
         <Style x:Key="TabItemBackground" TargetType="{x:Type TabItem}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -157,41 +158,8 @@
                                    Visibility="{Binding ShaderModel.Registers, Converter={x:Static converters:AnyToVisibilityConverter.VisibleWhenEmpty}}" />
                         <ItemsControl Grid.Column="0" ItemsSource="{Binding ShaderModel.Registers}">
                             <ItemsControl.ItemTemplateSelector>
-                                <views:ShaderModelConstantRegisterTemplateSelector>
-                                    <views:ShaderModelConstantRegisterTemplateSelector.ColorTemplate>
-                                        <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
-                                            <controls:AdjustableColor Value="{Binding Value}" />
-                                        </DataTemplate>
-                                    </views:ShaderModelConstantRegisterTemplateSelector.ColorTemplate>
-
-                                    <views:ShaderModelConstantRegisterTemplateSelector.SingleTemplate>
-                                        <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
-                                            <controls:AdjustableSlider Maximum="{Binding MaxValue, Mode=OneTime}"
-                                                                       Minimum="{Binding MinValue, Mode=OneTime}"
-                                                                       Value="{Binding Value}" />
-                                        </DataTemplate>
-                                    </views:ShaderModelConstantRegisterTemplateSelector.SingleTemplate>
-
-                                    <views:ShaderModelConstantRegisterTemplateSelector.PairTemplate>
-                                        <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
-                                            <controls:AdjustableSliderPair Maximum="{Binding MaxValue, Mode=OneTime}"
-                                                                           Minimum="{Binding MinValue, Mode=OneTime}"
-                                                                           Value="{Binding Value}" />
-                                        </DataTemplate>
-                                    </views:ShaderModelConstantRegisterTemplateSelector.PairTemplate>
-
-                                    <views:ShaderModelConstantRegisterTemplateSelector.TripleTemplate>
-                                        <DataTemplate>
-                                            <controls:AdjustableSliderTriplet />
-                                        </DataTemplate>
-                                    </views:ShaderModelConstantRegisterTemplateSelector.TripleTemplate>
-
-                                    <views:ShaderModelConstantRegisterTemplateSelector.QuadrupleTemplate>
-                                        <DataTemplate>
-                                            <controls:AdjustableSliderQuadruplet />
-                                        </DataTemplate>
-                                    </views:ShaderModelConstantRegisterTemplateSelector.QuadrupleTemplate>
-                                </views:ShaderModelConstantRegisterTemplateSelector>
+                                <views:ShaderModelConstantRegisterTemplateSelector ColorTemplate="{StaticResource ShaderModelColorRegisterTemplate}"
+                                                                                   DoubleTemplate="{StaticResource ShaderModelDoubleRegisterTemplate}"/>
                             </ItemsControl.ItemTemplateSelector>
                         </ItemsControl>
 

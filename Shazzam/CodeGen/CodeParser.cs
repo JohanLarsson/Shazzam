@@ -144,7 +144,7 @@
                 }
 
                 // Create a structure to hold the register information.
-                register = new ShaderModelConstantRegister(
+                register = ShaderModelConstantRegister.Create(
                     registerName,
                     registerType,
                     registerNumber,

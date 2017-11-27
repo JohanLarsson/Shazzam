@@ -3,31 +3,28 @@
     using System;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
+    using System.Windows;
+    using System.Windows.Media;
 
     /// <summary>
     ///  Contains the details for each register described in a HLSL shader file
     /// </summary>
-    public class ShaderModelConstantRegister : INotifyPropertyChanged
+    public abstract class ShaderModelConstantRegister : INotifyPropertyChanged
     {
-        private object value;
+        private double animationDuration = 2.0;
 
-        public ShaderModelConstantRegister(
+        protected ShaderModelConstantRegister(
             string registerName,
             Type registerType,
             int registerNumber,
             string description,
-            object minValue,
-            object maxValue,
             object defaultValue)
         {
             this.RegisterName = registerName;
             this.RegisterType = registerType;
             this.RegisterNumber = registerNumber;
             this.Description = description;
-            this.MinValue = minValue;
-            this.MaxValue = maxValue;
             this.DefaultValue = defaultValue;
-            this.value = defaultValue;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -53,32 +50,46 @@
         public string Description { get; }
 
         /// <summary>
-        /// The minimum value for this register variable.
-        /// </summary>
-        public object MinValue { get; }
-
-        /// <summary>
-        /// The maximum value for this register variable.
-        /// </summary>
-        public object MaxValue { get; }
-
-        /// <summary>
         /// The default value of this register variable.
         /// </summary>
         public object DefaultValue { get; }
 
-        public object Value
+        public double AnimationDuration
         {
-            get => this.value;
+            get => this.animationDuration;
             set
             {
-                if (ReferenceEquals(value, this.value))
+                if (value == this.animationDuration)
                 {
                     return;
                 }
 
-                this.value = value;
+                this.animationDuration = value;
                 this.OnPropertyChanged();
+            }
+        }
+
+        public static ShaderModelConstantRegister Create(string registerName, Type registerType, int registerNumber, string summary, object minValue, object maxValue, object defaultValue)
+        {
+            switch (defaultValue)
+            {
+                case double _:
+                    return new ShaderModelDoubleRegister(registerName, registerType, registerNumber, summary, (double)minValue, (double)maxValue, (double)defaultValue);
+                case float _:
+                    return new ShaderModelFloatRegister(registerName, registerType, registerNumber, summary, (float)minValue, (float)maxValue, (float)defaultValue);
+                case Color color:
+                    return new ShaderModelColorRegister(registerName, registerType, registerNumber, summary, color);
+                case Point _:
+                    return new ShaderModelPointRegister(registerName, registerType, registerNumber, summary, (Point)minValue, (Point)maxValue, (Point)defaultValue);
+                case Vector _:
+                    return new ShaderModelVectorRegister(registerName, registerType, registerNumber, summary, (Vector)minValue, (Vector)maxValue, (Vector)defaultValue);
+                case Size _:
+                    return new ShaderModelSizeRegister(registerName, registerType, registerNumber, summary, (Size)minValue, (Size)maxValue, (Size)defaultValue);
+                default:
+                    throw new ArgumentOutOfRangeException(
+                        nameof(registerType),
+                        registerType,
+                        "Could not create a register viewmodel for the type");
             }
         }
 

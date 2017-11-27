@@ -47,7 +47,7 @@
             this.loaderTab.SelectionChanged += this.LoaderTabSelectionChanged;
         }
 
-        public CodeTabView CodeTabView { get; set; }
+        public CodeView CodeView { get; set; }
 
         public void Update()
         {
@@ -73,7 +73,7 @@
 
             var path = Path.Combine(Properties.Settings.Default.FolderPath_FX, this.fileListBox.SelectedItem.ToString());
 
-            ShazzamSwitchboard.CodeTabView.OpenFile(path);
+            ShazzamSwitchboard.CodeView.OpenFile(path);
             Properties.Settings.Default.FilePath_LastFx = path;
             Properties.Settings.Default.Save();
         }
@@ -106,7 +106,7 @@
 
             var path = Path.Combine(samplesPath, this.sampleListBox.SelectedItem.ToString());
 
-            ShazzamSwitchboard.CodeTabView.OpenFile(path);
+            ShazzamSwitchboard.CodeView.OpenFile(path);
             Properties.Settings.Default.FilePath_LastFx = path;
             Properties.Settings.Default.Save();
         }
@@ -121,7 +121,7 @@
 
             var path = Path.Combine(tutorialsPath, this.tutorialListBox.SelectedItem.ToString());
 
-            ShazzamSwitchboard.CodeTabView.OpenFile(path);
+            ShazzamSwitchboard.CodeView.OpenFile(path);
             Properties.Settings.Default.FilePath_LastFx = path;
             Properties.Settings.Default.Save();
         }

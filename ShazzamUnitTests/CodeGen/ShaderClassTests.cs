@@ -23,11 +23,11 @@
                 targetFramework: TargetFramework.WPF,
                 registers: new List<ShaderModelConstantRegister>
                     {
-                        new ShaderModelConstantRegister(
+                        ShaderModelConstantRegister.Create(
                             registerName: "Bar",
                             registerType: typeof(double),
                             registerNumber: 1,
-                            description: "This is Bar",
+                            summary: "This is Bar",
                             minValue: null,
                             maxValue: null,
                             defaultValue: 0)
@@ -113,11 +113,11 @@ namespace Shaders
                 targetFramework: TargetFramework.WPF,
                 registers: new List<ShaderModelConstantRegister>
                                {
-                                   new ShaderModelConstantRegister(
+                                   ShaderModelConstantRegister.Create(
                                        registerName: "Bar",
                                        registerType: typeof(double),
                                        registerNumber: 1,
-                                       description: "This is Bar",
+                                       summary: "This is Bar",
                                        minValue: null,
                                        maxValue: null,
                                        defaultValue: 0)
@@ -212,11 +212,11 @@ namespace Shaders
                 targetFramework: TargetFramework.WPF,
                 registers: new List<ShaderModelConstantRegister>
                 {
-                    new ShaderModelConstantRegister(
+                    ShaderModelConstantRegister.Create(
                         registerName: "Bar",
                         registerType: typeof(double),
                         registerNumber: 1,
-                        description: "This is Bar",
+                        summary: "This is Bar",
                         minValue: null,
                         maxValue: null,
                         defaultValue: 0)

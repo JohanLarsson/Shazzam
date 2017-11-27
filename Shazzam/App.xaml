@@ -7,8 +7,9 @@
                 <ResourceDictionary Source="/Resources/BrushesRD.xaml" />
                 <ResourceDictionary Source="/Resources/MenuRD.xaml" />
                 <ResourceDictionary Source="/Resources/EditorRD.xaml" />
-
+                <ResourceDictionary Source="/Resources/RegisterTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
             <Style x:Key="ImageInsideBorder" TargetType="{x:Type Border}">
                 <Setter Property="BorderBrush" Value="White" />
                 <Setter Property="Background" Value="{DynamicResource ImageBorderBrush}" />

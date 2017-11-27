@@ -8,7 +8,7 @@
     {
         public static Window MainWindow { get; set; }
 
-        public static CodeTabView CodeTabView { get; set; }
+        public static CodeView CodeView { get; set; }
 
         public static FileLoaderPlugin FileLoaderPlugin { get; set; }
     }

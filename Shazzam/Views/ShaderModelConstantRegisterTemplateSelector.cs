@@ -7,7 +7,7 @@
 
     public class ShaderModelConstantRegisterTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate SingleTemplate { get; set; }
+        public DataTemplate DoubleTemplate { get; set; }
 
         public DataTemplate PairTemplate { get; set; }
 
@@ -22,10 +22,9 @@
             if (item is ShaderModelConstantRegister register)
             {
                 if (register.RegisterType == typeof(double) ||
-                    register.RegisterType == typeof(float) ||
-                    register.RegisterType == typeof(int))
+                    register.RegisterType == typeof(float))
                 {
-                    return this.SingleTemplate;
+                    return this.DoubleTemplate;
                 }
 
                 if (register.RegisterType == typeof(Color))

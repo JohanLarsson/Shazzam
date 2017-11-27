@@ -108,6 +108,18 @@
     </ApplicationDefinition>
     <Compile Include="CodeGen\ShaderCompiler.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="RegisterProperty.cs" />
+    <Compile Include="ShaderModelColorRegister.cs" />
+    <Compile Include="ShaderModelConstantRegister`1.cs" />
+    <Compile Include="ShaderModelDoubleRegister.cs" />
+    <Compile Include="ShaderModelFloatRegister.cs" />
+    <Compile Include="ShaderModelPairRegister.cs" />
+    <Compile Include="ShaderModelPointRegister.cs" />
+    <Compile Include="ShaderModelSizeRegister.cs" />
+    <Compile Include="ShaderModelVectorRegister.cs" />
+    <Compile Include="Views\CodeViewModel.cs">
+      <DependentUpon>CodeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShaderModelConstantRegisterTemplateSelector.cs" />
     <Page Include="Controls\AdjustableColor.xaml">
       <SubType>Designer</SubType>
@@ -195,7 +207,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\CodeTabsView.xaml">
+    <Page Include="Resources\RegisterTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <Generator>MSBuild:Compile</Generator>
@@ -698,15 +714,12 @@
     <Compile Include="ShaderModelConstantRegister.cs" />
     <Compile Include="ShazzamSwitchboard.cs" />
     <Compile Include="TargetFramework.cs" />
-    <Compile Include="Views\CodeTabsView.xaml.cs">
-      <DependentUpon>CodeTabsView.xaml</DependentUpon>
+    <Compile Include="Views\CodeView.xaml.cs">
+      <DependentUpon>CodeView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Plugins\FileLoaderViewer.xaml.cs">
       <DependentUpon>FileLoaderViewer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CodeViewModel.cs">
-      <DependentUpon>CodeTabsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PluginView.xaml.cs">
       <DependentUpon>PluginView.xaml</DependentUpon>

@@ -25,7 +25,7 @@
             this.InitializeComponent();
 
             ShazzamSwitchboard.MainWindow = this;
-            ShazzamSwitchboard.CodeTabView = this.CodeTabView;
+            ShazzamSwitchboard.CodeView = this.CodeTabView;
             this.CodeTabView.ShaderEffectChanged += this.CodeTabViewShaderEffectChanged;
             this.ImageTabControl.SelectionChanged += this.CodeTabControlSelectionChanged;
 
@@ -117,7 +117,7 @@
 
         private void MainWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            ShazzamSwitchboard.CodeTabView.SaveFileFirst();
+            ShazzamSwitchboard.CodeView.SaveFileFirst();
         }
 
         private void CodeTabControlSelectionChanged(object sender, SelectionChangedEventArgs e)

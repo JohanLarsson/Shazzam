@@ -19,13 +19,13 @@
     using Shazzam.CodeGen;
     using Shazzam.Converters;
 
-    public partial class CodeTabView : UserControl, IDisposable
+    public partial class CodeView : UserControl, IDisposable
     {
         public static readonly RoutedEvent ShaderEffectChangedEvent = EventManager.RegisterRoutedEvent(
             "ShaderEffectChanged",
             RoutingStrategy.Bubble,
             typeof(RoutedPropertyChangedEventHandler<object>),
-            typeof(CodeTabView));
+            typeof(CodeView));
 
         private readonly ICSharpCode.TextEditor.TextEditorControl shaderTextEditor;
         private readonly ICSharpCode.TextEditor.TextEditorControl csTextEditor;
@@ -41,7 +41,7 @@
         private int dirtyCounter;
         private int storedDocHash;
 
-        public CodeTabView()
+        public CodeView()
         {
             this.InitializeComponent();
 
@@ -50,7 +50,7 @@
             //// _shaderTextEditor.TextChanged += new EventHandler(_shaderTextEditor_TextChanged);
             //// _shaderTextEditor.Document.TextContentChanged += new EventHandler(Document_TextContentChanged);
             this.shaderTextEditor.Document.DocumentChanged += this.DocumentDocumentChanged;
-            using (var stream = typeof(CodeTabView).Assembly.GetManifestResourceStream("Shazzam.Resources.HLSLSyntax.xshd"))
+            using (var stream = typeof(CodeView).Assembly.GetManifestResourceStream("Shazzam.Resources.HLSLSyntax.xshd"))
             {
                 if (stream != null)
                 {
@@ -330,8 +330,8 @@
 
         private void SetupInputBindings()
         {
-            var changeToCodeTab = new RoutedUICommand("Change To Code Tab", "ChangeToCodeTab", typeof(CodeTabView));
-            var changeToEditTab = new RoutedUICommand("Change To Edit Tab", "ChangeToEditTab", typeof(CodeTabView));
+            var changeToCodeTab = new RoutedUICommand("Change To Code Tab", "ChangeToCodeTab", typeof(CodeView));
+            var changeToEditTab = new RoutedUICommand("Change To Edit Tab", "ChangeToEditTab", typeof(CodeView));
 
             var cb = new CommandBinding(changeToCodeTab, (s, e) => this.CodeTabControl.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, this.CodeTab));
             var kb = new KeyBinding(changeToCodeTab, Key.F9, ModifierKeys.Control);
@@ -360,7 +360,7 @@
                 this.storedDocHash = this.shaderTextEditor.Document.TextContent.GetHashCode();
             }
 
-            ShazzamSwitchboard.CodeTabView.DirtyStatusText.SetCurrentValue(
+            ShazzamSwitchboard.CodeView.DirtyStatusText.SetCurrentValue(
                 VisibilityProperty,
                 this.shaderTextEditor.Document.TextContent.GetHashCode() == this.storedDocHash
                     ? Visibility.Collapsed

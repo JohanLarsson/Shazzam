@@ -1,0 +1,245 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:Shazzam.Converters"
+                    xmlns:extToolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit/extended"
+                    xmlns:shazzam="clr-namespace:Shazzam">
+    <Style x:Key="LabelStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{StaticResource NeutralWhiteBrush}" />
+        <Setter Property="Margin" Value="4,0" />
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="TextAlignment" Value="Right" />
+        <Setter Property="Margin" Value="4,0" />
+        <Setter Property="MinWidth" Value="50" />
+    </Style>
+
+    <Style x:Key="AnimationButtonStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="2,0" />
+        <Setter Property="Width" Value="22" />
+        <Setter Property="Height" Value="22" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Border Background="Transparent">
+                        <Rectangle Width="16"
+                                   Height="16"
+                                   Fill="{TemplateBinding Background}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SeparatorRectangleStyle" TargetType="{x:Type Rectangle}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="10,2" />
+        <Setter Property="Width" Value="1" />
+        <Setter Property="Fill" Value="{StaticResource NeutralDarkBrush}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <DataTemplate x:Key="ShaderModelDoubleRegisterTemplate" DataType="{x:Type shazzam:ShaderModelDoubleRegister}">
+        <Grid Margin="0,3" Background="{StaticResource VeryDarkBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           Foreground="{StaticResource HighlightBrush}"
+                           Style="{StaticResource LabelStyle}">
+                    <Run Text="{Binding RegisterName, Mode=OneTime, FallbackValue='name'}" />
+                    <Run Text="{Binding RegisterType, Mode=OneTime, StringFormat='{} ({0})', FallbackValue='(type)'}" />
+                </TextBlock>
+
+                <TextBlock Grid.Column="1"
+                           Style="{StaticResource LabelStyle}"
+                           Text="Value:" />
+                <TextBox x:Name="ValueTextBox"
+                         Grid.Column="2"
+                         Text="{Binding Value, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
+            </Grid>
+
+            <Rectangle Grid.Row="0"
+                       Grid.RowSpan="2"
+                       Grid.Column="1"
+                       Style="{StaticResource SeparatorRectangleStyle}" />
+
+            <StackPanel Grid.Row="0"
+                        Grid.Column="2"
+                        Margin="5,3"
+                        Orientation="Horizontal">
+                <TextBlock Style="{StaticResource LabelStyle}" Text="Animation:" />
+                <RadioButton x:Name="NoAnimationToggleButton"
+                             Background="{StaticResource NoAnimationIconBrush}"
+                             IsChecked="True"
+                             Style="{StaticResource AnimationButtonStyle}" />
+                <RadioButton x:Name="LinearAnimationToggleButton"
+                             Background="{StaticResource HorizontalAnimationIconBrush}"
+                             Style="{StaticResource AnimationButtonStyle}"
+                             ToolTip="Linear" />
+                <FrameworkElement Width="27" />
+            </StackPanel>
+
+            <Grid Grid.Row="1"
+                  Grid.Column="0"
+                  MinWidth="450"
+                  Margin="5,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Foreground="{StaticResource HighlightBrush}"
+                           Text="͏"
+                           Style="{StaticResource LabelStyle}" />
+
+                <TextBlock Grid.Column="1" Text="Min:"  Style="{StaticResource LabelStyle}"/>
+                <TextBox x:Name="MinTextBox"
+                         Grid.Column="2"
+                         Text="{Binding Min, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
+
+                <Slider x:Name="Slider"
+                        Grid.Column="3"
+                        Margin="5,0"
+                        VerticalAlignment="Center"
+                        AutoToolTipPlacement="TopLeft"
+                        AutoToolTipPrecision="3"
+                        IsMoveToPointEnabled="True"
+                        Maximum="{Binding Max}"
+                        Minimum="{Binding Min}"
+                        ToolTip="{Binding Value, Converter={x:Static converters:DoubleToStringConverter.F2}}"
+                        Value="{Binding Value}" />
+
+                <TextBlock Grid.Column="4" Text="Max:"  Style="{StaticResource LabelStyle}"/>
+                <TextBox x:Name="MaxTextBox"
+                         Grid.Column="5"
+                         Text="{Binding Max, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
+            </Grid>
+
+            <StackPanel Grid.Row="1"
+                        Grid.Column="2"
+                        Margin="5,3"
+                        Orientation="Horizontal">
+                <TextBlock Style="{StaticResource LabelStyle}" Text="Duration:" />
+                <TextBox x:Name="DurationTextBox" Text="{Binding AnimationDuration}" />
+                <TextBlock Style="{StaticResource LabelStyle}" Text="s" />
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ShaderModelColorRegisterTemplate" DataType="{x:Type shazzam:ShaderModelColorRegister}">
+        <Grid x:Name="MainPanel"
+              Margin="0,3"
+              Background="{StaticResource VeryDarkBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           Foreground="{StaticResource HighlightBrush}"
+                           Style="{StaticResource LabelStyle}">
+                    <Run Text="{Binding RegisterName, Mode=OneTime, FallbackValue='name'}" />
+                    <Run Text="{Binding RegisterType, Mode=OneTime, StringFormat='{} ({0})', FallbackValue='(type)'}" />
+                </TextBlock>
+
+                <TextBlock Grid.Column="1"
+                           Style="{StaticResource LabelStyle}"
+                           Text="Value:" />
+
+                <extToolkit:ColorPicker x:Name="ColorPicker1"
+                                        Grid.Column="2"
+                                        Width="70"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        SelectedColor="{Binding Value}" />
+            </Grid>
+
+            <Rectangle Grid.Row="0"
+                       Grid.RowSpan="2"
+                       Grid.Column="1"
+                       Style="{StaticResource SeparatorRectangleStyle}" />
+
+            <StackPanel Grid.Row="0"
+                        Grid.Column="2"
+                        Margin="5,3"
+                        Orientation="Horizontal">
+                <TextBlock Style="{StaticResource LabelStyle}" Text="Animation:" />
+                <RadioButton x:Name="NoAnimationToggleButton"
+                             Background="{StaticResource NoAnimationIconBrush}"
+                             IsChecked="True"
+                             Style="{StaticResource AnimationButtonStyle}" />
+                <RadioButton x:Name="LinearAnimationToggleButton"
+                             Background="{StaticResource HorizontalAnimationIconBrush}"
+                             Style="{StaticResource AnimationButtonStyle}"
+                             ToolTip="Linear" />
+                <FrameworkElement Width="27" />
+            </StackPanel>
+
+            <Grid Grid.Row="1"
+                  Grid.Column="0"
+                  MinWidth="450"
+                  Margin="5,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Foreground="{StaticResource HighlightBrush}"
+                           Style="{StaticResource LabelStyle}"
+                           Text="͏" />
+
+                <TextBlock x:Name="EndColorTextBlock"
+                           Grid.Column="1"
+                           Style="{StaticResource LabelStyle}"
+                           Text="Animate To Value:" />
+
+                <extToolkit:ColorPicker Name="EndColorPicker"
+                                        Grid.Column="2"
+                                        Width="70"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center" />
+
+            </Grid>
+
+            <StackPanel Grid.Row="1"
+                        Grid.Column="2"
+                        Orientation="Horizontal">
+                <TextBlock Style="{StaticResource LabelStyle}" Text="Duration:" />
+                <TextBox x:Name="DurationTextBox" Text="{Binding AnimationDuration}" />
+                <TextBlock Style="{StaticResource LabelStyle}" Text="s" />
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

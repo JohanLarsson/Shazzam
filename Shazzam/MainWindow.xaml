@@ -437,7 +437,7 @@
                           HorizontalAlignment="Stretch"
                           ResizeDirection="Rows" />
 
-            <view:CodeTabView x:Name="CodeTabView" Grid.Row="2" />
+            <view:CodeView x:Name="CodeTabView" Grid.Row="2" />
         </Grid>
     </Grid>
 </Window>
