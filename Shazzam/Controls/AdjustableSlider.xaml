@@ -6,52 +6,116 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              x:Name="Root"
              mc:Ignorable="d">
-    <WrapPanel x:Name="MainPanel"
-               Margin="0,3"
-               Background="{StaticResource VeryDarkBrush}">
-        <StackPanel MinWidth="290"
-                    Margin="5,0,0,0"
+    <Grid x:Name="MainPanel"
+          Margin="0,3"
+          Background="{StaticResource VeryDarkBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center">
+                <Run Text="{Binding RegisterName, Mode=OneTime}" />
+                <Run Text="{Binding RegisterType, Mode=OneTime, StringFormat='{} ({0})'}" />
+            </TextBlock>
+
+            <TextBlock Grid.Column="1"
+                       Margin="5,0,0,0"
+                       VerticalAlignment="Center"
+                       Foreground="{StaticResource NeutralWhiteBrush}"
+                       Text="Value:" />
+
+            <TextBox x:Name="ValueTextBox"
+                     Grid.Column="2"
+                     Width="40"
+                     Margin="5,0,0,0"
+                     VerticalAlignment="Center"
+                     Text="{Binding ElementName=Root, Path=Value, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
+        </Grid>
+
+        <Rectangle Grid.Row="0"
+                   Grid.RowSpan="2"
+                   Grid.Column="1"
+                   Width="1"
+                   Fill="{StaticResource NeutralDarkBrush}"
+                   SnapsToDevicePixels="True" />
+
+        <StackPanel Grid.Row="0"
+                    Grid.Column="2"
+                    Margin="5,3"
                     Orientation="Horizontal">
+            <TextBlock MinWidth="55"
+                       VerticalAlignment="Center"
+                       Foreground="{StaticResource NeutralWhiteBrush}"
+                       Text="Animation:" />
+            <ToggleButton x:Name="NoAnimationToggleButton"
+                          Width="22"
+                          Height="22"
+                          Margin="5,0,0,0"
+                          VerticalAlignment="Center"
+                          IsChecked="True"
+                          ToolTip="None">
+                <Rectangle Width="16"
+                           Height="16"
+                           Fill="{StaticResource NoAnimationIconBrush}" />
+            </ToggleButton>
+            <ToggleButton x:Name="LinearAnimationToggleButton"
+                          Width="22"
+                          Height="22"
+                          Margin="5,0,0,0"
+                          VerticalAlignment="Center"
+                          ToolTip="Linear">
+                <Rectangle Width="16"
+                           Height="16"
+                           Fill="{StaticResource HorizontalAnimationIconBrush}" />
+            </ToggleButton>
+        </StackPanel>
+
+        <Grid Grid.Row="1"
+              Grid.Column="0"
+              MinWidth="450"
+              Margin="5,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
             <TextBlock Width="12"
                        Margin="0"
                        VerticalAlignment="Center"
                        Foreground="{StaticResource HighlightBrush}"
                        Text="͏"
                        TextAlignment="Center" />
-            <TextBlock Margin="5,0,0,0"
+
+            <TextBlock Grid.Column="1"
+                       Margin="5,0,0,0"
                        VerticalAlignment="Center"
                        Foreground="{StaticResource NeutralWhiteBrush}"
                        Text="Min:" />
             <TextBox x:Name="MinTextBox"
+                     Grid.Column="2"
                      Width="40"
                      Margin="5,0,0,0"
                      VerticalAlignment="Center"
                      Text="{Binding ElementName=Root, Path=Minimum, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
 
-            <TextBlock Margin="5,0,0,0"
-                       VerticalAlignment="Center"
-                       Foreground="{StaticResource NeutralWhiteBrush}"
-                       Text="Max:" />
-            <TextBox x:Name="MaxTextBox"
-                     Width="40"
-                     Margin="5,0,0,0"
-                     VerticalAlignment="Center"
-                     Text="{Binding ElementName=Root, Path=Maximum, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
-
-            <TextBlock Margin="5,0,0,0"
-                       VerticalAlignment="Center"
-                       Foreground="{StaticResource NeutralWhiteBrush}"
-                       Text="Value:" />
-
-            <TextBox x:Name="ValueTextBox"
-                     Width="40"
-                     Margin="5,0,0,0"
-                     VerticalAlignment="Center"
-                     Text="{Binding ElementName=Root, Path=Value, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
-
             <Slider x:Name="Slider"
-                    Width="90"
-                    Margin="5,0,0,0"
+                    Grid.Column="3"
+                    Margin="5,0"
                     VerticalAlignment="Center"
                     AutoToolTipPlacement="TopLeft"
                     AutoToolTipPrecision="3"
@@ -61,56 +125,37 @@
                     ToolTip="{Binding ElementName=Root, Path=Value, Converter={x:Static converters:DoubleToStringConverter.F2}}"
                     Value="{Binding ElementName=Root, Path=Value}" />
 
+            <TextBlock Grid.Column="4"
+                       Margin="5,0,0,0"
+                       VerticalAlignment="Center"
+                       Foreground="{StaticResource NeutralWhiteBrush}"
+                       Text="Max:" />
+            <TextBox x:Name="MaxTextBox"
+                     Grid.Column="5"
+                     Width="40"
+                     Margin="5,0,0,0"
+                     VerticalAlignment="Center"
+                     Text="{Binding ElementName=Root, Path=Maximum, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
+
+        </Grid>
+
+        <StackPanel Grid.Row="1"
+                    Grid.Column="2"
+                    Margin="5,3"
+                    Orientation="Horizontal">
+            <TextBlock MinWidth="55"
+                       VerticalAlignment="Center"
+                       Foreground="{StaticResource NeutralWhiteBrush}"
+                       Text="Duration:" />
+            <TextBox x:Name="DurationTextBox"
+                     MinWidth="40"
+                     Margin="5,0,0,0"
+                     VerticalAlignment="Center"
+                     Text="0.5" />
+            <TextBlock Margin="5,0,0,0"
+                       VerticalAlignment="Center"
+                       Foreground="{StaticResource NeutralWhiteBrush}"
+                       Text="s" />
         </StackPanel>
-        
-        <Rectangle Width="1"
-                   Margin="0,3,-1,3"
-                   Fill="{StaticResource NeutralDarkBrush}"
-                   SnapsToDevicePixels="True" />
-        
-        <StackPanel VerticalAlignment="Center">
-            <StackPanel Margin="5,3,5,3" Orientation="Horizontal">
-                <TextBlock MinWidth="55"
-                           VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
-                           Text="Animation:" />
-                <ToggleButton x:Name="NoAnimationToggleButton"
-                              Width="22"
-                              Height="22"
-                              Margin="5,0,0,0"
-                              VerticalAlignment="Center"
-                              IsChecked="True"
-                              ToolTip="None">
-                    <Rectangle Width="16"
-                               Height="16"
-                               Fill="{StaticResource NoAnimationIconBrush}" />
-                </ToggleButton>
-                <ToggleButton x:Name="LinearAnimationToggleButton"
-                              Width="22"
-                              Height="22"
-                              Margin="5,0,0,0"
-                              VerticalAlignment="Center"
-                              ToolTip="Linear">
-                    <Rectangle Width="16"
-                               Height="16"
-                               Fill="{StaticResource HorizontalAnimationIconBrush}" />
-                </ToggleButton>
-            </StackPanel>
-            <StackPanel Margin="5,3,5,3" Orientation="Horizontal">
-                <TextBlock MinWidth="55"
-                           VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
-                           Text="Duration:" />
-                <TextBox x:Name="DurationTextBox"
-                         MinWidth="40"
-                         Margin="5,0,0,0"
-                         VerticalAlignment="Center"
-                         Text="0.5" />
-                <TextBlock Margin="5,0,0,0"
-                           VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
-                           Text="seconds" />
-            </StackPanel>
-        </StackPanel>
-    </WrapPanel>
+    </Grid>
 </UserControl>

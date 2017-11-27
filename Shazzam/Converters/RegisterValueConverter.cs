@@ -6,8 +6,10 @@
     using System.Windows.Data;
     using System.Windows.Media.Media3D;
 
-    public class RegisterValueConverter : IValueConverter
+    public sealed class RegisterValueConverter : IValueConverter
     {
+        public static readonly RegisterValueConverter Default = new RegisterValueConverter();
+
         public static object ConvertToUsualType(object value)
         {
             // Convert float to double, Vector to Point, Size to Point, and Vector3D to Point3D.

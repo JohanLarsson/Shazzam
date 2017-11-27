@@ -3,14 +3,13 @@
     using System;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using System.Windows.Controls;
 
     /// <summary>
     ///  Contains the details for each register described in a HLSL shader file
     /// </summary>
     public class ShaderModelConstantRegister : INotifyPropertyChanged
     {
-        private Control affiliatedControl;
+        private object value;
 
         public ShaderModelConstantRegister(
             string registerName,
@@ -28,6 +27,7 @@
             this.MinValue = minValue;
             this.MaxValue = maxValue;
             this.DefaultValue = defaultValue;
+            this.value = defaultValue;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -67,21 +67,17 @@
         /// </summary>
         public object DefaultValue { get; }
 
-        /// <summary>
-        /// The user interface control associated with this register variable.
-        /// </summary>
-        public Control AffiliatedControl
+        public object Value
         {
-            get => this.affiliatedControl;
-
+            get => this.value;
             set
             {
-                if (ReferenceEquals(value, this.affiliatedControl))
+                if (ReferenceEquals(value, this.value))
                 {
                     return;
                 }
 
-                this.affiliatedControl = value;
+                this.value = value;
                 this.OnPropertyChanged();
             }
         }

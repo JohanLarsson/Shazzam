@@ -9,17 +9,14 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Data;
-    using System.Windows.Documents;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Animation;
     using System.Windows.Media.Effects;
-    using System.Windows.Media.Media3D;
     using System.Xml;
     using ICSharpCode.TextEditor.Document;
     using Microsoft.CSharp;
     using Shazzam.CodeGen;
-    using Shazzam.Controls;
     using Shazzam.Converters;
 
     public partial class CodeTabView : UserControl, IDisposable
@@ -40,7 +37,6 @@
         private readonly DefaultHighlightingStrategy hlslHs;
         private readonly ShaderCompiler compiler;
 
-        private ShaderModel shaderModel;
         private ShaderEffect currentShaderEffect;
         private int dirtyCounter;
         private int storedDocHash;
@@ -108,7 +104,7 @@
                 {
                     var oldShaderEffect = this.currentShaderEffect;
                     this.currentShaderEffect = value;
-                    this.BindShaderEffectToControls();
+                    this.BindShaderEffect();
                     this.OnShaderEffectChanged(oldShaderEffect, this.currentShaderEffect);
                 }
             }
@@ -200,8 +196,8 @@
                 }
 
                 var ps = new PixelShader { UriSource = new Uri(path + Constants.FileNames.TempShaderPs) };
-                this.shaderModel = CodeGen.CodeParser.ParseShader(this.shaderTextEditor.FileName, this.MergedCode);
-                var code = ShaderClass.GetSourceText(new CSharpCodeProvider(), this.shaderModel, includePixelShaderConstructor: true);
+                CodeViewModel.Instance.ShaderModel = CodeGen.CodeParser.ParseShader(this.shaderTextEditor.FileName, this.MergedCode);
+                var code = ShaderClass.GetSourceText(new CSharpCodeProvider(), CodeViewModel.Instance.ShaderModel, includePixelShaderConstructor: true);
                 var autoAssembly = ShaderClass.CompileInMemory(code);
 
                 if (autoAssembly == null)
@@ -210,15 +206,15 @@
                     return;
                 }
 
-                var t = autoAssembly.GetType($"{this.shaderModel.GeneratedNamespace}.{this.shaderModel.GeneratedClassName}");
-                this.FillEditControls();
-                var outputFolder = $"{Properties.Settings.Default.FolderPath_Output}{this.shaderModel.GeneratedClassName}";
+                this.csTextEditor.Text = ShaderClass.GetSourceText(CodeDomProvider.CreateProvider("CSharp"), CodeViewModel.Instance.ShaderModel, includePixelShaderConstructor: false);
+                this.csTextEditor.Document.HighlightingStrategy = HighlightingManager.Manager.FindHighlighterForFile(".cs");
+                var outputFolder = $"{Properties.Settings.Default.FolderPath_Output}{CodeViewModel.Instance.ShaderModel.GeneratedClassName}";
                 if (!Directory.Exists(outputFolder))
                 {
                     Directory.CreateDirectory(outputFolder);
                 }
 
-                this.csTextEditor.SaveFile($"{outputFolder}\\{this.shaderModel.GeneratedClassName}.cs");
+                this.csTextEditor.SaveFile($"{outputFolder}\\{CodeViewModel.Instance.ShaderModel.GeneratedClassName}.cs");
                 File.Copy(this.shaderTextEditor.FileName, $"{outputFolder}\\{Path.GetFileName(this.shaderTextEditor.FileName)}", overwrite: true);
                 foreach (var match in Regex.Matches(this.CodeText, @"#include <(?<hlsli>\w+.hlsli)>").OfType<Match>())
                 {
@@ -228,7 +224,8 @@
                         overwrite: true);
                 }
 
-                this.CreateFileCopies(outputFolder + @"\", this.shaderModel.GeneratedClassName);
+                this.CreateFileCopies(outputFolder + @"\", CodeViewModel.Instance.ShaderModel.GeneratedClassName);
+                var t = autoAssembly.GetType($"{CodeViewModel.Instance.ShaderModel.GeneratedNamespace}.{CodeViewModel.Instance.ShaderModel.GeneratedClassName}");
                 this.CurrentShaderEffect = (ShaderEffect)Activator.CreateInstance(t, ps);
                 this.InputControlsTab.SetCurrentValue(IsEnabledProperty, true);
             }
@@ -363,14 +360,11 @@
                 this.storedDocHash = this.shaderTextEditor.Document.TextContent.GetHashCode();
             }
 
-            if (this.shaderTextEditor.Document.TextContent.GetHashCode() == this.storedDocHash)
-            {
-                ShazzamSwitchboard.CodeTabView.DirtyStatusText.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
-            }
-            else
-            {
-                ShazzamSwitchboard.CodeTabView.DirtyStatusText.SetCurrentValue(VisibilityProperty, Visibility.Visible);
-            }
+            ShazzamSwitchboard.CodeTabView.DirtyStatusText.SetCurrentValue(
+                VisibilityProperty,
+                this.shaderTextEditor.Document.TextContent.GetHashCode() == this.storedDocHash
+                    ? Visibility.Collapsed
+                    : Visibility.Visible);
         }
 
         private void CodeTabViewLoaded(object sender, RoutedEventArgs e)
@@ -415,147 +409,28 @@
             return currentEditor;
         }
 
-        private void GenerateBlankInputControls()
-        {
-            var textBlock = new TextBlock
-            {
-                Foreground = Brushes.White,
-                Margin = new Thickness(5),
-                Text = "The current effect has no input parameters."
-            };
-            this.InputControlPanel.Children.Add(textBlock);
-        }
-
-        private void GenerateShaderInputControl(ShaderModelConstantRegister register)
-        {
-            var toolTipText = string.IsNullOrEmpty(register.Description) ? null : register.Description;
-
-            var textBlock = new TextBlock
-            {
-                Foreground = Brushes.White,
-                Margin = new Thickness(5),
-                Inlines =
-                                        {
-                                            new Run { Foreground = (Brush)Application.Current.FindResource("HighlightBrush"), Text = register.RegisterName },
-                                            new Run { Text = $" : {register.RegisterType.Name}" },
-                                        },
-                ToolTip = toolTipText
-            };
-            this.InputControlPanel.Children.Add(textBlock);
-
-            Control control = null;
-            if (register.RegisterType == typeof(Brush))
-            {
-                control = new TexturePicker(register);
-            }
-            else if (register.RegisterType == typeof(double) || register.RegisterType == typeof(float))
-            {
-                var minValue = Convert.ToDouble(register.MinValue);
-                var maxValue = Convert.ToDouble(register.MaxValue);
-                //// double defaultValue = Double.Parse(register.DefaultValue.ToString(), NumberStyles.Any, null);
-                var defaultValue = Convert.ToDouble(register.DefaultValue);
-                control = new AdjustableSlider
-                {
-                    Minimum = Math.Min(minValue, defaultValue),
-                    Maximum = Math.Max(maxValue, defaultValue),
-                    Value = defaultValue
-                };
-            }
-            else if (register.RegisterType == typeof(Point) || register.RegisterType == typeof(Vector) || register.RegisterType == typeof(Size))
-            {
-                var minValue = (Point)RegisterValueConverter.ConvertToUsualType(register.MinValue);
-                var maxValue = (Point)RegisterValueConverter.ConvertToUsualType(register.MaxValue);
-                var defaultValue = (Point)RegisterValueConverter.ConvertToUsualType(register.DefaultValue);
-                control = new AdjustableSliderPair
-                {
-                    Minimum = new Point(Math.Min(minValue.X, defaultValue.X), Math.Min(minValue.Y, defaultValue.Y)),
-                    Maximum = new Point(Math.Max(maxValue.X, defaultValue.X), Math.Max(maxValue.Y, defaultValue.Y)),
-                    Value = defaultValue
-                };
-            }
-            else if (register.RegisterType == typeof(Point3D) || register.RegisterType == typeof(Vector3D))
-            {
-                var minValue = (Point3D)RegisterValueConverter.ConvertToUsualType(register.MinValue);
-                var maxValue = (Point3D)RegisterValueConverter.ConvertToUsualType(register.MaxValue);
-                var defaultValue = (Point3D)RegisterValueConverter.ConvertToUsualType(register.DefaultValue);
-                control = new AdjustableSliderTriplet
-                {
-                    Minimum = new Point3D(Math.Min(minValue.X, defaultValue.X), Math.Min(minValue.Y, defaultValue.Y), Math.Min(minValue.Z, defaultValue.Z)),
-                    Maximum = new Point3D(Math.Max(maxValue.X, defaultValue.X), Math.Max(maxValue.Y, defaultValue.Y), Math.Max(maxValue.Z, defaultValue.Z)),
-                    Value = defaultValue
-                };
-            }
-            else if (register.RegisterType == typeof(Color))
-            {
-                var defaultValue = (Color)register.DefaultValue;
-                control = new AdjustableColor
-                {
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    Value = defaultValue
-                };
-            }
-            else if (register.RegisterType == typeof(Point4D))
-            {
-                var minValue = (Point4D)register.MinValue;
-                var maxValue = (Point4D)register.MaxValue;
-                var defaultValue = (Point4D)register.DefaultValue;
-                control = new AdjustableSliderQuadruplet
-                {
-                    Minimum = new Point4D(Math.Min(minValue.X, defaultValue.X), Math.Min(minValue.Y, defaultValue.Y), Math.Min(minValue.Z, defaultValue.Z), Math.Min(minValue.W, defaultValue.W)),
-                    Maximum = new Point4D(Math.Max(maxValue.X, defaultValue.X), Math.Max(maxValue.Y, defaultValue.Y), Math.Max(maxValue.Z, defaultValue.Z), Math.Max(maxValue.W, defaultValue.W)),
-                    Value = defaultValue
-                };
-            }
-
-            if (control != null)
-            {
-                control.SetCurrentValue(MarginProperty, new Thickness(15, 2, 25, 5));
-                control.SetCurrentValue(ToolTipProperty, toolTipText);
-                this.InputControlPanel.Children.Add(control);
-                register.AffiliatedControl = control;
-            }
-        }
-
-        private void BindShaderEffectToControls()
+        private void BindShaderEffect()
         {
             var shaderEffect = this.CurrentShaderEffect;
             if (shaderEffect != null)
             {
-                foreach (var register in this.shaderModel.Registers)
+                foreach (var register in CodeViewModel.Instance.ShaderModel.Registers)
                 {
-                    if (register.AffiliatedControl != null)
+                    var fieldInfo = shaderEffect.GetType().GetField($"{register.RegisterName}Property", BindingFlags.Public | BindingFlags.Static);
+                    if (fieldInfo != null)
                     {
-                        var fieldInfo = shaderEffect.GetType().GetField($"{register.RegisterName}Property", BindingFlags.Public | BindingFlags.Static);
-                        if (fieldInfo != null)
+                        if (fieldInfo.GetValue(null) is DependencyProperty dependencyProperty)
                         {
-                            if (fieldInfo.GetValue(null) is DependencyProperty dependencyProperty)
-                            {
-                                var controlPropertyName = "Value";
-
-                                var binding = new Binding(controlPropertyName)
-                                {
-                                    Source = register.AffiliatedControl,
-                                    Converter = new RegisterValueConverter()
-                                };
-                                BindingOperations.SetBinding(shaderEffect, dependencyProperty, binding);
-                            }
+                            var binding = new Binding("Value")
+                                          {
+                                              Source = register,
+                                              Converter = RegisterValueConverter.Default,
+                                          };
+                            BindingOperations.SetBinding(shaderEffect, dependencyProperty, binding);
                         }
                     }
                 }
             }
-        }
-
-        private void FillEditControls()
-        {
-            this.InputControlPanel.Children.Clear();
-            if (this.shaderModel.Registers.Count == 0)
-            {
-                this.GenerateBlankInputControls();
-            }
-
-            this.shaderModel.Registers.ForEach(this.GenerateShaderInputControl);
-            this.csTextEditor.Text = ShaderClass.GetSourceText(CodeDomProvider.CreateProvider("CSharp"), this.shaderModel, includePixelShaderConstructor: false);
-            this.csTextEditor.Document.HighlightingStrategy = HighlightingManager.Manager.FindHighlighterForFile(".cs");
         }
     }
 }

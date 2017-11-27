@@ -169,7 +169,7 @@
 
         private void YMaxTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(this.YMaxTextBox.Text, NumberStyles.Any, null, out double number))
+            if (double.TryParse(this.YMaxTextBox.Text, NumberStyles.Any, null, out var number))
             {
                 this.SetCurrentValue(MaximumProperty, new Point(this.Maximum.X, number));
             }
@@ -177,7 +177,7 @@
 
         private void YMinTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(this.YMinTextBox.Text, NumberStyles.Any, null, out double number))
+            if (double.TryParse(this.YMinTextBox.Text, NumberStyles.Any, null, out var number))
             {
                 this.SetCurrentValue(MinimumProperty, new Point(this.Minimum.X, number));
             }
@@ -185,7 +185,7 @@
 
         private void XMaxTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(this.XMaxTextBox.Text, NumberStyles.Any, null, out double number))
+            if (double.TryParse(this.XMaxTextBox.Text, NumberStyles.Any, null, out var number))
             {
                 this.SetCurrentValue(MaximumProperty, new Point(number, this.Maximum.Y));
             }
@@ -193,7 +193,7 @@
 
         private void XMinTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(this.XMinTextBox.Text, NumberStyles.Any, null, out double number))
+            if (double.TryParse(this.XMinTextBox.Text, NumberStyles.Any, null, out var number))
             {
                 this.SetCurrentValue(MinimumProperty, new Point(number, this.Minimum.Y));
             }
@@ -230,7 +230,7 @@
 
         private void DurationTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (double.TryParse(this.DurationTextBox.Text, out double number))
+            if (double.TryParse(this.DurationTextBox.Text, out var number))
             {
                 var duration = TimeSpan.FromSeconds(Math.Max(0, number));
                 this.xSliderValueAnimation.SetCurrentValue(Timeline.DurationProperty, (System.Windows.Duration)duration);

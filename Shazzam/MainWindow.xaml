@@ -11,10 +11,10 @@
         Background="Black"
         Icon="Images/star.png"
         WindowState="Maximized"
+        DataContext="{x:Static shazzam:MainWindowViewModel.Instance}"
         mc:Ignorable="d">
     <Window.Resources>
         <converters:StretchToIsCheckedConverter x:Key="CheckedConverter" />
-        <shazzam:MainWindowViewModel x:Key="MainVm" />
         <DrawingBrush x:Key="AlphaGrid"
                       Stretch="UniformToFill"
                       TileMode="Tile"
@@ -65,8 +65,7 @@
     </Window.CommandBindings>
 
     <Grid x:Name="MainGrid"
-          Background="#101010"
-          DataContext="{StaticResource MainVm}">
+          Background="#101010">
         <Grid.Resources />
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="PluginsColumn" Width="Auto" />

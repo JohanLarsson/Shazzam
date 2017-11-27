@@ -20,7 +20,7 @@
             nameof(Value),
             typeof(double),
             typeof(AdjustableSlider),
-            new FrameworkPropertyMetadata(0.0, OnValueChanged));
+            new FrameworkPropertyMetadata(0.0, OnValueChanged) { BindsTwoWayByDefault = true });
 
         /// <summary>
         /// Minimum Dependency Property
@@ -60,10 +60,6 @@
             Storyboard.SetTargetProperty(this.sliderValueAnimation, new PropertyPath(RangeBase.ValueProperty));
             this.storyboard.Children.Add(this.sliderValueAnimation);
             this.MainPanel.PreviewKeyDown += this.MainStackPanel_PreviewKeyDown;
-            //// this.minTextBox.TextChanged += this.MinTextBox_TextChanged;
-            this.MinTextBox.LostFocus += this.MinTextBoxLostFocus;
-            this.MaxTextBox.LostFocus += this.MaxTextBoxLostFocus;
-            //// this.maxTextBox.TextChanged += this.MaxTextBox_TextChanged;
             this.Slider.ValueChanged += this.SliderValueChanged;
 
             this.NoAnimationToggleButton.Click += this.AnimationToggleButtonClick;
@@ -151,22 +147,6 @@
             {
                 e.Handled = true;
                 uie.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
-            }
-        }
-
-        private void MinTextBoxLostFocus(object sender, RoutedEventArgs e)
-        {
-            if (double.TryParse(this.MinTextBox.Text, NumberStyles.Any, null, out double number))
-            {
-                this.SetCurrentValue(MinimumProperty, number);
-            }
-        }
-
-        private void MaxTextBoxLostFocus(object sender, RoutedEventArgs e)
-        {
-            if (double.TryParse(this.MaxTextBox.Text, NumberStyles.Any, null, out double number))
-            {
-                this.SetCurrentValue(MaximumProperty, number);
             }
         }
 

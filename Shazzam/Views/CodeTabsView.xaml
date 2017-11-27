@@ -1,15 +1,17 @@
 ﻿<UserControl x:Class="Shazzam.Views.CodeTabView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:Shazzam.Controls"
              xmlns:converters="clr-namespace:Shazzam.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:shazzam="clr-namespace:Shazzam"
              xmlns:views="clr-namespace:Shazzam.Views"
+             DataContext="{x:Static views:CodeViewModel.Instance}"
              mc:Ignorable="d">
     <UserControl.Resources>
         <converters:StringToVisibilityConverter x:Key="VisConverter" />
         <converters:VisibiltyToVisibilityConverter x:Key="VisvisConverter" />
-        <views:CodeTabViewModel x:Key="CodeVm" />
         <LinearGradientBrush x:Key="TabBrush" StartPoint="0,0" EndPoint="1,0">
             <GradientStop Offset="0" Color="{StaticResource Dark}" />
             <GradientStop Offset="1" Color="{StaticResource Light}" />
@@ -45,9 +47,7 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <TabControl x:Name="CodeTabControl"
-                DataContext="{StaticResource CodeVm}"
-                SnapsToDevicePixels="True">
+    <TabControl x:Name="CodeTabControl" SnapsToDevicePixels="True">
         <TabItem x:Name="CodeTab">
             <TabItem.Header>
                 <TextBlock x:Name="CodeTabHeaderText"
@@ -55,11 +55,18 @@
                            Text="HLSL"
                            ToolTip="Use Ctrl-F9 to move focus to this tab." />
             </TabItem.Header>
-            
+
             <Border BorderBrush="{DynamicResource NeutralDarkBrush}" BorderThickness="9">
                 <Border BorderBrush="White" BorderThickness="1">
-                    <DockPanel MinWidth="330" LastChildFill="True">
-                        <StackPanel Background="White"
+                    <Grid MinWidth="330">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <WindowsFormsHost x:Name="FormsHost" Margin="2,2,2,2" />
+
+                        <StackPanel Grid.Row="1"
+                                    Background="White"
                                     DockPanel.Dock="Bottom"
                                     Orientation="Horizontal">
 
@@ -110,7 +117,7 @@
                                                       Color="Black" />
                                 </TextBlock.Effect>
                             </TextBlock>
-                            
+
                             <TextBlock x:Name="VersionNotSupported"
                                        Margin="5,3,5,8"
                                        Padding="8,4"
@@ -125,24 +132,69 @@
                                 </TextBlock.Effect>
                             </TextBlock>
                         </StackPanel>
-                        <DockPanel LastChildFill="True">
-                            <WindowsFormsHost x:Name="FormsHost" Margin="2,2,2,2" />
-                        </DockPanel>
-                    </DockPanel>
+                    </Grid>
                 </Border>
             </Border>
         </TabItem>
-        
+
         <TabItem x:Name="InputControlsTab" Visibility="{Binding Visibility, Converter={StaticResource VisvisConverter}, ElementName=OutputTextBox}">
             <TabItem.Header>
-                <TextBlock Text="Tryout (adjust settings)" Background="Transparent" ToolTip="Use Ctrl-F10 to move focus to this tab."/>
+                <TextBlock Background="Transparent"
+                           Text="Tryout (adjust settings)"
+                           ToolTip="Use Ctrl-F10 to move focus to this tab." />
             </TabItem.Header>
             <Border BorderBrush="{DynamicResource NeutralDarkBrush}" BorderThickness="9">
                 <Border BorderBrush="White" BorderThickness="1">
-                    <DockPanel MinWidth="330"
-                               Background="{StaticResource NeutralDarkBrush}"
-                               LastChildFill="True">
-                        <Expander BorderThickness="0"
+                    <Grid MinWidth="330" Background="{StaticResource NeutralDarkBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                                   Margin="5"
+                                   Foreground="White"
+                                   Text="The current effect has no input parameters."
+                                   Visibility="{Binding ShaderModel.Registers, Converter={x:Static converters:AnyToVisibilityConverter.VisibleWhenEmpty}}" />
+                        <ItemsControl Grid.Column="0" ItemsSource="{Binding ShaderModel.Registers}">
+                            <ItemsControl.ItemTemplateSelector>
+                                <views:ShaderModelConstantRegisterTemplateSelector>
+                                    <views:ShaderModelConstantRegisterTemplateSelector.BrushTemplate>
+                                        <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
+                                            <controls:AdjustableColor Value="{Binding Value, Mode=TwoWay}"/>
+                                        </DataTemplate>
+                                    </views:ShaderModelConstantRegisterTemplateSelector.BrushTemplate>
+
+                                    <views:ShaderModelConstantRegisterTemplateSelector.SingleTemplate>
+                                        <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
+                                            <controls:AdjustableSlider Maximum="{Binding MaxValue, Mode=OneTime}"
+                                                                       Minimum="{Binding MinValue, Mode=OneTime}"
+                                                                       Value="{Binding Value, Mode=TwoWay}" />
+                                        </DataTemplate>
+                                    </views:ShaderModelConstantRegisterTemplateSelector.SingleTemplate>
+
+                                    <views:ShaderModelConstantRegisterTemplateSelector.PairTemplate>
+                                        <DataTemplate>
+                                            <controls:AdjustableSliderPair />
+                                        </DataTemplate>
+                                    </views:ShaderModelConstantRegisterTemplateSelector.PairTemplate>
+
+                                    <views:ShaderModelConstantRegisterTemplateSelector.TripleTemplate>
+                                        <DataTemplate>
+                                            <controls:AdjustableSliderTriplet />
+                                        </DataTemplate>
+                                    </views:ShaderModelConstantRegisterTemplateSelector.TripleTemplate>
+
+                                    <views:ShaderModelConstantRegisterTemplateSelector.QuadrupleTemplate>
+                                        <DataTemplate>
+                                            <controls:AdjustableSliderQuadruplet />
+                                        </DataTemplate>
+                                    </views:ShaderModelConstantRegisterTemplateSelector.QuadrupleTemplate>
+                                </views:ShaderModelConstantRegisterTemplateSelector>
+                            </ItemsControl.ItemTemplateSelector>
+                        </ItemsControl>
+
+                        <Expander Grid.Column="1"
+                                  BorderThickness="0"
                                   DockPanel.Dock="Right"
                                   ExpandDirection="Left"
                                   IsExpanded="True">
@@ -290,18 +342,11 @@
                                 </FlowDocument>
                             </FlowDocumentScrollViewer>
                         </Expander>
-                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
-                            <StackPanel x:Name="InputControlPanel"
-                                        Margin="2,2,2,2"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top"
-                                        Background="{StaticResource NeutralDarkBrush}" />
-                        </ScrollViewer>
-                    </DockPanel>
+                    </Grid>
                 </Border>
             </Border>
         </TabItem>
-        
+
         <TabItem x:Name="CsharpTab"
                  Header="Generated Shader - C#"
                  Visibility="{Binding Visibility, Converter={StaticResource VisvisConverter}, ElementName=OutputTextBox}">
@@ -315,3 +360,4 @@
         </TabItem>
     </TabControl>
 </UserControl>
+

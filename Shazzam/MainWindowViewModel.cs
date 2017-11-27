@@ -10,13 +10,15 @@
 
     using Shazzam.Commands;
 
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public sealed class MainWindowViewModel : INotifyPropertyChanged
     {
+        public static readonly MainWindowViewModel Instance = new MainWindowViewModel();
+
         private System.Windows.Media.Stretch imageStretch = System.Windows.Media.Stretch.Uniform;
         private GridLength codeGridHeight = new GridLength(5, GridUnitType.Star);
         private GridLength imageRowHeight = new GridLength(5, GridUnitType.Star);
 
-        public MainWindowViewModel()
+        private MainWindowViewModel()
         {
             this.FullScreenImageCommand = new RelayCommand(this.FullScreenImageCommandExecute);
             this.FullScreenCodeCommand = new RelayCommand(this.FullScreenCodeExecute);
@@ -84,7 +86,7 @@
             }
         }
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

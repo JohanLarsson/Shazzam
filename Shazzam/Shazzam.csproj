@@ -108,6 +108,7 @@
     </ApplicationDefinition>
     <Compile Include="CodeGen\ShaderCompiler.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Views\ShaderModelConstantRegisterTemplateSelector.cs" />
     <Page Include="Controls\AdjustableColor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -254,6 +255,7 @@
       <DependentUpon>TexturePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\VerticalRevealMode.cs" />
+    <Compile Include="Converters\AnyToVisibilityConverter.cs" />
     <Compile Include="Converters\EqualityConverter.cs" />
     <Compile Include="Converters\StretchToIsCheckedConverter.cs" />
     <Compile Include="Converters\RegisterValueConverter.cs" />
@@ -703,7 +705,7 @@
     <Compile Include="Plugins\FileLoaderViewer.xaml.cs">
       <DependentUpon>FileLoaderViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CodeTabViewModel.cs">
+    <Compile Include="Views\CodeViewModel.cs">
       <DependentUpon>CodeTabsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PluginView.xaml.cs">

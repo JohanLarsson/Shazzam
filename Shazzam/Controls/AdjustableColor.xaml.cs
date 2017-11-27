@@ -18,7 +18,7 @@
             nameof(Value),
             typeof(Color),
             typeof(AdjustableColor),
-            new FrameworkPropertyMetadata(Colors.LightYellow, OnValueChanged));
+            new FrameworkPropertyMetadata(Colors.LightYellow, OnValueChanged) { BindsTwoWayByDefault = true });
 
         private const double DefaultDuration = 0.5;
 
