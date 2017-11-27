@@ -2,18 +2,24 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Windows;
     using System.Windows.Input;
     using Shazzam.Commands;
 
     public abstract class ShaderModelConstantRegister<T> : ShaderModelConstantRegister
         where T : struct
     {
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
+            nameof(Value),
+            typeof(T),
+            typeof(ShaderModelConstantRegister<T>),
+            new PropertyMetadata(default(T)));
+
         private readonly T defaultMin;
         private readonly T defaultMax;
 
         private T min;
         private T max;
-        private T value;
 
         protected ShaderModelConstantRegister(string registerName, Type registerType, int registerNumber, string description, T min, T max, T defaultValue)
             : base(registerName, registerType, registerNumber, description, defaultValue)
@@ -23,7 +29,7 @@
             this.min = min;
             this.max = max;
             this.DefaultValue = defaultValue;
-            this.value = defaultValue;
+            this.Value = defaultValue;
             this.ResetCommand = new RelayCommand(this.Reset);
         }
 
@@ -72,24 +78,15 @@
 
         public T Value
         {
-            get => this.value;
-            set
-            {
-                if (EqualityComparer<T>.Default.Equals(value, this.value))
-                {
-                    return;
-                }
-
-                this.value = value;
-                this.OnPropertyChanged();
-            }
+            get => (T) this.GetValue(ValueProperty);
+            set => this.SetValue(ValueProperty, value);
         }
 
         protected virtual void Reset()
         {
             this.Min = this.defaultMin;
             this.Max = this.defaultMax;
-            this.Value = this.DefaultValue;
+            this.SetCurrentValue(ValueProperty, this.DefaultValue);
         }
     }
 }

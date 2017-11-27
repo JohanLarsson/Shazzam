@@ -74,7 +74,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock Foreground="{StaticResource HighlightBrush}"
                        Style="{StaticResource LabelStyle}"
-                       Text="͏{Binding Name}" />
+                       Text="{Binding Name}" />
 
             <TextBlock Grid.Column="1"
                        Style="{StaticResource LabelStyle}"
@@ -150,16 +150,9 @@
             <StackPanel Grid.Row="0"
                         Grid.Column="2"
                         Orientation="Horizontal">
-                <TextBlock Style="{StaticResource LabelStyle}" Text="Animation:" />
-                <RadioButton x:Name="NoAnimationToggleButton"
-                             Background="{StaticResource NoAnimationIconBrush}"
-                             IsChecked="True"
-                             Style="{StaticResource AnimationButtonStyle}" />
-                <RadioButton x:Name="LinearAnimationToggleButton"
-                             Background="{StaticResource HorizontalAnimationIconBrush}"
-                             Style="{StaticResource AnimationButtonStyle}"
-                             ToolTip="Linear" />
-                <FrameworkElement Width="27" />
+                <TextBlock Style="{StaticResource LabelStyle}" Text="Duration:" />
+                <TextBox x:Name="DurationTextBox" Text="{Binding AnimationDuration, Converter={x:Static converters:TimeSpanToSecondsConverter.Default}}" />
+                <TextBlock Style="{StaticResource LabelStyle}" Text="s" />
             </StackPanel>
 
             <ContentPresenter Grid.Row="1"
@@ -170,9 +163,40 @@
             <StackPanel Grid.Row="1"
                         Grid.Column="2"
                         Orientation="Horizontal">
-                <TextBlock Style="{StaticResource LabelStyle}" Text="Duration:" />
-                <TextBox x:Name="DurationTextBox" Text="{Binding AnimationDuration}" />
-                <TextBlock Style="{StaticResource LabelStyle}" Text="s" />
+                <TextBlock Style="{StaticResource LabelStyle}" Text="Animation:" />
+                <RadioButton x:Name="NoAnimationToggleButton"
+                             Background="{StaticResource NoAnimationIconBrush}"
+                             IsChecked="True"
+                             Style="{StaticResource AnimationButtonStyle}" />
+
+                <RadioButton x:Name="LinearAnimationToggleButton"
+                             Background="{StaticResource HorizontalAnimationIconBrush}"
+                             Style="{StaticResource AnimationButtonStyle}"
+                             ToolTip="Linear animation">
+                    <RadioButton.Triggers>
+                        <EventTrigger RoutedEvent="CheckBox.Checked">
+                            <BeginStoryboard Name="ValueAnimation" HandoffBehavior="SnapshotAndReplace">
+                                <Storyboard>
+                                    <DoubleAnimation AutoReverse="True"
+                                                     FillBehavior="Stop"
+                                                     Storyboard.TargetProperty="DataContext.Value"
+                                                     From="{Binding Min}"
+                                                     To="{Binding Max}"
+                                                     Duration="{Binding AnimationDuration, Converter={x:Static converters:TimeSpanToDurationConverter.Default}}" />
+                                    <!--<BooleanAnimationUsingKeyFrames Storyboard.TargetName="NoAnimationToggleButton"
+                                                                    BeginTime="{Binding AnimationDuration}"
+                                                                    Storyboard.TargetProperty="IsChecked">
+                                        <DiscreteBooleanKeyFrame KeyTime="{Binding AnimationDuration}" Value="True" />
+                                    </BooleanAnimationUsingKeyFrames>-->
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="CheckBox.Unchecked">
+                            <StopStoryboard BeginStoryboardName="ValueAnimation" />
+                        </EventTrigger>
+                    </RadioButton.Triggers>
+                </RadioButton>
+                <FrameworkElement Width="27" />
             </StackPanel>
         </Grid>
     </DataTemplate>
@@ -271,7 +295,7 @@
                         Grid.Column="2"
                         Orientation="Horizontal">
                 <TextBlock Style="{StaticResource LabelStyle}" Text="Duration:" />
-                <TextBox x:Name="DurationTextBox" Text="{Binding AnimationDuration}" />
+                <TextBox x:Name="DurationTextBox" Text="{Binding AnimationDuration, Converter={x:Static converters:TimeSpanToSecondsConverter.Default}}" />
                 <TextBlock Style="{StaticResource LabelStyle}" Text="s" />
             </StackPanel>
         </Grid>
@@ -350,7 +374,7 @@
                         Grid.Column="2"
                         Orientation="Horizontal">
                 <TextBlock Style="{StaticResource LabelStyle}" Text="Duration:" />
-                <TextBox x:Name="DurationTextBox" Text="{Binding AnimationDuration}" />
+                <TextBox x:Name="DurationTextBox" Text="{Binding AnimationDuration, Converter={x:Static converters:TimeSpanToSecondsConverter.Default}}" />
                 <TextBlock Style="{StaticResource LabelStyle}" Text="s" />
             </StackPanel>
 

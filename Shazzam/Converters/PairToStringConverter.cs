@@ -48,7 +48,7 @@
             {
                 if (targetType == typeof(Point))
                 {
-                    return new Point(x,y);
+                    return new Point(x, y);
                 }
 
                 if (targetType == typeof(Vector))

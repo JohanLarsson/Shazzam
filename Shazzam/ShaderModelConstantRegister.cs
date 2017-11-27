@@ -9,9 +9,9 @@
     /// <summary>
     ///  Contains the details for each register described in a HLSL shader file
     /// </summary>
-    public abstract class ShaderModelConstantRegister : INotifyPropertyChanged
+    public abstract class ShaderModelConstantRegister : DependencyObject, INotifyPropertyChanged
     {
-        private double animationDuration = 2.0;
+        private TimeSpan animationDuration = TimeSpan.FromSeconds(2);
 
         protected ShaderModelConstantRegister(
             string registerName,
@@ -54,7 +54,7 @@
         /// </summary>
         public object DefaultValue { get; }
 
-        public double AnimationDuration
+        public TimeSpan AnimationDuration
         {
             get => this.animationDuration;
             set

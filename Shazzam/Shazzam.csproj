@@ -109,6 +109,8 @@
     <Compile Include="CodeGen\ShaderCompiler.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Converters\DoubleToStringConverter.cs" />
+    <Compile Include="Converters\TimeSpanToDurationConverter.cs" />
+    <Compile Include="Converters\TimeSpanToSecondsConverter.cs" />
     <Compile Include="IRegisterProperty.cs" />
     <Compile Include="RegisterProperty.cs" />
     <Compile Include="ShaderModelColorRegister.cs" />
