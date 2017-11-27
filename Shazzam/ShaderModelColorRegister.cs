@@ -1,7 +1,9 @@
 ﻿namespace Shazzam
 {
     using System;
+    using System.Windows.Input;
     using System.Windows.Media;
+    using Shazzam.Commands;
 
     public class ShaderModelColorRegister : ShaderModelConstantRegister
     {
@@ -12,12 +14,15 @@
         {
             this.DefaultValue = defaultValue;
             this.value = defaultValue;
+            this.ResetCommand = new RelayCommand(() => this.Value = this.DefaultValue);
         }
 
         /// <summary>
         /// The default value of this register variable.
         /// </summary>
         public new Color DefaultValue { get; }
+
+        public ICommand ResetCommand { get; }
 
         public Color Value
         {

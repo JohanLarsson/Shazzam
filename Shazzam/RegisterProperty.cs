@@ -3,8 +3,7 @@
     using System;
     using System.ComponentModel;
 
-    public class RegisterProperty<T> : INotifyPropertyChanged
-        where T : struct
+    public class RegisterProperty<T> : INotifyPropertyChanged, IRegisterProperty where T : struct
     {
         private readonly ShaderModelPairRegister<T> pair;
         private readonly Func<T, double> getValue;
@@ -65,6 +64,13 @@
                 this.pair.Value = this.create(this.pair.Value, value);
                 this.OnPropertyChanged();
             }
+        }
+
+        public void Reset()
+        {
+            this.OnPropertyChanged(nameof(this.Min));
+            this.OnPropertyChanged(nameof(this.Max));
+            this.OnPropertyChanged(nameof(this.Value));
         }
 
         protected virtual void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)

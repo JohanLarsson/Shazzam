@@ -8,6 +8,9 @@
     public abstract class ShaderModelConstantRegister<T> : ShaderModelConstantRegister
         where T : struct
     {
+        private readonly T defaultMin;
+        private readonly T defaultMax;
+
         private T min;
         private T max;
         private T value;
@@ -15,16 +18,13 @@
         protected ShaderModelConstantRegister(string registerName, Type registerType, int registerNumber, string description, T min, T max, T defaultValue)
             : base(registerName, registerType, registerNumber, description, defaultValue)
         {
+            this.defaultMin = min;
+            this.defaultMax = max;
             this.min = min;
             this.max = max;
             this.DefaultValue = defaultValue;
             this.value = defaultValue;
-            this.ResetCommand = new RelayCommand(() =>
-            {
-                this.Min = min;
-                this.Max = max;
-                this.Value = this.DefaultValue;
-            });
+            this.ResetCommand = new RelayCommand(this.Reset);
         }
 
         /// <summary>
@@ -83,6 +83,13 @@
                 this.value = value;
                 this.OnPropertyChanged();
             }
+        }
+
+        protected virtual void Reset()
+        {
+            this.Min = this.defaultMin;
+            this.Max = this.defaultMax;
+            this.Value = this.DefaultValue;
         }
     }
 }

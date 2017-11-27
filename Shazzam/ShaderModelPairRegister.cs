@@ -15,5 +15,12 @@
         public RegisterProperty<T> Property1 { get; }
 
         public RegisterProperty<T> Property2 { get; }
+
+        protected override void Reset()
+        {
+            base.Reset();
+            this.Property1.Reset();
+            this.Property2.Reset();
+        }
     }
 }
