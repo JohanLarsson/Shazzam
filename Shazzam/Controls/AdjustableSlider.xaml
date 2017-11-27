@@ -25,7 +25,9 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" VerticalAlignment="Center">
+            <TextBlock Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Foreground="{StaticResource HighlightBrush}">
                 <Run Text="{Binding RegisterName, Mode=OneTime}" />
                 <Run Text="{Binding RegisterType, Mode=OneTime, StringFormat='{} ({0})'}" />
             </TextBlock>
@@ -48,6 +50,7 @@
                    Grid.RowSpan="2"
                    Grid.Column="1"
                    Width="1"
+                   Margin="10,2"
                    Fill="{StaticResource NeutralDarkBrush}"
                    SnapsToDevicePixels="True" />
 
