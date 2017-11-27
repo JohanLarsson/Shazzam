@@ -1,5 +1,4 @@
 ﻿#include <shared.hlsli>
-/// <class>FadeEffect</class>
 /// <description>Fade to a colour by animating the strength.</description>
 sampler2D inputSampler : register(S0);
 

@@ -13,7 +13,7 @@ float InnerRadius : register(C0);
 /// <defaultValue>0</defaultValue>
 float InnerSaturation : register(C1);
 
-/// <summary>The value.</summary>
+/// <summary>The value in Hue, Saturation, Value.</summary>
 /// <minValue>0</minValue>
 /// <maxValue>1</maxValue>
 /// <defaultValue>0.5</defaultValue>
@@ -22,13 +22,13 @@ float Lightness : register(C2);
 /// <summary>The starting angle of the gradient, clockwise from X-axis</summary>
 /// <minValue>-360</minValue>
 /// <maxValue>360</maxValue>
-/// <defaultValue>0</defaultValue>
+/// <defaultValue>90</defaultValue>
 float StartAngle : register(C3);
 
 /// <summary>The central angle of the gradient, positive value for clockwise.</summary>
 /// <minValue>-360</minValue>
 /// <maxValue>360</maxValue>
-/// <defaultValue>360</defaultValue>
+/// <defaultValue>-360</defaultValue>
 float CentralAngle : register(C4);
 
 float3 HUEtoRGB(in float H)
