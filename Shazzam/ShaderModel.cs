@@ -1,6 +1,7 @@
 ﻿namespace Shazzam
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
 
     public class ShaderModel
     {
@@ -17,7 +18,7 @@
             this.GeneratedNamespace = generatedNamespace;
             this.Description = description;
             this.TargetFramework = targetFramework;
-            this.Registers = registers;
+            this.Registers = new ReadOnlyObservableCollection<ShaderModelConstantRegister>(new ObservableCollection<ShaderModelConstantRegister>(registers));
         }
 
         public string ShaderFileName { get; }
@@ -30,6 +31,6 @@
 
         public TargetFramework TargetFramework { get; }
 
-        public List<ShaderModelConstantRegister> Registers { get; }
+        public ReadOnlyObservableCollection<ShaderModelConstantRegister> Registers { get; }
     }
 }

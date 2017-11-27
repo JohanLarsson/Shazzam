@@ -172,33 +172,25 @@
                                       Header="_None"
                                       InputGestureText="Ctrl+F5"
                                       IsCheckable="True"
-                                      IsChecked="{Binding ImageStretch,
-                                                          ConverterParameter=none,
-                                                          Converter={StaticResource CheckedConverter}}" />
+                                      IsChecked="{Binding ImageStretch, ConverterParameter=none, Converter={StaticResource CheckedConverter}}" />
                             <MenuItem Command="{Binding ImageStretchCommand}"
                                       CommandParameter="fill"
                                       Header="_Fill"
                                       InputGestureText="Ctrl+F6"
                                       IsCheckable="True"
-                                      IsChecked="{Binding ImageStretch,
-                                                          ConverterParameter=fill,
-                                                          Converter={StaticResource CheckedConverter}}" />
+                                      IsChecked="{Binding ImageStretch, ConverterParameter=fill, Converter={StaticResource CheckedConverter}}" />
                             <MenuItem Command="{Binding ImageStretchCommand}"
                                       CommandParameter="uniform"
                                       Header="_Uniform"
                                       InputGestureText="Ctrl+F7"
                                       IsCheckable="True"
-                                      IsChecked="{Binding ImageStretch,
-                                                          ConverterParameter=uniform,
-                                                          Converter={StaticResource CheckedConverter}}" />
+                                      IsChecked="{Binding ImageStretch, ConverterParameter=uniform, Converter={StaticResource CheckedConverter}}" />
                             <MenuItem Command="{Binding ImageStretchCommand}"
                                       CommandParameter="uniformtofill"
                                       Header="Uniform_ToFill"
                                       InputGestureText="Ctrl+F8"
                                       IsCheckable="True"
-                                      IsChecked="{Binding ImageStretch,
-                                                          ConverterParameter=uniformtofill,
-                                                          Converter={StaticResource CheckedConverter}}" />
+                                      IsChecked="{Binding ImageStretch, ConverterParameter=uniformtofill, Converter={StaticResource CheckedConverter}}" />
 
                         </MenuItem>
                     </MenuItem>
@@ -241,12 +233,10 @@
 
                 </Menu>
             </Grid>
-            <!--<view:MenuView x:Name='menuView'></view:MenuView>-->
             <view:PluginView x:Name="Plugin1" Margin="10" />
-
-            <!-- <view:DynamicInputView Margin='10' x:Name='dynamicView' />-->
             <StackPanel x:Name="TestStack" />
         </StackPanel>
+        
         <Grid Grid.Column="1" Margin="3,6,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="ImageRow" Height="{Binding ImageRowHeight}" />
@@ -254,15 +244,6 @@
                 <RowDefinition x:Name="CodeRow" Height="{Binding CodeRowHeight}" />
             </Grid.RowDefinitions>
 
-            <GridSplitter Grid.Row="1"
-                          Grid.ColumnSpan="1"
-                          Width="Auto"
-                          HorizontalAlignment="Stretch"
-                          ResizeDirection="Rows" />
-
-            <view:CodeTabView x:Name="CodeTabView"
-                              Grid.Row="2"
-                              DockPanel.Dock="Bottom" />
             <TabControl x:Name="ImageTabControl"
                         Grid.Row="0"
                         Background="{DynamicResource NeutralDarkBrush}"
@@ -451,8 +432,13 @@
                 </TabItem>
             </TabControl>
 
-            <!--</Grid>-->
+            <GridSplitter Grid.Row="1"
+                          Grid.ColumnSpan="1"
+                          Width="Auto"
+                          HorizontalAlignment="Stretch"
+                          ResizeDirection="Rows" />
 
+            <view:CodeTabView x:Name="CodeTabView" Grid.Row="2" />
         </Grid>
     </Grid>
 </Window>

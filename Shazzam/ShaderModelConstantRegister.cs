@@ -72,10 +72,7 @@
         /// </summary>
         public Control AffiliatedControl
         {
-            get
-            {
-                return this.affiliatedControl;
-            }
+            get => this.affiliatedControl;
 
             set
             {

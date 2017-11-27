@@ -44,22 +44,21 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </UserControl.Resources>
     <TabControl x:Name="CodeTabControl"
                 DataContext="{StaticResource CodeVm}"
                 SnapsToDevicePixels="True">
         <TabItem x:Name="CodeTab">
             <TabItem.Header>
-                <Grid ToolTip="Use Ctrl-F9 to move focus to this tab.">
-                    <TextBlock x:Name="CodeTabHeaderText" Text="HLSL" />
-                </Grid>
-
+                <TextBlock x:Name="CodeTabHeaderText"
+                           Background="Transparent"
+                           Text="HLSL"
+                           ToolTip="Use Ctrl-F9 to move focus to this tab." />
             </TabItem.Header>
+            
             <Border BorderBrush="{DynamicResource NeutralDarkBrush}" BorderThickness="9">
                 <Border BorderBrush="White" BorderThickness="1">
                     <DockPanel MinWidth="330" LastChildFill="True">
-
                         <StackPanel Background="White"
                                     DockPanel.Dock="Bottom"
                                     Orientation="Horizontal">
@@ -83,7 +82,7 @@
                                                       Color="Black" />
                                 </TextBox.Effect>
                             </TextBox>
-                            
+
                             <TextBlock x:Name="CompileStatusText"
                                        Margin="5,3,5,8"
                                        Padding="8,4"
@@ -96,7 +95,7 @@
                                                       Color="Black" />
                                 </TextBlock.Effect>
                             </TextBlock>
-                            
+
                             <TextBlock x:Name="DirtyStatusText"
                                        Margin="5,3,5,8"
                                        Padding="8,4"
@@ -111,6 +110,7 @@
                                                       Color="Black" />
                                 </TextBlock.Effect>
                             </TextBlock>
+                            
                             <TextBlock x:Name="VersionNotSupported"
                                        Margin="5,3,5,8"
                                        Padding="8,4"
@@ -132,12 +132,10 @@
                 </Border>
             </Border>
         </TabItem>
+        
         <TabItem x:Name="InputControlsTab" Visibility="{Binding Visibility, Converter={StaticResource VisvisConverter}, ElementName=OutputTextBox}">
             <TabItem.Header>
-                <Grid ToolTip="Use Ctrl-F10 to move focus to this tab.">
-                    <TextBlock Text="Tryout (adjust settings)" />
-                </Grid>
-
+                <TextBlock Text="Tryout (adjust settings)" Background="Transparent" ToolTip="Use Ctrl-F10 to move focus to this tab."/>
             </TabItem.Header>
             <Border BorderBrush="{DynamicResource NeutralDarkBrush}" BorderThickness="9">
                 <Border BorderBrush="White" BorderThickness="1">
@@ -303,9 +301,7 @@
                 </Border>
             </Border>
         </TabItem>
-        <TabItem Header="   "
-                 IsEnabled="False"
-                 Style="{StaticResource TabItemBackground}" />
+        
         <TabItem x:Name="CsharpTab"
                  Header="Generated Shader - C#"
                  Visibility="{Binding Visibility, Converter={StaticResource VisvisConverter}, ElementName=OutputTextBox}">
