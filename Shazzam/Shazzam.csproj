@@ -9,6 +9,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Resource Include="Views\*.png" />
+    <Resource Include="Fonts\*.ttf" />
+    <Resource Include="Images\logo.ico" />
+    <Resource Include="Images\*.jpg" />
+    <Resource Include="Images\*.png" />
+    <Resource Include="Images\*.wmv" />
+    <None Include="*.dll" CopyToOutputDirectory="PreserveNewest" />
+    <EmbeddedResource Include="Resources\HLSLSyntax.xshd" />
+    <None Include="Samples\*.fx" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Samples\*.hlsli" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Images\TextureMaps\*.jpg" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Images\Default\*.png" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KaxamlPlugins\KaxamlPlugins.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="PresentationFramework.Aero">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -40,24 +59,5 @@
     <Reference Include="WindowsFormsIntegration">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Views\*.png" />
-    <Resource Include="Fonts\*.ttf" />
-    <Resource Include="Images\logo.ico" />
-    <Resource Include="Images\*.jpg" />
-    <Resource Include="Images\*.png" />
-    <Resource Include="Images\*.wmv" />
-    <None Include="*.dll" CopyToOutputDirectory="PreserveNewest" />
-    <EmbeddedResource Include="Resources\HLSLSyntax.xshd" />
-    <None Include="Samples\*.fx" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="Samples\*.hlsli" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="Images\TextureMaps\*.jpg" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="Images\Default\*.png" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\KaxamlPlugins\KaxamlPlugins.csproj" />
   </ItemGroup>
 </Project>
