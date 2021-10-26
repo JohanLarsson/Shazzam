@@ -47,14 +47,12 @@
     <None Include="*.dll" CopyToOutputDirectory="PreserveNewest" />
     <Resource Include="Views\*.png" />
     <Resource Include="Fonts\*.ttf" />
+    <Resource Include="Images\logo.ico" />
+    <Resource Include="Images\*.jpg" />
+    <Resource Include="Images\*.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\connect.png" />
-    <Resource Include="Images\disconnect.png" />
-    <Resource Include="Images\page_copy.png" />
-    <Resource Include="Images\disk.png" />
-
     <Content Include="Images\TextureMaps\cactus.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -409,7 +407,6 @@
     <Content Include="Tutorials\09a_MorphNearbyPixels.fx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Images\cactus.jpg" />
     <Content Include="Samples\MultiInput_MergeImages.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -426,7 +423,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
 
-    <Resource Include="Images\logo.ico" />
+
     <Content Include="Samples\BandedSwirl.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -512,24 +509,7 @@
     </Content>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ColorRange.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Fire1.jpg" />
-    <Resource Include="Images\Default\Geese.jpg" />
-    <Resource Include="Images\Light1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\lines.jpg" />
-    <Resource Include="Images\gears.jpg" />
-    <Resource Include="Images\help.ico" />
-    <Resource Include="Images\Star.png" />
-    <Resource Include="Images\square.png" />
-    <Resource Include="Images\SwirlLogo2.png" />
-    <Resource Include="Images\Default\crystal.jpg" />
-    <Resource Include="Images\SpikeBalls.jpg" />
-  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\KaxamlPlugins\KaxamlPlugins.csproj" />
   </ItemGroup>
