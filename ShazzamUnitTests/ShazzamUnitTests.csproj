@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <UseWPF>true</UseWPF>
-    <CodeAnalysisRuleSet>ShazzamUnitTests.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>

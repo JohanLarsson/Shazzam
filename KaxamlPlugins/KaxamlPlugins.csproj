@@ -4,7 +4,6 @@
     <UseWPF>true</UseWPF>
     <TargetFramework>net45</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <CodeAnalysisRuleSet>KaxamlPlugins.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   
   <ItemGroup>

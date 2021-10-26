@@ -5,7 +5,6 @@
     <TargetFramework>net45</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <ApplicationIcon>Images\logo.ico</ApplicationIcon>
-    <CodeAnalysisRuleSet>Shazzam.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>

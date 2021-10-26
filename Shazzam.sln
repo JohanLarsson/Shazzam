@@ -5,6 +5,7 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".sln", ".sln", "{F03C0DDE-43B2-477C-8D33-CC03E14830C9}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		appveyor.yml = appveyor.yml
 		LICENSE = LICENSE
 		README.md = README.md
@@ -12,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".sln", ".sln", "{F03C0DDE-4
 		Shazzam.sln.DotSettings = Shazzam.sln.DotSettings
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shazzam", "Shazzam\Shazzam.csproj", "{EB76EF00-42DE-4715-9675-CFBB2C073F8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shazzam", "Shazzam\Shazzam.csproj", "{EB76EF00-42DE-4715-9675-CFBB2C073F8F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KaxamlPlugins", "KaxamlPlugins\KaxamlPlugins.csproj", "{F6B1B201-8293-4729-842C-0BB54F89FFA7}"
 EndProject
