@@ -45,10 +45,11 @@
 
   <ItemGroup>
     <None Include="*.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Resource Include="Views\*.png" />
+    <Resource Include="Fonts\*.ttf" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Views\greentarget.png" />
     <Resource Include="Images\connect.png" />
     <Resource Include="Images\disconnect.png" />
     <Resource Include="Images\page_copy.png" />
@@ -424,9 +425,7 @@
     <Content Include="Samples\SketchPencilStroke.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Fonts\Candara.ttf" />
-    <Resource Include="Fonts\Miramo.ttf" />
-    <Resource Include="Fonts\Peric.ttf" />
+
     <Resource Include="Images\logo.ico" />
     <Content Include="Samples\BandedSwirl.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -524,11 +523,8 @@
   <ItemGroup>
     <Resource Include="Images\lines.jpg" />
     <Resource Include="Images\gears.jpg" />
-    <Resource Include="Views\info.png" />
     <Resource Include="Images\help.ico" />
     <Resource Include="Images\Star.png" />
-    <Resource Include="Views\check.png" />
-    <Resource Include="Views\Fav2.png" />
     <Resource Include="Images\square.png" />
     <Resource Include="Images\SwirlLogo2.png" />
     <Resource Include="Images\Default\crystal.jpg" />
