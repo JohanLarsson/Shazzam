@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <OutputType>library</OutputType>
+    <UseWPF>true</UseWPF>
     <TargetFramework>net45</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <UseWPF>true</UseWPF>
     <CodeAnalysisRuleSet>KaxamlPlugins.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   
