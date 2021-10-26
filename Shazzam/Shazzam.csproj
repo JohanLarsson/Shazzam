@@ -44,20 +44,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="d3dx10_40.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="D3DX9_40.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Include="*.dll" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Views\greentarget.png" />
     <Resource Include="Images\connect.png" />
     <Resource Include="Images\disconnect.png" />
     <Resource Include="Images\page_copy.png" />
     <Resource Include="Images\disk.png" />
-    <Content Include="D3DX9_40_64bit.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+
     <Content Include="Images\TextureMaps\cactus.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
