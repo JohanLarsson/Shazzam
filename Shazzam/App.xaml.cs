@@ -6,6 +6,7 @@
     using System.IO;
     using System.IO.IsolatedStorage;
     using System.Windows;
+
     using Shazzam.Properties;
 
     /// <summary>
@@ -44,16 +45,16 @@
                 var filename = inner.Filename;
                 if (MessageBox.Show(
                     "Shazzam has detected that your" +
-                     " user settings file has become corrupted. " +
-                     "This may be due to a crash or improper exiting" +
-                     " of the program. Shazzam must reset your " +
-                     "user settings in order to continue.\n\nClick" +
-                     " Yes to reset your user settings.  You will need to restart.\n\n" +
-                     "Click No if you wish to attempt manual repair" +
-                     " or to rescue information before proceeding.",
-                     "Corrupt user settings",
-                     MessageBoxButton.YesNo,
-                     MessageBoxImage.Error) == MessageBoxResult.Yes)
+                    " user settings file has become corrupted. " +
+                    "This may be due to a crash or improper exiting" +
+                    " of the program. Shazzam must reset your " +
+                    "user settings in order to continue.\n\nClick" +
+                    " Yes to reset your user settings.  You will need to restart.\n\n" +
+                    "Click No if you wish to attempt manual repair" +
+                    " or to rescue information before proceeding.",
+                    "Corrupt user settings",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Error) == MessageBoxResult.Yes)
                 {
                     File.Delete(filename);
                     Settings.Default.Reload();
@@ -99,16 +100,16 @@
 
                 if (MessageBox.Show(
                     "Shazzam has detected that your" +
-                                      " user settings file has become corrupted. " +
-                                      "This may be due to a crash or improper exiting" +
-                                      " of the program. Shazzam must reset your " +
-                                      "user settings in order to continue.\n\nClick" +
-                                      " Yes to reset your user settings and continue.\n\n" +
-                                      "Click No if you wish to attempt manual repair" +
-                                      " or to rescue information before proceeding.",
-                                      "Corrupt user settings",
-                                      MessageBoxButton.YesNo,
-                                      MessageBoxImage.Error) == MessageBoxResult.Yes)
+                    " user settings file has become corrupted. " +
+                    "This may be due to a crash or improper exiting" +
+                    " of the program. Shazzam must reset your " +
+                    "user settings in order to continue.\n\nClick" +
+                    " Yes to reset your user settings and continue.\n\n" +
+                    "Click No if you wish to attempt manual repair" +
+                    " or to rescue information before proceeding.",
+                    "Corrupt user settings",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Error) == MessageBoxResult.Yes)
                 {
                     File.Delete(filename);
                     Settings.Default.Reload();

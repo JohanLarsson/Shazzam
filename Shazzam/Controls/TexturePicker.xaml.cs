@@ -19,7 +19,9 @@
             nameof(Value),
             typeof(ImageBrush),
             typeof(TexturePicker),
-            new FrameworkPropertyMetadata(null, OnValueChanged));
+            new FrameworkPropertyMetadata(
+                null,
+                (d, e) => ((TexturePicker)d).OnValueChanged(e)));
 
         private static readonly Dictionary<int, ImageBrush> Images = new();
         private readonly ShaderModelConstantRegister register;
@@ -58,14 +60,6 @@
             Images[this.register.RegisterNumber] = brush;
             this.image2.SetCurrentValue(Image.SourceProperty, brush.ImageSource);
             this.image1.SetCurrentValue(Image.SourceProperty, brush.ImageSource);
-        }
-
-        /// <summary>
-        /// Handles changes to the Value property.
-        /// </summary>
-        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((TexturePicker)d).OnValueChanged(e);
         }
 
         private void BtnOpenImageClick(object sender, RoutedEventArgs e)

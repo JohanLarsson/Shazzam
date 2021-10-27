@@ -5,7 +5,7 @@
 // http://stackoverflow.com/questions/666799/embedding-unmanaged-dll-into-a-managed-c-dll
 namespace Shazzam.CodeGen
 {
-    internal enum ShaderProfile
+    public enum ShaderProfile
     {
         PixelShader2,
         PixelShader3,

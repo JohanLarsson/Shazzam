@@ -60,7 +60,7 @@
             typeof(SaturationBrightnessChooser),
             new FrameworkPropertyMetadata(
                 0.0,
-                (o, e) => ((SaturationBrightnessChooser)o).UpdateBrightnessOffset(),
+                (o, _) => ((SaturationBrightnessChooser)o).UpdateBrightnessOffset(),
                 CoerceBrightness));
 
         public Thickness OffsetPadding

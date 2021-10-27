@@ -16,7 +16,7 @@ namespace Shazzam.Commands
     public class RelayCommand<T> : ICommand
     {
         private readonly Action<T> execute;
-        private readonly Predicate<T> canExecute;
+        private readonly Predicate<T>? canExecute;
 
         public RelayCommand(Action<T> execute)
         : this(execute, null)
@@ -28,7 +28,7 @@ namespace Shazzam.Commands
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
-        public RelayCommand(Action<T> execute, Predicate<T> canExecute)
+        public RelayCommand(Action<T> execute, Predicate<T>? canExecute)
         {
             this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
             this.canExecute = canExecute;

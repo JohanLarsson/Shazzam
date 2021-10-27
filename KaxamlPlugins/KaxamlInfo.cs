@@ -78,7 +78,7 @@
             ContentLoaded?.Invoke();
         }
 
-        protected static void NotifyPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string info = null)
+        protected static void NotifyPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string? info = null)
         {
             PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(info));
         }

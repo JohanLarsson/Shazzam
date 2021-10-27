@@ -397,7 +397,7 @@
             foreach (var textValue in textValues)
             {
                 var trimmedValue = textValue.Trim();
-                if (double.TryParse(trimmedValue, out double number))
+                if (double.TryParse(trimmedValue, out var number))
                 {
                     numbers.Add(number);
                 }

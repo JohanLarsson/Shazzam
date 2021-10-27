@@ -5,7 +5,7 @@
     using System.IO;
     using System.Runtime.InteropServices;
 
-    internal class ShaderCompiler : INotifyPropertyChanged
+    public class ShaderCompiler : INotifyPropertyChanged
     {
         private string? errorText;
         private bool isCompiled;

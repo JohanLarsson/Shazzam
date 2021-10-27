@@ -18,7 +18,10 @@
             nameof(Value),
             typeof(Color),
             typeof(AdjustableColor),
-            new FrameworkPropertyMetadata(Colors.LightYellow, OnValueChanged) { BindsTwoWayByDefault = true });
+            new FrameworkPropertyMetadata(
+                Colors.LightYellow,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                (d, e) => ((AdjustableColor)d).SetCurrentValue(ColorPicker.SelectedColorProperty, e.NewValue)));
 
         private const double DefaultDuration = 2.0;
 
@@ -57,11 +60,6 @@
         {
             get => (Color)this.GetValue(ValueProperty);
             set => this.SetValue(ValueProperty, value);
-        }
-
-        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((AdjustableColor)d).SetCurrentValue(ColorPicker.SelectedColorProperty, e.NewValue);
         }
 
         private static void MainStackPanelPreviewKeyDown(object sender, KeyEventArgs e)

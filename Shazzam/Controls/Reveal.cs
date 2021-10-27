@@ -11,7 +11,9 @@
             nameof(IsExpanded),
             typeof(bool),
             typeof(Reveal),
-            new UIPropertyMetadata(false, OnIsExpandedChanged));
+            new UIPropertyMetadata(
+                false,
+                (sender, e) => ((Reveal)sender).SetupAnimation((bool)e.NewValue)));
 
         // Using a DependencyProperty as the backing store for Duration.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DurationProperty = DependencyProperty.Register(
@@ -39,7 +41,11 @@
             nameof(AnimationProgress),
             typeof(double),
             typeof(Reveal),
-            new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsMeasure, null, CoerceAnimationProgress));
+            new FrameworkPropertyMetadata(
+                0.0,
+                FrameworkPropertyMetadataOptions.AffectsMeasure,
+                null,
+                CoerceAnimationProgress));
 
         static Reveal()
         {
@@ -132,7 +138,7 @@
             return default;
         }
 
-        private static object CoerceAnimationProgress(DependencyObject d, object baseValue)
+        private static object CoerceAnimationProgress(DependencyObject d, object? baseValue)
         {
             var num = (double)baseValue;
             if (num < 0.0)
@@ -145,11 +151,6 @@
             }
 
             return baseValue;
-        }
-
-        private static void OnIsExpandedChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            ((Reveal)sender).SetupAnimation((bool)e.NewValue);
         }
 
         private static double CalculateLeft(double width, double percent, HorizontalRevealMode reveal)

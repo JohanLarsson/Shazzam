@@ -1,6 +1,6 @@
-namespace Shazzam.Controls
+﻿namespace Shazzam.Controls
 {
-    internal struct TextureMapLocator
+    public struct TextureMapLocator
     {
         public string ShortFileName { get; set; }
 

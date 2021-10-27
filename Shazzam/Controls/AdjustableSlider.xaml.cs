@@ -28,14 +28,18 @@
             nameof(Minimum),
             typeof(double),
             typeof(AdjustableSlider),
-            new FrameworkPropertyMetadata(0.0, OnMinimumChanged));
+            new FrameworkPropertyMetadata(
+                0.0,
+                (d, e) => ((AdjustableSlider)d).OnMinimumChanged(e)));
 
         /// <summary>Identifies the <see cref="Maximum"/> dependency property.</summary>
         public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
             nameof(Maximum),
             typeof(double),
             typeof(AdjustableSlider),
-            new FrameworkPropertyMetadata(100.0, OnMaximumChanged));
+            new FrameworkPropertyMetadata(
+                100.0,
+                (d, e) => ((AdjustableSlider)d).OnMaximumChanged(e)));
 
         private const double DefaultDuration = 2.0;
 
@@ -119,16 +123,6 @@
         protected virtual void OnMaximumChanged(DependencyPropertyChangedEventArgs e)
         {
             this.UpdateAnimation();
-        }
-
-        private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((AdjustableSlider)d).OnMinimumChanged(e);
-        }
-
-        private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((AdjustableSlider)d).OnMaximumChanged(e);
         }
 
         private void MainStackPanel_PreviewKeyDown(object sender, KeyEventArgs e)

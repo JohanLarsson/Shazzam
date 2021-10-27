@@ -211,8 +211,8 @@
                                     Method = new CodeMethodReferenceExpression(null,
                                         "PixelShaderConstantCallback"),
                                     Parameters = { new CodePrimitiveExpression(register.RegisterNumber) }
-                                }
-                            }
+                                },
+                            },
                         },
                     },
                 },
@@ -294,7 +294,7 @@
                             Expression = new CodeMethodInvokeExpression
                             {
                                 Method = new CodeMethodReferenceExpression(new CodeThisReferenceExpression(), "GetValue"),
-                                Parameters = { new CodeVariableReferenceExpression($"{propertyName}Property") }
+                                Parameters = { new CodeVariableReferenceExpression($"{propertyName}Property") },
                             },
                         },
                     },
@@ -308,7 +308,7 @@
                         Parameters =
                         {
                             new CodeVariableReferenceExpression(propertyName + "Property"),
-                            new CodeVariableReferenceExpression("value")
+                            new CodeVariableReferenceExpression("value"),
                         },
                     },
                 },

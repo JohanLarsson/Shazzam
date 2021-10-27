@@ -19,7 +19,9 @@
             nameof(Value),
             typeof(Point4D),
             typeof(AdjustableSliderQuadruplet),
-            new FrameworkPropertyMetadata(new Point4D(0, 0, 0, 0), OnValueChanged));
+            new FrameworkPropertyMetadata(
+                new Point4D(0, 0, 0, 0),
+                (d, e) => ((AdjustableSliderQuadruplet)d).OnValueChanged(e)));
 
         /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>
         public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
@@ -35,7 +37,9 @@
             nameof(Maximum),
             typeof(Point4D),
             typeof(AdjustableSliderQuadruplet),
-            new FrameworkPropertyMetadata(new Point4D(100, 100, 100, 100), OnMaximumChanged));
+            new FrameworkPropertyMetadata(
+                new Point4D(100, 100, 100, 100),
+                (d, e) => ((AdjustableSliderQuadruplet)d).OnMaximumChanged(e)));
 
         private const double DefaultDuration = 0.5;
 
@@ -191,22 +195,6 @@
             this.UpdateAnimation();
         }
 
-        /// <summary>
-        /// Handles changes to the Value property.
-        /// </summary>
-        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((AdjustableSliderQuadruplet)d).OnValueChanged(e);
-        }
-
-        /// <summary>
-        /// Handles changes to the Maximum property.
-        /// </summary>
-        private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((AdjustableSliderQuadruplet)d).OnMaximumChanged(e);
-        }
-
         private void MainStackPanelPreviewKeyDown(object sender, KeyEventArgs e)
         {
             // pressing the enter key will move focus to next control
@@ -220,7 +208,7 @@
 
         private void XMinTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(this.XMinTextBox.Text, NumberStyles.Any, null, out double number))
+            if (double.TryParse(this.XMinTextBox.Text, NumberStyles.Any, null, out var number))
             {
                 this.SetCurrentValue(MinimumProperty, new Point4D(number, this.Minimum.Y, this.Minimum.Z, this.Minimum.W));
             }
@@ -228,7 +216,7 @@
 
         private void XMaxTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(this.XMaxTextBox.Text, NumberStyles.Any, null, out double number))
+            if (double.TryParse(this.XMaxTextBox.Text, NumberStyles.Any, null, out var number))
             {
                 this.SetCurrentValue(MaximumProperty, new Point4D(number, this.Maximum.Y, this.Maximum.Z, this.Maximum.W));
             }
@@ -241,7 +229,7 @@
 
         private void YMinTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(this.YMinTextBox.Text, NumberStyles.Any, null, out double number))
+            if (double.TryParse(this.YMinTextBox.Text, NumberStyles.Any, null, out var number))
             {
                 this.SetCurrentValue(MinimumProperty, new Point4D(this.Minimum.X, number, this.Minimum.Z, this.Minimum.W));
             }
@@ -249,7 +237,7 @@
 
         private void YMaxTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(this.YMaxTextBox.Text, NumberStyles.Any, null, out double number))
+            if (double.TryParse(this.YMaxTextBox.Text, NumberStyles.Any, null, out var number))
             {
                 this.SetCurrentValue(MaximumProperty, new Point4D(this.Maximum.X, number, this.Maximum.Z, this.Maximum.W));
             }
@@ -262,7 +250,7 @@
 
         private void ZMinTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(this.ZMinTextBox.Text, NumberStyles.Any, null, out double number))
+            if (double.TryParse(this.ZMinTextBox.Text, NumberStyles.Any, null, out var number))
             {
                 this.SetCurrentValue(MinimumProperty, new Point4D(this.Minimum.X, this.Minimum.Y, number, this.Minimum.W));
             }
@@ -270,7 +258,7 @@
 
         private void ZMaxTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(this.ZMaxTextBox.Text, NumberStyles.Any, null, out double number))
+            if (double.TryParse(this.ZMaxTextBox.Text, NumberStyles.Any, null, out var number))
             {
                 this.SetCurrentValue(MaximumProperty, new Point4D(this.Maximum.X, this.Maximum.Y, number, this.Maximum.W));
             }
@@ -283,7 +271,7 @@
 
         private void WMinTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(this.WMinTextBox.Text, NumberStyles.Any, null, out double number))
+            if (double.TryParse(this.WMinTextBox.Text, NumberStyles.Any, null, out var number))
             {
                 this.SetCurrentValue(MinimumProperty, new Point4D(this.Minimum.X, this.Minimum.Y, this.Minimum.Z, number));
             }
@@ -291,7 +279,7 @@
 
         private void WMaxTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            if (double.TryParse(this.WMaxTextBox.Text, NumberStyles.Any, null, out double number))
+            if (double.TryParse(this.WMaxTextBox.Text, NumberStyles.Any, null, out var number))
             {
                 this.SetCurrentValue(MaximumProperty, new Point4D(this.Maximum.X, this.Maximum.Y, this.Maximum.Z, number));
             }
@@ -312,7 +300,7 @@
 
         private void DurationTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (double.TryParse(this.DurationTextBox.Text, out double number))
+            if (double.TryParse(this.DurationTextBox.Text, out var number))
             {
                 var duration = TimeSpan.FromSeconds(Math.Max(0, number));
                 this.xSliderValueAnimation.SetCurrentValue(Timeline.DurationProperty, (System.Windows.Duration)duration);
