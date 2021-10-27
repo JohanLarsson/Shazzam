@@ -116,12 +116,12 @@
         protected override void OnRender(DrawingContext dc)
         {
             var lb = new LinearGradientBrush
-                         {
-                             StartPoint = new Point(0, 0),
-                             EndPoint = this.Orientation == Orientation.Vertical
-                                            ? new Point(0, 1)
-                                            : new Point(1, 0),
-                         };
+            {
+                StartPoint = new Point(0, 0),
+                EndPoint = this.Orientation == Orientation.Vertical
+                    ? new Point(0, 1)
+                    : new Point(1, 0),
+            };
 
             lb.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0x00, 0x00, 0x00), 0.00));
             lb.GradientStops.Add(new GradientStop(Color.FromArgb(0x00, 0x00, 0x00, 0x00), 1.00));
@@ -145,18 +145,12 @@
 
         private static object CoerceAlpha(DependencyObject d, object? brightness)
         {
-            var v = (double)brightness;
-            if (v < 0)
+            return (double)brightness! switch
             {
-                return 0.0;
-            }
-
-            if (v > 1)
-            {
-                return 1.0;
-            }
-
-            return v;
+                < 0 => 0.0,
+                > 1 => 1.0,
+                _ => brightness,
+            };
         }
 
         private void UpdateAlphaOffset()

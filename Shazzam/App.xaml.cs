@@ -128,13 +128,10 @@
             {
                 // IsolatedStorageFileStream represents the stream
                 // write data to the stream
-                using (var isoStream = new IsolatedStorageFileStream(
-                      "ErrorLog.txt", FileMode.OpenOrCreate, FileAccess.Write, isoStore))
-                {
-                    using var writer = new StreamWriter(isoStream);
-                    writer.WriteLine(e.Exception.Message);
-                    writer.WriteLine(e.Exception.StackTrace);
-                }
+                using var isoStream = new IsolatedStorageFileStream("ErrorLog.txt", FileMode.OpenOrCreate, FileAccess.Write, isoStore);
+                using var writer = new StreamWriter(isoStream);
+                writer.WriteLine(e.Exception.Message);
+                writer.WriteLine(e.Exception.StackTrace);
             }
 
             Shazzam.Properties.Settings.Default.FilePath_LastFx = string.Empty;

@@ -29,7 +29,15 @@ namespace KaxamlPlugins.Controls
             nameof(Hue),
             typeof(double),
             typeof(ColorPicker),
-            new FrameworkPropertyMetadata(0.0, (o, _) => OnHsbaChanged(o), CoerceHue));
+            new FrameworkPropertyMetadata(
+                0.0,
+                (o, _) => OnHsbaChanged(o),
+                (_, hue) => (double)hue! switch
+                {
+                    < 0 => 0.0,
+                    > 1 => 1.0,
+                    _ => hue,
+                }));
 
         public static readonly DependencyProperty SaturationProperty = DependencyProperty.Register(
             nameof(Saturation),
@@ -181,52 +189,24 @@ namespace KaxamlPlugins.Controls
             }
         }
 
-        private static object CoerceHue(DependencyObject d, object? hue)
-        {
-            var v = (double)hue;
-            if (v < 0)
-            {
-                return 0.0;
-            }
-
-            if (v > 1)
-            {
-                return 1.0;
-            }
-
-            return v;
-        }
-
         private static object CoerceBrightness(DependencyObject d, object? brightness)
         {
-            var v = (double)brightness;
-            if (v < 0)
+            return (double)brightness! switch
             {
-                return 0.0;
-            }
-
-            if (v > 1)
-            {
-                return 1.0;
-            }
-
-            return v;
+                < 0 => 0.0,
+                > 1 => 1.0,
+                _ => brightness,
+            };
         }
 
         private static object CoerceSaturation(DependencyObject d, object? saturation)
         {
-            var v = (double)saturation;
-            if (v < 0)
+            return (double)saturation! switch
             {
-                return 0.0;
-            }
-
-            if (v > 1)
-            {
-                return 1.0;
-            }
-
-            return v;
+                < 0 => 0.0,
+                > 1 => 1.0,
+                _ => saturation,
+            };
         }
 
         private static object CoerceAlpha(DependencyObject d, object? alpha)

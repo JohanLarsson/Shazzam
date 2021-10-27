@@ -43,26 +43,24 @@
             KaxamlInfo.EditSelectionChanged += this.KaxamlInfoEditSelectionChanged;
         }
 
-        public ObservableCollection<Color>? Colors
+        public ObservableCollection<Color> Colors
         {
-            get => (ObservableCollection<Color>?)this.GetValue(ColorsProperty);
+            get => (ObservableCollection<Color>)this.GetValue(ColorsProperty);
             set => this.SetValue(ColorsProperty, value);
         }
 
-        public string? ColorString
+        public string ColorString
         {
-            get => (string?)this.GetValue(ColorStringProperty);
+            get => (string)this.GetValue(ColorStringProperty);
             set => this.SetValue(ColorStringProperty, value);
         }
 
         private static void OnColorsChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
-            if (obj is ColorPickerPlugin owner)
+            if (obj is ColorPickerPlugin owner &&
+                args.NewValue is ObservableCollection<Color> c)
             {
-                if (args.NewValue is ObservableCollection<Color> c)
-                {
-                    c.CollectionChanged += owner.CCollectionChanged;
-                }
+                c.CollectionChanged += owner.CCollectionChanged;
             }
         }
 

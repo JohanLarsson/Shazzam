@@ -9,6 +9,7 @@
     using System.Windows;
     using System.Windows.Media;
     using System.Windows.Media.Media3D;
+
     using Shazzam.Properties;
 
     public static class CodeParser
@@ -166,7 +167,8 @@
             {
                 "float" or "float1" => typeof(double),
                 "float2" => typeof(Point),
-                "float3" => targetFramework == TargetFramework.WPF ? typeof(Point3D) : null,// Silverlight doesn't have any types that correspond to float3 registers.
+                // Silverlight doesn't have any types that correspond to float3 registers.
+                "float3" => targetFramework == TargetFramework.WPF ? typeof(Point3D) : null,
                 "float4" => typeof(Color),
                 "sampler1d" => typeof(Brush),
                 "sampler2d" => typeof(Brush),

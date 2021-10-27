@@ -331,7 +331,7 @@
             var changeToCodeTab = new RoutedUICommand("Change To Code Tab", "ChangeToCodeTab", typeof(CodeTabView));
             var changeToEditTab = new RoutedUICommand("Change To Edit Tab", "ChangeToEditTab", typeof(CodeTabView));
 
-            var cb = new CommandBinding(changeToCodeTab, (s, e) => this.CodeTabControl.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, this.CodeTab));
+            var cb = new CommandBinding(changeToCodeTab, (_, _) => this.CodeTabControl.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, this.CodeTab));
             var kb = new KeyBinding(changeToCodeTab, Key.F9, ModifierKeys.Control);
 
             ShazzamSwitchboard.MainWindow.CommandBindings.Add(cb);
@@ -339,7 +339,7 @@
             ShazzamSwitchboard.MainWindow.InputBindings.Add(kb);
             //// this.InputBindings.Add(kb);
 
-            var cb2 = new CommandBinding(changeToEditTab, (s, e) => this.CodeTabControl.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, this.InputControlsTab));
+            var cb2 = new CommandBinding(changeToEditTab, (_, _) => this.CodeTabControl.SetCurrentValue(System.Windows.Controls.Primitives.Selector.SelectedItemProperty, this.InputControlsTab));
             kb = new KeyBinding(changeToEditTab, Key.F10, ModifierKeys.Control);
 
             ShazzamSwitchboard.MainWindow.CommandBindings.Add(cb2);

@@ -1,4 +1,4 @@
-namespace Shazzam.Controls
+﻿namespace Shazzam.Controls
 {
     using System.Windows;
     using System.Windows.Controls;
@@ -30,45 +30,21 @@ namespace Shazzam.Controls
             typeof(IndexingStackPanel),
             new UIPropertyMetadata(default(IndexOddEven)));
 
-        public static int GetIndex(DependencyObject obj)
-        {
-            return (int)obj.GetValue(IndexProperty);
-        }
+        public static int GetIndex(DependencyObject obj) => (int)obj.GetValue(IndexProperty);
 
-        public static void SetIndex(DependencyObject obj, int value)
-        {
-            obj.SetValue(IndexProperty, value);
-        }
+        public static void SetIndex(DependencyObject obj, int value) => obj.SetValue(IndexProperty, value);
 
-        public static SelectionLocation GetSelectionLocation(DependencyObject obj)
-        {
-            return (SelectionLocation)obj.GetValue(SelectionLocationProperty);
-        }
+        public static SelectionLocation GetSelectionLocation(DependencyObject obj) => (SelectionLocation)obj.GetValue(SelectionLocationProperty);
 
-        public static void SetSelectionLocation(DependencyObject obj, SelectionLocation value)
-        {
-            obj.SetValue(SelectionLocationProperty, value);
-        }
+        public static void SetSelectionLocation(DependencyObject obj, SelectionLocation value) => obj.SetValue(SelectionLocationProperty, value);
 
-        public static StackLocation GetStackLocation(DependencyObject obj)
-        {
-            return (StackLocation)obj.GetValue(StackLocationProperty);
-        }
+        public static StackLocation GetStackLocation(DependencyObject obj) => (StackLocation)obj.GetValue(StackLocationProperty);
 
-        public static void SetStackLocation(DependencyObject obj, StackLocation value)
-        {
-            obj.SetValue(StackLocationProperty, value);
-        }
+        public static void SetStackLocation(DependencyObject obj, StackLocation value) => obj.SetValue(StackLocationProperty, value);
 
-        public static IndexOddEven GetIndexOddEven(DependencyObject obj)
-        {
-            return (IndexOddEven)obj.GetValue(IndexOddEvenProperty);
-        }
+        public static IndexOddEven GetIndexOddEven(DependencyObject obj) => (IndexOddEven)obj.GetValue(IndexOddEvenProperty);
 
-        public static void SetIndexOddEven(DependencyObject obj, IndexOddEven value)
-        {
-            obj.SetValue(IndexOddEvenProperty, value);
-        }
+        public static void SetIndexOddEven(DependencyObject obj, IndexOddEven value) => obj.SetValue(IndexOddEvenProperty, value);
 
         protected override Size MeasureOverride(Size constraint)
         {

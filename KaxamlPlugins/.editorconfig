@@ -7,3 +7,5 @@ dotnet_diagnostic.SA0001.severity = none
 
 # WPF0060: Backing member for DependencyProperty should have standard documentation text.
 dotnet_diagnostic.WPF0060.severity = none
+# WPF0108: Backing member for RoutedEvent should have standard documentation text.
+dotnet_diagnostic.WPF0108.severity = none

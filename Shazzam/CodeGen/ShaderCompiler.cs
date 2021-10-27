@@ -62,8 +62,8 @@
 
             var defines = IntPtr.Zero;
             var includes = IntPtr.Zero;
-            ID3DXBuffer ppShader;
-            ID3DXBuffer ppErrorMsgs;
+            ID3DXBuffer? ppShader;
+            ID3DXBuffer? ppErrorMsgs;
 
             var entryPoint = "main";
 

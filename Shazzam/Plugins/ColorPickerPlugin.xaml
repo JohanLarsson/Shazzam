@@ -13,8 +13,6 @@
                     <ResourceDictionary Source="/Shazzam;component/Resources/PluginTheme.xaml" />
                 </ResourceDictionary.MergedDictionaries>
 
-                <p:RoundConverter x:Key="RoundConverter" />
-
                 <DrawingBrush
                     x:Key="AlphaBrush"
                     TileMode="Tile"
@@ -436,7 +434,7 @@
                     MinWidth="0"
                     MinHeight="0"
                     Margin="10,0,0,1"
-                    Text="{Binding ElementName=C, Path=Hue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource RoundConverter}}" />
+                    Text="{Binding ElementName=C, Path=Hue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={x:Static p:RoundConverter.Default}}" />
                 <TextBox
                     Grid.Row="2"
                     Grid.Column="7"
@@ -444,7 +442,7 @@
                     MinWidth="0"
                     MinHeight="0"
                     Margin="10,0,0,1"
-                    Text="{Binding ElementName=C, Path=Saturation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource RoundConverter}}" />
+                    Text="{Binding ElementName=C, Path=Saturation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={x:Static p:RoundConverter.Default}}" />
                 <TextBox
                     Grid.Row="4"
                     Grid.Column="7"
@@ -452,7 +450,7 @@
                     MinWidth="0"
                     MinHeight="0"
                     Margin="10,0,0,1"
-                    Text="{Binding ElementName=C, Path=Brightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource RoundConverter}}" />
+                    Text="{Binding ElementName=C, Path=Brightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={x:Static p:RoundConverter.Default}}" />
                 <TextBox
                     Grid.Row="6"
                     Grid.Column="7"
@@ -460,7 +458,7 @@
                     MinWidth="0"
                     MinHeight="0"
                     Margin="10,0,0,1"
-                    Text="{Binding ElementName=C, Path=Alpha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource RoundConverter}}" />
+                    Text="{Binding ElementName=C, Path=Alpha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={x:Static p:RoundConverter.Default}}" />
 
                 <!--  Buttons  -->
 

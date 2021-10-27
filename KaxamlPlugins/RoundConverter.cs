@@ -4,19 +4,22 @@
     using System.Globalization;
     using System.Windows.Data;
 
-    public class RoundConverter : IValueConverter
+    [ValueConversion(typeof(string), typeof(double))]
+    [ValueConversion(typeof(double), typeof(double))]
+    public sealed class RoundConverter : IValueConverter
     {
+        public static readonly RoundConverter Default = new();
+
         object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            try
+            return value switch
             {
-                var v = double.Parse(value.ToString());
-                return Math.Round(v, 2);
-            }
-            catch
-            {
-                return value;
-            }
+                string s
+                    when double.TryParse(s, out var d)
+                    => Math.Round(d, 2),
+                double d => Math.Round(d, 2),
+                _ => value,
+            };
         }
 
         object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

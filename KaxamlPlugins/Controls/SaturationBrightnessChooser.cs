@@ -19,7 +19,7 @@
             new FrameworkPropertyMetadata(
                 0.0,
                 FrameworkPropertyMetadataOptions.AffectsRender,
-                (o, e) => ((SaturationBrightnessChooser)o).UpdateColor()));
+                (o, _) => ((SaturationBrightnessChooser)o).UpdateColor()));
 
         public static readonly DependencyProperty SaturationOffsetProperty = DependencyProperty.Register(
             nameof(SaturationOffset),
@@ -33,8 +33,13 @@
             typeof(SaturationBrightnessChooser),
             new FrameworkPropertyMetadata(
                 0.0,
-                (o, e) => ((SaturationBrightnessChooser)o).UpdateSaturationOffset(),
-                CoerceSaturation));
+                (o, _) => ((SaturationBrightnessChooser)o).UpdateSaturationOffset(),
+                (_, brightness) => (double)brightness! switch
+                {
+                    < 0 => 0.0,
+                    > 1 => 1.0,
+                    _ => brightness,
+                }));
 
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
             nameof(Color),
@@ -61,7 +66,12 @@
             new FrameworkPropertyMetadata(
                 0.0,
                 (o, _) => ((SaturationBrightnessChooser)o).UpdateBrightnessOffset(),
-                CoerceBrightness));
+                (d, brightness) => (double)brightness! switch
+                {
+                    < 0 => 0.0,
+                    > 1 => 1.0,
+                    _ => brightness,
+                }));
 
         public Thickness OffsetPadding
         {
@@ -160,38 +170,6 @@
         {
             this.ReleaseMouseCapture();
             base.OnMouseUp(e);
-        }
-
-        private static object CoerceSaturation(DependencyObject d, object? brightness)
-        {
-            var v = (double)brightness;
-            if (v < 0)
-            {
-                return 0.0;
-            }
-
-            if (v > 1)
-            {
-                return 1.0;
-            }
-
-            return v;
-        }
-
-        private static object CoerceBrightness(DependencyObject d, object? brightness)
-        {
-            var v = (double)brightness;
-            if (v < 0)
-            {
-                return 0.0;
-            }
-
-            if (v > 1)
-            {
-                return 1.0;
-            }
-
-            return v;
         }
 
         private void UpdateColor()
