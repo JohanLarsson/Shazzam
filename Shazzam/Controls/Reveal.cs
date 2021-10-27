@@ -1,4 +1,4 @@
-namespace Shazzam.Controls
+﻿namespace Shazzam.Controls
 {
     using System;
     using System.Windows;
@@ -103,7 +103,7 @@ namespace Shazzam.Controls
                 return new Size(width, height);
             }
 
-            return default(Size);
+            return default;
         }
 
         protected override Size ArrangeOverride(Size arrangeSize)
@@ -129,7 +129,7 @@ namespace Shazzam.Controls
                 return new Size(width, height);
             }
 
-            return default(Size);
+            return default;
         }
 
         private static object CoerceAnimationProgress(DependencyObject d, object baseValue)
