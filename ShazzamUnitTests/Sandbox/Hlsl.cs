@@ -10,7 +10,7 @@ namespace ShazzamUnitTests.Sandbox
     using System.Windows.Media;
     using static Hlsl.Types;
 
-    internal abstract class Hlsl
+    public abstract class Hlsl
     {
         protected float clamp(float value, float min, float max)
         {
@@ -53,7 +53,7 @@ namespace ShazzamUnitTests.Sandbox
 
         protected float4 float4(float r, float g, float b, float a) => new float4(r, g, b, a);
 
-        internal class Types
+        public class Types
         {
             public struct float2
             {
@@ -180,20 +180,9 @@ namespace ShazzamUnitTests.Sandbox
                         (float)color.A / byte.MaxValue);
                 }
 
-                public bool Equals(string other)
-                {
-                    return ToString() == other;
-                }
+                public bool Equals(string other) => ToString() == other;
 
-                public override string ToString()
-                {
-                    return Color.FromArgb(
-                                    (byte)(byte.MaxValue * this.a),
-                                     (byte)(byte.MaxValue * this.r),
-                                     (byte)(byte.MaxValue * this.g),
-                                     (byte)(byte.MaxValue * this.b))
-                                .ToString();
-                }
+                public override string ToString() => Color.FromArgb((byte)(byte.MaxValue * this.a), (byte)(byte.MaxValue * this.r), (byte)(byte.MaxValue * this.g), (byte)(byte.MaxValue * this.b)).ToString();
             }
         }
     }

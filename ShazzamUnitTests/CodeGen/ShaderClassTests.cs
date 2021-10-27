@@ -22,16 +22,16 @@
                 description: "This is Foo",
                 targetFramework: TargetFramework.WPF,
                 registers: new List<ShaderModelConstantRegister>
-                    {
-                        new ShaderModelConstantRegister(
-                            registerName: "Bar",
-                            registerType: typeof(double),
-                            registerNumber: 1,
-                            description: "This is Bar",
-                            minValue: null,
-                            maxValue: null,
-                            defaultValue: 0)
-                    });
+                {
+                    new ShaderModelConstantRegister(
+                        registerName: "Bar",
+                        registerType: typeof(double),
+                        registerNumber: 1,
+                        description: "This is Bar",
+                        minValue: null,
+                        maxValue: null,
+                        defaultValue: 0),
+                });
 
             var actual = ShaderClass.GetSourceText(new CSharpCodeProvider(), shaderModel, includePixelShaderConstructor: true);
             Console.Write(actual);
@@ -112,16 +112,16 @@ namespace Shaders
                 description: "This is Foo",
                 targetFramework: TargetFramework.WPF,
                 registers: new List<ShaderModelConstantRegister>
-                               {
-                                   new ShaderModelConstantRegister(
-                                       registerName: "Bar",
-                                       registerType: typeof(double),
-                                       registerNumber: 1,
-                                       description: "This is Bar",
-                                       minValue: null,
-                                       maxValue: null,
-                                       defaultValue: 0)
-                               });
+                {
+                    new ShaderModelConstantRegister(
+                        registerName: "Bar",
+                        registerType: typeof(double),
+                        registerNumber: 1,
+                        description: "This is Bar",
+                        minValue: null,
+                        maxValue: null,
+                        defaultValue: 0),
+                });
 
             var actual = ShaderClass.GetSourceText(new CSharpCodeProvider(), shaderModel, includePixelShaderConstructor: false);
             Console.Write(actual);
@@ -219,7 +219,7 @@ namespace Shaders
                         description: "This is Bar",
                         minValue: null,
                         maxValue: null,
-                        defaultValue: 0)
+                        defaultValue: 0),
                 });
 
             var code = ShaderClass.GetSourceText(new CSharpCodeProvider(), shaderModel, includePixelShaderConstructor: false);

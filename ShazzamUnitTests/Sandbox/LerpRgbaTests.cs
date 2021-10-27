@@ -9,7 +9,7 @@ namespace ShazzamUnitTests.Sandbox
     using NUnit.Framework;
     using static Hlsl.Types;
 
-    internal class LerpRgbaTests : Hlsl
+    public class LerpRgbaTests : Hlsl
     {
         [TestCase("#FFFF0000", "#00FFFFFF", 0, "#FFFF0000")]
         [TestCase("#FFFF0000", "#00FFFFFF", 0.5f, "#7F7F3F3F")]

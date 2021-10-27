@@ -1,4 +1,4 @@
-namespace KaxamlPlugins.Controls
+﻿namespace KaxamlPlugins.Controls
 {
     using System.Windows;
     using System.Windows.Controls;

@@ -1,4 +1,4 @@
-namespace KaxamlPlugins.Controls
+﻿namespace KaxamlPlugins.Controls
 {
     using System.Windows;
     using System.Windows.Controls;
@@ -119,7 +119,7 @@ namespace KaxamlPlugins.Controls
                              StartPoint = new Point(0, 0),
                              EndPoint = this.Orientation == Orientation.Vertical
                                             ? new Point(0, 1)
-                                            : new Point(1, 0)
+                                            : new Point(1, 0),
                          };
 
             lb.GradientStops.Add(new GradientStop(Color.FromRgb(0xFF, 0x00, 0x00), 1.00));

@@ -12,7 +12,7 @@ namespace ShazzamUnitTests.Sandbox
     using NUnit.Framework;
     using static Hlsl.Types;
 
-    internal class AngleTests : Hlsl
+    public class AngleTests : Hlsl
     {
         static float PI2 = 6.28318548f;
 

@@ -9,7 +9,7 @@ namespace ShazzamUnitTests.Sandbox
 {
     using NUnit.Framework;
 
-    internal class InterpolateTests : Hlsl
+    public class InterpolateTests : Hlsl
     {
         [TestCase(0, 1, -1, 0)]
         [TestCase(0, 1, 0, 0)]

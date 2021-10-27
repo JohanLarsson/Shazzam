@@ -1,4 +1,4 @@
-namespace KaxamlPlugins.Controls
+﻿namespace KaxamlPlugins.Controls
 {
     using System.Windows;
     using System.Windows.Input;
@@ -227,7 +227,7 @@ namespace KaxamlPlugins.Controls
         {
             this.SetCurrentValue(
                 BrightnessOffsetProperty,
-                this.OffsetPadding.Top + ((this.ActualHeight - (this.OffsetPadding.Bottom + this.OffsetPadding.Top)) - ((this.ActualHeight - (this.OffsetPadding.Bottom + this.OffsetPadding.Top)) * this.Brightness)));
+                this.OffsetPadding.Top + (this.ActualHeight - (this.OffsetPadding.Bottom + this.OffsetPadding.Top) - ((this.ActualHeight - (this.OffsetPadding.Bottom + this.OffsetPadding.Top)) * this.Brightness)));
         }
     }
 }

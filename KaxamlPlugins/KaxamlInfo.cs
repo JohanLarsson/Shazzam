@@ -1,4 +1,4 @@
-namespace KaxamlPlugins
+﻿namespace KaxamlPlugins
 {
     using System.ComponentModel;
     using System.Windows;
@@ -51,7 +51,7 @@ namespace KaxamlPlugins
             set
             {
                 mainWindow = value;
-                NotifyPropertyChanged(nameof(MainWindow));
+                NotifyPropertyChanged();
             }
         }
 
@@ -63,7 +63,7 @@ namespace KaxamlPlugins
                 if (!ReferenceEquals(frame, value))
                 {
                     frame = value;
-                    NotifyPropertyChanged(nameof(Frame));
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -78,14 +78,14 @@ namespace KaxamlPlugins
             ContentLoaded?.Invoke();
         }
 
+        protected static void NotifyPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string info = null)
+        {
+            PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(info));
+        }
+
         private static void EditorTextSelectionChanged(object sender, RoutedEventArgs e)
         {
             EditSelectionChanged?.Invoke(editor.SelectedText);
-        }
-
-        private static void NotifyPropertyChanged(string info)
-        {
-            PropertyChanged?.Invoke(null, new PropertyChangedEventArgs(info));
         }
     }
 }

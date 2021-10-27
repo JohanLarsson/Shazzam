@@ -1,10 +1,10 @@
-namespace KaxamlPlugins.Controls
+﻿namespace KaxamlPlugins.Controls
 {
     using System.Windows;
     using System.Windows.Documents;
     using System.Windows.Media;
 
-    internal sealed class CursorAdorner : Adorner
+    public sealed class CursorAdorner : Adorner
     {
         private readonly UIElement cursor;
 
@@ -14,7 +14,7 @@ namespace KaxamlPlugins.Controls
             : base(owner)
         {
             this.cursor = cursor;
-            this.AddVisualChild(this.cursor);
+            this.AddVisualChild(cursor);
         }
 
         public Point Offset
