@@ -117,7 +117,7 @@
                     new CodeCommentStatement("<summary>", docComment: true),
                     new CodeCommentStatement($"The uri should be something like pack://application:,,,/Gu.Wpf.Geometry;component/Effects/{model.GeneratedClassName}.ps", docComment: true),
                     new CodeCommentStatement($"The file {model.GeneratedClassName}.ps should have BuildAction: Resource", docComment: true),
-                    new CodeCommentStatement("</summary>", docComment: true)
+                    new CodeCommentStatement("</summary>", docComment: true),
                 },
             };
         }
@@ -135,14 +135,14 @@
                     Method = new CodeMethodReferenceExpression
                     {
                         TargetObject = new CodeTypeReferenceExpression("ShaderEffect"),
-                        MethodName = "RegisterPixelShaderSamplerProperty"
+                        MethodName = "RegisterPixelShaderSamplerProperty",
                     },
                     Parameters =
                     {
                         new CodePrimitiveExpression(propertyName),
                         new CodeTypeOfExpression(className),
-                        new CodePrimitiveExpression(0)
-                    }
+                        new CodePrimitiveExpression(0),
+                    },
                 },
             };
         }
@@ -172,7 +172,7 @@
                         {
                             new CodePrimitiveExpression(register.RegisterName),
                             new CodeTypeOfExpression(shaderModel.GeneratedClassName),
-                            new CodePrimitiveExpression(register.RegisterNumber)
+                            new CodePrimitiveExpression(register.RegisterNumber),
                         },
                     },
                 };
@@ -189,7 +189,7 @@
                     Method = new CodeMethodReferenceExpression
                     {
                         TargetObject = new CodeTypeReferenceExpression("DependencyProperty"),
-                        MethodName = "Register"
+                        MethodName = "Register",
                     },
                     Parameters =
                     {
@@ -213,8 +213,8 @@
                                     Parameters = { new CodePrimitiveExpression(register.RegisterNumber) }
                                 }
                             }
-                        }
-                    }
+                        },
+                    },
                 },
             };
         }
@@ -295,8 +295,8 @@
                             {
                                 Method = new CodeMethodReferenceExpression(new CodeThisReferenceExpression(), "GetValue"),
                                 Parameters = { new CodeVariableReferenceExpression($"{propertyName}Property") }
-                            }
-                        }
+                            },
+                        },
                     },
                 },
                 HasSet = true,
@@ -309,8 +309,8 @@
                         {
                             new CodeVariableReferenceExpression(propertyName + "Property"),
                             new CodeVariableReferenceExpression("value")
-                        }
-                    }
+                        },
+                    },
                 },
             };
 
@@ -351,9 +351,9 @@
                     new CodeAssignStatement
                     {
                         Left = new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), "PixelShader"),
-                        Right = new CodeArgumentReferenceExpression("shader")
+                        Right = new CodeArgumentReferenceExpression("shader"),
                     },
-                    CreateUpdateMethod("Input")
+                    CreateUpdateMethod("Input"),
                 },
             };
             foreach (var register in shaderModel.Registers)
@@ -374,9 +374,9 @@
                     new CodeAssignStatement
                     {
                         Left = new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), "PixelShader"),
-                        Right = new CodeFieldReferenceExpression(null, "Shader")
+                        Right = new CodeFieldReferenceExpression(null, "Shader"),
                     },
-                    CreateUpdateMethod("Input")
+                    CreateUpdateMethod("Input"),
                 },
             };
             foreach (var register in shaderModel.Registers)

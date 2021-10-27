@@ -1,4 +1,4 @@
-namespace KaxamlPlugins.Controls
+﻿namespace KaxamlPlugins.Controls
 {
     using System;
     using System.Windows.Media;
@@ -14,9 +14,9 @@ namespace KaxamlPlugins.Controls
             {
                 var c = text[i];
 
-                if (!(c >= 'a' && c <= 'f') &&
-                    !(c >= 'A' && c <= 'F') &&
-                    !(c >= '0' && c <= '9'))
+                if (!(c is >= 'a' and <= 'f') &&
+                    !(c is >= 'A' and <= 'F') &&
+                    !(c is >= '0' and <= '9'))
                 {
                     text = text.Remove(i, 1);
                     i--;
@@ -32,7 +32,7 @@ namespace KaxamlPlugins.Controls
             // pad with zeroes until a valid length is found
             while (text.Length <= 8 && text.Length != 3 && text.Length != 4 && text.Length != 6 && text.Length != 8)
             {
-                text = text + "0";
+                text += "0";
             }
 
             return text;
@@ -148,7 +148,7 @@ namespace KaxamlPlugins.Controls
                 hue = (imax == red) ? 0.0 + (f * (green - blue))
                           : (imax == green) ? 2.0 + (f * (blue - red))
                               : 4.0 + (f * (red - green));
-                hue = hue * 60.0;
+                hue *= 60.0;
                 if (hue < 0.0)
                 {
                     hue += 360.0;
@@ -187,7 +187,7 @@ namespace KaxamlPlugins.Controls
                     h -= 360.0;
                 }
 
-                h = h / 60.0;
+                h /= 60.0;
                 var i = (int)h;
 
                 var f = h - i;

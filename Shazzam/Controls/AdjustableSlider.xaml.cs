@@ -13,27 +13,24 @@
     /// </summary>
     public partial class AdjustableSlider : UserControl
     {
-        /// <summary>
-        /// Value Dependency Property
-        /// </summary>
+        /// <summary>Identifies the <see cref="Value"/> dependency property.</summary>
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
             nameof(Value),
             typeof(double),
             typeof(AdjustableSlider),
-            new FrameworkPropertyMetadata(0.0, OnValueChanged) { BindsTwoWayByDefault = true });
+            new FrameworkPropertyMetadata(
+                0.0,
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                (d, e) => ((AdjustableSlider)d).OnValueChanged(e)));
 
-        /// <summary>
-        /// Minimum Dependency Property
-        /// </summary>
+        /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>
         public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
             nameof(Minimum),
             typeof(double),
             typeof(AdjustableSlider),
             new FrameworkPropertyMetadata(0.0, OnMinimumChanged));
 
-        /// <summary>
-        /// Maximum Dependency Property
-        /// </summary>
+        /// <summary>Identifies the <see cref="Maximum"/> dependency property.</summary>
         public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
             nameof(Maximum),
             typeof(double),
@@ -122,11 +119,6 @@
         protected virtual void OnMaximumChanged(DependencyPropertyChangedEventArgs e)
         {
             this.UpdateAnimation();
-        }
-
-        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((AdjustableSlider)d).OnValueChanged(e);
         }
 
         private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

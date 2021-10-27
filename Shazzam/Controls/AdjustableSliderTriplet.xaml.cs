@@ -14,32 +14,32 @@
     /// </summary>
     public partial class AdjustableSliderTriplet : UserControl
     {
-        /// <summary>
-        /// Value Dependency Property
-        /// </summary>
+        /// <summary>Identifies the <see cref="Value"/> dependency property.</summary>
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
             nameof(Value),
             typeof(Point3D),
             typeof(AdjustableSliderTriplet),
-            new FrameworkPropertyMetadata(new Point3D(0, 0, 0), OnValueChanged));
+            new FrameworkPropertyMetadata(
+                new Point3D(0, 0, 0),
+                (d, e) => ((AdjustableSliderTriplet)d).OnValueChanged(e)));
 
-        /// <summary>
-        /// Minimum Dependency Property
-        /// </summary>
+        /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>
         public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
             nameof(Minimum),
             typeof(Point3D),
             typeof(AdjustableSliderTriplet),
-            new FrameworkPropertyMetadata(new Point3D(0, 0, 0), OnMinimumChanged));
+            new FrameworkPropertyMetadata(
+                new Point3D(0, 0, 0),
+                (d, e) => ((AdjustableSliderTriplet)d).OnMinimumChanged(e)));
 
-        /// <summary>
-        /// Maximum Dependency Property
-        /// </summary>
+        /// <summary>Identifies the <see cref="Maximum"/> dependency property.</summary>
         public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
             nameof(Maximum),
             typeof(Point3D),
             typeof(AdjustableSliderTriplet),
-            new FrameworkPropertyMetadata(new Point3D(100, 100, 100), OnMaximumChanged));
+            new FrameworkPropertyMetadata(
+                new Point3D(100, 100, 100),
+                (d, e) => ((AdjustableSliderTriplet)d).OnMaximumChanged(e)));
 
         private const double DefaultDuration = 0.5;
 
@@ -171,30 +171,6 @@
             this.YMinTextBox.SetCurrentValue(TextBox.TextProperty, point.Y.ToString(CultureInfo.InvariantCulture));
             this.ZMinTextBox.SetCurrentValue(TextBox.TextProperty, point.Z.ToString(CultureInfo.InvariantCulture));
             this.UpdateAnimation();
-        }
-
-        /// <summary>
-        /// Handles changes to the Value property.
-        /// </summary>
-        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((AdjustableSliderTriplet)d).OnValueChanged(e);
-        }
-
-        /// <summary>
-        /// Handles changes to the Minimum property.
-        /// </summary>
-        private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((AdjustableSliderTriplet)d).OnMinimumChanged(e);
-        }
-
-        /// <summary>
-        /// Handles changes to the Maximum property.
-        /// </summary>
-        private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((AdjustableSliderTriplet)d).OnMaximumChanged(e);
         }
 
         private void MainStackPanel_PreviewKeyDown(object sender, KeyEventArgs e)

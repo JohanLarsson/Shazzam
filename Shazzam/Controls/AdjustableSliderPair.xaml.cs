@@ -13,32 +13,33 @@
     /// </summary>
     public partial class AdjustableSliderPair : UserControl
     {
-        /// <summary>
-        /// Value Dependency Property
-        /// </summary>
+        /// <summary>Identifies the <see cref="Value"/> dependency property.</summary>
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
             nameof(Value),
             typeof(Point),
             typeof(AdjustableSliderPair),
-            new FrameworkPropertyMetadata(new Point(0, 0), OnValueChanged) { BindsTwoWayByDefault = true });
+            new FrameworkPropertyMetadata(
+                new Point(0, 0),
+                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                (d, e) => ((AdjustableSliderPair)d).OnValueChanged(e)));
 
-        /// <summary>
-        /// Minimum Dependency Property
-        /// </summary>
+        /// <summary>Identifies the <see cref="Minimum"/> dependency property.</summary>
         public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
             nameof(Minimum),
             typeof(Point),
             typeof(AdjustableSliderPair),
-            new FrameworkPropertyMetadata(new Point(double.NaN, double.NaN), OnMinimumChanged));
+            new FrameworkPropertyMetadata(
+                new Point(double.NaN, double.NaN),
+                (d, e) => ((AdjustableSliderPair)d).OnMinimumChanged(e)));
 
-        /// <summary>
-        /// Maximum Dependency Property
-        /// </summary>
+        /// <summary>Identifies the <see cref="Maximum"/> dependency property.</summary>
         public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
             nameof(Maximum),
             typeof(Point),
             typeof(AdjustableSliderPair),
-            new FrameworkPropertyMetadata(new Point(double.NaN, double.NaN), OnMaximumChanged));
+            new FrameworkPropertyMetadata(
+                new Point(double.NaN, double.NaN),
+                (d, e) => ((AdjustableSliderPair)d).OnMaximumChanged(e)));
 
         private const double DefaultDuration = 2.0;
 
@@ -152,20 +153,7 @@
             this.UpdateAnimation();
         }
 
-        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((AdjustableSliderPair)d).OnValueChanged(e);
-        }
-
-        private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((AdjustableSliderPair)d).OnMinimumChanged(e);
-        }
-
-        private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((AdjustableSliderPair)d).OnMaximumChanged(e);
-        }
+        private static bool IsNaN(Point p) => double.IsNaN(p.X) || double.IsNaN(p.Y);
 
         private void YMaxTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
@@ -272,7 +260,5 @@
                 this.YSlider.SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
             }
         }
-
-        private static bool IsNaN(Point p) => double.IsNaN(p.X) || double.IsNaN(p.Y);
     }
 }

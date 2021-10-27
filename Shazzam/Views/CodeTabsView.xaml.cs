@@ -22,7 +22,7 @@
     public partial class CodeTabView : UserControl, IDisposable
     {
         public static readonly RoutedEvent ShaderEffectChangedEvent = EventManager.RegisterRoutedEvent(
-            "ShaderEffectChanged",
+            nameof(ShaderEffectChanged),
             RoutingStrategy.Bubble,
             typeof(RoutedPropertyChangedEventHandler<object>),
             typeof(CodeTabView));

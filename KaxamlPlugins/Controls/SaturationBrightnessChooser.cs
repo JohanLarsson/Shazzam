@@ -16,7 +16,10 @@
             nameof(Hue),
             typeof(double),
             typeof(SaturationBrightnessChooser),
-            new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender, OnHueChanged));
+            new FrameworkPropertyMetadata(
+                0.0,
+                FrameworkPropertyMetadataOptions.AffectsRender,
+                (o, e) => ((SaturationBrightnessChooser)o).UpdateColor()));
 
         public static readonly DependencyProperty SaturationOffsetProperty = DependencyProperty.Register(
             nameof(SaturationOffset),
@@ -28,7 +31,10 @@
             nameof(Saturation),
             typeof(double),
             typeof(SaturationBrightnessChooser),
-            new FrameworkPropertyMetadata(0.0, OnSaturationChanged, CoerceSaturation));
+            new FrameworkPropertyMetadata(
+                0.0,
+                (o, e) => ((SaturationBrightnessChooser)o).UpdateSaturationOffset(),
+                CoerceSaturation));
 
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
             nameof(Color),
@@ -52,7 +58,10 @@
             nameof(Brightness),
             typeof(double),
             typeof(SaturationBrightnessChooser),
-            new FrameworkPropertyMetadata(0.0, OnBrightnessChanged, CoerceBrightness));
+            new FrameworkPropertyMetadata(
+                0.0,
+                (o, e) => ((SaturationBrightnessChooser)o).UpdateBrightnessOffset(),
+                CoerceBrightness));
 
         public Thickness OffsetPadding
         {
@@ -153,19 +162,7 @@
             base.OnMouseUp(e);
         }
 
-        private static void OnHueChanged(object o, DependencyPropertyChangedEventArgs e)
-        {
-            var h = (SaturationBrightnessChooser)o;
-            h.UpdateColor();
-        }
-
-        private static void OnSaturationChanged(object o, DependencyPropertyChangedEventArgs e)
-        {
-            var h = (SaturationBrightnessChooser)o;
-            h.UpdateSaturationOffset();
-        }
-
-        private static object CoerceSaturation(DependencyObject d, object brightness)
+        private static object CoerceSaturation(DependencyObject d, object? brightness)
         {
             var v = (double)brightness;
             if (v < 0)
@@ -181,13 +178,7 @@
             return v;
         }
 
-        private static void OnBrightnessChanged(object o, DependencyPropertyChangedEventArgs e)
-        {
-            var h = (SaturationBrightnessChooser)o;
-            h.UpdateBrightnessOffset();
-        }
-
-        private static object CoerceBrightness(DependencyObject d, object brightness)
+        private static object CoerceBrightness(DependencyObject d, object? brightness)
         {
             var v = (double)brightness;
             if (v < 0)

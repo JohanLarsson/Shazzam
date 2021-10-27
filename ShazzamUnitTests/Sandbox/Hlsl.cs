@@ -1,7 +1,6 @@
-﻿// ReSharper disable InconsistentNaming
-#pragma warning disable SA1300 // Element must begin with upper-case letter
-#pragma warning disable IDE1006 // Naming Styles
-#pragma warning disable SA1400 // Access modifier must be declared
+﻿// ReSharper disable All
+#pragma warning disable SA1101, SA1300, SA1400
+#pragma warning disable IDE0007, IDE0009, IDE0040, IDE1006
 namespace ShazzamUnitTests.Sandbox
 {
     using System;

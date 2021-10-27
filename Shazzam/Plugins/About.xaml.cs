@@ -11,18 +11,18 @@
         public About()
         {
             this.InitializeComponent();
-            this.AddHandler(Hyperlink.RequestNavigateEvent, new RoutedEventHandler(HandleRequestNavigate), handledEventsToo: false);
+            this.AddHandler(Hyperlink.RequestNavigateEvent, new RoutedEventHandler(OnRequestNavigate), handledEventsToo: false);
             this.versionText.Text = VersionHelper.GetVersionNumber();
             this.versionRun.Text = $"v{VersionHelper.GetShortVersionNumber()}";
-        }
 
-        private static void HandleRequestNavigate(object sender, RoutedEventArgs e)
-        {
-            if (e.OriginalSource is Hyperlink hl)
+            static void OnRequestNavigate(object sender, RoutedEventArgs e)
             {
-                var navigateUri = hl.NavigateUri.ToString();
-                Process.Start(new ProcessStartInfo(navigateUri));
-                e.Handled = true;
+                if (e.OriginalSource is Hyperlink hl)
+                {
+                    var navigateUri = hl.NavigateUri.ToString();
+                    Process.Start(new ProcessStartInfo(navigateUri));
+                    e.Handled = true;
+                }
             }
         }
     }

@@ -1,12 +1,6 @@
-﻿// ReSharper disable InconsistentNaming
-// ReSharper disable ArrangeThisQualifier
-// ReSharper disable ArrangeTypeMemberModifiers
-// ReSharper disable SuggestVarOrType_BuiltInTypes
-#pragma warning disable SA1101 // Prefix local calls with this
-#pragma warning disable SA1300 // Element must begin with upper-case letter
-#pragma warning disable IDE1006 // Naming Styles
-#pragma warning disable SA1400 // Access modifier must be declared
-#pragma warning disable SA1306 // Field names must begin with lower-case letter
+﻿// ReSharper disable All
+#pragma warning disable SA1101, SA1300, SA1400
+#pragma warning disable IDE0007, IDE0009, IDE0040, IDE1006
 namespace ShazzamUnitTests.Sandbox
 {
     using NUnit.Framework;
@@ -14,7 +8,7 @@ namespace ShazzamUnitTests.Sandbox
 
     public class AngleTests : Hlsl
     {
-        static float PI2 = 6.28318548f;
+        private const float PI2 = 6.28318548f;
 
         [TestCase("1 0.5", "0.5 0.5", 0, 360, 90)]
         [TestCase("1 0.5", "0.5 0.5", 0, -360, 270)]
