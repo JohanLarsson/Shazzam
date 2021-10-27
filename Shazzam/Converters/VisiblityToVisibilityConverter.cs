@@ -4,24 +4,23 @@
     using System.Windows;
     using System.Windows.Data;
 
-    internal sealed class VisibiltyToVisibilityConverter : IValueConverter
+    [ValueConversion(typeof(object), typeof(Visibility))]
+    public sealed class VisibilityToVisibilityConverter : IValueConverter
     {
-        internal static readonly VisibiltyToVisibilityConverter Default = new();
+        public static readonly VisibilityToVisibilityConverter CollapsedWhenVisible = new();
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value is Visibility visibility &&
-                visibility == Visibility.Visible)
+            return value switch
             {
-                return Visibility.Collapsed;
-            }
-
-            return Visibility.Visible;
+                Visibility.Visible => Visibility.Collapsed,
+                _ => Visibility.Visible,
+            };
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        object IValueConverter.ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException($"{nameof(VisibilityToVisibilityConverter)} can only be used in OneWay bindings");
         }
     }
 }

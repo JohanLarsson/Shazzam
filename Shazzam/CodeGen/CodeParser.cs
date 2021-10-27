@@ -102,7 +102,7 @@
         /// </summary>
         private static ShaderModelConstantRegister? CreateRegister(TargetFramework targetFramework, Match match)
         {
-            ShaderModelConstantRegister register = null;
+            ShaderModelConstantRegister? register = null;
 
             // Figure out the .NET type that corresponds to the register type.
             var registerTypeInHlsl = match.Groups["registerType"].Value;

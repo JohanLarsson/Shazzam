@@ -4,25 +4,24 @@
     using System.Windows;
     using System.Windows.Data;
 
-    [ValueConversion(typeof(object), typeof(Visibility))]
+    [ValueConversion(typeof(string), typeof(Visibility))]
     public sealed class StringToVisibilityConverter : IValueConverter
     {
-        public static readonly StringToVisibilityConverter Default = new();
+        public static readonly StringToVisibilityConverter CollapsedWhenNullOrEmpty = new();
 
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
         {
-            var temp = value.ToString();
-            if (temp.Length == 0)
+            return value switch
             {
-                return Visibility.Collapsed;
-            }
-
-            return Visibility.Visible;
+                null => Visibility.Collapsed,
+                string { Length: 0 } => Visibility.Collapsed,
+                _ => Visibility.Visible,
+            };
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        object IValueConverter.ConvertBack(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException($"{nameof(StringToVisibilityConverter)} can only be used in OneWay bindings");
         }
     }
 }

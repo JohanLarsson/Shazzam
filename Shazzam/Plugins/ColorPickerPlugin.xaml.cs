@@ -1,4 +1,4 @@
-namespace Shazzam.Plugins
+﻿namespace Shazzam.Plugins
 {
     using System;
     using System.Collections.ObjectModel;
@@ -13,27 +13,25 @@ namespace Shazzam.Plugins
 
     public partial class ColorPickerPlugin : UserControl
     {
-        /// <summary>
-        /// DependencyProperty for Colors
-        /// </summary>
         public static readonly DependencyProperty ColorsProperty = DependencyProperty.Register(
             nameof(Colors),
             typeof(ObservableCollection<Color>),
             typeof(ColorPickerPlugin),
-            new FrameworkPropertyMetadata(default(ObservableCollection<Color>), OnColorsChanged));
+            new FrameworkPropertyMetadata(
+                default(ObservableCollection<Color>),
+                OnColorsChanged));
 
-        /// <summary>
-        /// DependencyProperty for ColorString
-        /// </summary>
         public static readonly DependencyProperty ColorStringProperty = DependencyProperty.Register(
             nameof(ColorString),
             typeof(string),
             typeof(ColorPickerPlugin),
-            new FrameworkPropertyMetadata(default(string), OnColorStringChanged));
+            new FrameworkPropertyMetadata(
+                default(string),
+                OnColorStringChanged));
 
         private const char Delimiter = '|';
         private bool updateInternal;
-        private DispatcherTimer colorChangedTimer;
+        private DispatcherTimer? colorChangedTimer;
         private Color colorChangedColor;
 
         public ColorPickerPlugin()
@@ -45,21 +43,15 @@ namespace Shazzam.Plugins
             KaxamlInfo.EditSelectionChanged += this.KaxamlInfoEditSelectionChanged;
         }
 
-        /// <summary>
-        /// description of the property
-        /// </summary>
-        public ObservableCollection<Color> Colors
+        public ObservableCollection<Color>? Colors
         {
-            get => (ObservableCollection<Color>)this.GetValue(ColorsProperty);
+            get => (ObservableCollection<Color>?)this.GetValue(ColorsProperty);
             set => this.SetValue(ColorsProperty, value);
         }
 
-        /// <summary>
-        /// description of the property
-        /// </summary>
-        public string ColorString
+        public string? ColorString
         {
-            get => (string)this.GetValue(ColorStringProperty);
+            get => (string?)this.GetValue(ColorStringProperty);
             set => this.SetValue(ColorStringProperty, value);
         }
 

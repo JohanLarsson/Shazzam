@@ -10,8 +10,6 @@
              DataContext="{x:Static views:CodeViewModel.Instance}"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <converters:StringToVisibilityConverter x:Key="VisConverter" />
-        <converters:VisibiltyToVisibilityConverter x:Key="VisvisConverter" />
         <LinearGradientBrush x:Key="TabBrush" StartPoint="0,0" EndPoint="1,0">
             <GradientStop Offset="0" Color="{StaticResource Dark}" />
             <GradientStop Offset="1" Color="{StaticResource Light}" />
@@ -80,7 +78,7 @@
                                      IsReadOnlyCaretVisible="True"
                                      MouseLeftButtonDown="OutputTextBoxMouseLeftButtonDown"
                                      ToolTip="Double-click here to goto error."
-                                     Visibility="{Binding Text, Converter={StaticResource VisConverter}, RelativeSource={RelativeSource Self}}">
+                                     Visibility="{Binding Text, Converter={x:Static converters:StringToVisibilityConverter.CollapsedWhenNullOrEmpty}, RelativeSource={RelativeSource Self}}">
 
                                 <TextBox.Effect>
                                     <DropShadowEffect BlurRadius="9"
@@ -137,7 +135,7 @@
             </Border>
         </TabItem>
 
-        <TabItem x:Name="InputControlsTab" Visibility="{Binding Visibility, Converter={StaticResource VisvisConverter}, ElementName=OutputTextBox}">
+        <TabItem x:Name="InputControlsTab" Visibility="{Binding Visibility, Converter={x:Static converters:VisibilityToVisibilityConverter.CollapsedWhenVisible}, ElementName=OutputTextBox}">
             <TabItem.Header>
                 <TextBlock Background="Transparent"
                            Text="Tryout (adjust settings)"
@@ -351,7 +349,7 @@
 
         <TabItem x:Name="CsharpTab"
                  Header="Generated Shader - C#"
-                 Visibility="{Binding Visibility, Converter={StaticResource VisvisConverter}, ElementName=OutputTextBox}">
+                 Visibility="{Binding Visibility, Converter={x:Static converters:VisibilityToVisibilityConverter.CollapsedWhenVisible}, ElementName=OutputTextBox}">
             <Border BorderBrush="{DynamicResource NeutralDarkBrush}" BorderThickness="9">
                 <Border BorderBrush="White" BorderThickness="1">
                     <DockPanel MinWidth="330" LastChildFill="True">

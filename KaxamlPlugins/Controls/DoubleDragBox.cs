@@ -8,27 +8,18 @@
 
     public class DoubleDragBox : Control
     {
-        /// <summary>
-        /// Indicates the number of digits that are displayed (beyond 0).
-        /// </summary>
         public static readonly DependencyProperty PrecisionProperty = DependencyProperty.Register(
             nameof(Precision),
             typeof(int),
             typeof(DoubleDragBox),
             new UIPropertyMetadata(2));
 
-        /// <summary>
-        /// A string corresponding to the value of the Current property.
-        /// </summary>
         public static readonly DependencyProperty CurrentTextProperty = DependencyProperty.Register(
             nameof(CurrentText),
             typeof(string),
             typeof(DoubleDragBox),
             new UIPropertyMetadata(string.Empty));
 
-        /// <summary>
-        /// The current value.
-        /// </summary>
         public static readonly DependencyProperty CurrentProperty = DependencyProperty.Register(
             nameof(Current),
             typeof(double),

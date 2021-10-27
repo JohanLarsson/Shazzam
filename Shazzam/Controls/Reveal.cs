@@ -13,7 +13,7 @@
             typeof(Reveal),
             new UIPropertyMetadata(
                 false,
-                (sender, e) => ((Reveal)sender).SetupAnimation((bool)e.NewValue)));
+                (sender, e) => ((Reveal)sender).OnIsExpandedChanged((bool)e.NewValue)));
 
         // Using a DependencyProperty as the backing store for Duration.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DurationProperty = DependencyProperty.Register(
@@ -209,7 +209,7 @@
             }
         }
 
-        private void SetupAnimation(bool isExpanded)
+        private void OnIsExpandedChanged(bool isExpanded)
         {
             // Adjust the time if the animation is already in progress
             var currentProgress = this.AnimationProgress;

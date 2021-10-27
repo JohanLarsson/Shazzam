@@ -14,7 +14,7 @@
             typeof(ElementCursorDecorator),
             new UIPropertyMetadata(null));
 
-        private CursorAdorner cursorAdorner;
+        private CursorAdorner? cursorAdorner;
 
         static ElementCursorDecorator()
         {
@@ -22,9 +22,9 @@
             ForceCursorProperty.OverrideMetadata(typeof(ElementCursorDecorator), new FrameworkPropertyMetadata(true));
         }
 
-        public UIElement CursorElement
+        public UIElement? CursorElement
         {
-            get => (UIElement)this.GetValue(CursorElementProperty);
+            get => (UIElement?)this.GetValue(CursorElementProperty);
             set => this.SetValue(CursorElementProperty, value);
         }
 
@@ -61,8 +61,11 @@
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            this.cursorAdorner.Offset = e.GetPosition(this);
-            base.OnMouseMove(e);
+            if (this.cursorAdorner != null)
+            {
+                this.cursorAdorner.Offset = e.GetPosition(this);
+                base.OnMouseMove(e);
+            }
         }
 
         protected override void OnRender(DrawingContext dc)
