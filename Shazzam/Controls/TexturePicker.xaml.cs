@@ -75,7 +75,7 @@
                 DefaultExt = ".jpg",
                 Filter = "JPEG Images (.jpg); PNG files(.png)|*.jpg;*.png|All Files(*.*)|*.*",
                 CheckFileExists = true,
-                CheckPathExists = true
+                CheckPathExists = true,
             };
 
             // Default file extension
@@ -216,7 +216,7 @@
                 {
                     ShortFileName = System.IO.Path.GetFileNameWithoutExtension(file),
                     LongFileName = file,
-                    TrimmedFileName = AssemblyPrefix + System.IO.Path.GetFileName(file)
+                    TrimmedFileName = AssemblyPrefix + System.IO.Path.GetFileName(file),
                 });
             }
         }

@@ -4,6 +4,6 @@ namespace Shazzam.Controls
     {
         Before,
         Selected,
-        After
+        After,
     }
 }

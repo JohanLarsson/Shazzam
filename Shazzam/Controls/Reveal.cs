@@ -223,7 +223,7 @@
                                              ? 1.0
                                              : 0.0,
                                     Duration = TimeSpan.FromMilliseconds(this.Duration * currentProgress),
-                                    FillBehavior = FillBehavior.HoldEnd
+                                    FillBehavior = FillBehavior.HoldEnd,
                                 };
 
             this.BeginAnimation(AnimationProgressProperty, animation);

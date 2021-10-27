@@ -70,13 +70,13 @@
                 Name = shaderModel.GeneratedClassName,
                 BaseTypes =
                 {
-                    new CodeTypeReference("ShaderEffect")
+                    new CodeTypeReference("ShaderEffect"),
                 },
                 Members =
                 {
                     constructor,
                     CreateSamplerDependencyProperty(shaderModel.GeneratedClassName, "Input"),
-                    CreateClrProperty("Input", typeof(Brush), null)
+                    CreateClrProperty("Input", typeof(Brush), null),
                 },
             };
             if (!string.IsNullOrEmpty(shaderModel.Description))
@@ -118,7 +118,7 @@
                     new CodeCommentStatement($"The uri should be something like pack://application:,,,/Gu.Wpf.Geometry;component/Effects/{model.GeneratedClassName}.ps", docComment: true),
                     new CodeCommentStatement($"The file {model.GeneratedClassName}.ps should have BuildAction: Resource", docComment: true),
                     new CodeCommentStatement("</summary>", docComment: true)
-                }
+                },
             };
         }
 
@@ -143,7 +143,7 @@
                         new CodeTypeOfExpression(className),
                         new CodePrimitiveExpression(0)
                     }
-                }
+                },
             };
         }
 
@@ -166,14 +166,14 @@
                         Method = new CodeMethodReferenceExpression
                         {
                             TargetObject = new CodeTypeReferenceExpression("ShaderEffect"),
-                            MethodName = "RegisterPixelShaderSamplerProperty"
+                            MethodName = "RegisterPixelShaderSamplerProperty",
                         },
                         Parameters =
                         {
                             new CodePrimitiveExpression(register.RegisterName),
                             new CodeTypeOfExpression(shaderModel.GeneratedClassName),
                             new CodePrimitiveExpression(register.RegisterNumber)
-                        }
+                        },
                     },
                 };
             }
@@ -215,7 +215,7 @@
                             }
                         }
                     }
-                }
+                },
             };
         }
 
@@ -297,7 +297,7 @@
                                 Parameters = { new CodeVariableReferenceExpression($"{propertyName}Property") }
                             }
                         }
-                    }
+                    },
                 },
                 HasSet = true,
                 SetStatements =
@@ -311,7 +311,7 @@
                             new CodeVariableReferenceExpression("value")
                         }
                     }
-                }
+                },
             };
 
             if (type == typeof(Brush))
@@ -344,7 +344,7 @@
                 Attributes = MemberAttributes.Public,
                 Parameters =
                 {
-                    new CodeParameterDeclarationExpression("PixelShader", "shader")
+                    new CodeParameterDeclarationExpression("PixelShader", "shader"),
                 },
                 Statements =
                 {
@@ -354,7 +354,7 @@
                         Right = new CodeArgumentReferenceExpression("shader")
                     },
                     CreateUpdateMethod("Input")
-                }
+                },
             };
             foreach (var register in shaderModel.Registers)
             {
@@ -377,7 +377,7 @@
                         Right = new CodeFieldReferenceExpression(null, "Shader")
                     },
                     CreateUpdateMethod("Input")
-                }
+                },
             };
             foreach (var register in shaderModel.Registers)
             {
@@ -412,7 +412,7 @@
                         new CodeNamespaceImport("System.Windows"),
                         new CodeNamespaceImport("System.Windows.Media"),
                         new CodeNamespaceImport("System.Windows.Media.Effects"),
-                        new CodeNamespaceImport("System.Windows.Media.Media3D")
+                        new CodeNamespaceImport("System.Windows.Media.Media3D"),
                     },
                 });
 

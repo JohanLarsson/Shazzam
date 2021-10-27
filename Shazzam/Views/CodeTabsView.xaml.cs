@@ -396,7 +396,7 @@
                 ShowTabs = false,
                 ShowVRuler = false,
                 ShowMatchingBracket = true,
-                AutoScroll = true
+                AutoScroll = true,
             };
 
             currentEditor.Document.TextEditorProperties.IndentationSize = 4;

@@ -47,7 +47,7 @@ namespace Shazzam.Views
             {
                 Root = new Plugins.FileLoaderPlugin(),
                 Name = "Shader Loader",
-                Description = "Pick a shader file to open"
+                Description = "Pick a shader file to open",
             };
 
             this.Plugins.Add(fileLoader);
@@ -64,7 +64,7 @@ namespace Shazzam.Views
             {
                 Root = new About(),
                 Name = "About Shazzam",
-                Description = "About Shazzam"
+                Description = "About Shazzam",
             };
             this.Plugins.Add(about);
             //// SelectedPlugin = colorLoader;
@@ -76,7 +76,7 @@ namespace Shazzam.Views
             {
                 Root = new SettingsPlugin(),
                 Name = "Settings",
-                Description = "Modify program settings and options"
+                Description = "Modify program settings and options",
             };
             //// settings.Key = Key.E;
             //// settings.ModifierKeys = ModifierKeys.Control;

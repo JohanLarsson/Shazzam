@@ -94,7 +94,6 @@
             }
             else
             {
-                IntPtr ppConstantTable;
                 if (IntPtr.Size == 8)
                 {
                     // 64 bit
@@ -108,7 +107,7 @@
                         0,
                         out ppShader,
                         out ppErrorMsgs,
-                        out ppConstantTable);
+                        out _);
                 }
                 else
                 {
@@ -123,7 +122,7 @@
                         0,
                         out ppShader,
                         out ppErrorMsgs,
-                        out ppConstantTable);
+                        out _);
                 }
             }
 

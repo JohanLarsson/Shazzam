@@ -4,6 +4,6 @@
     {
         WPF,
         Silverlight,
-        WPF_PS3
+        WPF_PS3,
     }
 }

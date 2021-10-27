@@ -49,7 +49,7 @@
             RepeatBehavior = RepeatBehavior.Forever,
             AutoReverse = true,
             AccelerationRatio = 0.25,
-            DecelerationRatio = 0.25
+            DecelerationRatio = 0.25,
         };
 
         private readonly DoubleAnimation ySliderValueAnimation = new()
@@ -58,7 +58,7 @@
             RepeatBehavior = RepeatBehavior.Forever,
             AutoReverse = true,
             AccelerationRatio = 0.25,
-            DecelerationRatio = 0.25
+            DecelerationRatio = 0.25,
         };
 
         public AdjustableSliderPair()

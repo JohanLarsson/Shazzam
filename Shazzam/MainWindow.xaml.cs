@@ -233,7 +233,7 @@
             var sfd = new SaveFileDialog
             {
                 Filter = "FX files|*.fx;|All Files|*.*",
-                InitialDirectory = Properties.Settings.Default.FolderPath_FX
+                InitialDirectory = Properties.Settings.Default.FolderPath_FX,
             };
 
             if (sfd.ShowDialog() == true)
