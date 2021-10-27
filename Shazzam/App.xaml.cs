@@ -74,18 +74,11 @@
             }
             catch (Exception ex)
             {
-                using (var isoStore = IsolatedStorageFile.GetUserStoreForAssembly())
-                {
-                    using (var isoStream = new IsolatedStorageFileStream(
-                            "starupError.txt", FileMode.Create, FileAccess.Write, isoStore))
-                    {
-                        using (var writer = new StreamWriter(isoStream))
-                        {
-                            writer.WriteLine(ex.Message);
-                            writer.WriteLine(ex.StackTrace);
-                        }
-                    }
-                }
+                using var isoStore = IsolatedStorageFile.GetUserStoreForAssembly();
+                using var isoStream = new IsolatedStorageFileStream("starupError.txt", FileMode.Create, FileAccess.Write, isoStore);
+                using var writer = new StreamWriter(isoStream);
+                writer.WriteLine(ex.Message);
+                writer.WriteLine(ex.StackTrace);
             }
         }
 

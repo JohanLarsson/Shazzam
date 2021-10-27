@@ -30,10 +30,10 @@
         private readonly ICSharpCode.TextEditor.TextEditorControl shaderTextEditor;
         private readonly ICSharpCode.TextEditor.TextEditorControl csTextEditor;
 
-        private readonly Storyboard blurStoryBoard = new Storyboard();
-        private readonly DoubleAnimation blurAnimation = new DoubleAnimation();
-        private readonly DoubleAnimation opacityAnimation = new DoubleAnimation();
-        private readonly BlurEffect blur = new BlurEffect { Radius = 0, RenderingBias = RenderingBias.Performance };
+        private readonly Storyboard blurStoryBoard = new();
+        private readonly DoubleAnimation blurAnimation = new();
+        private readonly DoubleAnimation opacityAnimation = new();
+        private readonly BlurEffect blur = new() { Radius = 0, RenderingBias = RenderingBias.Performance };
         private readonly DefaultHighlightingStrategy hlslHs;
         private readonly ShaderCompiler compiler;
 

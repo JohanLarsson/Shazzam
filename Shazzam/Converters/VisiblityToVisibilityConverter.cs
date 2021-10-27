@@ -6,7 +6,7 @@
 
     internal sealed class VisibiltyToVisibilityConverter : IValueConverter
     {
-        internal static readonly VisibiltyToVisibilityConverter Default = new VisibiltyToVisibilityConverter();
+        internal static readonly VisibiltyToVisibilityConverter Default = new();
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

@@ -8,7 +8,7 @@
 
     public sealed class RegisterValueConverter : IValueConverter
     {
-        public static readonly RegisterValueConverter Default = new RegisterValueConverter();
+        public static readonly RegisterValueConverter Default = new();
 
         public static object ConvertToUsualType(object value)
         {

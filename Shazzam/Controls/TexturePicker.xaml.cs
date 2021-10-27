@@ -21,7 +21,7 @@
             typeof(TexturePicker),
             new FrameworkPropertyMetadata(null, OnValueChanged));
 
-        private static readonly Dictionary<int, ImageBrush> Images = new Dictionary<int, ImageBrush>();
+        private static readonly Dictionary<int, ImageBrush> Images = new();
         private readonly ShaderModelConstantRegister register;
 
         public TexturePicker(ShaderModelConstantRegister register)

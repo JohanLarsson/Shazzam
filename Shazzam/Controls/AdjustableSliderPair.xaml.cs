@@ -42,8 +42,8 @@
 
         private const double DefaultDuration = 2.0;
 
-        private readonly Storyboard storyboard = new Storyboard();
-        private readonly DoubleAnimation xSliderValueAnimation = new DoubleAnimation
+        private readonly Storyboard storyboard = new();
+        private readonly DoubleAnimation xSliderValueAnimation = new()
         {
             Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
             RepeatBehavior = RepeatBehavior.Forever,
@@ -52,7 +52,7 @@
             DecelerationRatio = 0.25
         };
 
-        private readonly DoubleAnimation ySliderValueAnimation = new DoubleAnimation
+        private readonly DoubleAnimation ySliderValueAnimation = new()
         {
             Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
             RepeatBehavior = RepeatBehavior.Forever,

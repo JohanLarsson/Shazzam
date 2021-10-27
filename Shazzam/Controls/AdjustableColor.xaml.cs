@@ -22,8 +22,8 @@
 
         private const double DefaultDuration = 2.0;
 
-        private readonly Storyboard storyboard = new Storyboard();
-        private readonly ColorAnimation colorValueAnimation = new ColorAnimation
+        private readonly Storyboard storyboard = new();
+        private readonly ColorAnimation colorValueAnimation = new()
         {
             Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
             RepeatBehavior = RepeatBehavior.Forever,

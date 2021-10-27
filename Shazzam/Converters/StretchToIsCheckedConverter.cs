@@ -6,7 +6,7 @@
 
     public sealed class StretchToIsCheckedConverter : IValueConverter
     {
-        public static readonly StretchToIsCheckedConverter Default = new StretchToIsCheckedConverter();
+        public static readonly StretchToIsCheckedConverter Default = new();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

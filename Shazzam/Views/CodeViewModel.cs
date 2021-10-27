@@ -5,7 +5,7 @@
 
     public sealed class CodeViewModel : INotifyPropertyChanged
     {
-        public static readonly CodeViewModel Instance = new CodeViewModel();
+        public static readonly CodeViewModel Instance = new();
         private ShaderModel shaderModel;
 
         private CodeViewModel()

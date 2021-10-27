@@ -1,4 +1,4 @@
-namespace Shazzam.CodeGen
+﻿namespace Shazzam.CodeGen
 {
     using System;
     using System.ComponentModel;
@@ -7,10 +7,10 @@ namespace Shazzam.CodeGen
 
     internal class ShaderCompiler : INotifyPropertyChanged
     {
-        private string errorText;
+        private string? errorText;
         private bool isCompiled;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         [Guid("8BA5FB08-5195-40e2-AC58-0D989C3A0102")]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
@@ -23,7 +23,7 @@ namespace Shazzam.CodeGen
             int GetBufferSize();
         }
 
-        public string ErrorText
+        public string? ErrorText
         {
             get => this.errorText;
 
@@ -223,7 +223,7 @@ namespace Shazzam.CodeGen
             // for instrumentation
         }
 
-        private void RaiseNotifyChanged([System.Runtime.CompilerServices.CallerMemberName] string propName = null)
+        private void RaiseNotifyChanged([System.Runtime.CompilerServices.CallerMemberName] string? propName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }

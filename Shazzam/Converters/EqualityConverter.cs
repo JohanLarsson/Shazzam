@@ -7,7 +7,7 @@
     [ValueConversion(typeof(object), typeof(bool))]
     public sealed class EqualityConverter : IValueConverter
     {
-        public static readonly EqualityConverter Default = new EqualityConverter();
+        public static readonly EqualityConverter Default = new();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

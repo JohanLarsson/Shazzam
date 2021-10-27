@@ -47,11 +47,11 @@ namespace ShazzamUnitTests.Sandbox
 
         protected float3 lerp(float3 x, float3 y, float s) => x + (s * (y - x));
 
-        protected float2 float2(float x, float y) => new float2(x, y);
+        protected float2 float2(float x, float y) => new(x, y);
 
-        protected float3 float3(float r, float g, float b) => new float3(r, g, b);
+        protected float3 float3(float r, float g, float b) => new(r, g, b);
 
-        protected float4 float4(float r, float g, float b, float a) => new float4(r, g, b, a);
+        protected float4 float4(float r, float g, float b, float a) => new(r, g, b, a);
 
         public class Types
         {
@@ -67,15 +67,15 @@ namespace ShazzamUnitTests.Sandbox
 
                 public float y { get; }
 
-                public static float2 operator +(float2 left, float2 right) => new float2(
+                public static float2 operator +(float2 left, float2 right) => new(
                     left.x + right.x,
                     left.y + right.y);
 
-                public static float2 operator -(float2 left, float2 right) => new float2(
+                public static float2 operator -(float2 left, float2 right) => new(
                     left.x - right.x,
                     left.y - right.y);
 
-                public static float2 operator *(float left, float2 right) => new float2(
+                public static float2 operator *(float left, float2 right) => new(
                     left * right.x,
                     left * right.y);
 
@@ -110,17 +110,17 @@ namespace ShazzamUnitTests.Sandbox
 
                 public float b { get; }
 
-                public static float3 operator +(float3 left, float3 right) => new float3(
+                public static float3 operator +(float3 left, float3 right) => new(
                     left.r + right.r,
                     left.g + right.g,
                     left.b + right.b);
 
-                public static float3 operator -(float3 left, float3 right) => new float3(
+                public static float3 operator -(float3 left, float3 right) => new(
                     left.r - right.r,
                     left.g - right.g,
                     left.b - right.b);
 
-                public static float3 operator *(float left, float3 right) => new float3(
+                public static float3 operator *(float left, float3 right) => new(
                     left * right.r,
                     left * right.g,
                     left * right.b);
@@ -130,7 +130,7 @@ namespace ShazzamUnitTests.Sandbox
 
             public struct float4 : IEquatable<string>
             {
-                private static readonly ColorConverter ColorConverter = new ColorConverter();
+                private static readonly ColorConverter ColorConverter = new();
 
                 public float4(float r, float g, float b, float a)
                 {
@@ -148,21 +148,21 @@ namespace ShazzamUnitTests.Sandbox
 
                 public float a { get; }
 
-                public float3 rgb => new float3(r, g, b);
+                public float3 rgb => new(this.r, this.g, this.b);
 
-                public static float4 operator +(float4 left, float4 right) => new float4(
+                public static float4 operator +(float4 left, float4 right) => new(
                     left.r + right.r,
                     left.g + right.g,
                     left.b + right.b,
                     left.a + right.a);
 
-                public static float4 operator -(float4 left, float4 right) => new float4(
+                public static float4 operator -(float4 left, float4 right) => new(
                     left.r - right.r,
                     left.g - right.g,
                     left.b - right.b,
                     left.a - right.a);
 
-                public static float4 operator *(float left, float4 right) => new float4(
+                public static float4 operator *(float left, float4 right) => new(
                     left * right.r,
                     left * right.g,
                     left * right.b,
@@ -180,7 +180,7 @@ namespace ShazzamUnitTests.Sandbox
                         (float)color.A / byte.MaxValue);
                 }
 
-                public bool Equals(string other) => ToString() == other;
+                public bool Equals(string other) => this.ToString() == other;
 
                 public override string ToString() => Color.FromArgb((byte)(byte.MaxValue * this.a), (byte)(byte.MaxValue * this.r), (byte)(byte.MaxValue * this.g), (byte)(byte.MaxValue * this.b)).ToString();
             }

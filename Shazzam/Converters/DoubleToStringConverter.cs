@@ -7,8 +7,8 @@
     [ValueConversion(typeof(double), typeof(string))]
     public sealed class DoubleToStringConverter : IValueConverter
     {
-        public static readonly DoubleToStringConverter F1 = new DoubleToStringConverter("F1");
-        public static readonly DoubleToStringConverter F2 = new DoubleToStringConverter("F2");
+        public static readonly DoubleToStringConverter F1 = new("F1");
+        public static readonly DoubleToStringConverter F2 = new("F2");
 
         private readonly string format;
 

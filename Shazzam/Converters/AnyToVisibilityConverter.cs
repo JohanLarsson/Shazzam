@@ -11,8 +11,8 @@
     [ValueConversion(typeof(IEnumerable), typeof(Visibility))]
     public sealed class AnyToVisibilityConverter : IValueConverter
     {
-        public static readonly AnyToVisibilityConverter VisibleWhenAny = new AnyToVisibilityConverter(Visibility.Visible, Visibility.Collapsed);
-        public static readonly AnyToVisibilityConverter VisibleWhenEmpty = new AnyToVisibilityConverter(Visibility.Collapsed, Visibility.Visible);
+        public static readonly AnyToVisibilityConverter VisibleWhenAny = new(Visibility.Visible, Visibility.Collapsed);
+        public static readonly AnyToVisibilityConverter VisibleWhenEmpty = new(Visibility.Collapsed, Visibility.Visible);
 
         private readonly object whenAny;
         private readonly object whenEmpty;

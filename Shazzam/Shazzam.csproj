@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <OutputType>WinExe</OutputType>
@@ -33,5 +33,17 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+
+  <!-- For faster command line builds as tooling does not work with Gu.Roslyn.Extensions. -->
+  <ItemGroup Condition="'$(BuildingInsideVisualStudio)' == 'true'">
+    <PackageReference Include="Gu.Analyzers" Version="1.8.5" PrivateAssets="all" />
+    <PackageReference Include="IDisposableAnalyzers" Version="3.4.15" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.32-alpha" PrivateAssets="all" />
+    <PackageReference Include="PropertyChangedAnalyzers" Version="3.2.3" PrivateAssets="all" />
+    <PackageReference Include="ReflectionAnalyzers" Version="0.1.22-dev" PrivateAssets="all" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.354" PrivateAssets="all" />
+    <PackageReference Include="WpfAnalyzers" Version="3.5.4" PrivateAssets="all" />
   </ItemGroup>
 </Project>

@@ -12,11 +12,11 @@
 
     public sealed class MainWindowViewModel : INotifyPropertyChanged
     {
-        public static readonly MainWindowViewModel Instance = new MainWindowViewModel();
+        public static readonly MainWindowViewModel Instance = new();
 
         private System.Windows.Media.Stretch imageStretch = System.Windows.Media.Stretch.Uniform;
-        private GridLength codeGridHeight = new GridLength(5, GridUnitType.Star);
-        private GridLength imageRowHeight = new GridLength(5, GridUnitType.Star);
+        private GridLength codeGridHeight = new(5, GridUnitType.Star);
+        private GridLength imageRowHeight = new(5, GridUnitType.Star);
 
         private MainWindowViewModel()
         {

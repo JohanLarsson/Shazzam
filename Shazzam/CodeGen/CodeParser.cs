@@ -39,11 +39,11 @@
         private const string OptionalInitializerPattern = @"(?<initializer>=" + OptionalWhitespacePattern + InitializerValuePattern + OptionalWhitespacePattern + @")?";
 
         // Regular expression that matches a comment from double-slash to end-of-line (but not a triple-slash comment):
-        private static readonly Regex CommentRegex = new Regex(@"(?<!/)//$|(?<!/)//[^/].*?$", RegexOptions.Compiled | RegexOptions.Multiline);
-        private static readonly Regex HeaderCommentsRegex = new Regex(@"(" + HeaderCommentPattern + @")+", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static readonly Regex CommentRegex = new(@"(?<!/)//$|(?<!/)//[^/].*?$", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static readonly Regex HeaderCommentsRegex = new(@"(" + HeaderCommentPattern + @")+", RegexOptions.Compiled | RegexOptions.Multiline);
 
         // Regular expression that matches an entire constant register declaration, including the preceding special comments:
-        private static readonly Regex RegisterConstantDeclarationRegex = new Regex(
+        private static readonly Regex RegisterConstantDeclarationRegex = new(
             SpecialCommentsPattern +
           RegisterTypePattern + RequiredWhitespacePattern + RegisterNamePattern + OptionalWhitespacePattern +
           @":" + OptionalWhitespacePattern + @"register" + OptionalWhitespacePattern +

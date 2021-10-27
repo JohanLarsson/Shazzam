@@ -6,7 +6,7 @@
 
     public sealed class StringToVisibilityConverter : IValueConverter
     {
-        public static readonly StringToVisibilityConverter Default = new StringToVisibilityConverter();
+        public static readonly StringToVisibilityConverter Default = new();
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

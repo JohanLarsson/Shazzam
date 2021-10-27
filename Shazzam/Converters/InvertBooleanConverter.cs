@@ -6,7 +6,7 @@
 
     public sealed class InvertBooleanConverter : IValueConverter
     {
-        public static readonly InvertBooleanConverter Default = new InvertBooleanConverter();
+        public static readonly InvertBooleanConverter Default = new();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

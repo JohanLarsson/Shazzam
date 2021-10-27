@@ -42,14 +42,14 @@
 
         private const double DefaultDuration = 2.0;
 
-        private readonly Storyboard storyboard = new Storyboard();
-        private readonly DoubleAnimation sliderValueAnimation = new DoubleAnimation
+        private readonly Storyboard storyboard = new();
+        private readonly DoubleAnimation sliderValueAnimation = new()
         {
             Duration = new Duration(TimeSpan.FromSeconds(DefaultDuration)),
             RepeatBehavior = RepeatBehavior.Forever,
             AutoReverse = true,
             AccelerationRatio = 0.25,
-            DecelerationRatio = 0.25
+            DecelerationRatio = 0.25,
         };
 
         public AdjustableSlider()
