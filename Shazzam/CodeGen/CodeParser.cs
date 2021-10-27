@@ -167,7 +167,7 @@
             {
                 "float" or "float1" => typeof(double),
                 "float2" => typeof(Point),
-                // Silverlight doesn't have any types that correspond to float3 registers.
+                //// Silverlight doesn't have any types that correspond to float3 registers.
                 "float3" => targetFramework == TargetFramework.WPF ? typeof(Point3D) : null,
                 "float4" => typeof(Color),
                 "sampler1d" => typeof(Brush),

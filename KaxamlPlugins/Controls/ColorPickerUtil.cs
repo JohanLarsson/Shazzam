@@ -5,8 +5,6 @@
 
     public static class ColorPickerUtil
     {
-        private static readonly char[] HexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-
         public static Color ColorFromString(string text) => (Color)ColorConverter.ConvertFromString(text);
 
         public static void HsbFromColor(Color c, out double h, out double s, out double b)

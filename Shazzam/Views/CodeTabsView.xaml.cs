@@ -157,9 +157,7 @@
                 {
                     this.VersionNotSupported.SetCurrentValue(
                         VisibilityProperty,
-                        RenderCapability.IsPixelShaderVersionSupported(3, 0)
-                            ? Visibility.Hidden
-                            : Visibility.Visible);
+                        RenderCapability.IsPixelShaderVersionSupported(3, 0) ? Visibility.Hidden : Visibility.Visible);
 
                     this.compiler.Compile(this.MergedCode, ShaderProfile.PixelShader3);
                 }

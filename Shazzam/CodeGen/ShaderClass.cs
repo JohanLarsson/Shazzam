@@ -208,9 +208,8 @@
                                 CreateDefaultValue(register.RegisterType, register.DefaultValue),
                                 new CodeMethodInvokeExpression
                                 {
-                                    Method = new CodeMethodReferenceExpression(null,
-                                        "PixelShaderConstantCallback"),
-                                    Parameters = { new CodePrimitiveExpression(register.RegisterNumber) }
+                                    Method = new CodeMethodReferenceExpression(null, "PixelShaderConstantCallback"),
+                                    Parameters = { new CodePrimitiveExpression(register.RegisterNumber) },
                                 },
                             },
                         },

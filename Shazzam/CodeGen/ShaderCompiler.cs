@@ -222,7 +222,7 @@
             // for instrumentation
         }
 
-        private void RaiseNotifyChanged([System.Runtime.CompilerServices.CallerMemberName] string? propName = null)
+        protected void RaiseNotifyChanged([System.Runtime.CompilerServices.CallerMemberName] string? propName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }

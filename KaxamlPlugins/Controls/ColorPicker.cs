@@ -39,7 +39,7 @@ namespace KaxamlPlugins.Controls
             typeof(double),
             typeof(ColorPicker),
             new FrameworkPropertyMetadata(
-                0.0, 
+                0.0,
                 (o, _) => OnHsbaChanged(o),
                 (_, baseValue) => Coerce.ClampDouble(baseValue, 0, 1)));
 
