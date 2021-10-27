@@ -86,11 +86,6 @@
             }
         }
 
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private static void ExploreTextureMapsCommandExecute()
         {
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -119,6 +114,11 @@
             {
                 Process.Start(path);
             }
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void FullScreenImageCommandExecute()

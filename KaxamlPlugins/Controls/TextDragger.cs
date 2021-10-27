@@ -27,13 +27,13 @@
             CursorProperty.OverrideMetadata(typeof(TextDragger), new FrameworkPropertyMetadata(Cursors.Hand));
         }
 
-        public string Text
+        public string? Text
         {
             get => (string)this.GetValue(TextProperty);
             set => this.SetValue(TextProperty, value);
         }
 
-        public object Data
+        public object? Data
         {
             get => this.GetValue(DataProperty);
             set => this.SetValue(DataProperty, value);

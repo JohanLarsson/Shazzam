@@ -147,7 +147,7 @@
                 psFile.Write(compiledPs, 0, compiledPs.Length);
             }
 
-            finished:
+finished:
 
             if (ppShader != null)
             {
@@ -172,15 +172,20 @@
             this.ErrorText = "not compiled";
         }
 
+        protected void RaiseNotifyChanged([System.Runtime.CompilerServices.CallerMemberName] string? propName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+
         [PreserveSig]
         [DllImport("D3DX9_40.dll", CharSet = CharSet.Auto)]
         private static extern int D3DXCompileShader(
-            [MarshalAs(UnmanagedType.LPStr)]string pSrcData,
+            [MarshalAs(UnmanagedType.LPStr)] string pSrcData,
             int dataLen,
             IntPtr pDefines,
             IntPtr includes,
-            [MarshalAs(UnmanagedType.LPStr)]string pFunctionName,
-            [MarshalAs(UnmanagedType.LPStr)]string pTarget,
+            [MarshalAs(UnmanagedType.LPStr)] string pFunctionName,
+            [MarshalAs(UnmanagedType.LPStr)] string pTarget,
             int flags,
             out ID3DXBuffer ppShader,
             out ID3DXBuffer ppErrorMsgs,
@@ -189,12 +194,12 @@
         [PreserveSig]
         [DllImport("D3DX9_40_64bit.dll", CharSet = CharSet.Auto, EntryPoint = "D3DXCompileShader")]
         private static extern int D3DXCompileShader64Bit(
-            [MarshalAs(UnmanagedType.LPStr)]string pSrcData,
+            [MarshalAs(UnmanagedType.LPStr)] string pSrcData,
             int dataLen,
             IntPtr pDefines,
             IntPtr includes,
-            [MarshalAs(UnmanagedType.LPStr)]string pFunctionName,
-            [MarshalAs(UnmanagedType.LPStr)]string pTarget,
+            [MarshalAs(UnmanagedType.LPStr)] string pFunctionName,
+            [MarshalAs(UnmanagedType.LPStr)] string pTarget,
             int flags,
             out ID3DXBuffer ppShader,
             out ID3DXBuffer ppErrorMsgs,
@@ -203,13 +208,13 @@
         [PreserveSig]
         [DllImport("d3dx10_43.dll", CharSet = CharSet.Auto)]
         private static extern int D3DX10CompileFromMemory(
-            [MarshalAs(UnmanagedType.LPStr)]string pSrcData,
+            [MarshalAs(UnmanagedType.LPStr)] string pSrcData,
             int dataLen,
-            [MarshalAs(UnmanagedType.LPStr)]string pFilename,
+            [MarshalAs(UnmanagedType.LPStr)] string pFilename,
             IntPtr pDefines,
             IntPtr pInclude,
-            [MarshalAs(UnmanagedType.LPStr)]string pFunctionName,
-            [MarshalAs(UnmanagedType.LPStr)]string pProfile,
+            [MarshalAs(UnmanagedType.LPStr)] string pFunctionName,
+            [MarshalAs(UnmanagedType.LPStr)] string pProfile,
             int flags1,
             int flags2,
             IntPtr pPump,
@@ -220,11 +225,6 @@
         private void CompileFinished()
         {
             // for instrumentation
-        }
-
-        protected void RaiseNotifyChanged([System.Runtime.CompilerServices.CallerMemberName] string? propName = null)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }
