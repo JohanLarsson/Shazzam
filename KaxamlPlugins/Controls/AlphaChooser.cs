@@ -18,7 +18,10 @@
             nameof(Alpha),
             typeof(double),
             typeof(AlphaChooser),
-            new FrameworkPropertyMetadata(1.0, OnAlphaChanged, CoerceAlpha));
+            new FrameworkPropertyMetadata(
+                1.0,
+                OnAlphaChanged,
+                (_, baseValue) => Coerce.ClampDouble(baseValue, 0, 1)));
 
         public static readonly DependencyProperty AlphaOffsetProperty = DependencyProperty.Register(
             nameof(AlphaOffset),
@@ -141,16 +144,6 @@
             var h = (AlphaChooser)o;
             h.UpdateAlphaOffset();
             h.UpdateColor();
-        }
-
-        private static object CoerceAlpha(DependencyObject d, object? brightness)
-        {
-            return (double)brightness! switch
-            {
-                < 0 => 0.0,
-                > 1 => 1.0,
-                _ => brightness,
-            };
         }
 
         private void UpdateAlphaOffset()

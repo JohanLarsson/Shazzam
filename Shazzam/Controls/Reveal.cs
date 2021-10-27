@@ -3,6 +3,7 @@
     using System;
     using System.Windows;
     using System.Windows.Media.Animation;
+    using KaxamlPlugins.Controls;
 
     public class Reveal : System.Windows.Controls.Decorator
     {
@@ -45,7 +46,7 @@
                 0.0,
                 FrameworkPropertyMetadataOptions.AffectsMeasure,
                 null,
-                CoerceAnimationProgress));
+                (_, baseValue) => Coerce.ClampDouble(baseValue, 0, 1)));
 
         static Reveal()
         {
@@ -136,21 +137,6 @@
             }
 
             return default;
-        }
-
-        private static object CoerceAnimationProgress(DependencyObject d, object? baseValue)
-        {
-            var num = (double)baseValue;
-            if (num < 0.0)
-            {
-                return 0.0;
-            }
-            else if (num > 1.0)
-            {
-                return 1.0;
-            }
-
-            return baseValue;
         }
 
         private static double CalculateLeft(double width, double percent, HorizontalRevealMode reveal)

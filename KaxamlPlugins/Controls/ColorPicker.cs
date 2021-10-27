@@ -32,54 +32,70 @@ namespace KaxamlPlugins.Controls
             new FrameworkPropertyMetadata(
                 0.0,
                 (o, _) => OnHsbaChanged(o),
-                (_, hue) => (double)hue! switch
-                {
-                    < 0 => 0.0,
-                    > 1 => 1.0,
-                    _ => hue,
-                }));
+                (_, baseValue) => Coerce.ClampDouble(baseValue, 0, 1)));
 
         public static readonly DependencyProperty SaturationProperty = DependencyProperty.Register(
             nameof(Saturation),
             typeof(double),
             typeof(ColorPicker),
-            new FrameworkPropertyMetadata(0.0, (o, _) => OnHsbaChanged(o), CoerceSaturation));
+            new FrameworkPropertyMetadata(
+                0.0, 
+                (o, _) => OnHsbaChanged(o),
+                (_, baseValue) => Coerce.ClampDouble(baseValue, 0, 1)));
 
         public static readonly DependencyProperty BrightnessProperty = DependencyProperty.Register(
             nameof(Brightness),
             typeof(double),
             typeof(ColorPicker),
-            new FrameworkPropertyMetadata(0.0, (o, _) => OnHsbaChanged(o), CoerceBrightness));
+            new FrameworkPropertyMetadata(
+                0.0,
+                (o, _) => OnHsbaChanged(o),
+                (_, baseValue) => Coerce.ClampDouble(baseValue, 0, 1)));
 
         public static readonly DependencyProperty AlphaProperty = DependencyProperty.Register(
             nameof(Alpha),
             typeof(double),
             typeof(ColorPicker),
-            new FrameworkPropertyMetadata(1.0, (o, _) => OnHsbaChanged(o), CoerceAlpha));
+            new FrameworkPropertyMetadata(
+                1.0,
+                (o, _) => OnHsbaChanged(o),
+                (_, baseValue) => Coerce.ClampDouble(baseValue, 0, 1)));
 
         public static readonly DependencyProperty RProperty = DependencyProperty.Register(
             nameof(R),
             typeof(int),
             typeof(ColorPicker),
-            new FrameworkPropertyMetadata(default(int), (o, _) => OnRgbaChanged(o), (_, o) => CoerceRgba(o)));
+            new FrameworkPropertyMetadata(
+                default(int),
+                (o, _) => OnRgbaChanged(o),
+                (_, baseValue) => Coerce.ClampInt(baseValue, 0, 255)));
 
         public static readonly DependencyProperty GProperty = DependencyProperty.Register(
             nameof(G),
             typeof(int),
             typeof(ColorPicker),
-            new FrameworkPropertyMetadata(default(int), (o, _) => OnRgbaChanged(o), (_, o) => CoerceRgba(o)));
+            new FrameworkPropertyMetadata(
+                default(int),
+                (o, _) => OnRgbaChanged(o),
+                (_, baseValue) => Coerce.ClampInt(baseValue, 0, 255)));
 
         public static readonly DependencyProperty BProperty = DependencyProperty.Register(
             nameof(B),
             typeof(int),
             typeof(ColorPicker),
-            new FrameworkPropertyMetadata(default(int), (o, _) => OnRgbaChanged(o), (_, o) => CoerceRgba(o)));
+            new FrameworkPropertyMetadata(
+                default(int),
+                (o, _) => OnRgbaChanged(o),
+                (_, baseValue) => Coerce.ClampInt(baseValue, 0, 255)));
 
         public static readonly DependencyProperty AProperty = DependencyProperty.Register(
             nameof(A),
             typeof(int),
             typeof(ColorPicker),
-            new FrameworkPropertyMetadata(255, (o, _) => OnRgbaChanged(o), (_, o) => CoerceRgba(o)));
+            new FrameworkPropertyMetadata(
+                255,
+                (o, _) => OnRgbaChanged(o),
+                (_, baseValue) => Coerce.ClampInt(baseValue, 0, 255)));
 
         private bool hsbSetInternally;
         private bool rgbSetInternally;
@@ -189,42 +205,6 @@ namespace KaxamlPlugins.Controls
             }
         }
 
-        private static object CoerceBrightness(DependencyObject d, object? brightness)
-        {
-            return (double)brightness! switch
-            {
-                < 0 => 0.0,
-                > 1 => 1.0,
-                _ => brightness,
-            };
-        }
-
-        private static object CoerceSaturation(DependencyObject d, object? saturation)
-        {
-            return (double)saturation! switch
-            {
-                < 0 => 0.0,
-                > 1 => 1.0,
-                _ => saturation,
-            };
-        }
-
-        private static object CoerceAlpha(DependencyObject d, object? alpha)
-        {
-            var v = (double)alpha;
-            if (v < 0)
-            {
-                return 0.0;
-            }
-
-            if (v > 1)
-            {
-                return 1.0;
-            }
-
-            return v;
-        }
-
         private static void OnHsbaChanged(object sender)
         {
             var c = (ColorPicker)sender;
@@ -236,22 +216,6 @@ namespace KaxamlPlugins.Controls
             c.SetCurrentValue(ColorBrushProperty, new SolidColorBrush(n));
 
             c.hsbSetInternally = false;
-        }
-
-        private static object CoerceRgba(object value)
-        {
-            var v = (int)value;
-            if (v < 0)
-            {
-                return 0;
-            }
-
-            if (v > 255)
-            {
-                return 255;
-            }
-
-            return v;
         }
 
         private static void OnRgbaChanged(object sender)

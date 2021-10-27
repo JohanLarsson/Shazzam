@@ -17,7 +17,10 @@
             nameof(Hue),
             typeof(double),
             typeof(HueChooser),
-            new FrameworkPropertyMetadata(0.0, OnHueChanged, CoerceHue));
+            new FrameworkPropertyMetadata(
+                0.0,
+                OnHueChanged,
+                (_, baseValue) => Coerce.ClampDouble(baseValue, 0, 1)));
 
         public static readonly DependencyProperty HueOffsetProperty = DependencyProperty.Register(
             nameof(HueOffset),
@@ -146,22 +149,6 @@
             var h = (HueChooser)o;
             h.UpdateHueOffset();
             h.UpdateColor();
-        }
-
-        private static object CoerceHue(DependencyObject d, object? brightness)
-        {
-            var v = (double)brightness;
-            if (v < 0)
-            {
-                return 0.0;
-            }
-
-            if (v > 1)
-            {
-                return 1.0;
-            }
-
-            return v;
         }
 
         private void UpdateHueOffset()

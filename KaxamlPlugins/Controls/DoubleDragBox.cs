@@ -24,7 +24,10 @@
             nameof(Current),
             typeof(double),
             typeof(DoubleDragBox),
-            new FrameworkPropertyMetadata(double.MinValue, OnCurrentChanged, CoerceCurrent));
+            new FrameworkPropertyMetadata(
+                double.MinValue,
+                OnCurrentChanged,
+                (d, baseValue) => Coerce.ClampDouble(baseValue, ((DoubleDragBox)d).Minimum, ((DoubleDragBox)d).Maximum)));
 
         public static readonly DependencyProperty IntervalProperty = DependencyProperty.Register(
             nameof(Interval),
@@ -142,27 +145,6 @@
             var ddb = (DoubleDragBox)o;
             var d = (double)e.NewValue;
             ddb.SetCurrentValue(CurrentTextProperty, Math.Round(d, ddb.Precision).ToString(CultureInfo.InvariantCulture));
-        }
-
-        private static object CoerceCurrent(DependencyObject o, object? value)
-        {
-            var ddb = (DoubleDragBox)o;
-            var v = (double)value;
-
-            if (ddb != null)
-            {
-                if (v > ddb.Maximum)
-                {
-                    return ddb.Maximum;
-                }
-
-                if (v < ddb.Minimum)
-                {
-                    return ddb.Minimum;
-                }
-            }
-
-            return v;
         }
     }
 }

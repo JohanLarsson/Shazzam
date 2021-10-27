@@ -34,12 +34,7 @@
             new FrameworkPropertyMetadata(
                 0.0,
                 (o, _) => ((SaturationBrightnessChooser)o).UpdateSaturationOffset(),
-                (_, brightness) => (double)brightness! switch
-                {
-                    < 0 => 0.0,
-                    > 1 => 1.0,
-                    _ => brightness,
-                }));
+                (_, baseValue) => Coerce.ClampDouble(baseValue, 0, 1)));
 
         public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(
             nameof(Color),
@@ -66,12 +61,7 @@
             new FrameworkPropertyMetadata(
                 0.0,
                 (o, _) => ((SaturationBrightnessChooser)o).UpdateBrightnessOffset(),
-                (d, brightness) => (double)brightness! switch
-                {
-                    < 0 => 0.0,
-                    > 1 => 1.0,
-                    _ => brightness,
-                }));
+                (_, baseValue) => Coerce.ClampDouble(baseValue, 0, 1)));
 
         public Thickness OffsetPadding
         {
