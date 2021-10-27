@@ -4,6 +4,7 @@
     using System.Windows;
     using System.Windows.Data;
 
+    [ValueConversion(typeof(object), typeof(Visibility))]
     public sealed class StringToVisibilityConverter : IValueConverter
     {
         public static readonly StringToVisibilityConverter Default = new();

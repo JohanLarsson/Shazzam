@@ -1,4 +1,4 @@
-namespace KaxamlPlugins.Controls
+﻿namespace KaxamlPlugins.Controls
 {
     using System.Windows;
     using System.Windows.Controls;
@@ -33,12 +33,12 @@ namespace KaxamlPlugins.Controls
             // setup the adorner layer
             var adornerLayer = AdornerLayer.GetAdornerLayer(this);
 
-            if (adornerLayer == null)
+            if (adornerLayer is null)
             {
                 return;
             }
 
-            if (this.cursorAdorner == null)
+            if (this.cursorAdorner is null)
             {
                 this.cursorAdorner = new CursorAdorner(this, this.CursorElement);
             }

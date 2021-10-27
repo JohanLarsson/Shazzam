@@ -143,7 +143,7 @@
             h.UpdateColor();
         }
 
-        private static object CoerceAlpha(DependencyObject d, object brightness)
+        private static object CoerceAlpha(DependencyObject d, object? brightness)
         {
             var v = (double)brightness;
             if (v < 0)

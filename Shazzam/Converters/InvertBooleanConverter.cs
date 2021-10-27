@@ -4,6 +4,7 @@
     using System.Globalization;
     using System.Windows.Data;
 
+    [ValueConversion(typeof(bool), typeof(bool))]
     public sealed class InvertBooleanConverter : IValueConverter
     {
         public static readonly InvertBooleanConverter Default = new();

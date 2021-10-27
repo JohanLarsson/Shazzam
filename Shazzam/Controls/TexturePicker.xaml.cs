@@ -31,7 +31,7 @@
             //// attempt to get the already loaded value
             Images.TryGetValue(this.register.RegisterNumber, out ImageBrush result);
             this.Value = result;
-            if (this.Value == null)
+            if (this.Value is null)
             {
                 this.LoadTextureFromSettings();
             }

@@ -1,4 +1,4 @@
-// ReSharper disable ConvertClosureToMethodGroup
+﻿// ReSharper disable ConvertClosureToMethodGroup
 namespace KaxamlPlugins.Controls
 {
     using System.Windows;
@@ -157,7 +157,7 @@ namespace KaxamlPlugins.Controls
                 if (!c.hsbSetInternally)
                 {
                     // update HSB value based on new value of color
-                    ColorPickerUtil.HsbFromColor(color, out double h, out double s, out double b);
+                    ColorPickerUtil.HsbFromColor(color, out var h, out var s, out var b);
                     c.hsbSetInternally = true;
                     c.SetCurrentValue(AlphaProperty, color.A / 255.0);
                     c.SetCurrentValue(HueProperty, h);
@@ -181,7 +181,7 @@ namespace KaxamlPlugins.Controls
             }
         }
 
-        private static object CoerceHue(DependencyObject d, object hue)
+        private static object CoerceHue(DependencyObject d, object? hue)
         {
             var v = (double)hue;
             if (v < 0)
@@ -197,7 +197,7 @@ namespace KaxamlPlugins.Controls
             return v;
         }
 
-        private static object CoerceBrightness(DependencyObject d, object brightness)
+        private static object CoerceBrightness(DependencyObject d, object? brightness)
         {
             var v = (double)brightness;
             if (v < 0)
@@ -213,7 +213,7 @@ namespace KaxamlPlugins.Controls
             return v;
         }
 
-        private static object CoerceSaturation(DependencyObject d, object saturation)
+        private static object CoerceSaturation(DependencyObject d, object? saturation)
         {
             var v = (double)saturation;
             if (v < 0)
@@ -229,7 +229,7 @@ namespace KaxamlPlugins.Controls
             return v;
         }
 
-        private static object CoerceAlpha(DependencyObject d, object alpha)
+        private static object CoerceAlpha(DependencyObject d, object? alpha)
         {
             var v = (double)alpha;
             if (v < 0)

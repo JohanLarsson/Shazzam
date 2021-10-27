@@ -157,7 +157,7 @@ namespace Shazzam.Plugins
             {
                 try
                 {
-                    if (this.colorChangedTimer == null)
+                    if (this.colorChangedTimer is null)
                     {
                         this.colorChangedTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(200), DispatcherPriority.Background, this.ColorChangedTimerTick, this.Dispatcher);
                     }

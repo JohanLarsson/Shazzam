@@ -4,7 +4,7 @@
     using Shazzam.Views;
     using FileLoaderPlugin = Shazzam.Plugins.FileLoaderPlugin;
 
-    internal static class ShazzamSwitchboard
+    public static class ShazzamSwitchboard
     {
         public static Window MainWindow { get; set; }
 

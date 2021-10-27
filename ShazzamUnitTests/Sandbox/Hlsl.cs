@@ -1,5 +1,4 @@
 ﻿// ReSharper disable InconsistentNaming
-#pragma warning disable SA1101 // Prefix local calls with this
 #pragma warning disable SA1300 // Element must begin with upper-case letter
 #pragma warning disable IDE1006 // Naming Styles
 #pragma warning disable SA1400 // Access modifier must be declared

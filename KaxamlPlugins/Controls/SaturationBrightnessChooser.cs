@@ -62,15 +62,8 @@
 
         public double Hue
         {
-            private get
-            {
-                return (double)this.GetValue(HueProperty);
-            }
-
-            set
-            {
-                this.SetValue(HueProperty, value);
-            }
+            private get => (double)this.GetValue(HueProperty);
+            set => this.SetValue(HueProperty, value);
         }
 
         public double SaturationOffset

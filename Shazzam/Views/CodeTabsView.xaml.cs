@@ -37,7 +37,7 @@
         private readonly DefaultHighlightingStrategy hlslHs;
         private readonly ShaderCompiler compiler;
 
-        private ShaderEffect currentShaderEffect;
+        private ShaderEffect? currentShaderEffect;
         private int dirtyCounter;
         private int storedDocHash;
 
@@ -54,13 +54,11 @@
             {
                 if (stream != null)
                 {
-                    using (var reader = new XmlTextReader(stream))
-                    {
-                        var sm = new SyntaxMode("HLSL.xshd", "HLSL", ".fx");
-                        this.hlslHs = HighlightingDefinitionParser.Parse(sm, reader);
-                        this.hlslHs.ResolveReferences(); // don't forget this!
-                        reader.Close();
-                    }
+                    using var reader = new XmlTextReader(stream);
+                    var sm = new SyntaxMode("HLSL.xshd", "HLSL", ".fx");
+                    this.hlslHs = HighlightingDefinitionParser.Parse(sm, reader);
+                    this.hlslHs.ResolveReferences(); // don't forget this!
+                    reader.Close();
                 }
             }
 
@@ -94,7 +92,7 @@
             set => this.OutputTextBox.SetValue(TextBlock.TextProperty, value);
         }
 
-        internal ShaderEffect CurrentShaderEffect
+        internal ShaderEffect? CurrentShaderEffect
         {
             get => this.currentShaderEffect;
 
@@ -114,15 +112,15 @@
         {
             get
             {
-                string ReadHlsli(string name)
-                {
-                   return File.ReadAllText(FindHlsli(name).FullName);
-                }
-
                 return Regex.Replace(
                     this.CodeText,
                     @"#include <(?<hlsli>\w+.hlsli)>",
                     x => ReadHlsli(x.Groups["hlsli"].Value));
+
+                static string ReadHlsli(string name)
+                {
+                    return File.ReadAllText(FindHlsli(name).FullName);
+                }
             }
         }
 
@@ -200,7 +198,7 @@
                 var code = ShaderClass.GetSourceText(new CSharpCodeProvider(), CodeViewModel.Instance.ShaderModel, includePixelShaderConstructor: true);
                 var autoAssembly = ShaderClass.CompileInMemory(code);
 
-                if (autoAssembly == null)
+                if (autoAssembly is null)
                 {
                     MessageBox.Show(ShazzamSwitchboard.MainWindow, "Cannot compile the generated C# code.", "Compile error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;

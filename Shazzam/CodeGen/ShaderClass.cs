@@ -10,11 +10,13 @@
     using System.Windows;
     using System.Windows.Media;
     using System.Windows.Media.Media3D;
+
     using Microsoft.CSharp;
+
     using Shazzam.Converters;
     using Shazzam.Properties;
 
-    internal static class ShaderClass
+    public static class ShaderClass
     {
         public static string GetSourceText(CodeDomProvider currentProvider, ShaderModel shaderModel, bool includePixelShaderConstructor)
         {
@@ -26,11 +28,10 @@
 
         public static Assembly CompileInMemory(string code)
         {
-            using (var provider = new CSharpCodeProvider(new Dictionary<string, string> { { "CompilerVersion", "v3.5" } }))
+            using var provider = new CSharpCodeProvider(new Dictionary<string, string> { { "CompilerVersion", "v3.5" } });
+            var options = new CompilerParameters
             {
-                var options = new CompilerParameters
-                {
-                    ReferencedAssemblies =
+                ReferencedAssemblies =
                     {
                         "System.dll",
                         "System.Core.dll",
@@ -38,18 +39,17 @@
                         "PresentationFramework.dll",
                         "PresentationCore.dll",
                     },
-                    IncludeDebugInformation = false,
-                    GenerateExecutable = false,
-                    GenerateInMemory = true
-                };
-                var compiled = provider.CompileAssemblyFromSource(options, code);
-                if (compiled.Errors.Count == 0)
-                {
-                    return compiled.CompiledAssembly;
-                }
-
-                throw new InvalidOperationException(string.Join(Environment.NewLine, compiled.Errors.OfType<CompilerError>().Select(e => e.ErrorText)));
+                IncludeDebugInformation = false,
+                GenerateExecutable = false,
+                GenerateInMemory = true,
+            };
+            var compiled = provider.CompileAssemblyFromSource(options, code);
+            if (compiled.Errors.Count == 0)
+            {
+                return compiled.CompiledAssembly;
             }
+
+            throw new InvalidOperationException(string.Join(Environment.NewLine, compiled.Errors.OfType<CompilerError>().Select(e => e.ErrorText)));
         }
 
         private static CodeCompileUnit BuildPixelShaderGraph(ShaderModel shaderModel, bool includePixelShaderConstructor)
@@ -192,25 +192,26 @@
                         MethodName = "Register"
                     },
                     Parameters =
+                    {
+                        new CodePrimitiveExpression(register.RegisterName),
+                        new CodeTypeOfExpression(CreateCodeTypeReference(register.RegisterType)),
+                        new CodeTypeOfExpression(shaderModel.GeneratedClassName),
+                        new CodeObjectCreateExpression
                         {
-                            new CodePrimitiveExpression(register.RegisterName),
-                            new CodeTypeOfExpression(CreateCodeTypeReference(register.RegisterType)),
-                            new CodeTypeOfExpression(shaderModel.GeneratedClassName),
-                            new CodeObjectCreateExpression
+                            // Silverlight doesn't have UIPropertyMetadata.
+                            CreateType =
+                                new CodeTypeReference(shaderModel.TargetFramework == TargetFramework.WPF
+                                    ? "UIPropertyMetadata"
+                                    : "PropertyMetadata"),
+                            Parameters =
                             {
-                                // Silverlight doesn't have UIPropertyMetadata.
-                                CreateType = new CodeTypeReference(shaderModel.TargetFramework == TargetFramework.WPF ? "UIPropertyMetadata" : "PropertyMetadata"),
-                                Parameters =
-                                {
                                 CreateDefaultValue(register.RegisterType, register.DefaultValue),
                                 new CodeMethodInvokeExpression
-                                    {
-                                        Method = new CodeMethodReferenceExpression(null, "PixelShaderConstantCallback"),
-                                        Parameters =
-                                            {
-                                                new CodePrimitiveExpression(register.RegisterNumber)
-                                            }
-                                    }
+                                {
+                                    Method = new CodeMethodReferenceExpression(null,
+                                        "PixelShaderConstantCallback"),
+                                    Parameters = { new CodePrimitiveExpression(register.RegisterNumber) }
+                                }
                             }
                         }
                     }
@@ -220,7 +221,7 @@
 
         private static CodeExpression CreateDefaultValue(Type type, object defaultValue)
         {
-            if (defaultValue == null)
+            if (defaultValue is null)
             {
                 return new CodePrimitiveExpression(null);
             }
@@ -393,8 +394,8 @@
                 Method = new CodeMethodReferenceExpression(new CodeThisReferenceExpression(), "UpdateShaderValue"),
                 Parameters =
                 {
-                    new CodeVariableReferenceExpression(propertyName + "Property")
-                }
+                    new CodeVariableReferenceExpression(propertyName + "Property"),
+                },
             };
         }
 
@@ -406,13 +407,13 @@
                 new CodeNamespace
                 {
                     Imports =
-                            {
-                                new CodeNamespaceImport("System"),
-                                new CodeNamespaceImport("System.Windows"),
-                                new CodeNamespaceImport("System.Windows.Media"),
-                                new CodeNamespaceImport("System.Windows.Media.Effects"),
-                                new CodeNamespaceImport("System.Windows.Media.Media3D")
-                            }
+                    {
+                        new CodeNamespaceImport("System"),
+                        new CodeNamespaceImport("System.Windows"),
+                        new CodeNamespaceImport("System.Windows.Media"),
+                        new CodeNamespaceImport("System.Windows.Media.Effects"),
+                        new CodeNamespaceImport("System.Windows.Media.Media3D")
+                    },
                 });
 
             return ns;
@@ -421,44 +422,42 @@
         private static string GenerateCode(CodeDomProvider provider, CodeCompileUnit compileUnit, ShaderModel model)
         {
             // Generate source code using the code generator.
-            using (var writer = new StringWriter())
+            using var writer = new StringWriter();
+            var indentString = Settings.Default.IndentUsingTabs
+                                   ? "\t"
+                                   : new string(' ', Settings.Default.IndentSpaces);
+            var options = new CodeGeneratorOptions
             {
-                var indentString = Settings.Default.IndentUsingTabs
-                                       ? "\t"
-                                       : new string(' ', Settings.Default.IndentSpaces);
-                var options = new CodeGeneratorOptions
-                {
-                    IndentString = indentString,
-                    BlankLinesBetweenMembers = true,
-                    BracingStyle = "C",
-                };
-                provider.GenerateCodeFromCompileUnit(compileUnit, writer, options);
-                var text = writer.ToString();
-                //// Fix up code: make static DP fields readonly, and use triple-slash or triple-quote comments for XML doc comments.
-                if (provider.FileExtension == "cs")
-                {
-                    text = text.Replace(
-                                   "private static PixelShader Shader = new PixelShader()",
-                                   $"private static readonly PixelShader Shader = new PixelShader{Environment.NewLine}" +
-                                   $"        {{{Environment.NewLine}" +
-                                   $"            UriSource = new Uri(\"pack://application:,,,/[assemblyname];component/[folder]/{model.GeneratedClassName}.ps\", UriKind.Absolute){Environment.NewLine}" +
-                                   $"        }}")
-                               .Replace(
-                                   "public static DependencyProperty",
-                                   "public static readonly DependencyProperty")
-                               .Replace($"{writer.NewLine}    {writer.NewLine}", $"{writer.NewLine}{writer.NewLine}")
-                               .Replace($"{writer.NewLine}        {writer.NewLine}", $"{writer.NewLine}{writer.NewLine}")
-                               .Replace($"{writer.NewLine}{writer.NewLine}{writer.NewLine}", $"{writer.NewLine}{writer.NewLine}")
-                               .Replace($"{{{writer.NewLine}{writer.NewLine}", $"{{{writer.NewLine}");
-                }
-                else if (provider.FileExtension == "vb")
-                {
-                    text = text.Replace("Public Shared ", "Public Shared ReadOnly ");
-                    text = text.Replace("'<", "'''<");
-                }
-
-                return text;
+                IndentString = indentString,
+                BlankLinesBetweenMembers = true,
+                BracingStyle = "C",
+            };
+            provider.GenerateCodeFromCompileUnit(compileUnit, writer, options);
+            var text = writer.ToString();
+            //// Fix up code: make static DP fields readonly, and use triple-slash or triple-quote comments for XML doc comments.
+            if (provider.FileExtension == "cs")
+            {
+                text = text.Replace(
+                               "private static PixelShader Shader = new PixelShader()",
+                               $"private static readonly PixelShader Shader = new PixelShader{Environment.NewLine}" +
+                               $"        {{{Environment.NewLine}" +
+                               $"            UriSource = new Uri(\"pack://application:,,,/[assemblyname];component/[folder]/{model.GeneratedClassName}.ps\", UriKind.Absolute){Environment.NewLine}" +
+                               $"        }}")
+                           .Replace(
+                               "public static DependencyProperty",
+                               "public static readonly DependencyProperty")
+                           .Replace($"{writer.NewLine}    {writer.NewLine}", $"{writer.NewLine}{writer.NewLine}")
+                           .Replace($"{writer.NewLine}        {writer.NewLine}", $"{writer.NewLine}{writer.NewLine}")
+                           .Replace($"{writer.NewLine}{writer.NewLine}{writer.NewLine}", $"{writer.NewLine}{writer.NewLine}")
+                           .Replace($"{{{writer.NewLine}{writer.NewLine}", $"{{{writer.NewLine}");
             }
+            else if (provider.FileExtension == "vb")
+            {
+                text = text.Replace("Public Shared ", "Public Shared ReadOnly ");
+                text = text.Replace("'<", "'''<");
+            }
+
+            return text;
         }
     }
 }

@@ -6,17 +6,17 @@
     public sealed class CodeViewModel : INotifyPropertyChanged
     {
         public static readonly CodeViewModel Instance = new();
-        private ShaderModel shaderModel;
+        private ShaderModel? shaderModel;
 
         private CodeViewModel()
         {
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public bool AreGeneratedCodeTabsEnabled => Properties.Settings.Default.AreGeneratedCodeTabsEnabled;
 
-        public ShaderModel ShaderModel
+        public ShaderModel? ShaderModel
         {
             get => this.shaderModel;
             set
@@ -31,7 +31,7 @@
             }
         }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

@@ -11,7 +11,7 @@
     using System.Windows.Media.Media3D;
     using Shazzam.Properties;
 
-    internal static class CodeParser
+    public static class CodeParser
     {
         // Patterns that match special triple-slash comments in the header:
         private const string ClassPattern = @"<class>(?<class>.*)</class>";
@@ -100,7 +100,7 @@
         /// Returns a ShaderModelConstantRegister object with the information contained in
         /// the given regular expression match.
         /// </summary>
-        private static ShaderModelConstantRegister CreateRegister(TargetFramework targetFramework, Match match)
+        private static ShaderModelConstantRegister? CreateRegister(TargetFramework targetFramework, Match match)
         {
             ShaderModelConstantRegister register = null;
 
@@ -129,7 +129,7 @@
                 var summary = match.Groups["summary"].Value;
 
                 // Get the standard min, max, and default value for the register type.
-                GetStandardValues(registerType, out object minValue, out object maxValue, out object defaultValue);
+                GetStandardValues(registerType, out var minValue, out var maxValue, out var defaultValue);
 
                 // Allow the user to override the defaults with values from their comments.
                 ConvertValue(match.Groups["minValue"].Value, registerType, ref minValue);
@@ -160,29 +160,18 @@
         /// <summary>
         /// Returns the CLR type used to represent the given HLSL register type.
         /// </summary>
-        private static Type GetRegisterType(TargetFramework targetFramework, string registerTypeInHlsl)
+        private static Type? GetRegisterType(TargetFramework targetFramework, string registerTypeInHlsl)
         {
-            switch (registerTypeInHlsl.ToLower())
+            return registerTypeInHlsl.ToLower() switch
             {
-                case "float":
-                case "float1":
-                    return typeof(double);
-                case "float2":
-                    return typeof(Point);
-                case "float3":
-                    // Silverlight doesn't have any types that correspond to float3 registers.
-                    return targetFramework == TargetFramework.WPF ? typeof(Point3D) : null;
-                case "float4":
-                    return typeof(Color);
-
-                case "sampler1d":
-                    return typeof(Brush);
-
-                case "sampler2d":
-                    return typeof(Brush);
-            }
-
-            return null;
+                "float" or "float1" => typeof(double),
+                "float2" => typeof(Point),
+                "float3" => targetFramework == TargetFramework.WPF ? typeof(Point3D) : null,// Silverlight doesn't have any types that correspond to float3 registers.
+                "float4" => typeof(Color),
+                "sampler1d" => typeof(Brush),
+                "sampler2d" => typeof(Brush),
+                _ => null,
+            };
         }
 
         /// <summary>
@@ -236,7 +225,7 @@
         /// <summary>
         /// Sets the out parameters to the standard min, max, and default values for the given type.
         /// </summary>
-        private static void GetStandardValues(Type registerType, out object minValue, out object maxValue, out object defaultValue)
+        private static void GetStandardValues(Type registerType, out object minValue, out object maxValue, out object? defaultValue)
         {
             if (registerType == typeof(double))
             {

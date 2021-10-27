@@ -1,4 +1,4 @@
-namespace KaxamlPlugins.Controls
+﻿namespace KaxamlPlugins.Controls
 {
     using System;
     using System.Globalization;
@@ -153,7 +153,7 @@ namespace KaxamlPlugins.Controls
             ddb.SetCurrentValue(CurrentTextProperty, Math.Round(d, ddb.Precision).ToString(CultureInfo.InvariantCulture));
         }
 
-        private static object CoerceCurrent(DependencyObject o, object value)
+        private static object CoerceCurrent(DependencyObject o, object? value)
         {
             var ddb = (DoubleDragBox)o;
             var v = (double)value;

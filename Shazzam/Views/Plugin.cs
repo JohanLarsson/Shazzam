@@ -1,4 +1,4 @@
-namespace Shazzam
+﻿namespace Shazzam
 {
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
@@ -8,16 +8,16 @@ namespace Shazzam
 
     public class Plugin : INotifyPropertyChanged
     {
-        private UserControl root;
-        private string name;
-        private string description;
+        private UserControl? root;
+        private string? name;
+        private string? description;
         private Key key;
         private ModifierKeys modifierKeys;
-        private ImageSource icon;
+        private ImageSource? icon;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        public UserControl Root
+        public UserControl? Root
         {
             get => this.root;
 
@@ -33,7 +33,7 @@ namespace Shazzam
             }
         }
 
-        public string Name
+        public string? Name
         {
             get => this.name;
 
@@ -49,7 +49,7 @@ namespace Shazzam
             }
         }
 
-        public string Description
+        public string? Description
         {
             get => this.description;
 
@@ -97,7 +97,7 @@ namespace Shazzam
             }
         }
 
-        public ImageSource Icon
+        public ImageSource? Icon
         {
             get => this.icon;
 
@@ -113,7 +113,7 @@ namespace Shazzam
             }
         }
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

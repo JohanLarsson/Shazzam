@@ -66,7 +66,7 @@
 
         private void FileListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.fileListBox.SelectedItem == null)
+            if (this.fileListBox.SelectedItem is null)
             {
                 return;
             }
@@ -80,26 +80,24 @@
 
         private void HyperlinkClick(object sender, RoutedEventArgs e)
         {
-            using (var ofd = new System.Windows.Forms.FolderBrowserDialog())
+            using var ofd = new System.Windows.Forms.FolderBrowserDialog();
+            if (Properties.Settings.Default.FolderPath_FX != string.Empty)
             {
-                if (Properties.Settings.Default.FolderPath_FX != string.Empty)
-                {
-                    ofd.SelectedPath = Properties.Settings.Default.FolderPath_FX;
-                }
+                ofd.SelectedPath = Properties.Settings.Default.FolderPath_FX;
+            }
 
-                if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    Properties.Settings.Default.FolderPath_FX = ofd.SelectedPath;
-                    Properties.Settings.Default.Save();
-                    this.FillList();
-                }
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Properties.Settings.Default.FolderPath_FX = ofd.SelectedPath;
+                Properties.Settings.Default.Save();
+                this.FillList();
             }
         }
 
         private void SampleListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var samplesPath = Path.Combine(this.exePath, "samples");
-            if (this.sampleListBox.SelectedItem == null)
+            if (this.sampleListBox.SelectedItem is null)
             {
                 return;
             }
@@ -114,7 +112,7 @@
         private void TutorialListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var tutorialsPath = Path.Combine(this.exePath, "tutorials");
-            if (this.tutorialListBox.SelectedItem == null)
+            if (this.tutorialListBox.SelectedItem is null)
             {
                 return;
             }

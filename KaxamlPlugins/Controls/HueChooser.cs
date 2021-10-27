@@ -148,7 +148,7 @@
             h.UpdateColor();
         }
 
-        private static object CoerceHue(DependencyObject d, object brightness)
+        private static object CoerceHue(DependencyObject d, object? brightness)
         {
             var v = (double)brightness;
             if (v < 0)

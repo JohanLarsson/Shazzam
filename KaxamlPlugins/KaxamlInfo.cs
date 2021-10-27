@@ -6,9 +6,9 @@
 
     public class KaxamlInfo
     {
-        private static IKaxamlInfoTextEditor editor;
-        private static Window mainWindow;
-        private static Frame frame;
+        private static IKaxamlInfoTextEditor? editor;
+        private static Window? mainWindow;
+        private static Frame? frame;
 
         public delegate void EditSelectionChangedDelegate(string selectedText);
 
@@ -16,15 +16,15 @@
 
         public delegate void ContentLoadedDelegate();
 
-        public static event EditSelectionChangedDelegate EditSelectionChanged;
+        public static event EditSelectionChangedDelegate? EditSelectionChanged;
 
-        public static event ParseRequestedDelegate ParseRequested;
+        public static event ParseRequestedDelegate? ParseRequested;
 
-        public static event ContentLoadedDelegate ContentLoaded;
+        public static event ContentLoadedDelegate? ContentLoaded;
 
-        public static event PropertyChangedEventHandler PropertyChanged;
+        public static event PropertyChangedEventHandler? PropertyChanged;
 
-        public static IKaxamlInfoTextEditor Editor
+        public static IKaxamlInfoTextEditor? Editor
         {
             get => editor;
             set
@@ -45,7 +45,7 @@
             }
         }
 
-        public static Window MainWindow
+        public static Window? MainWindow
         {
             get => mainWindow;
             set
@@ -55,7 +55,7 @@
             }
         }
 
-        public static Frame Frame
+        public static Frame? Frame
         {
             get => frame;
             set

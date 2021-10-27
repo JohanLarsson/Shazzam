@@ -15,7 +15,7 @@
         public static readonly MainWindowViewModel Instance = new();
 
         private System.Windows.Media.Stretch imageStretch = System.Windows.Media.Stretch.Uniform;
-        private GridLength codeGridHeight = new(5, GridUnitType.Star);
+        private GridLength codeRowHeight = new(5, GridUnitType.Star);
         private GridLength imageRowHeight = new(5, GridUnitType.Star);
 
         private MainWindowViewModel()
@@ -25,7 +25,7 @@
             this.ImageStretchCommand = new RelayCommand<string>(this.ImageStretchExecute);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public RelayCommand ExploreCompiledShadersCommand { get; } = new RelayCommand(ExploreCompiledShadersCommandExecute);
 
@@ -56,16 +56,16 @@
 
         public GridLength CodeRowHeight
         {
-            get => this.codeGridHeight;
+            get => this.codeRowHeight;
 
             set
             {
-                if (value == this.codeGridHeight)
+                if (value == this.codeRowHeight)
                 {
                     return;
                 }
 
-                this.codeGridHeight = value;
+                this.codeRowHeight = value;
                 this.OnPropertyChanged();
             }
         }
@@ -86,7 +86,7 @@
             }
         }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
