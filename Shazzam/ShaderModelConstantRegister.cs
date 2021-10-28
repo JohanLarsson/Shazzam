@@ -9,16 +9,16 @@
     /// </summary>
     public class ShaderModelConstantRegister : INotifyPropertyChanged
     {
-        private object value;
+        private object? value;
 
         public ShaderModelConstantRegister(
             string registerName,
             Type registerType,
             int registerNumber,
             string description,
-            object minValue,
-            object maxValue,
-            object defaultValue)
+            object? minValue,
+            object? maxValue,
+            object? defaultValue)
         {
             this.RegisterName = registerName;
             this.RegisterType = registerType;
@@ -55,19 +55,19 @@
         /// <summary>
         /// The minimum value for this register variable.
         /// </summary>
-        public object MinValue { get; }
+        public object? MinValue { get; }
 
         /// <summary>
         /// The maximum value for this register variable.
         /// </summary>
-        public object MaxValue { get; }
+        public object? MaxValue { get; }
 
         /// <summary>
         /// The default value of this register variable.
         /// </summary>
-        public object DefaultValue { get; }
+        public object? DefaultValue { get; }
 
-        public object Value
+        public object? Value
         {
             get => this.value;
             set
