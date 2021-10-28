@@ -59,14 +59,12 @@
     <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="{x:Type Separator}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Height" Value="2" />
-        <Setter Property="Margin" Value="0,4,0,4" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Separator}">
-                    <StackPanel Height="2" SnapsToDevicePixels="True">
-                        <Rectangle Height="1" Fill="#222" />
-                        <Rectangle Height="2" Fill="#666" />
-                    </StackPanel>
+                    <Rectangle Height="2"
+                               Margin="4,2"
+                               Fill="{StaticResource DarkBrush}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -111,7 +109,8 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="{x:Static MenuItem.TopLevelItemTemplateKey}" TargetType="{x:Type MenuItem}">
-        <Border Name="Border" 	Margin="{TemplateBinding Padding}"
+        <Border Name="Border"
+                Margin="{TemplateBinding Padding}"
                 Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 BorderThickness="{TemplateBinding BorderThickness}">
@@ -154,7 +153,7 @@
                           Height="7"
                           Data="M 0 0 L 7 7 M 0 7 L 7 0"
                           SnapsToDevicePixels="False"
-                          Stroke="{StaticResource LightBrush}"
+                          Stroke="{TemplateBinding Foreground}"
                           StrokeThickness="2"
                           Visibility="Hidden" />
                 </Border>
@@ -208,7 +207,7 @@
                        IsOpen="{TemplateBinding IsSubmenuOpen}"
                        Placement="Right"
                        PopupAnimation="Fade">
-                    <a:SystemDropShadowChrome Margin="0,0,5,5" CornerRadius="4">
+                    <a:SystemDropShadowChrome Margin="0,0,5,5">
                         <Border Name="SubmenuBorder"
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="4,4,4,4"
@@ -223,21 +222,19 @@
                                   Grid.Column="1"
                                   Margin="0,4"
                                   ContentSource="Header"
-                                  RecognizesAccessKey="True"
-                                  TextElement.Foreground="#FFF" />
+                                  RecognizesAccessKey="True" />
                 <TextBlock x:Name="InputGestureText"
                            Grid.Column="2"
                            Margin="12,4,0,4"
                            DockPanel.Dock="Right"
-                           Text="{TemplateBinding InputGestureText}"
-                           TextElement.Foreground="#FFF" />
+                           Text="{TemplateBinding InputGestureText}" />
                 <Path Name="Arrow"
                       Grid.Column="3"
                       Margin="8,0,0,0"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Center"
                       Data="M 0 0 L 0 7 L 4 3.5 Z"
-                      Fill="White" />
+                      Fill="{TemplateBinding Foreground}" />
             </Grid>
         </Border>
         <ControlTemplate.Triggers>
@@ -266,10 +263,31 @@
             <Trigger Property="Role" Value="SubmenuItem">
                 <Setter Property="Template" Value="{StaticResource {x:Static MenuItem.SubmenuItemTemplateKey}}" />
             </Trigger>
-            <Trigger Property="IsHighlighted" Value="true">
-                <Setter Property="TextElement.Foreground" Value="{StaticResource LightBrush}" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="false">
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled" Value="True" />
+                    <Condition Property="IsPressed" Value="True" />
+                    <Condition Property="IsMouseDirectlyOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="TextElement.Foreground" Value="{StaticResource AccentBrush}" />
+                    <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled" Value="True" />
+                    <Condition Property="IsMouseDirectlyOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="TextElement.Foreground" Value="{StaticResource LightBrush}" />
+                    <Setter Property="Foreground" Value="{StaticResource LightBrush}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+            
+            <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="TextElement.FontStyle" Value="Oblique" />
             </Trigger>
         </Style.Triggers>
