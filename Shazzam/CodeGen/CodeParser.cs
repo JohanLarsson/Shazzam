@@ -341,7 +341,7 @@
         /// Parses the string representation of an HLSL float, float2, float3, or float4 value,
         /// setting the final parameter to the corresponding double, Point, Point3D, or Color if possible.
         /// </summary>
-        private static void ParseInitializerValue(string initializerValueText, Type registerType, ref object initializerValue)
+        private static void ParseInitializerValue(string initializerValueText, Type registerType, ref object? initializerValue)
         {
             var numbers = ParseNumbers(initializerValueText);
             if (registerType == typeof(double) && numbers.Length >= 1)
