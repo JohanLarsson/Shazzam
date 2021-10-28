@@ -4,8 +4,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/BrushesRD.xaml" />
-                <ResourceDictionary Source="/Resources/MenuRD.xaml" />
+                <ResourceDictionary Source="/Resources/Brushes.xaml" />
+                <ResourceDictionary Source="/Resources/Menu.xaml" />
                 <ResourceDictionary Source="/Resources/EditorRD.xaml" />
 
             </ResourceDictionary.MergedDictionaries>

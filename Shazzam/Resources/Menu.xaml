@@ -4,7 +4,7 @@
                     xmlns:controls="clr-namespace:Shazzam.Controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Resources/BrushesRD.xaml" />
+        <ResourceDictionary Source="/Resources/Brushes.xaml" />
     </ResourceDictionary.MergedDictionaries>
     <Style x:Key="{x:Type Menu}" TargetType="{x:Type Menu}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -80,8 +80,7 @@
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   ContentSource="Header"
-                                  RecognizesAccessKey="True"
-                                  TextElement.Foreground="#FFFFFFFF" />
+                                  RecognizesAccessKey="True" />
                 <Popup Name="Popup"
                        AllowsTransparency="True"
                        Focusable="False"
@@ -104,7 +103,7 @@
         <ControlTemplate.Triggers>
 
             <Trigger Property="IsHighlighted" Value="true">
-                <Setter TargetName="Content" Property="TextElement.Foreground" Value="#FFF" />
+                <Setter TargetName="Content" Property="TextElement.Foreground" Value="{StaticResource LightBrush}" />
                 <Setter TargetName="Border" Property="Background">
                     <Setter.Value>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -130,7 +129,7 @@
                         </LinearGradientBrush>
                     </Setter.Value>
                 </Setter>
-                <Setter TargetName="Content" Property="TextElement.Foreground" Value="#FFFFFFFF" />
+                <Setter TargetName="Content" Property="TextElement.Foreground" Value="{StaticResource LightBrush}" />
             </MultiTrigger>
 
         </ControlTemplate.Triggers>
@@ -148,13 +147,12 @@
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
                               ContentSource="Header"
-                              RecognizesAccessKey="True"
-                              TextElement.Foreground="#80FFFFFF" />
+                              RecognizesAccessKey="True" />
         </Border>
         <ControlTemplate.Triggers>
 
             <Trigger Property="IsHighlighted" Value="true">
-                <Setter TargetName="Content" Property="TextElement.Foreground" Value="#FFF" />
+                <Setter TargetName="Content" Property="TextElement.Foreground" Value="{StaticResource LightBrush}" />
                 <Setter TargetName="Border" Property="Background">
                     <Setter.Value>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -177,7 +175,7 @@
                         </LinearGradientBrush>
                     </Setter.Value>
                 </Setter>
-                <Setter TargetName="Content" Property="TextElement.Foreground" Value="#FFFFFFFF" />
+                <Setter TargetName="Content" Property="TextElement.Foreground" Value="{StaticResource LightBrush}" />
             </MultiTrigger>
 
         </ControlTemplate.Triggers>
@@ -211,7 +209,7 @@
                           Height="7"
                           Data="M 0 0 L 7 7 M 0 7 L 7 0"
                           SnapsToDevicePixels="False"
-                          Stroke="White"
+                          Stroke="{StaticResource LightBrush}"
                           StrokeThickness="2"
                           Visibility="Hidden" />
                 </Border>
@@ -224,8 +222,7 @@
                 <TextBlock x:Name="InputGestureText"
                            Grid.Column="2"
                            Margin="12,4,0,4"
-                           Text="{TemplateBinding InputGestureText}"
-                           TextElement.Foreground="#FFF" />
+                           Text="{TemplateBinding InputGestureText}" />
             </Grid>
         </Border>
         <ControlTemplate.Triggers>
@@ -252,8 +249,7 @@
                 <Setter TargetName="Border" Property="CornerRadius" Value="0,4,4,4" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter TargetName="HeaderHost" Property="TextElement.Foreground" Value="#777" />
-                <Setter TargetName="InputGestureText" Property="TextElement.Foreground" Value="#777" />
+                <Setter Property="TextElement.Foreground" Value="{StaticResource MediumBrush}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -330,7 +326,7 @@
                 <Setter TargetName="Border" Property="CornerRadius" Value="0,4,4,4" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter TargetName="HeaderHost" Property="TextElement.Foreground" Value="#777" />
+                <Setter TargetName="HeaderHost" Property="TextElement.Foreground" Value="{StaticResource MediumBrush}" />
                 <Setter TargetName="InputGestureText" Property="TextElement.Foreground" Value="#777" />
             </Trigger>
         </ControlTemplate.Triggers>

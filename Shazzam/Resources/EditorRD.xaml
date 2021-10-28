@@ -3,7 +3,7 @@
                     xmlns:controls="clr-namespace:Shazzam.Controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Resources/BrushesRD.xaml" />
+        <ResourceDictionary Source="/Resources/Brushes.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!--

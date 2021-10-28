@@ -1,11 +1,4 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-    <!--
-        ===================================================================
-        Basic Colors
-        ===================================================================
-    -->
-
     <Color x:Key="VeryDark"
            A="255"
            B="70"
@@ -50,16 +43,6 @@
            G="221"
            R="221" />
 
-    <!--<SolidColorBrush x:Key='NeutralDarkBrush'
-                     Color='{StaticResource NeutralDark}' />
-    <SolidColorBrush x:Key='NeutralWhiteBrush'
-                     Color='{StaticResource NeutralWhite}' />-->
-    <!--
-        ===================================================================
-        Basic Brushes (Derived from Basic Colors)
-        ===================================================================
-    -->
-
     <SolidColorBrush x:Key="VeryDarkBrush" Color="{StaticResource VeryDark}" />
     <SolidColorBrush x:Key="DarkBrush" Color="{StaticResource Dark}" />
     <SolidColorBrush x:Key="MediumBrush" Color="{StaticResource Medium}" />
@@ -70,12 +53,6 @@
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Accent}" />
     <SolidColorBrush x:Key="NeutralDarkBrush" Color="{StaticResource NeutralDark}" />
     <SolidColorBrush x:Key="NeutralWhiteBrush" Color="{StaticResource NeutralWhite}" />
-
-    <!--
-        ===================================================================
-        Other Brushes
-        ====================================================================
-    -->
 
     <LinearGradientBrush x:Key="EdgeBorder" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Offset="0" Color="#0000" />

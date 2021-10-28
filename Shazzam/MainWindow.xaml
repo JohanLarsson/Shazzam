@@ -9,6 +9,7 @@
         xmlns:view="clr-namespace:Shazzam.Views"
         Title="Shazzam Shader Editor = V1.2"
         Background="Black"
+        TextElement.Foreground="{StaticResource MediumBrush}"
         DataContext="{x:Static shazzam:MainWindowViewModel.Instance}"
         Icon="Images/star.png"
         WindowState="Maximized"
