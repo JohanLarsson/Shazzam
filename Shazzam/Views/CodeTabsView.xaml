@@ -11,8 +11,8 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <LinearGradientBrush x:Key="TabBrush" StartPoint="0,0" EndPoint="1,0">
-            <GradientStop Offset="0" Color="{StaticResource Dark}" />
-            <GradientStop Offset="1" Color="{StaticResource Light}" />
+            <GradientStop Offset="0" Color="{StaticResource DarkColor}" />
+            <GradientStop Offset="1" Color="{StaticResource LightColor}" />
         </LinearGradientBrush>
         <Style x:Key="TabItemBackground" TargetType="{x:Type TabItem}">
             <Setter Property="Template">

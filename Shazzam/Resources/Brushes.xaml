@@ -1,58 +1,76 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Color x:Key="VeryDark"
+    <Color x:Key="BackgroundColor"
+           A="255"
+           B="5"
+           G="5"
+           R="15" />
+
+    <Color x:Key="VeryDarkColor"
            A="255"
            B="70"
            G="70"
            R="70" />
-    <Color x:Key="Dark"
+
+    <Color x:Key="DarkColor"
            A="255"
            B="102"
            G="102"
            R="102" />
-    <Color x:Key="Medium"
+    
+    <Color x:Key="MediumColor"
            A="255"
            B="140"
            G="140"
            R="140" />
-    <Color x:Key="Light"
+    
+    <Color x:Key="LightColor"
            A="255"
            B="204"
            G="204"
            R="204" />
-    <Color x:Key="VeryLight"
+    
+    <Color x:Key="VeryLightColor"
            A="255"
            B="241"
            G="241"
            R="241" />
-    <Color x:Key="OffWhite"
+
+    <Color x:Key="OffWhiteColor"
            A="255"
            B="255"
            G="255"
            R="255" />
 
-    <Color x:Key="Highlight">Gold</Color>
-    <Color x:Key="Accent">#FFC0A000</Color>
-    <Color x:Key="NeutralDark"
+    <Color x:Key="HighlightColor">Gold</Color>
+
+    <Color x:Key="AccentColor"
+           A="255"
+           B="237"
+           G="149"
+           R="100" />
+
+    <Color x:Key="NeutralDarkColor"
            A="255"
            B="33"
            G="44"
            R="44" />
-    <Color x:Key="NeutralWhite"
+    <Color x:Key="NeutralWhiteColor"
            A="255"
            B="221"
            G="221"
            R="221" />
 
-    <SolidColorBrush x:Key="VeryDarkBrush" Color="{StaticResource VeryDark}" />
-    <SolidColorBrush x:Key="DarkBrush" Color="{StaticResource Dark}" />
-    <SolidColorBrush x:Key="MediumBrush" Color="{StaticResource Medium}" />
-    <SolidColorBrush x:Key="LightBrush" Color="{StaticResource Light}" />
-    <SolidColorBrush x:Key="VeryLightBrush" Color="{StaticResource VeryLight}" />
-    <SolidColorBrush x:Key="OffWhiteBrush" Color="{StaticResource OffWhite}" />
-    <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource Highlight}" />
-    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource Accent}" />
-    <SolidColorBrush x:Key="NeutralDarkBrush" Color="{StaticResource NeutralDark}" />
-    <SolidColorBrush x:Key="NeutralWhiteBrush" Color="{StaticResource NeutralWhite}" />
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
+    <SolidColorBrush x:Key="VeryDarkBrush" Color="{StaticResource VeryDarkColor}" />
+    <SolidColorBrush x:Key="DarkBrush" Color="{StaticResource DarkColor}" />
+    <SolidColorBrush x:Key="MediumBrush" Color="{StaticResource MediumColor}" />
+    <SolidColorBrush x:Key="LightBrush" Color="{StaticResource LightColor}" />
+    <SolidColorBrush x:Key="VeryLightBrush" Color="{StaticResource VeryLightColor}" />
+    <SolidColorBrush x:Key="OffWhiteBrush" Color="{StaticResource OffWhiteColor}" />
+    <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}" />
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="NeutralDarkBrush" Color="{StaticResource NeutralDarkColor}" />
+    <SolidColorBrush x:Key="NeutralWhiteBrush" Color="{StaticResource NeutralWhiteColor}" />
 
     <LinearGradientBrush x:Key="EdgeBorder" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Offset="0" Color="#0000" />
@@ -70,7 +88,7 @@
 
     <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#6FFF" />
 
-    <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="{StaticResource Light}" />
+    <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="{StaticResource LightColor}" />
 
     <DrawingBrush x:Key="CircularAnimationIconBrush"
                   Stretch="Uniform"

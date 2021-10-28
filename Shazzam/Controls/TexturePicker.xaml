@@ -177,8 +177,8 @@
 
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                <GradientStop Offset=".5" Color="{StaticResource VeryDark}" />
-                <GradientStop Offset="1" Color="{StaticResource NeutralDark}" />
+                <GradientStop Offset=".5" Color="{StaticResource VeryDarkColor}" />
+                <GradientStop Offset="1" Color="{StaticResource NeutralDarkColor}" />
             </LinearGradientBrush>
         </Grid.Background>
     </Grid>
