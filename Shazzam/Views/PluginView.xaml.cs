@@ -1,4 +1,4 @@
-namespace Shazzam.Views
+﻿namespace Shazzam.Views
 {
     using System.Collections.Generic;
     using System.Windows;
@@ -51,12 +51,6 @@ namespace Shazzam.Views
             };
 
             this.Plugins.Add(fileLoader);
-
-            // Plugin colorLoader = new Plugin();
-            // colorLoader.Root = new Kaxaml.Plugins.ColorPicker.ColorPickerPlugin();
-            // colorLoader.Name = "Color Picker";
-            // colorLoader.Description = "Color assistant";
-            // Plugins.Add(colorLoader);
             this.AddSettingsPlugin();
 
             //// add the about plugin
@@ -67,7 +61,6 @@ namespace Shazzam.Views
                 Description = "About Shazzam",
             };
             this.Plugins.Add(about);
-            //// SelectedPlugin = colorLoader;
         }
 
         private void AddSettingsPlugin()
