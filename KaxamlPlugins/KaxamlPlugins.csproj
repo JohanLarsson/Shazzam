@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <OutputType>library</OutputType>
     <UseWPF>true</UseWPF>
     <LangVersion>latest</LangVersion>
