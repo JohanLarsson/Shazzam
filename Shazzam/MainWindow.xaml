@@ -74,11 +74,9 @@
             <ColumnDefinition x:Name="PluginsColumn" Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Menu Grid.Row="0" Grid.ColumnSpan="2"
-                      Height="24"
-                      Margin="0,6,1,0"
-                      VerticalAlignment="Top"
-                      Background="Black">
+        <Menu Grid.Row="0"
+              Grid.ColumnSpan="2"
+              VerticalAlignment="Top">
             <MenuItem Header="_File">
                 <MenuItem Command="ApplicationCommands.New" Header="_New_Shader File..." />
                 <MenuItem Command="ApplicationCommands.Open" Header="Open _Shader File..." />
@@ -113,80 +111,83 @@
 
             <MenuItem Header="_View">
                 <MenuItem Command="{Binding FullScreenImageCommand}"
-                                  Header="Full Screen _Image"
-                                  InputGestureText="F9" />
+                          Header="Full Screen _Image"
+                          InputGestureText="F9" />
                 <MenuItem Command="{Binding FullScreenCodeCommand}"
-                                  Header="Full Screen _Code"
-                                  InputGestureText="F11" />
+                          Header="Full Screen _Code"
+                          InputGestureText="F11" />
                 <Separator />
                 <MenuItem Header="Image _Stretch">
                     <MenuItem Command="{Binding ImageStretchCommand}"
-                                      CommandParameter="none"
-                                      Header="_None"
-                                      InputGestureText="Ctrl+F5"
-                                      IsCheckable="True"
-                                      IsChecked="{Binding ImageStretch, ConverterParameter=none, Converter={StaticResource CheckedConverter}}" />
+                              CommandParameter="none"
+                              Header="_None"
+                              InputGestureText="Ctrl+F5"
+                              IsCheckable="True"
+                              IsChecked="{Binding ImageStretch, ConverterParameter=none, Converter={StaticResource CheckedConverter}}" />
                     <MenuItem Command="{Binding ImageStretchCommand}"
-                                      CommandParameter="fill"
-                                      Header="_Fill"
-                                      InputGestureText="Ctrl+F6"
-                                      IsCheckable="True"
-                                      IsChecked="{Binding ImageStretch, ConverterParameter=fill, Converter={StaticResource CheckedConverter}}" />
+                              CommandParameter="fill"
+                              Header="_Fill"
+                              InputGestureText="Ctrl+F6"
+                              IsCheckable="True"
+                              IsChecked="{Binding ImageStretch, ConverterParameter=fill, Converter={StaticResource CheckedConverter}}" />
                     <MenuItem Command="{Binding ImageStretchCommand}"
-                                      CommandParameter="uniform"
-                                      Header="_Uniform"
-                                      InputGestureText="Ctrl+F7"
-                                      IsCheckable="True"
-                                      IsChecked="{Binding ImageStretch, ConverterParameter=uniform, Converter={StaticResource CheckedConverter}}" />
+                              CommandParameter="uniform"
+                              Header="_Uniform"
+                              InputGestureText="Ctrl+F7"
+                              IsCheckable="True"
+                              IsChecked="{Binding ImageStretch, ConverterParameter=uniform, Converter={StaticResource CheckedConverter}}" />
                     <MenuItem Command="{Binding ImageStretchCommand}"
-                                      CommandParameter="uniformtofill"
-                                      Header="Uniform_ToFill"
-                                      InputGestureText="Ctrl+F8"
-                                      IsCheckable="True"
-                                      IsChecked="{Binding ImageStretch, ConverterParameter=uniformtofill, Converter={StaticResource CheckedConverter}}" />
+                              CommandParameter="uniformtofill"
+                              Header="Uniform_ToFill"
+                              InputGestureText="Ctrl+F8"
+                              IsCheckable="True"
+                              IsChecked="{Binding ImageStretch, ConverterParameter=uniformtofill, Converter={StaticResource CheckedConverter}}" />
 
                 </MenuItem>
             </MenuItem>
+
             <MenuItem Header="_Help">
-
                 <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://blog.shazzam-tool.com/"
-                                  Header="What's New" />
+                          CommandParameter="http://blog.shazzam-tool.com/"
+                          Header="What's New" />
                 <Separator />
 
                 <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://shazzam.codeplex.com/WorkItem/List.aspx"
-                                  Header="Report a bug" />
+                          CommandParameter="http://shazzam.codeplex.com/WorkItem/List.aspx"
+                          Header="Report a bug" />
                 <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://shazzam.codeplex.com/Thread/List.aspx"
-                                  Header="Forums" />
+                          CommandParameter="http://shazzam.codeplex.com/Thread/List.aspx"
+                          Header="Forums" />
                 <Separator />
                 <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://twitter.com/shazzamtool"
-                                  Header="Twitter" />
+                          CommandParameter="http://twitter.com/shazzamtool"
+                          Header="Twitter" />
                 <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://blog.shazzam-tool.com/"
-                                  Header="Blog" />
+                          CommandParameter="http://blog.shazzam-tool.com/"
+                          Header="Blog" />
                 <Separator />
                 <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://blog.xamlwonderland.com/"
-                                  Header="XAML Wonderland" />
+                          CommandParameter="http://blog.xamlwonderland.com/"
+                          Header="XAML Wonderland" />
                 <MenuItem Command="{Binding BrowseToSiteCommand}"
-                                  CommandParameter="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=UMKJV7XEKWPV8"
-                                  Header="Contribute" />
+                          CommandParameter="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=UMKJV7XEKWPV8"
+                          Header="Contribute" />
                 <!--<MenuItem Header="Check for Update" />-->
                 <Separator />
                 <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://amazon.com/"
-                                  Header="HLSL and Pixel Shader for .NET Developers Book" />
+                          CommandParameter="http://amazon.com/"
+                          Header="HLSL and Pixel Shader for .NET Developers Book" />
                 <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
-                                  CommandParameter="http://lynda.com/waltritscher"
-                                  Header="Video Training" />
+                          CommandParameter="http://lynda.com/waltritscher"
+                          Header="Video Training" />
             </MenuItem>
 
         </Menu>
 
-        <view:PluginView Grid.Row="1" Grid.Column="0" x:Name="Plugin1" Margin="10" />
+        <view:PluginView x:Name="Plugin1"
+                         Grid.Row="1"
+                         Grid.Column="0"
+                         Margin="10" />
 
         <Grid Grid.Row="1"
               Grid.Column="1"
