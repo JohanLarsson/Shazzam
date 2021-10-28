@@ -16,7 +16,7 @@ namespace Shazzam.Commands
     public class RelayCommand : ICommand
     {
         private readonly Action execute;
-        private readonly Func<bool> canExecute;
+        private readonly Func<bool>? canExecute;
 
         /// <summary>
         /// Creates a new command that can always execute.
@@ -32,7 +32,7 @@ namespace Shazzam.Commands
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
-        public RelayCommand(Action execute, Func<bool> canExecute)
+        public RelayCommand(Action execute, Func<bool>? canExecute)
         {
             this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
             this.canExecute = canExecute;

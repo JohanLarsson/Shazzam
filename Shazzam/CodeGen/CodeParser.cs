@@ -227,7 +227,7 @@
         /// <summary>
         /// Sets the out parameters to the standard min, max, and default values for the given type.
         /// </summary>
-        private static void GetStandardValues(Type registerType, out object minValue, out object maxValue, out object? defaultValue)
+        private static void GetStandardValues(Type registerType, out object? minValue, out object? maxValue, out object? defaultValue)
         {
             if (registerType == typeof(double))
             {
@@ -292,7 +292,7 @@
         /// <summary>
         /// Converts the given string value into a double, Point, Point3D, or Color.
         /// </summary>
-        private static void ConvertValue(string valueText, Type type, ref object value)
+        private static void ConvertValue(string valueText, Type type, ref object? value)
         {
             if (string.IsNullOrEmpty(valueText))
             {

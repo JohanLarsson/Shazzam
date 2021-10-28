@@ -58,7 +58,6 @@
         public void Compile(string codeText, ShaderProfile shaderProfile)
         {
             this.IsCompiled = false;
-            var path = Properties.Settings.Default.FolderPath_Output;
 
             var defines = IntPtr.Zero;
             var includes = IntPtr.Zero;
@@ -136,6 +135,7 @@
 
             this.ErrorText = string.Empty;
             this.IsCompiled = true;
+            var path = Properties.Settings.Default.FolderPath_Output;
             var psPath = path + Constants.FileNames.TempShaderPs;
             var pCompiledPs = ppShader.GetBufferPointer();
             var compiledPsSize = ppShader.GetBufferSize();

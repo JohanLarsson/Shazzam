@@ -147,10 +147,7 @@
             {
                 try
                 {
-                    if (this.colorChangedTimer is null)
-                    {
-                        this.colorChangedTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(200), DispatcherPriority.Background, this.ColorChangedTimerTick, this.Dispatcher);
-                    }
+                    this.colorChangedTimer ??= new DispatcherTimer(TimeSpan.FromMilliseconds(200), DispatcherPriority.Background, this.ColorChangedTimerTick, this.Dispatcher);
 
                     this.colorChangedTimer.Stop();
                     this.colorChangedTimer.Start();

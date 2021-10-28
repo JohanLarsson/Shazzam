@@ -32,13 +32,13 @@
             var options = new CompilerParameters
             {
                 ReferencedAssemblies =
-                    {
-                        "System.dll",
-                        "System.Core.dll",
-                        "WindowsBase.dll",
-                        "PresentationFramework.dll",
-                        "PresentationCore.dll",
-                    },
+                {
+                    "System.dll",
+                    "System.Core.dll",
+                    "WindowsBase.dll",
+                    "PresentationFramework.dll",
+                    "PresentationCore.dll",
+                },
                 IncludeDebugInformation = false,
                 GenerateExecutable = false,
                 GenerateInMemory = true,
@@ -274,7 +274,7 @@
             return new CodeDefaultValueExpression(codeTypeReference);
         }
 
-        private static CodeMemberProperty CreateClrProperty(string propertyName, Type type, string description)
+        private static CodeMemberProperty CreateClrProperty(string propertyName, Type type, string? description)
         {
             var property = new CodeMemberProperty
             {
