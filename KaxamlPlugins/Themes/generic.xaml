@@ -3,32 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:KaxamlPlugins.Controls">
 
-    <!--  DoubleDragBox  -->
-
-    <Style TargetType="{x:Type local:DoubleDragBox}">
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Cursor" Value="SizeNS" />
-        <Setter Property="Height" Value="20" />
-        <Setter Property="Foreground" Value="#FF33393C" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:DoubleDragBox}">
-                    <Border
-                        Background="White"
-                        BorderBrush="#4D565D"
-                        BorderThickness="1"
-                        CornerRadius="2">
-                        <TextBlock
-                            Margin="2,1,0,0"
-                            VerticalAlignment="Center"
-                            Text="{TemplateBinding CurrentText}" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-
     <!--  ColorPicker  -->
 
     <VisualBrush
