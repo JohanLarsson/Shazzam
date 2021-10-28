@@ -148,7 +148,7 @@
                         .Line("/// </summary>")
                         .Line("private static readonly PixelShader Shader = new PixelShader")
                         .Line("{")
-                        .Line($"    UriSource = new Uri(\"pack://application:,,,/[assemblyname];component/[folder]/{model.GeneratedClassName}.ps\", UriKind.Absolute)")
+                        .Line($"    UriSource = new Uri(\"pack://application:,,,/[assemblyname];component/[folder]/{model.GeneratedClassName}.ps\", UriKind.Absolute),")
                         .Line("};")
                         .Line()
                         .Line($"public {model.GeneratedClassName}()")
@@ -178,7 +178,7 @@
                 this.Summary("There has to be a property of type Brush called Input. This property contains the input image and it is usually not set directly - it is set automatically when our effect is applied to a control.")
                     .Line("public Brush Input")
                     .Line("{")
-                    .Line($"    get => ((Brush)(this.GetValue(InputProperty)));")
+                    .Line($"    get => (Brush)this.GetValue(InputProperty);")
                     .Line($"    set => this.SetValue(InputProperty, value);")
                     .Line("}");
 
@@ -188,7 +188,7 @@
                         .Summary(register.Description)
                         .Line($"public {TypeName(register.RegisterType)} {register.RegisterName}")
                         .Line("{")
-                        .Line($"    get => (({TypeName(register.RegisterType)})(this.GetValue({register.RegisterName}Property)));")
+                        .Line($"    get => ({TypeName(register.RegisterType)})this.GetValue({register.RegisterName}Property);")
                         .Line($"    set => this.SetValue({register.RegisterName}Property, value);")
                         .Line("}");
                 }

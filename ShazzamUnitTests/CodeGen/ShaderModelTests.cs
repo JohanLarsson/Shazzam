@@ -71,14 +71,14 @@
         /// </summary>
         public Brush Input
         {
-            get => ((Brush)(this.GetValue(InputProperty)));
+            get => (Brush)this.GetValue(InputProperty);
             set => this.SetValue(InputProperty, value);
         }
 
         /// <summary>This is the value</summary>
         public double Value
         {
-            get => ((double)(this.GetValue(ValueProperty)));
+            get => (double)this.GetValue(ValueProperty);
             set => this.SetValue(ValueProperty, value);
         }
     }
@@ -141,7 +141,7 @@
         /// </summary>
         private static readonly PixelShader Shader = new PixelShader
         {
-            UriSource = new Uri(""pack://application:,,,/[assemblyname];component/[folder]/MyEffect.ps"", UriKind.Absolute)
+            UriSource = new Uri(""pack://application:,,,/[assemblyname];component/[folder]/MyEffect.ps"", UriKind.Absolute),
         };
 
         public MyEffect()
@@ -156,14 +156,14 @@
         /// </summary>
         public Brush Input
         {
-            get => ((Brush)(this.GetValue(InputProperty)));
+            get => (Brush)this.GetValue(InputProperty);
             set => this.SetValue(InputProperty, value);
         }
 
         /// <summary>This is the value</summary>
         public double Value
         {
-            get => ((double)(this.GetValue(ValueProperty)));
+            get => (double)this.GetValue(ValueProperty);
             set => this.SetValue(ValueProperty, value);
         }
     }
