@@ -35,7 +35,7 @@
                 }
 
                 this.errorText = value;
-                this.RaiseNotifyChanged();
+                this.OnPropertyChanged();
             }
         }
 
@@ -51,7 +51,7 @@
                 }
 
                 this.isCompiled = value;
-                this.RaiseNotifyChanged();
+                this.OnPropertyChanged();
             }
         }
 
@@ -172,7 +172,7 @@ finished:
             this.ErrorText = "not compiled";
         }
 
-        protected void RaiseNotifyChanged([System.Runtime.CompilerServices.CallerMemberName] string? propName = null)
+        protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string? propName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
