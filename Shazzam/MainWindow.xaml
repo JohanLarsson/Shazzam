@@ -9,9 +9,9 @@
         xmlns:view="clr-namespace:Shazzam.Views"
         Title="Shazzam Shader Editor = V1.2"
         Background="Black"
+        DataContext="{x:Static shazzam:MainWindowViewModel.Instance}"
         Icon="Images/star.png"
         WindowState="Maximized"
-        DataContext="{x:Static shazzam:MainWindowViewModel.Instance}"
         mc:Ignorable="d">
     <Window.Resources>
         <converters:StretchToIsCheckedConverter x:Key="CheckedConverter" />
@@ -64,178 +64,133 @@
 
     </Window.CommandBindings>
 
-    <Grid x:Name="MainGrid"
-          Background="#101010">
+    <Grid x:Name="MainGrid" Background="#101010">
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition x:Name="PluginsColumn" Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
-            <Grid x:Name="MenuContainer">
-
-                <Grid Margin="0,5,0,5">
-                    <Border BorderBrush="#484848"
-                            BorderThickness="0,0,1,0"
-                            CornerRadius="0,4,4,0">
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Offset="0.0" Color="#484848" />
-                                <GradientStop Offset="1.0" Color="#282828" />
-                            </LinearGradientBrush>
-                        </Border.Background>
-                    </Border>
-
-                    <Border Height="25"
-                            VerticalAlignment="Top"
-                            BorderBrush="{StaticResource HighlightBrush}"
-                            BorderThickness="0,1,0,0"
-                            CornerRadius="0,4,0,0">
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Offset="0.0" Color="#505050" />
-                                <GradientStop Offset="1.0" Color="#282828" />
-                            </LinearGradientBrush>
-                        </Border.Background>
-                    </Border>
-
-                    <Border BorderBrush="#777"
-                            BorderThickness="0,1,0,0"
-                            CornerRadius="0,4,4,0" />
-                    <Border BorderBrush="#404040"
-                            BorderThickness="0,0,0,1"
-                            CornerRadius="0,4,4,0" />
-                    <Border Height="33"
-                            VerticalAlignment="Bottom"
-                            BorderBrush="{StaticResource HighlightBrush}"
-                            BorderThickness="0,1,0,0"
-                            CornerRadius="0,0,4,0"
-                            Opacity=".4">
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Offset="0" Color="#10FFFFFF" />
-                                <GradientStop Offset="1" Color="#00FFFFFF" />
-                            </LinearGradientBrush>
-                        </Border.Background>
-                    </Border>
-                </Grid>
-
-                <Menu Grid.Column="0"
+        <Menu Grid.Row="0" Grid.ColumnSpan="2"
                       Height="24"
                       Margin="0,6,1,0"
                       VerticalAlignment="Top"
                       Background="Black">
-                    <MenuItem Header="_File">
-                        <MenuItem Command="ApplicationCommands.New" Header="_New_Shader File..." />
-                        <MenuItem Command="ApplicationCommands.Open" Header="Open _Shader File..." />
-                        <MenuItem Command="commands:AppCommands.OpenImage" Header="Open _Image File..." />
-                        <MenuItem Command="commands:AppCommands.OpenMedia" Header="Open _Media File..." />
-                        <Separator />
-                        <MenuItem Command="ApplicationCommands.Save" Header="_Save" />
-                        <MenuItem Command="ApplicationCommands.SaveAs" Header="Save _As..." />
-                        <Separator />
-                        <MenuItem Command="commands:AppCommands.Exit" Header="E_xit" />
-                    </MenuItem>
+            <MenuItem Header="_File">
+                <MenuItem Command="ApplicationCommands.New" Header="_New_Shader File..." />
+                <MenuItem Command="ApplicationCommands.Open" Header="Open _Shader File..." />
+                <MenuItem Command="commands:AppCommands.OpenImage" Header="Open _Image File..." />
+                <MenuItem Command="commands:AppCommands.OpenMedia" Header="Open _Media File..." />
+                <Separator />
+                <MenuItem Command="ApplicationCommands.Save" Header="_Save" />
+                <MenuItem Command="ApplicationCommands.SaveAs" Header="Save _As..." />
+                <Separator />
+                <MenuItem Command="commands:AppCommands.Exit" Header="E_xit" />
+            </MenuItem>
 
-                    <MenuItem Header="_Edit" Visibility="Collapsed">
-                        <MenuItem Command="ApplicationCommands.Undo" Header="_Undo" />
-                        <MenuItem Command="ApplicationCommands.Redo" Header="_Redo" />
-                        <Separator />
-                        <MenuItem Command="ApplicationCommands.Cut" Header="_Cut" />
-                        <MenuItem Command="ApplicationCommands.Copy" Header="C_opy" />
-                        <MenuItem Command="ApplicationCommands.Paste" Header="_Paste" />
-                        <Separator />
-                        <MenuItem Command="ApplicationCommands.Find" Header="Find" />
-                    </MenuItem>
+            <MenuItem Header="_Edit" Visibility="Collapsed">
+                <MenuItem Command="ApplicationCommands.Undo" Header="_Undo" />
+                <MenuItem Command="ApplicationCommands.Redo" Header="_Redo" />
+                <Separator />
+                <MenuItem Command="ApplicationCommands.Cut" Header="_Cut" />
+                <MenuItem Command="ApplicationCommands.Copy" Header="C_opy" />
+                <MenuItem Command="ApplicationCommands.Paste" Header="_Paste" />
+                <Separator />
+                <MenuItem Command="ApplicationCommands.Find" Header="Find" />
+            </MenuItem>
 
-                    <MenuItem Header="_Tools">
-                        <MenuItem Command="commands:AppCommands.ApplyShader" Header="_Apply Shader" />
-                        <MenuItem Command="commands:AppCommands.RemoveShader" Header="_Remove Shader" />
-                        <MenuItem Command="commands:AppCommands.CompileShader" Header="_Compile Shader" />
-                        <Separator />
-                        <MenuItem Command="{Binding ExploreCompiledShadersCommand}" Header="_Explore Compiled Shaders (*.ps)" />
-                        <MenuItem Command="{Binding ExploreTextureMapsCommand}" Header="_Explore Texture Maps" />
-                    </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Command="commands:AppCommands.ApplyShader" Header="_Apply Shader" />
+                <MenuItem Command="commands:AppCommands.RemoveShader" Header="_Remove Shader" />
+                <MenuItem Command="commands:AppCommands.CompileShader" Header="_Compile Shader" />
+                <Separator />
+                <MenuItem Command="{Binding ExploreCompiledShadersCommand}" Header="_Explore Compiled Shaders (*.ps)" />
+                <MenuItem Command="{Binding ExploreTextureMapsCommand}" Header="_Explore Texture Maps" />
+            </MenuItem>
 
-                    <MenuItem Header="_View">
-                        <MenuItem Command="{Binding FullScreenImageCommand}"
+            <MenuItem Header="_View">
+                <MenuItem Command="{Binding FullScreenImageCommand}"
                                   Header="Full Screen _Image"
                                   InputGestureText="F9" />
-                        <MenuItem Command="{Binding FullScreenCodeCommand}"
+                <MenuItem Command="{Binding FullScreenCodeCommand}"
                                   Header="Full Screen _Code"
                                   InputGestureText="F11" />
-                        <Separator />
-                        <MenuItem Header="Image _Stretch">
-                            <MenuItem Command="{Binding ImageStretchCommand}"
+                <Separator />
+                <MenuItem Header="Image _Stretch">
+                    <MenuItem Command="{Binding ImageStretchCommand}"
                                       CommandParameter="none"
                                       Header="_None"
                                       InputGestureText="Ctrl+F5"
                                       IsCheckable="True"
                                       IsChecked="{Binding ImageStretch, ConverterParameter=none, Converter={StaticResource CheckedConverter}}" />
-                            <MenuItem Command="{Binding ImageStretchCommand}"
+                    <MenuItem Command="{Binding ImageStretchCommand}"
                                       CommandParameter="fill"
                                       Header="_Fill"
                                       InputGestureText="Ctrl+F6"
                                       IsCheckable="True"
                                       IsChecked="{Binding ImageStretch, ConverterParameter=fill, Converter={StaticResource CheckedConverter}}" />
-                            <MenuItem Command="{Binding ImageStretchCommand}"
+                    <MenuItem Command="{Binding ImageStretchCommand}"
                                       CommandParameter="uniform"
                                       Header="_Uniform"
                                       InputGestureText="Ctrl+F7"
                                       IsCheckable="True"
                                       IsChecked="{Binding ImageStretch, ConverterParameter=uniform, Converter={StaticResource CheckedConverter}}" />
-                            <MenuItem Command="{Binding ImageStretchCommand}"
+                    <MenuItem Command="{Binding ImageStretchCommand}"
                                       CommandParameter="uniformtofill"
                                       Header="Uniform_ToFill"
                                       InputGestureText="Ctrl+F8"
                                       IsCheckable="True"
                                       IsChecked="{Binding ImageStretch, ConverterParameter=uniformtofill, Converter={StaticResource CheckedConverter}}" />
 
-                        </MenuItem>
-                    </MenuItem>
-                    <MenuItem Header="_Help">
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Help">
 
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
+                <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
                                   CommandParameter="http://blog.shazzam-tool.com/"
                                   Header="What's New" />
-                        <Separator />
+                <Separator />
 
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
+                <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
                                   CommandParameter="http://shazzam.codeplex.com/WorkItem/List.aspx"
                                   Header="Report a bug" />
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
+                <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
                                   CommandParameter="http://shazzam.codeplex.com/Thread/List.aspx"
                                   Header="Forums" />
-                        <Separator />
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
+                <Separator />
+                <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
                                   CommandParameter="http://twitter.com/shazzamtool"
                                   Header="Twitter" />
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
+                <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
                                   CommandParameter="http://blog.shazzam-tool.com/"
                                   Header="Blog" />
-                        <Separator />
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
+                <Separator />
+                <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
                                   CommandParameter="http://blog.xamlwonderland.com/"
                                   Header="XAML Wonderland" />
-                        <MenuItem Command="{Binding BrowseToSiteCommand}"
+                <MenuItem Command="{Binding BrowseToSiteCommand}"
                                   CommandParameter="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=UMKJV7XEKWPV8"
                                   Header="Contribute" />
-                        <!--<MenuItem Header="Check for Update" />-->
-                        <Separator />
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
+                <!--<MenuItem Header="Check for Update" />-->
+                <Separator />
+                <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
                                   CommandParameter="http://amazon.com/"
                                   Header="HLSL and Pixel Shader for .NET Developers Book" />
-                        <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
+                <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
                                   CommandParameter="http://lynda.com/waltritscher"
                                   Header="Video Training" />
-                    </MenuItem>
+            </MenuItem>
 
-                </Menu>
-            </Grid>
-            <view:PluginView x:Name="Plugin1" Margin="10" />
-        </StackPanel>
-        
-        <Grid Grid.Column="1" Margin="3,6,0,0">
+        </Menu>
+
+        <view:PluginView Grid.Row="1" Grid.Column="0" x:Name="Plugin1" Margin="10" />
+
+        <Grid Grid.Row="1"
+              Grid.Column="1"
+              Margin="3,6,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="ImageRow" Height="{Binding ImageRowHeight}" />
                 <RowDefinition x:Name="SplitterRow" Height="4" />
