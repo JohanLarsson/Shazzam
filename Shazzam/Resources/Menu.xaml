@@ -103,7 +103,6 @@
         <ControlTemplate.Triggers>
 
             <Trigger Property="IsHighlighted" Value="true">
-                <Setter TargetName="Content" Property="TextElement.Foreground" Value="{StaticResource LightBrush}" />
                 <Setter TargetName="Border" Property="Background">
                     <Setter.Value>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -129,7 +128,6 @@
                         </LinearGradientBrush>
                     </Setter.Value>
                 </Setter>
-                <Setter TargetName="Content" Property="TextElement.Foreground" Value="{StaticResource LightBrush}" />
             </MultiTrigger>
 
         </ControlTemplate.Triggers>
@@ -152,7 +150,6 @@
         <ControlTemplate.Triggers>
 
             <Trigger Property="IsHighlighted" Value="true">
-                <Setter TargetName="Content" Property="TextElement.Foreground" Value="{StaticResource LightBrush}" />
                 <Setter TargetName="Border" Property="Background">
                     <Setter.Value>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -175,7 +172,6 @@
                         </LinearGradientBrush>
                     </Setter.Value>
                 </Setter>
-                <Setter TargetName="Content" Property="TextElement.Foreground" Value="{StaticResource LightBrush}" />
             </MultiTrigger>
 
         </ControlTemplate.Triggers>
@@ -236,9 +232,6 @@
                 <Setter TargetName="Check" Property="Visibility" Value="Visible" />
                 <Setter TargetName="Icon" Property="Visibility" Value="Hidden" />
             </Trigger>
-            <Trigger Property="IsHighlighted" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="#707070" />
-            </Trigger>
             <Trigger Property="controls:IndexingStackPanel.StackLocation" Value="First">
                 <Setter TargetName="Border" Property="CornerRadius" Value="0,4,0,0" />
             </Trigger>
@@ -247,9 +240,6 @@
             </Trigger>
             <Trigger Property="controls:IndexingStackPanel.StackLocation" Value="FirstAndLast">
                 <Setter TargetName="Border" Property="CornerRadius" Value="0,4,4,4" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="false">
-                <Setter Property="TextElement.Foreground" Value="{StaticResource MediumBrush}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -313,9 +303,6 @@
             <Trigger Property="Icon" Value="{x:Null}">
                 <Setter TargetName="Icon" Property="Visibility" Value="Hidden" />
             </Trigger>
-            <Trigger Property="IsHighlighted" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="#707070" />
-            </Trigger>
             <Trigger Property="controls:IndexingStackPanel.StackLocation" Value="First">
                 <Setter TargetName="Border" Property="CornerRadius" Value="0,4,0,0" />
             </Trigger>
@@ -324,10 +311,6 @@
             </Trigger>
             <Trigger Property="controls:IndexingStackPanel.StackLocation" Value="FirstAndLast">
                 <Setter TargetName="Border" Property="CornerRadius" Value="0,4,4,4" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="false">
-                <Setter TargetName="HeaderHost" Property="TextElement.Foreground" Value="{StaticResource MediumBrush}" />
-                <Setter TargetName="InputGestureText" Property="TextElement.Foreground" Value="#777" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -348,6 +331,12 @@
             </Trigger>
             <Trigger Property="Role" Value="SubmenuItem">
                 <Setter Property="Template" Value="{StaticResource {x:Static MenuItem.SubmenuItemTemplateKey}}" />
+            </Trigger>
+            <Trigger Property="IsHighlighted" Value="true">
+                <Setter Property="TextElement.Foreground" Value="{StaticResource LightBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="TextElement.FontStyle" Value="Oblique" />
             </Trigger>
         </Style.Triggers>
     </Style>
