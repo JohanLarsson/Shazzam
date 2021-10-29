@@ -17,21 +17,19 @@
                            ToolTip="Use Ctrl-F9 to move focus to this tab." />
             </TabItem.Header>
 
-            <Border BorderBrush="{DynamicResource NeutralDarkBrush}" BorderThickness="9">
-                <Border BorderBrush="White" BorderThickness="1">
-                    <Grid MinWidth="330">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <WindowsFormsHost x:Name="FormsHost" Margin="2,2,2,2" />
+            <Grid MinWidth="330">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <WindowsFormsHost x:Name="FormsHost" Margin="2,2,2,2" />
 
-                        <StackPanel Grid.Row="1"
+                <StackPanel Grid.Row="1"
                                     Background="White"
                                     DockPanel.Dock="Bottom"
                                     Orientation="Horizontal">
 
-                            <TextBox x:Name="OutputTextBox"
+                    <TextBox x:Name="OutputTextBox"
                                      Margin="5,3,5,8"
                                      Padding="8,4"
                                      Background="DarkRed"
@@ -43,59 +41,57 @@
                                      ToolTip="Double-click here to goto error."
                                      Visibility="{Binding Text, Converter={x:Static converters:StringToVisibilityConverter.CollapsedWhenNullOrEmpty}, RelativeSource={RelativeSource Self}}">
 
-                                <TextBox.Effect>
-                                    <DropShadowEffect BlurRadius="9"
+                        <TextBox.Effect>
+                            <DropShadowEffect BlurRadius="9"
                                                       Direction="335"
                                                       Opacity="0.63"
                                                       Color="Black" />
-                                </TextBox.Effect>
-                            </TextBox>
+                        </TextBox.Effect>
+                    </TextBox>
 
-                            <TextBlock x:Name="CompileStatusText"
+                    <TextBlock x:Name="CompileStatusText"
                                        Margin="5,3,5,8"
                                        Padding="8,4"
                                        Background="#FFC4FFC4"
                                        DockPanel.Dock="Bottom">
-                                <TextBlock.Effect>
-                                    <DropShadowEffect BlurRadius="9"
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="9"
                                                       Direction="335"
                                                       Opacity="0.63"
                                                       Color="Black" />
-                                </TextBlock.Effect>
-                            </TextBlock>
+                        </TextBlock.Effect>
+                    </TextBlock>
 
-                            <TextBlock x:Name="DirtyStatusText"
+                    <TextBlock x:Name="DirtyStatusText"
                                        Margin="5,3,5,8"
                                        Padding="8,4"
                                        Background="LightYellow"
                                        DockPanel.Dock="Bottom"
                                        Text="Shader not saved."
                                        Visibility="Hidden">
-                                <TextBlock.Effect>
-                                    <DropShadowEffect BlurRadius="9"
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="9"
                                                       Direction="335"
                                                       Opacity="0.63"
                                                       Color="Black" />
-                                </TextBlock.Effect>
-                            </TextBlock>
+                        </TextBlock.Effect>
+                    </TextBlock>
 
-                            <TextBlock x:Name="VersionNotSupported"
+                    <TextBlock x:Name="VersionNotSupported"
                                        Margin="5,3,5,8"
                                        Padding="8,4"
                                        Background="#FFE4B85A"
                                        Text="PS_3 not available on this computer."
                                        Visibility="Hidden">
-                                <TextBlock.Effect>
-                                    <DropShadowEffect BlurRadius="9"
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="9"
                                                       Direction="335"
                                                       Opacity="0.63"
                                                       Color="Black" />
-                                </TextBlock.Effect>
-                            </TextBlock>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-            </Border>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
         </TabItem>
 
         <TabItem x:Name="InputControlsTab" Visibility="{Binding Visibility, Converter={x:Static converters:VisibilityToVisibilityConverter.CollapsedWhenVisible}, ElementName=OutputTextBox}">
@@ -104,222 +100,212 @@
                            Text="Tryout (adjust settings)"
                            ToolTip="Use Ctrl-F10 to move focus to this tab." />
             </TabItem.Header>
-            <Border BorderBrush="{DynamicResource NeutralDarkBrush}" BorderThickness="9">
-                <Border BorderBrush="White" BorderThickness="1">
-                    <Grid MinWidth="330" Background="{StaticResource NeutralDarkBrush}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0"
+            <Grid MinWidth="330">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
                                    Margin="5"
                                    Foreground="White"
                                    Text="The current effect has no input parameters."
                                    Visibility="{Binding ShaderModel.Registers, Converter={x:Static converters:AnyToVisibilityConverter.VisibleWhenEmpty}}" />
-                        <ItemsControl Grid.Column="0" ItemsSource="{Binding ShaderModel.Registers}">
-                            <ItemsControl.ItemTemplateSelector>
-                                <views:ShaderModelConstantRegisterTemplateSelector>
-                                    <views:ShaderModelConstantRegisterTemplateSelector.ColorTemplate>
-                                        <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
-                                            <controls:AdjustableColor Value="{Binding Value}" />
-                                        </DataTemplate>
-                                    </views:ShaderModelConstantRegisterTemplateSelector.ColorTemplate>
+                <ItemsControl Grid.Column="0" ItemsSource="{Binding ShaderModel.Registers}">
+                    <ItemsControl.ItemTemplateSelector>
+                        <views:ShaderModelConstantRegisterTemplateSelector>
+                            <views:ShaderModelConstantRegisterTemplateSelector.ColorTemplate>
+                                <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
+                                    <controls:AdjustableColor Value="{Binding Value}" />
+                                </DataTemplate>
+                            </views:ShaderModelConstantRegisterTemplateSelector.ColorTemplate>
 
-                                    <views:ShaderModelConstantRegisterTemplateSelector.SingleTemplate>
-                                        <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
-                                            <controls:AdjustableSlider Maximum="{Binding MaxValue, Mode=OneTime}"
+                            <views:ShaderModelConstantRegisterTemplateSelector.SingleTemplate>
+                                <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
+                                    <controls:AdjustableSlider Maximum="{Binding MaxValue, Mode=OneTime}"
                                                                        Minimum="{Binding MinValue, Mode=OneTime}"
                                                                        Value="{Binding Value}" />
-                                        </DataTemplate>
-                                    </views:ShaderModelConstantRegisterTemplateSelector.SingleTemplate>
+                                </DataTemplate>
+                            </views:ShaderModelConstantRegisterTemplateSelector.SingleTemplate>
 
-                                    <views:ShaderModelConstantRegisterTemplateSelector.PairTemplate>
-                                        <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
-                                            <controls:AdjustableSliderPair Maximum="{Binding MaxValue, Mode=OneTime}"
+                            <views:ShaderModelConstantRegisterTemplateSelector.PairTemplate>
+                                <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
+                                    <controls:AdjustableSliderPair Maximum="{Binding MaxValue, Mode=OneTime}"
                                                                            Minimum="{Binding MinValue, Mode=OneTime}"
                                                                            Value="{Binding Value}" />
-                                        </DataTemplate>
-                                    </views:ShaderModelConstantRegisterTemplateSelector.PairTemplate>
+                                </DataTemplate>
+                            </views:ShaderModelConstantRegisterTemplateSelector.PairTemplate>
 
-                                    <views:ShaderModelConstantRegisterTemplateSelector.TripleTemplate>
-                                        <DataTemplate>
-                                            <controls:AdjustableSliderTriplet />
-                                        </DataTemplate>
-                                    </views:ShaderModelConstantRegisterTemplateSelector.TripleTemplate>
+                            <views:ShaderModelConstantRegisterTemplateSelector.TripleTemplate>
+                                <DataTemplate>
+                                    <controls:AdjustableSliderTriplet />
+                                </DataTemplate>
+                            </views:ShaderModelConstantRegisterTemplateSelector.TripleTemplate>
 
-                                    <views:ShaderModelConstantRegisterTemplateSelector.QuadrupleTemplate>
-                                        <DataTemplate>
-                                            <controls:AdjustableSliderQuadruplet />
-                                        </DataTemplate>
-                                    </views:ShaderModelConstantRegisterTemplateSelector.QuadrupleTemplate>
-                                </views:ShaderModelConstantRegisterTemplateSelector>
-                            </ItemsControl.ItemTemplateSelector>
-                        </ItemsControl>
+                            <views:ShaderModelConstantRegisterTemplateSelector.QuadrupleTemplate>
+                                <DataTemplate>
+                                    <controls:AdjustableSliderQuadruplet />
+                                </DataTemplate>
+                            </views:ShaderModelConstantRegisterTemplateSelector.QuadrupleTemplate>
+                        </views:ShaderModelConstantRegisterTemplateSelector>
+                    </ItemsControl.ItemTemplateSelector>
+                </ItemsControl>
 
-                        <Expander Grid.Column="1"
+                <Expander Grid.Column="1"
                                   BorderThickness="0"
                                   DockPanel.Dock="Right"
                                   ExpandDirection="Left"
                                   IsExpanded="True">
-                            <FlowDocumentScrollViewer Width="300"
+                    <FlowDocumentScrollViewer Width="300"
                                                       Background="{StaticResource NeutralDarkBrush}"
                                                       BorderThickness="0"
                                                       Foreground="{StaticResource NeutralWhiteBrush}"
                                                       VerticalScrollBarVisibility="Auto">
-                                <FlowDocument FontFamily="Segoe UI"
+                        <FlowDocument FontFamily="Segoe UI"
                                               FontSize="12"
                                               TextAlignment="Left">
-                                    <Paragraph>
-                                        <InlineUIContainer>
-                                            <Image Width="24"
+                            <Paragraph>
+                                <InlineUIContainer>
+                                    <Image Width="24"
                                                    Height="24"
                                                    Source="info.png" />
-                                        </InlineUIContainer>
-                                        <Run Text=" " />
-                                        <Bold BaselineAlignment="Center">
-                                            <Run Text="Auto-Generated Control Information" />
-                                        </Bold>
-                                    </Paragraph>
-                                    <Paragraph>
-                                        <Run Text="Each register declared in HLSL is mapped to a DependencyProperty with a compatible .NET type, as shown in the table below." />
-                                    </Paragraph>
-                                    <Table Margin="0"
+                                </InlineUIContainer>
+                                <Run Text=" " />
+                                <Bold BaselineAlignment="Center">
+                                    <Run Text="Auto-Generated Control Information" />
+                                </Bold>
+                            </Paragraph>
+                            <Paragraph>
+                                <Run Text="Each register declared in HLSL is mapped to a DependencyProperty with a compatible .NET type, as shown in the table below." />
+                            </Paragraph>
+                            <Table Margin="0"
                                            BorderBrush="{StaticResource NeutralWhiteBrush}"
                                            BorderThickness="1"
                                            CellSpacing="0">
-                                        <Table.Columns>
-                                            <TableColumn Width="2*" />
-                                            <TableColumn Width="3*" />
-                                        </Table.Columns>
-                                        <TableRowGroup>
-                                            <TableRow Background="{StaticResource NeutralDarkBrush}" Foreground="{StaticResource HighlightBrush}">
-                                                <TableCell Padding="2,1,2,1"
+                                <Table.Columns>
+                                    <TableColumn Width="2*" />
+                                    <TableColumn Width="3*" />
+                                </Table.Columns>
+                                <TableRowGroup>
+                                    <TableRow Background="{StaticResource NeutralDarkBrush}" Foreground="{StaticResource HighlightBrush}">
+                                        <TableCell Padding="2,1,2,1"
                                                            BorderBrush="{StaticResource NeutralWhiteBrush}"
                                                            BorderThickness="0,0,0,1">
-                                                    <Paragraph>
-                                                        <Run Text="HLSL type" />
-                                                    </Paragraph>
-                                                </TableCell>
-                                                <TableCell Padding="2,1,2,1"
+                                            <Paragraph>
+                                                <Run Text="HLSL type" />
+                                            </Paragraph>
+                                        </TableCell>
+                                        <TableCell Padding="2,1,2,1"
                                                            BorderBrush="{StaticResource NeutralWhiteBrush}"
                                                            BorderThickness="0,0,0,1">
-                                                    <Paragraph>
-                                                        <Run Text=".NET type" />
-                                                    </Paragraph>
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow Background="{StaticResource VeryDarkBrush}">
-                                                <TableCell Padding="2,1,2,1">
-                                                    <Paragraph>
-                                                        <Run Text="float" />
-                                                    </Paragraph>
-                                                </TableCell>
-                                                <TableCell Padding="2,1,2,1">
-                                                    <Paragraph>
-                                                        <Span Foreground="{StaticResource HighlightBrush}">
-                                                            <Run Text="Double" />
-                                                        </Span>
-                                                        <Run Text=" or Single" />
-                                                    </Paragraph>
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow Background="{StaticResource NeutralDarkBrush}">
-                                                <TableCell Padding="2,1,2,1">
-                                                    <Paragraph>
-                                                        <Run Text="float2" />
-                                                    </Paragraph>
-                                                </TableCell>
-                                                <TableCell Padding="2,1,2,1">
-                                                    <Paragraph>
-                                                        <Span Foreground="{StaticResource HighlightBrush}">
-                                                            <Run Text="Point" />
-                                                        </Span>
-                                                        <Run Text=" or Size or Vector" />
-                                                    </Paragraph>
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow Background="{StaticResource VeryDarkBrush}">
-                                                <TableCell Padding="2,1,2,1">
-                                                    <Paragraph>
-                                                        <Run Text="float3" />
-                                                    </Paragraph>
-                                                </TableCell>
-                                                <TableCell Padding="2,1,2,1">
-                                                    <Paragraph>
-                                                        <Span Foreground="{StaticResource HighlightBrush}">
-                                                            <Run Text="Point3D" />
-                                                        </Span>
-                                                        <Run Text=" * or Vector3D*" />
-                                                    </Paragraph>
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow Background="{StaticResource NeutralDarkBrush}">
-                                                <TableCell Padding="2,1,2,1">
-                                                    <Paragraph>
-                                                        <Run Text="float4" />
-                                                    </Paragraph>
-                                                </TableCell>
-                                                <TableCell Padding="2,1,2,1">
-                                                    <Paragraph>
-                                                        <Span Foreground="{StaticResource HighlightBrush}">
-                                                            <Run Text="Color" />
-                                                        </Span>
-                                                        <Run Text=" or Point4D*" />
-                                                    </Paragraph>
-                                                </TableCell>
-                                            </TableRow>
-                                        </TableRowGroup>
-                                    </Table>
-                                    <Paragraph Margin="0,2,0,0" FontSize="11">
-                                        <Run Text="* Available in WPF but not in Silverlight." />
-                                    </Paragraph>
-                                    <Paragraph>
-                                        <Run Text="The highlighted types are used by default, but other compatible types can be selected in the comments before an HLSL register declaration:" />
-                                    </Paragraph>
-                                    <Paragraph Padding="2"
+                                            <Paragraph>
+                                                <Run Text=".NET type" />
+                                            </Paragraph>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow Background="{StaticResource VeryDarkBrush}">
+                                        <TableCell Padding="2,1,2,1">
+                                            <Paragraph>
+                                                <Run Text="float" />
+                                            </Paragraph>
+                                        </TableCell>
+                                        <TableCell Padding="2,1,2,1">
+                                            <Paragraph>
+                                                <Span Foreground="{StaticResource HighlightBrush}">
+                                                    <Run Text="Double" />
+                                                </Span>
+                                                <Run Text=" or Single" />
+                                            </Paragraph>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow Background="{StaticResource NeutralDarkBrush}">
+                                        <TableCell Padding="2,1,2,1">
+                                            <Paragraph>
+                                                <Run Text="float2" />
+                                            </Paragraph>
+                                        </TableCell>
+                                        <TableCell Padding="2,1,2,1">
+                                            <Paragraph>
+                                                <Span Foreground="{StaticResource HighlightBrush}">
+                                                    <Run Text="Point" />
+                                                </Span>
+                                                <Run Text=" or Size or Vector" />
+                                            </Paragraph>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow Background="{StaticResource VeryDarkBrush}">
+                                        <TableCell Padding="2,1,2,1">
+                                            <Paragraph>
+                                                <Run Text="float3" />
+                                            </Paragraph>
+                                        </TableCell>
+                                        <TableCell Padding="2,1,2,1">
+                                            <Paragraph>
+                                                <Span Foreground="{StaticResource HighlightBrush}">
+                                                    <Run Text="Point3D" />
+                                                </Span>
+                                                <Run Text=" * or Vector3D*" />
+                                            </Paragraph>
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow Background="{StaticResource NeutralDarkBrush}">
+                                        <TableCell Padding="2,1,2,1">
+                                            <Paragraph>
+                                                <Run Text="float4" />
+                                            </Paragraph>
+                                        </TableCell>
+                                        <TableCell Padding="2,1,2,1">
+                                            <Paragraph>
+                                                <Span Foreground="{StaticResource HighlightBrush}">
+                                                    <Run Text="Color" />
+                                                </Span>
+                                                <Run Text=" or Point4D*" />
+                                            </Paragraph>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableRowGroup>
+                            </Table>
+                            <Paragraph Margin="0,2,0,0" FontSize="11">
+                                <Run Text="* Available in WPF but not in Silverlight." />
+                            </Paragraph>
+                            <Paragraph>
+                                <Run Text="The highlighted types are used by default, but other compatible types can be selected in the comments before an HLSL register declaration:" />
+                            </Paragraph>
+                            <Paragraph Padding="2"
                                                Background="White"
                                                FontFamily="Consolas"
                                                Foreground="Black">
-                                        <Span Foreground="Green">
-                                            <Run Text="/// &lt;summary&gt;Input size&lt;/summary&gt;" />
-                                            <LineBreak />
-                                            <Run Text="/// " />
-                                            <Run Background="#60FFC000" Text="&lt;type&gt;Size&lt;/type&gt;" />
-                                            <LineBreak />
-                                            <Run Text="/// &lt;minValue&gt;10,10&lt;/minValue&gt;" />
-                                            <LineBreak />
-                                            <Run Text="/// &lt;maxValue&gt;100,100&lt;/maxValue&gt;" />
-                                            <LineBreak />
-                                            <Run Text="/// &lt;defaultValue&gt;3,3&lt;/defaultValue&gt;" />
-                                        </Span>
-                                        <LineBreak />
-                                        <Run FontWeight="Bold"
+                                <Span Foreground="Green">
+                                    <Run Text="/// &lt;summary&gt;Input size&lt;/summary&gt;" />
+                                    <LineBreak />
+                                    <Run Text="/// " />
+                                    <Run Background="#60FFC000" Text="&lt;type&gt;Size&lt;/type&gt;" />
+                                    <LineBreak />
+                                    <Run Text="/// &lt;minValue&gt;10,10&lt;/minValue&gt;" />
+                                    <LineBreak />
+                                    <Run Text="/// &lt;maxValue&gt;100,100&lt;/maxValue&gt;" />
+                                    <LineBreak />
+                                    <Run Text="/// &lt;defaultValue&gt;3,3&lt;/defaultValue&gt;" />
+                                </Span>
+                                <LineBreak />
+                                <Run FontWeight="Bold"
                                              Foreground="Maroon"
                                              Text="float2" />
-                                        <Run Text=" InputSize : " />
-                                        <Run FontWeight="Bold"
+                                <Run Text=" InputSize : " />
+                                <Run FontWeight="Bold"
                                              Foreground="Blue"
                                              Text="register" />
-                                        <Run Text=" (C0);" />
-                                    </Paragraph>
-                                </FlowDocument>
-                            </FlowDocumentScrollViewer>
-                        </Expander>
-                    </Grid>
-                </Border>
-            </Border>
+                                <Run Text=" (C0);" />
+                            </Paragraph>
+                        </FlowDocument>
+                    </FlowDocumentScrollViewer>
+                </Expander>
+            </Grid>
         </TabItem>
 
         <TabItem x:Name="CsharpTab"
                  Header="Generated Shader - C#"
                  Visibility="{Binding Visibility, Converter={x:Static converters:VisibilityToVisibilityConverter.CollapsedWhenVisible}, ElementName=OutputTextBox}">
-            <Border BorderBrush="{DynamicResource NeutralDarkBrush}" BorderThickness="9">
-                <Border BorderBrush="White" BorderThickness="1">
-                    <DockPanel MinWidth="330" LastChildFill="True">
-                        <WindowsFormsHost x:Name="FormsHostCs" Margin="2,2,2,2" />
-                    </DockPanel>
-                </Border>
-            </Border>
+            <WindowsFormsHost x:Name="FormsHostCs" Margin="2,2,2,2" />
         </TabItem>
     </TabControl>
 </UserControl>
