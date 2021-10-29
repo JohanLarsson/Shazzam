@@ -61,7 +61,7 @@
                                   Margin="0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
-                                  Data="F1 M 0,0 L 2.667,2.66665 L 5.3334,0 L 5.3334,-1.78168 L 2.6667,0.88501 L0,-1.78168 L0,0 Z"
+                                  Data="M 1,0 L9,0 L 5,5 Z"
                                   Fill="{TemplateBinding Foreground}" />
                         </Border>
                     </Border>
