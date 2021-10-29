@@ -30,15 +30,15 @@
     <DrawingBrush x:Key="AlphaGrid"
                   Stretch="UniformToFill"
                   TileMode="Tile"
-                  Viewport="0 0 8 8"
+                  Viewport="0 0 12 12"
                   ViewportUnits="Absolute">
         <DrawingBrush.Drawing>
             <DrawingGroup>
                 <GeometryDrawing Brush="{StaticResource DarkBackgroundBrush}">
                     <GeometryDrawing.Geometry>
                         <GeometryGroup>
-                            <RectangleGeometry Rect="0 0 10 10" />
-                            <RectangleGeometry Rect="10 10 10 10" />
+                            <RectangleGeometry Rect="0 0 6 6" />
+                            <RectangleGeometry Rect="6 6 6 6" />
                         </GeometryGroup>
                     </GeometryDrawing.Geometry>
                 </GeometryDrawing>

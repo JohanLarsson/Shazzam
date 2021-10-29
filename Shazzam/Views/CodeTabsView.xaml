@@ -17,7 +17,7 @@
                            ToolTip="Use Ctrl-F9 to move focus to this tab." />
             </TabItem.Header>
 
-            <Grid MinWidth="330">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
@@ -25,91 +25,85 @@
                 <WindowsFormsHost x:Name="FormsHost" Margin="2,2,2,2" />
 
                 <StackPanel Grid.Row="1"
-                                    Background="White"
-                                    DockPanel.Dock="Bottom"
-                                    Orientation="Horizontal">
+                            Background="White"
+                            DockPanel.Dock="Bottom"
+                            Orientation="Horizontal">
 
                     <TextBox x:Name="OutputTextBox"
-                                     Margin="5,3,5,8"
-                                     Padding="8,4"
-                                     Background="DarkRed"
-                                     DockPanel.Dock="Bottom"
-                                     Foreground="White"
-                                     IsReadOnly="True"
-                                     IsReadOnlyCaretVisible="True"
-                                     MouseLeftButtonDown="OutputTextBoxMouseLeftButtonDown"
-                                     ToolTip="Double-click here to goto error."
-                                     Visibility="{Binding Text, Converter={x:Static converters:StringToVisibilityConverter.CollapsedWhenNullOrEmpty}, RelativeSource={RelativeSource Self}}">
+                             Margin="5,3,5,8"
+                             Padding="8,4"
+                             Background="DarkRed"
+                             DockPanel.Dock="Bottom"
+                             Foreground="White"
+                             IsReadOnly="True"
+                             IsReadOnlyCaretVisible="True"
+                             MouseLeftButtonDown="OutputTextBoxMouseLeftButtonDown"
+                             ToolTip="Double-click here to goto error."
+                             Visibility="{Binding Text, Converter={x:Static converters:StringToVisibilityConverter.CollapsedWhenNullOrEmpty}, RelativeSource={RelativeSource Self}}">
 
                         <TextBox.Effect>
                             <DropShadowEffect BlurRadius="9"
-                                                      Direction="335"
-                                                      Opacity="0.63"
-                                                      Color="Black" />
+                                              Direction="335"
+                                              Opacity="0.63"
+                                              Color="Black" />
                         </TextBox.Effect>
                     </TextBox>
 
                     <TextBlock x:Name="CompileStatusText"
-                                       Margin="5,3,5,8"
-                                       Padding="8,4"
-                                       Background="#FFC4FFC4"
-                                       DockPanel.Dock="Bottom">
+                               Margin="5,3,5,8"
+                               Padding="8,4"
+                               Background="#FFC4FFC4"
+                               DockPanel.Dock="Bottom">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="9"
-                                                      Direction="335"
-                                                      Opacity="0.63"
-                                                      Color="Black" />
+                                              Direction="335"
+                                              Opacity="0.63"
+                                              Color="Black" />
                         </TextBlock.Effect>
                     </TextBlock>
 
                     <TextBlock x:Name="DirtyStatusText"
-                                       Margin="5,3,5,8"
-                                       Padding="8,4"
-                                       Background="LightYellow"
-                                       DockPanel.Dock="Bottom"
-                                       Text="Shader not saved."
-                                       Visibility="Hidden">
+                               Margin="5,3,5,8"
+                               Padding="8,4"
+                               Background="LightYellow"
+                               DockPanel.Dock="Bottom"
+                               Text="Shader not saved."
+                               Visibility="Hidden">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="9"
-                                                      Direction="335"
-                                                      Opacity="0.63"
-                                                      Color="Black" />
+                                              Direction="335"
+                                              Opacity="0.63"
+                                              Color="Black" />
                         </TextBlock.Effect>
                     </TextBlock>
 
                     <TextBlock x:Name="VersionNotSupported"
-                                       Margin="5,3,5,8"
-                                       Padding="8,4"
-                                       Background="#FFE4B85A"
-                                       Text="PS_3 not available on this computer."
-                                       Visibility="Hidden">
+                               Margin="5,3,5,8"
+                               Padding="8,4"
+                               Background="#FFE4B85A"
+                               Text="PS_3 not available on this computer."
+                               Visibility="Hidden">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="9"
-                                                      Direction="335"
-                                                      Opacity="0.63"
-                                                      Color="Black" />
+                                              Direction="335"
+                                              Opacity="0.63"
+                                              Color="Black" />
                         </TextBlock.Effect>
                     </TextBlock>
                 </StackPanel>
             </Grid>
         </TabItem>
 
-        <TabItem x:Name="InputControlsTab" Visibility="{Binding Visibility, Converter={x:Static converters:VisibilityToVisibilityConverter.CollapsedWhenVisible}, ElementName=OutputTextBox}">
-            <TabItem.Header>
-                <TextBlock Background="Transparent"
-                           Text="Tryout (adjust settings)"
-                           ToolTip="Use Ctrl-F10 to move focus to this tab." />
-            </TabItem.Header>
-            <Grid MinWidth="330">
+        <TabItem x:Name="InputControlsTab" Header="Tryout (adjust settings)" ToolTip="Use Ctrl-F10 to move focus to this tab.">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0"
-                                   Margin="5"
-                                   Foreground="White"
-                                   Text="The current effect has no input parameters."
-                                   Visibility="{Binding ShaderModel.Registers, Converter={x:Static converters:AnyToVisibilityConverter.VisibleWhenEmpty}}" />
+                           Margin="5"
+                           Text="The current effect has no input parameters."
+                           Visibility="{Binding ShaderModel.Registers, Converter={x:Static converters:AnyToVisibilityConverter.VisibleWhenEmpty}}" />
                 <ItemsControl Grid.Column="0" ItemsSource="{Binding ShaderModel.Registers}">
                     <ItemsControl.ItemTemplateSelector>
                         <views:ShaderModelConstantRegisterTemplateSelector>
@@ -122,16 +116,16 @@
                             <views:ShaderModelConstantRegisterTemplateSelector.SingleTemplate>
                                 <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
                                     <controls:AdjustableSlider Maximum="{Binding MaxValue, Mode=OneTime}"
-                                                                       Minimum="{Binding MinValue, Mode=OneTime}"
-                                                                       Value="{Binding Value}" />
+                                                               Minimum="{Binding MinValue, Mode=OneTime}"
+                                                               Value="{Binding Value}" />
                                 </DataTemplate>
                             </views:ShaderModelConstantRegisterTemplateSelector.SingleTemplate>
 
                             <views:ShaderModelConstantRegisterTemplateSelector.PairTemplate>
                                 <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
                                     <controls:AdjustableSliderPair Maximum="{Binding MaxValue, Mode=OneTime}"
-                                                                           Minimum="{Binding MinValue, Mode=OneTime}"
-                                                                           Value="{Binding Value}" />
+                                                                   Minimum="{Binding MinValue, Mode=OneTime}"
+                                                                   Value="{Binding Value}" />
                                 </DataTemplate>
                             </views:ShaderModelConstantRegisterTemplateSelector.PairTemplate>
 
@@ -151,23 +145,23 @@
                 </ItemsControl>
 
                 <Expander Grid.Column="1"
-                                  BorderThickness="0"
-                                  DockPanel.Dock="Right"
-                                  ExpandDirection="Left"
-                                  IsExpanded="True">
+                          BorderThickness="0"
+                          DockPanel.Dock="Right"
+                          ExpandDirection="Left"
+                          IsExpanded="True">
                     <FlowDocumentScrollViewer Width="300"
-                                                      Background="{StaticResource NeutralDarkBrush}"
-                                                      BorderThickness="0"
-                                                      Foreground="{StaticResource NeutralWhiteBrush}"
-                                                      VerticalScrollBarVisibility="Auto">
+                                              Background="{StaticResource NeutralDarkBrush}"
+                                              BorderThickness="0"
+                                              Foreground="{StaticResource NeutralWhiteBrush}"
+                                              VerticalScrollBarVisibility="Auto">
                         <FlowDocument FontFamily="Segoe UI"
-                                              FontSize="12"
-                                              TextAlignment="Left">
+                                      FontSize="12"
+                                      TextAlignment="Left">
                             <Paragraph>
                                 <InlineUIContainer>
                                     <Image Width="24"
-                                                   Height="24"
-                                                   Source="info.png" />
+                                           Height="24"
+                                           Source="info.png" />
                                 </InlineUIContainer>
                                 <Run Text=" " />
                                 <Bold BaselineAlignment="Center">
@@ -178,9 +172,9 @@
                                 <Run Text="Each register declared in HLSL is mapped to a DependencyProperty with a compatible .NET type, as shown in the table below." />
                             </Paragraph>
                             <Table Margin="0"
-                                           BorderBrush="{StaticResource NeutralWhiteBrush}"
-                                           BorderThickness="1"
-                                           CellSpacing="0">
+                                   BorderBrush="{StaticResource NeutralWhiteBrush}"
+                                   BorderThickness="1"
+                                   CellSpacing="0">
                                 <Table.Columns>
                                     <TableColumn Width="2*" />
                                     <TableColumn Width="3*" />
@@ -188,15 +182,15 @@
                                 <TableRowGroup>
                                     <TableRow Background="{StaticResource NeutralDarkBrush}" Foreground="{StaticResource HighlightBrush}">
                                         <TableCell Padding="2,1,2,1"
-                                                           BorderBrush="{StaticResource NeutralWhiteBrush}"
-                                                           BorderThickness="0,0,0,1">
+                                                   BorderBrush="{StaticResource NeutralWhiteBrush}"
+                                                   BorderThickness="0,0,0,1">
                                             <Paragraph>
                                                 <Run Text="HLSL type" />
                                             </Paragraph>
                                         </TableCell>
                                         <TableCell Padding="2,1,2,1"
-                                                           BorderBrush="{StaticResource NeutralWhiteBrush}"
-                                                           BorderThickness="0,0,0,1">
+                                                   BorderBrush="{StaticResource NeutralWhiteBrush}"
+                                                   BorderThickness="0,0,0,1">
                                             <Paragraph>
                                                 <Run Text=".NET type" />
                                             </Paragraph>
@@ -271,9 +265,9 @@
                                 <Run Text="The highlighted types are used by default, but other compatible types can be selected in the comments before an HLSL register declaration:" />
                             </Paragraph>
                             <Paragraph Padding="2"
-                                               Background="White"
-                                               FontFamily="Consolas"
-                                               Foreground="Black">
+                                       Background="White"
+                                       FontFamily="Consolas"
+                                       Foreground="Black">
                                 <Span Foreground="Green">
                                     <Run Text="/// &lt;summary&gt;Input size&lt;/summary&gt;" />
                                     <LineBreak />
@@ -288,12 +282,12 @@
                                 </Span>
                                 <LineBreak />
                                 <Run FontWeight="Bold"
-                                             Foreground="Maroon"
-                                             Text="float2" />
+                                     Foreground="Maroon"
+                                     Text="float2" />
                                 <Run Text=" InputSize : " />
                                 <Run FontWeight="Bold"
-                                             Foreground="Blue"
-                                             Text="register" />
+                                     Foreground="Blue"
+                                     Text="register" />
                                 <Run Text=" (C0);" />
                             </Paragraph>
                         </FlowDocument>

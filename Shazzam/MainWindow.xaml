@@ -166,7 +166,6 @@
                 <MenuItem Command="{Binding Path=ShowAboutCommand}"
                           Header="About" />
             </MenuItem>
-
         </Menu>
 
         <view:PluginView x:Name="Plugin1"
@@ -195,6 +194,7 @@
                                Stretch="{Binding ImageStretch}" />
                     </Border>
                 </TabItem>
+
                 <TabItem Header="Sample1">
                     <Border Background="{StaticResource AlphaGrid}">
                         <Image x:Name="SampleImage1"
@@ -204,6 +204,7 @@
                                Stretch="{Binding ImageStretch}" />
                     </Border>
                 </TabItem>
+
                 <TabItem Header="Sample2">
                     <Border Background="{StaticResource AlphaGrid}">
                         <Image x:Name="SampleImage2"
@@ -213,6 +214,7 @@
                                Stretch="{Binding ImageStretch}" />
                     </Border>
                 </TabItem>
+
                 <TabItem Header="Sample3">
                     <Border Background="{StaticResource AlphaGrid}">
                         <Image x:Name="SampleImage3"
@@ -222,6 +224,7 @@
                                Stretch="{Binding ImageStretch}" />
                     </Border>
                 </TabItem>
+
                 <TabItem Header="Sample4">
                     <Border Background="{StaticResource AlphaGrid}">
                         <Image x:Name="SampleImage4"
@@ -231,6 +234,7 @@
                                Stretch="{Binding ImageStretch}" />
                     </Border>
                 </TabItem>
+
                 <TabItem Header="Sample5">
                     <Border Background="{StaticResource AlphaGrid}">
                         <Image x:Name="SampleImage5"
@@ -240,6 +244,7 @@
                                Stretch="{Binding ImageStretch}" />
                     </Border>
                 </TabItem>
+                
                 <TabItem Header="Sample UI">
                     <Border Background="{StaticResource AlphaGrid}">
                         <DockPanel x:Name="SampleUi"
@@ -281,8 +286,8 @@
                             </StackPanel>
                         </DockPanel>
                     </Border>
-
                 </TabItem>
+
                 <TabItem x:Name="MediaTab" Header="Media">
                     <Border Background="{StaticResource AlphaGrid}">
                         <DockPanel MinWidth="200"
