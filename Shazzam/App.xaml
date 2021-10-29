@@ -7,7 +7,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Brushes.xaml" />
                 <ResourceDictionary Source="/Resources/Menu.xaml" />
-                <ResourceDictionary Source="/Resources/EditorRD.xaml" />
                 <ResourceDictionary Source="/Resources/ComboBox.xaml" />
                 <ResourceDictionary Source="/Resources/TabControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
