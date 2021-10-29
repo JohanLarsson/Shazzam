@@ -7,7 +7,7 @@
         <Setter Property="BorderBrush" Value="{x:Null}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="Background" Value="{StaticResource NeutralDarkBrush}" />
+        <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}" />
     </Style>
 
     <Style TargetType="{x:Type TabItem}">
@@ -52,7 +52,7 @@
 
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Foreground" Value="{StaticResource LightBrush}" />
-                <Setter Property="Background" Value="{StaticResource NeutralDarkBrush}" />
+                <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}" />
             </Trigger>
 
             <Trigger Property="IsEnabled" Value="False">

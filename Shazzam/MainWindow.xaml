@@ -8,7 +8,7 @@
         xmlns:shazzam="clr-namespace:Shazzam"
         xmlns:view="clr-namespace:Shazzam.Views"
         Title="Shazzam Shader Editor = V1.2"
-        Background="{StaticResource BackgroundBrush}"
+        Background="{StaticResource MediumBackgroundBrush}"
         DataContext="{x:Static shazzam:MainWindowViewModel.Instance}"
         Icon="Images/star.png"
         TextElement.Foreground="{StaticResource MediumBrush}"

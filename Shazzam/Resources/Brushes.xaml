@@ -1,66 +1,21 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Color x:Key="BackgroundColor"
-           A="255"
-           B="5"
-           G="5"
-           R="15" />
-
-    <Color x:Key="VeryDarkColor"
-           A="255"
-           B="70"
-           G="70"
-           R="70" />
-
-    <Color x:Key="DarkColor"
-           A="255"
-           B="102"
-           G="102"
-           R="102" />
-    
-    <Color x:Key="MediumColor"
-           A="255"
-           B="140"
-           G="140"
-           R="140" />
-    
-    <Color x:Key="LightColor"
-           A="255"
-           B="204"
-           G="204"
-           R="204" />
-    
-    <Color x:Key="VeryLightColor"
-           A="255"
-           B="241"
-           G="241"
-           R="241" />
-
-    <Color x:Key="OffWhiteColor"
-           A="255"
-           B="255"
-           G="255"
-           R="255" />
-
+    <Color x:Key="DarkBackgroundColor" A="255" B="31" G="30" R="30" />
+    <Color x:Key="MediumBackgroundColor" A="255" B="37" G="37" R="37" />
+    <Color x:Key="LightBackgroundColor" A="255" B="45" G="46" R="47" />
+    <Color x:Key="VeryDarkColor" A="255" B="70" G="70" R="70" />
+    <Color x:Key="DarkColor" A="255" B="102" G="102" R="102" />
+    <Color x:Key="MediumColor" A="255" B="140" G="140" R="140" />
+    <Color x:Key="LightColor" A="255" B="204" G="204" R="204" />
+    <Color x:Key="VeryLightColor" A="255" B="241" G="241" R="241" />
+    <Color x:Key="OffWhiteColor" A="255" B="255" G="255" R="255" />
     <Color x:Key="HighlightColor">Gold</Color>
+    <Color x:Key="AccentColor" A="255" B="237" G="149" R="100" />
+    <Color x:Key="NeutralDarkColor" A="255" B="33" G="44" R="44" />
+    <Color x:Key="NeutralWhiteColor" A="255" B="221" G="221" R="221" />
 
-    <Color x:Key="AccentColor"
-           A="255"
-           B="237"
-           G="149"
-           R="100" />
-
-    <Color x:Key="NeutralDarkColor"
-           A="255"
-           B="33"
-           G="44"
-           R="44" />
-    <Color x:Key="NeutralWhiteColor"
-           A="255"
-           B="221"
-           G="221"
-           R="221" />
-
-    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
+    <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource DarkBackgroundColor}" />
+    <SolidColorBrush x:Key="MediumBackgroundBrush" Color="{StaticResource MediumBackgroundColor}" />
+    <SolidColorBrush x:Key="LightBackgroundBrush" Color="{StaticResource LightBackgroundColor}" />
     <SolidColorBrush x:Key="VeryDarkBrush" Color="{StaticResource VeryDarkColor}" />
     <SolidColorBrush x:Key="DarkBrush" Color="{StaticResource DarkColor}" />
     <SolidColorBrush x:Key="MediumBrush" Color="{StaticResource MediumColor}" />

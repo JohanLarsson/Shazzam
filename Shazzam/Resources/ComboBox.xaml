@@ -95,7 +95,7 @@
                     <Border x:Name="dropDownBorder"
                             MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
                             MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                            Background="{StaticResource BackgroundBrush}"
+                            Background="{StaticResource DarkBackgroundBrush}"
                             BorderThickness="0">
                         <ScrollViewer x:Name="DropDownScrollViewer">
                             <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
@@ -175,7 +175,7 @@
                     <Border x:Name="dropDownBorder"
                             MinWidth="{Binding ActualWidth, ElementName=templateRoot}"
                             MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                            Background="{StaticResource BackgroundBrush}"
+                            Background="{StaticResource DarkBackgroundBrush}"
                             BorderThickness="0">
                         <ScrollViewer x:Name="DropDownScrollViewer">
                             <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">

@@ -6,7 +6,7 @@
     <Style x:Key="{x:Type Menu}" TargetType="{x:Type Menu}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
         <Setter Property="BorderThickness" Value="0" />
 
@@ -31,7 +31,7 @@
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Grid.IsSharedSizeScope" Value="true" />
         <Setter Property="HasDropShadow" Value="True" />
-        <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Template">
@@ -88,7 +88,7 @@
                        Placement="Bottom"
                        PopupAnimation="Fade">
                     <Border Name="SubmenuBorder"
-                            Background="{TemplateBinding Background}"
+                            Background="{StaticResource DarkBackgroundBrush}"
                             SnapsToDevicePixels="True">
                         <StackPanel Grid.IsSharedSizeScope="True"
                                     IsItemsHost="True"
@@ -207,7 +207,7 @@
                        Placement="Right"
                        PopupAnimation="Fade">
                     <Border Name="SubmenuBorder"
-                            Background="{TemplateBinding Background}"
+                            Background="{StaticResource DarkBackgroundBrush}"
                             SnapsToDevicePixels="True">
                         <StackPanel Grid.IsSharedSizeScope="True"
                                     IsItemsHost="True"
@@ -241,7 +241,7 @@
 
     <Style x:Key="{x:Type MenuItem}" TargetType="{x:Type MenuItem}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Foreground" Value="{StaticResource MediumBrush}" />
@@ -278,6 +278,7 @@
                     <Condition Property="IsHighlighted" Value="True" />
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}" />
                     <Setter Property="Foreground" Value="{StaticResource LightBrush}" />
                 </MultiTrigger.Setters>
             </MultiTrigger>
