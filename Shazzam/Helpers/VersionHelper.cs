@@ -1,4 +1,4 @@
-﻿namespace Shazzam.Helpers
+﻿namespace Shazzam
 {
     internal static class VersionHelper
     {

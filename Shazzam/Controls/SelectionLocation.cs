@@ -1,4 +1,4 @@
-namespace Shazzam.Controls
+﻿namespace Shazzam.Controls
 {
     public enum SelectionLocation
     {

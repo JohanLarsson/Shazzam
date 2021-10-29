@@ -19,7 +19,7 @@
             typeof(Color),
             typeof(AdjustableColor),
             new FrameworkPropertyMetadata(
-                Colors.LightYellow,
+                Colors.HotPink,
                 FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 (d, e) => ((AdjustableColor)d).SetCurrentValue(ColorPicker.SelectedColorProperty, e.NewValue)));
 
@@ -75,7 +75,7 @@
 
         private void DurationTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (double.TryParse(this.DurationTextBox.Text, out double number))
+            if (double.TryParse(this.DurationTextBox.Text, out var number))
             {
                 var duration = TimeSpan.FromSeconds(Math.Max(0, number));
                 this.colorValueAnimation.SetCurrentValue(Timeline.DurationProperty, (System.Windows.Duration)duration);
@@ -93,7 +93,7 @@
             }
             else
             {
-                this.startColor = this.ColorPicker1.SelectedColor;
+                this.startColor = (Color)this.ColorPicker1.SelectedItem;
             }
 
             this.UpdateAnimation();
@@ -103,7 +103,7 @@
         {
             // this.sliderValueAnimation.From = this.Minimum;
             // this.sliderValueAnimation.To = this.Maximum;
-            this.colorValueAnimation.SetCurrentValue(ColorAnimation.FromProperty, this.ColorPicker1.SelectedColor);
+            this.colorValueAnimation.SetCurrentValue(ColorAnimation.FromProperty, this.ColorPicker1.SelectedItem);
             this.colorValueAnimation.SetCurrentValue(ColorAnimation.ToProperty, this.EndColorPicker.SelectedColor);
 
             if (this.NoAnimationToggleButton.IsChecked.GetValueOrDefault() ||

@@ -2,17 +2,22 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using System.Windows.Media;
 
     public static class Constants
     {
-        public static readonly IReadOnlyList<Color> Colors = typeof(Colors)
-                                                             .GetProperties(BindingFlags.Public | BindingFlags.Static)
-                                                             .Where(x => x.PropertyType == typeof(Color))
-                                                             .Select(x => (Color)x.GetValue(null))
-                                                             .OrderBy(x => x.R + x.G + x.B)
-                                                             .ToArray();
+        public static readonly IReadOnlyList<Color> Colors = CreateColors(360).ToArray();
+
+        private static IEnumerable<Color> CreateColors(int n)
+        {
+            var step = 360.0 / n;
+            var hue = 0.0;
+            while (hue < 360.0)
+            {
+                yield return Hsv.ColorFromHsv(hue, 1, 1);
+                hue += step;
+            }
+        }
 
         public static class Paths
         {

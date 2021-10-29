@@ -8,7 +8,6 @@
     using System.Windows.Media.Effects;
     using System.Windows.Media.Imaging;
     using Microsoft.Win32;
-    using Shazzam.Helpers;
 
     // Images
     //  creative commons license

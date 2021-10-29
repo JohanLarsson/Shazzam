@@ -308,11 +308,29 @@
                 </DataTemplate>
             </Setter.Value>
         </Setter>
+
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="5" />
+                    <WrapPanel Width="144"/>
                 </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ComboBoxItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                                <Rectangle Width="12" Height="12">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="{Binding}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
             </Setter.Value>
         </Setter>
     </Style>

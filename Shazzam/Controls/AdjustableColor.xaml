@@ -39,12 +39,13 @@
                        Foreground="{StaticResource NeutralWhiteBrush}"
                        Text="Value:" />
 
-            <extended:ColorPicker x:Name="ColorPicker1"
-                                  Grid.Column="2"
-                                  Width="70"
-                                  Margin="5,0,0,0"
-                                  VerticalAlignment="Center"
-                                  SelectedColor="{Binding ElementName=Root, Path=Value}" />
+            <ComboBox x:Name="ColorPicker1"
+                      Grid.Column="2"
+                      Style="{StaticResource ColorComboBoxStyle}"
+                      Margin="5,0,0,0"
+                      VerticalAlignment="Center"
+                      SelectedIndex="0"
+                      SelectedItem="{Binding ElementName=Root, Path=Value}" />
         </Grid>
 
         <Rectangle Grid.Row="0"

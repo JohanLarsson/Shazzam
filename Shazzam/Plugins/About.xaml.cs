@@ -4,7 +4,6 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
-    using Shazzam.Helpers;
 
     public partial class About : UserControl
     {
