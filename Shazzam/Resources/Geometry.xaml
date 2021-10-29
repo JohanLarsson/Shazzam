@@ -1,0 +1,5 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StreamGeometry x:Key="DownArrowGeometry">M 1,0 L9,0 L 5,5 Z</StreamGeometry>
+    <StreamGeometry x:Key="UpArrowGeometry">M 1,5 L9,5 L 5,0 Z</StreamGeometry>
+</ResourceDictionary>

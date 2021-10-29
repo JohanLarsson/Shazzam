@@ -3,6 +3,7 @@
                     xmlns:local="clr-namespace:Shazzam">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Resources/Brushes.xaml" />
+        <ResourceDictionary Source="/Resources/Geometry.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="ComboBoxEditableTextBox" TargetType="{x:Type TextBox}">
@@ -61,7 +62,7 @@
                                   Margin="0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
-                                  Data="M 1,0 L9,0 L 5,5 Z"
+                                  Data="{StaticResource DownArrowGeometry}"
                                   Fill="{TemplateBinding Foreground}" />
                         </Border>
                     </Border>
