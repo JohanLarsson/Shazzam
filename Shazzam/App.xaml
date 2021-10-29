@@ -11,27 +11,6 @@
                 <ResourceDictionary Source="/Resources/TabControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Style x:Key="ImageInsideBorder" TargetType="{x:Type Border}">
-                <Setter Property="BorderBrush" Value="White" />
-                <Setter Property="Background" Value="{DynamicResource ImageBorderBrush}" />
-                <Setter Property="CornerRadius" Value="2,2,2,2" />
-                <Setter Property="BorderThickness" Value="2" />
-                <Setter Property="HorizontalAlignment" Value="Center" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="Padding" Value="4" />
-                <Setter Property="Margin" Value="4" />
-            </Style>
-            <Style x:Key="ImageOutsideBorder" TargetType="{x:Type Border}">
-                <Setter Property="BorderBrush" Value="White" />
-                <Setter Property="Background" Value="{DynamicResource ImageBorderBrush}" />
-                <Setter Property="CornerRadius" Value="2,2,2,2" />
-                <Setter Property="BorderThickness" Value="6" />
-                <Setter Property="HorizontalAlignment" Value="Center" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-
-                <Setter Property="Margin" Value="1" />
-            </Style>
-
             <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="{x:Type TextBox}">
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="BorderBrush" Value="{StaticResource MediumBrush}" />

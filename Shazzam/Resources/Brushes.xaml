@@ -27,6 +27,25 @@
     <SolidColorBrush x:Key="NeutralDarkBrush" Color="{StaticResource NeutralDarkColor}" />
     <SolidColorBrush x:Key="NeutralWhiteBrush" Color="{StaticResource NeutralWhiteColor}" />
 
+    <DrawingBrush x:Key="AlphaGrid"
+                  Stretch="UniformToFill"
+                  TileMode="Tile"
+                  Viewport="0 0 8 8"
+                  ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="{StaticResource DarkBackgroundBrush}">
+                    <GeometryDrawing.Geometry>
+                        <GeometryGroup>
+                            <RectangleGeometry Rect="0 0 10 10" />
+                            <RectangleGeometry Rect="10 10 10 10" />
+                        </GeometryGroup>
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
     <LinearGradientBrush x:Key="EdgeBorder" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Offset="0" Color="#0000" />
         <GradientStop Offset="0.65" Color="#1000" />

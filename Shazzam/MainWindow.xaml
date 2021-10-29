@@ -16,24 +16,6 @@
         mc:Ignorable="d">
     <Window.Resources>
         <converters:StretchToIsCheckedConverter x:Key="CheckedConverter" />
-        <DrawingBrush x:Key="AlphaGrid"
-                      Stretch="UniformToFill"
-                      TileMode="Tile"
-                      Viewport="0 0 8 8"
-                      ViewportUnits="Absolute">
-            <DrawingBrush.Drawing>
-                <DrawingGroup>
-                    <GeometryDrawing Brush="Gray">
-                        <GeometryDrawing.Geometry>
-                            <GeometryGroup>
-                                <RectangleGeometry Rect="0 0 10 10" />
-                                <RectangleGeometry Rect="10 10 10 10" />
-                            </GeometryGroup>
-                        </GeometryDrawing.Geometry>
-                    </GeometryDrawing>
-                </DrawingGroup>
-            </DrawingBrush.Drawing>
-        </DrawingBrush>
     </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.New" Executed="NewExecuted" />
@@ -203,97 +185,62 @@
 
             <TabControl x:Name="ImageTabControl"
                         Grid.Row="0"
-                        Background="{DynamicResource NeutralDarkBrush}"
                         SelectionChanged="ImageTabControlSelectionChanged">
-
                 <TabItem Header="Custom Image">
-                    <Border Style="{DynamicResource ImageOutsideBorder}">
-                        <Border Style="{DynamicResource ImageInsideBorder}">
-                            <!--  checkered background  -->
-                            <Border Background="{StaticResource AlphaGrid}">
-
-                                <Image x:Name="UserImage"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Source="Images/ColorRange.png"
-                                       Stretch="{Binding ImageStretch}" />
-                            </Border>
-                        </Border>
+                    <Border Background="{StaticResource AlphaGrid}">
+                        <Image x:Name="UserImage"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Source="Images/ColorRange.png"
+                               Stretch="{Binding ImageStretch}" />
                     </Border>
                 </TabItem>
                 <TabItem Header="Sample1">
-                    <Border Style="{DynamicResource ImageOutsideBorder}">
-                        <Border Style="{DynamicResource ImageInsideBorder}">
-                            <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="SampleImage1"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Source="Images/Fire1.jpg"
-                                       Stretch="{Binding ImageStretch}" />
-                            </Border>
-                        </Border>
+                    <Border Background="{StaticResource AlphaGrid}">
+                        <Image x:Name="SampleImage1"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Source="Images/Fire1.jpg"
+                               Stretch="{Binding ImageStretch}" />
                     </Border>
                 </TabItem>
                 <TabItem Header="Sample2">
-
-                    <Border Style="{DynamicResource ImageOutsideBorder}">
-                        <Border Style="{DynamicResource ImageInsideBorder}">
-                            <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="SampleImage2"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Source="Images/Light1.jpg"
-                                       Stretch="{Binding ImageStretch}" />
-                            </Border>
-
-                        </Border>
+                    <Border Background="{StaticResource AlphaGrid}">
+                        <Image x:Name="SampleImage2"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Source="Images/Light1.jpg"
+                               Stretch="{Binding ImageStretch}" />
                     </Border>
                 </TabItem>
                 <TabItem Header="Sample3">
-
-                    <Border Style="{DynamicResource ImageOutsideBorder}">
-                        <Border Style="{DynamicResource ImageInsideBorder}">
-                            <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="SampleImage3"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Source="Images/SpikeBalls.jpg"
-                                       Stretch="{Binding ImageStretch}" />
-                            </Border>
-                        </Border>
+                    <Border Background="{StaticResource AlphaGrid}">
+                        <Image x:Name="SampleImage3"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Source="Images/SpikeBalls.jpg"
+                               Stretch="{Binding ImageStretch}" />
                     </Border>
                 </TabItem>
                 <TabItem Header="Sample4">
-
-                    <Border Style="{DynamicResource ImageOutsideBorder}">
-                        <Border Style="{DynamicResource ImageInsideBorder}">
-                            <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="SampleImage4"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Source="Images/lines.jpg"
-                                       Stretch="{Binding ImageStretch}" />
-                            </Border>
-                        </Border>
+                    <Border Background="{StaticResource AlphaGrid}">
+                        <Image x:Name="SampleImage4"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Source="Images/lines.jpg"
+                               Stretch="{Binding ImageStretch}" />
                     </Border>
                 </TabItem>
                 <TabItem Header="Sample5">
-
-                    <Border Style="{DynamicResource ImageOutsideBorder}">
-                        <Border Style="{DynamicResource ImageInsideBorder}">
-                            <Border Background="{StaticResource AlphaGrid}">
-                                <Image x:Name="SampleImage5"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Source="Images/gears.jpg"
-                                       Stretch="{Binding ImageStretch}" />
-                            </Border>
-
-                        </Border>
+                    <Border Background="{StaticResource AlphaGrid}">
+                        <Image x:Name="SampleImage5"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Source="Images/gears.jpg"
+                               Stretch="{Binding ImageStretch}" />
                     </Border>
                 </TabItem>
                 <TabItem Header="Sample UI">
-
                     <Border Background="{StaticResource AlphaGrid}">
                         <DockPanel x:Name="SampleUi"
                                    MinWidth="200"
@@ -302,12 +249,6 @@
                                    VerticalAlignment="Stretch"
                                    LastChildFill="False"
                                    TextElement.FontSize="14">
-                            <DockPanel.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                    <GradientStop Offset="0" Color="#FFBCF3F1" />
-                                    <GradientStop Offset="1" Color="#FF6558E0" />
-                                </LinearGradientBrush>
-                            </DockPanel.Background>
                             <TextBlock Margin="8"
                                        HorizontalAlignment="Center"
                                        DockPanel.Dock="Top"
@@ -343,33 +284,30 @@
 
                 </TabItem>
                 <TabItem x:Name="MediaTab" Header="Media">
-
-                    <Border Style="{DynamicResource ImageOutsideBorder}">
-                        <Border Style="{DynamicResource ImageInsideBorder}">
-                            <Border Background="{StaticResource AlphaGrid}">
-                                <DockPanel MinWidth="200"
+                    <Border Background="{StaticResource AlphaGrid}">
+                        <DockPanel MinWidth="200"
                                            MinHeight="200"
                                            HorizontalAlignment="Stretch"
                                            VerticalAlignment="Stretch"
                                            Background="White"
                                            TextElement.FontSize="16">
-                                    <StackPanel Margin="10"
+                            <StackPanel Margin="10"
                                                 DockPanel.Dock="Top"
                                                 Orientation="Horizontal">
-                                        <!--<TextBlock Text='Click the video to replay.'
+                                <!--<TextBlock Text='Click the video to replay.'
                                Margin='5,0' />-->
-                                        <CheckBox x:Name="AutoPlayCheckBox"
+                                <CheckBox x:Name="AutoPlayCheckBox"
                                                   Margin="5,0"
                                                   Checked="AutoPlayCheckBoxChecked"
                                                   Content="Auto replay the video."
                                                   IsChecked="True" />
-                                    </StackPanel>
-                                    <TextBlock x:Name="VideoMessage"
+                            </StackPanel>
+                            <TextBlock x:Name="VideoMessage"
                                                Margin="10"
                                                DockPanel.Dock="Top" />
-                                    <Border Style="{DynamicResource ImageOutsideBorder}">
-                                        <Border Style="{DynamicResource ImageInsideBorder}">
-                                            <MediaElement x:Name="MediaUi"
+                            <Border Style="{DynamicResource ImageOutsideBorder}">
+                                <Border Style="{DynamicResource ImageInsideBorder}">
+                                    <MediaElement x:Name="MediaUi"
                                                           DockPanel.Dock="Top"
                                                           LoadedBehavior="Manual"
                                                           MediaEnded="MediaUiMediaEnded"
@@ -378,12 +316,9 @@
                                                           Source="Images/plasma.wmv"
                                                           Stretch="{Binding ImageStretch}"
                                                           ToolTip="Click video to replay." />
-                                        </Border>
-                                    </Border>
-                                </DockPanel>
+                                </Border>
                             </Border>
-
-                        </Border>
+                        </DockPanel>
                     </Border>
                 </TabItem>
             </TabControl>
