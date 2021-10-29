@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="/Resources/Menu.xaml" />
                 <ResourceDictionary Source="/Resources/EditorRD.xaml" />
                 <ResourceDictionary Source="/Resources/ComboBox.xaml" />
+                <ResourceDictionary Source="/Resources/TabControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style x:Key="ImageInsideBorder" TargetType="{x:Type Border}">

@@ -245,6 +245,7 @@
         <Setter Property="BorderBrush" Value="{x:Null}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Foreground" Value="{StaticResource MediumBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
 
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">
