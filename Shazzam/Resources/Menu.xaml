@@ -265,10 +265,9 @@
                 <MultiTrigger.Conditions>
                     <Condition Property="IsEnabled" Value="True" />
                     <Condition Property="IsPressed" Value="True" />
-                    <Condition Property="IsMouseDirectlyOver" Value="True" />
+                    <Condition Property="IsHighlighted" Value="True" />
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
-                    <Setter Property="TextElement.Foreground" Value="{StaticResource AccentBrush}" />
                     <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
                 </MultiTrigger.Setters>
             </MultiTrigger>
@@ -276,16 +275,15 @@
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsEnabled" Value="True" />
-                    <Condition Property="IsMouseDirectlyOver" Value="True" />
+                    <Condition Property="IsHighlighted" Value="True" />
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
-                    <Setter Property="TextElement.Foreground" Value="{StaticResource LightBrush}" />
                     <Setter Property="Foreground" Value="{StaticResource LightBrush}" />
                 </MultiTrigger.Setters>
             </MultiTrigger>
 
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="TextElement.FontStyle" Value="Oblique" />
+                <Setter Property="FontStyle" Value="Oblique" />
             </Trigger>
         </Style.Triggers>
     </Style>
