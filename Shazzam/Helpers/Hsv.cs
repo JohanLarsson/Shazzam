@@ -7,6 +7,21 @@
     {
         public Hsv(double hue, double saturation, double value)
         {
+            if (hue is < 0 or > 360)
+            {
+                throw new ArgumentOutOfRangeException(nameof(hue), hue, "Expected 0..360°");
+            }
+
+            if (saturation is < 0 or > 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(saturation), saturation, "Expected 0..1");
+            }
+
+            if (value is < 0 or > 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value), value, "Expected 0..1");
+            }
+
             this.Hue = hue;
             this.Saturation = saturation;
             this.Value = value;
@@ -37,6 +52,21 @@
 
         public static Color ColorFromHsv(double hue, double saturation, double value)
         {
+            if (hue is < 0 or > 360)
+            {
+                throw new ArgumentOutOfRangeException(nameof(hue), hue, "Expected 0..360°");
+            }
+
+            if (saturation is < 0 or > 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(saturation), saturation, "Expected 0..1");
+            }
+
+            if (value is < 0 or > 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value), value, "Expected 0..1");
+            }
+
             var hi = (int)Math.Floor(hue / 60) % 6;
             var f = (hue / 60) - Math.Floor(hue / 60);
 
