@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="Shazzam.Views.AboutView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource BackgroundBrush}"
+             Foreground="{StaticResource MediumBrush}">
+
+    <StackPanel VerticalAlignment="Center">
+        <Image Width="230"
+               MinHeight="230"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Source="/Images/SwirlLogo2.png" />
+
+        <TextBlock HorizontalAlignment="Center" Foreground="White">
+            <Run FontSize="24" Text="Shazzam" />
+            <Run x:Name="versionRun" FontSize="24">
+                v1.1
+            </Run>
+            <LineBreak />
+            <Run FontSize="16">
+                Shader Editor
+            </Run>
+            <LineBreak />
+            <Run>© 2008-2010 Walt Ritscher</Run>
+            <LineBreak />
+            <Hyperlink Foreground="White"
+                       NavigateUri="http://shazzam-tool.com"
+                       TextDecorations="Underline">
+                shazzam-tool.com
+            </Hyperlink>
+        </TextBlock>
+
+        <TextBlock Width="220" TextWrapping="Wrap">
+            <TextBlock.Resources>
+                <Style TargetType="{x:Type Hyperlink}">
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="TextDecorations" Value="None" />
+                </Style>
+            </TextBlock.Resources>
+            Shazzam is free for personal or commercial use. Please use at your own risk.  No warranties are made or implied for Shazzam.<LineBreak />
+            <LineBreak />
+            The  current version is located at<Hyperlink Foreground="White"
+                       NavigateUri="http://www.shazzam-tool.com"
+                       TextDecorations="Underline">
+                www.shazzam-tool.com
+            </Hyperlink>
+            <LineBreak />
+
+            <LineBreak />
+            A big thanks to Robby Ingebretsen for sharing his excellent Kaxaml code, especially his WPF plugin modules.<LineBreak />
+            <LineBreak />
+            Shazzam is licensed under Microsoft Public License (Ms-PL)</TextBlock>
+        <TextBlock Foreground="{StaticResource NeutralWhiteBrush}" Text="Version:" />
+        <TextBlock x:Name="versionText"
+                   Margin="10,0,0,0"
+                   Foreground="White"
+                   Text="0.0.0.0" />
+    </StackPanel>
+</UserControl>

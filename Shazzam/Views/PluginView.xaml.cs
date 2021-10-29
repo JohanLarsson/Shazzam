@@ -52,15 +52,6 @@
 
             this.Plugins.Add(fileLoader);
             this.AddSettingsPlugin();
-
-            //// add the about plugin
-            var about = new Plugin
-            {
-                Root = new About(),
-                Name = "About Shazzam",
-                Description = "About Shazzam",
-            };
-            this.Plugins.Add(about);
         }
 
         private void AddSettingsPlugin()

@@ -9,6 +9,7 @@
     using System.Windows;
 
     using Shazzam.Commands;
+    using Shazzam.Views;
 
     public sealed class MainWindowViewModel : INotifyPropertyChanged
     {
@@ -23,6 +24,17 @@
             this.FullScreenImageCommand = new RelayCommand(this.FullScreenImageCommandExecute);
             this.FullScreenCodeCommand = new RelayCommand(this.FullScreenCodeExecute);
             this.ImageStretchCommand = new RelayCommand<string>(this.ImageStretchExecute);
+            this.ShowAboutCommand = new RelayCommand(() =>
+            {
+                var window = new Window
+                {
+                    Owner = Application.Current.MainWindow,
+                    Content = new AboutView(),
+                    SizeToContent = SizeToContent.WidthAndHeight,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                };
+                window.ShowDialog();
+            });
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -32,6 +44,8 @@
         public RelayCommand ExploreTextureMapsCommand { get; } = new RelayCommand(ExploreTextureMapsCommandExecute);
 
         public RelayCommand<string> BrowseToSiteCommand { get; } = new RelayCommand<string>(BrowseToSiteExecute);
+
+        public RelayCommand ShowAboutCommand { get; }
 
         public RelayCommand FullScreenImageCommand { get; }
 

@@ -1,13 +1,13 @@
-﻿namespace Shazzam.Plugins
+﻿namespace Shazzam.Views
 {
     using System.Diagnostics;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
 
-    public partial class About : UserControl
+    public partial class AboutView : UserControl
     {
-        public About()
+        public AboutView()
         {
             this.InitializeComponent();
             this.AddHandler(Hyperlink.RequestNavigateEvent, new RoutedEventHandler(OnRequestNavigate), handledEventsToo: false);

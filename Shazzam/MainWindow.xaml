@@ -180,6 +180,9 @@
                 <MenuItem Command="{Binding Path=BrowseToSiteCommand}"
                           CommandParameter="http://lynda.com/waltritscher"
                           Header="Video Training" />
+
+                <MenuItem Command="{Binding Path=ShowAboutCommand}"
+                          Header="About" />
             </MenuItem>
 
         </Menu>
@@ -219,7 +222,6 @@
                     </Border>
                 </TabItem>
                 <TabItem Header="Sample1">
-
                     <Border Style="{DynamicResource ImageOutsideBorder}">
                         <Border Style="{DynamicResource ImageInsideBorder}">
                             <Border Background="{StaticResource AlphaGrid}">
