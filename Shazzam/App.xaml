@@ -37,6 +37,21 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+
+            <Style TargetType="GridSplitter">
+                <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}" />
+
+                <Style.Triggers>
+                    <Trigger Property="ResizeDirection" Value="Rows">
+                        <Setter Property="Height" Value="12" />
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    </Trigger>
+                    <Trigger Property="ResizeDirection" Value="Columns">
+                        <Setter Property="Width" Value="12" />
+                        <Setter Property="VerticalAlignment" Value="Stretch" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

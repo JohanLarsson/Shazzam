@@ -179,7 +179,7 @@
               Margin="3,6,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="ImageRow" Height="{Binding ImageRowHeight}" />
-                <RowDefinition x:Name="SplitterRow" Height="4" />
+                <RowDefinition x:Name="SplitterRow" Height="12" />
                 <RowDefinition x:Name="CodeRow" Height="{Binding CodeRowHeight}" />
             </Grid.RowDefinitions>
 
@@ -325,8 +325,6 @@
 
             <GridSplitter Grid.Row="1"
                           Grid.ColumnSpan="1"
-                          Width="Auto"
-                          HorizontalAlignment="Stretch"
                           ResizeDirection="Rows" />
 
             <view:CodeTabView x:Name="CodeTabView" Grid.Row="2" />
