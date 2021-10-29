@@ -5,6 +5,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Brushes.xaml" />
+                <ResourceDictionary Source="/Resources/Button.xaml" />
                 <ResourceDictionary Source="/Resources/Menu.xaml" />
                 <ResourceDictionary Source="/Resources/ComboBox.xaml" />
                 <ResourceDictionary Source="/Resources/TabControl.xaml" />
@@ -50,6 +51,45 @@
                         <Setter Property="VerticalAlignment" Value="Stretch" />
                     </Trigger>
                 </Style.Triggers>
+            </Style>
+
+            <Style TargetType="{x:Type ToolTip}">
+                <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}" />
+                <Setter Property="BorderBrush" Value="{StaticResource MediumBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+            </Style>
+
+            <Style TargetType="{x:Type ListBoxItem}">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{StaticResource MediumBrush}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter Margin="6,2" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}" />
+                        <Setter Property="Foreground" Value="{StaticResource LightBrush}" />
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="{StaticResource LightBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="{x:Type ListBox}">
+                <Setter Property="Foreground" Value="{StaticResource MediumBrush}" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="{StaticResource MediumBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

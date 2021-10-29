@@ -163,8 +163,7 @@
                           CommandParameter="http://lynda.com/waltritscher"
                           Header="Video Training" />
 
-                <MenuItem Command="{Binding Path=ShowAboutCommand}"
-                          Header="About" />
+                <MenuItem Command="{Binding Path=ShowAboutCommand}" Header="About" />
             </MenuItem>
         </Menu>
 
@@ -244,7 +243,7 @@
                                Stretch="{Binding ImageStretch}" />
                     </Border>
                 </TabItem>
-                
+
                 <TabItem Header="Sample UI">
                     <Border Background="{StaticResource AlphaGrid}">
                         <DockPanel x:Name="SampleUi"
@@ -252,13 +251,15 @@
                                    MinHeight="200"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch"
+                                   Background="{StaticResource DarkBackgroundBrush}"
                                    LastChildFill="False"
-                                   TextElement.FontSize="14">
+                                   TextElement.FontSize="18">
                             <TextBlock Margin="8"
                                        HorizontalAlignment="Center"
                                        DockPanel.Dock="Top"
                                        FontSize="18"
                                        Text="Sample UI" />
+
                             <ListBox x:Name="FruitListBox"
                                      Width="140"
                                      Margin="8"
@@ -270,6 +271,7 @@
                                 <TextBlock Text="Peach" />
                                 <TextBlock Text="Strawberry" />
                             </ListBox>
+
                             <StackPanel Height="42.5"
                                         Margin="8"
                                         HorizontalAlignment="Center"
@@ -291,36 +293,36 @@
                 <TabItem x:Name="MediaTab" Header="Media">
                     <Border Background="{StaticResource AlphaGrid}">
                         <DockPanel MinWidth="200"
-                                           MinHeight="200"
-                                           HorizontalAlignment="Stretch"
-                                           VerticalAlignment="Stretch"
-                                           Background="White"
-                                           TextElement.FontSize="16">
+                                   MinHeight="200"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   Background="White"
+                                   TextElement.FontSize="16">
                             <StackPanel Margin="10"
-                                                DockPanel.Dock="Top"
-                                                Orientation="Horizontal">
+                                        DockPanel.Dock="Top"
+                                        Orientation="Horizontal">
                                 <!--<TextBlock Text='Click the video to replay.'
                                Margin='5,0' />-->
                                 <CheckBox x:Name="AutoPlayCheckBox"
-                                                  Margin="5,0"
-                                                  Checked="AutoPlayCheckBoxChecked"
-                                                  Content="Auto replay the video."
-                                                  IsChecked="True" />
+                                          Margin="5,0"
+                                          Checked="AutoPlayCheckBoxChecked"
+                                          Content="Auto replay the video."
+                                          IsChecked="True" />
                             </StackPanel>
                             <TextBlock x:Name="VideoMessage"
-                                               Margin="10"
-                                               DockPanel.Dock="Top" />
+                                       Margin="10"
+                                       DockPanel.Dock="Top" />
                             <Border Style="{DynamicResource ImageOutsideBorder}">
                                 <Border Style="{DynamicResource ImageInsideBorder}">
                                     <MediaElement x:Name="MediaUi"
-                                                          DockPanel.Dock="Top"
-                                                          LoadedBehavior="Manual"
-                                                          MediaEnded="MediaUiMediaEnded"
-                                                          MediaFailed="MediaUiMediaFailed"
-                                                          MouseLeftButtonUp="MediaUiMouseLeftButtonUp"
-                                                          Source="Images/plasma.wmv"
-                                                          Stretch="{Binding ImageStretch}"
-                                                          ToolTip="Click video to replay." />
+                                                  DockPanel.Dock="Top"
+                                                  LoadedBehavior="Manual"
+                                                  MediaEnded="MediaUiMediaEnded"
+                                                  MediaFailed="MediaUiMediaFailed"
+                                                  MouseLeftButtonUp="MediaUiMouseLeftButtonUp"
+                                                  Source="Images/plasma.wmv"
+                                                  Stretch="{Binding ImageStretch}"
+                                                  ToolTip="Click video to replay." />
                                 </Border>
                             </Border>
                         </DockPanel>
