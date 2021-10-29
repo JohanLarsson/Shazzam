@@ -9,47 +9,10 @@
              xmlns:views="clr-namespace:Shazzam.Views"
              DataContext="{x:Static views:CodeViewModel.Instance}"
              mc:Ignorable="d">
-    <UserControl.Resources>
-        <LinearGradientBrush x:Key="TabBrush" StartPoint="0,0" EndPoint="1,0">
-            <GradientStop Offset="0" Color="{StaticResource DarkColor}" />
-            <GradientStop Offset="1" Color="{StaticResource LightColor}" />
-        </LinearGradientBrush>
-        <Style x:Key="TabItemBackground" TargetType="{x:Type TabItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TabItem">
-                        <Grid>
-                            <Border Name="Border"
-                                    Margin="0,0,-4,0"
-                                    Background="{StaticResource LightBrush}"
-                                    BorderBrush="{StaticResource LightBrush}"
-                                    BorderThickness="1,1,1,1"
-                                    CornerRadius="0,0,0,0">
-                                <ContentPresenter x:Name="ContentSite"
-                                                  Margin="12,2,12,2"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center"
-                                                  ContentSource="Header"
-                                                  RecognizesAccessKey="True" />
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource TabBrush}" />
-                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource LightBrush}" />
-                                <Setter Property="Foreground" Value="{StaticResource DarkBrush}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
     <TabControl x:Name="CodeTabControl" SnapsToDevicePixels="True">
         <TabItem x:Name="CodeTab">
             <TabItem.Header>
                 <TextBlock x:Name="CodeTabHeaderText"
-                           Background="Transparent"
                            Text="HLSL"
                            ToolTip="Use Ctrl-F9 to move focus to this tab." />
             </TabItem.Header>
