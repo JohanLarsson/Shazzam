@@ -104,7 +104,7 @@
             // this.sliderValueAnimation.From = this.Minimum;
             // this.sliderValueAnimation.To = this.Maximum;
             this.colorValueAnimation.SetCurrentValue(ColorAnimation.FromProperty, this.ColorPicker1.SelectedItem);
-            this.colorValueAnimation.SetCurrentValue(ColorAnimation.ToProperty, this.EndColorPicker.SelectedColor);
+            this.colorValueAnimation.SetCurrentValue(ColorAnimation.ToProperty, this.EndColorPicker.SelectedItem);
 
             if (this.NoAnimationToggleButton.IsChecked.GetValueOrDefault() ||
                 this.colorValueAnimation.Duration.TimeSpan == TimeSpan.Zero)
