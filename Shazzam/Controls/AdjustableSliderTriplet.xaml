@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:converters="clr-namespace:Shazzam.Converters">
     <WrapPanel x:Name="MainPanel"
-               Margin="0,3"
-               Background="{StaticResource VeryDarkBrush}">
+               Margin="0,3">
         <StackPanel MinWidth="290"
                     Margin="5,0,0,0"
                     VerticalAlignment="Center">

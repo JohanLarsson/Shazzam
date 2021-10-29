@@ -7,9 +7,7 @@
              x:Name="Root"
              mc:Ignorable="d">
 
-    <Grid x:Name="MainPanel"
-          Margin="0,3"
-          Background="{StaticResource VeryDarkBrush}">
+    <Grid x:Name="MainPanel" Margin="0,3">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -41,11 +39,11 @@
 
             <ComboBox x:Name="ColorPicker1"
                       Grid.Column="2"
-                      Style="{StaticResource ColorComboBoxStyle}"
                       Margin="5,0,0,0"
                       VerticalAlignment="Center"
                       SelectedIndex="0"
-                      SelectedItem="{Binding ElementName=Root, Path=Value}" />
+                      SelectedItem="{Binding ElementName=Root, Path=Value}"
+                      Style="{StaticResource ColorComboBoxStyle}" />
         </Grid>
 
         <Rectangle Grid.Row="0"
@@ -112,11 +110,11 @@
                        Text="Animate To Value:" />
 
             <ComboBox Name="EndColorPicker"
-                      SelectedIndex="100"
-                      Style="{StaticResource ColorComboBoxStyle}"
                       Grid.Column="2"
                       Margin="5,0,0,0"
-                      VerticalAlignment="Center" />
+                      VerticalAlignment="Center"
+                      SelectedIndex="100"
+                      Style="{StaticResource ColorComboBoxStyle}" />
 
         </Grid>
 

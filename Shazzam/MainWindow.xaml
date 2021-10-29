@@ -9,9 +9,9 @@
         xmlns:view="clr-namespace:Shazzam.Views"
         Title="Shazzam Shader Editor = V1.2"
         Background="{StaticResource BackgroundBrush}"
-        TextElement.Foreground="{StaticResource MediumBrush}"
         DataContext="{x:Static shazzam:MainWindowViewModel.Instance}"
         Icon="Images/star.png"
+        TextElement.Foreground="{StaticResource MediumBrush}"
         WindowState="Maximized"
         mc:Ignorable="d">
     <Window.Resources>
@@ -65,8 +65,7 @@
 
     </Window.CommandBindings>
 
-    <Grid x:Name="MainGrid" Background="#101010">
-
+    <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

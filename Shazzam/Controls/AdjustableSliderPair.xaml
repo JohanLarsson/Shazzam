@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Name="Root">
     <Grid x:Name="MainPanel"
-          Margin="0,3"
-          Background="{StaticResource VeryDarkBrush}">
+          Margin="0,3">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
