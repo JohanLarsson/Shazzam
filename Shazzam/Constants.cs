@@ -1,7 +1,19 @@
 ﻿namespace Shazzam
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Windows.Media;
+
     public static class Constants
     {
+        public static readonly IReadOnlyList<Color> Colors = typeof(Colors)
+                                                             .GetProperties(BindingFlags.Public | BindingFlags.Static)
+                                                             .Where(x => x.PropertyType == typeof(Color))
+                                                             .Select(x => (Color)x.GetValue(null))
+                                                             .OrderBy(x => x.R + x.G + x.B)
+                                                             .ToArray();
+
         public static class Paths
         {
             public static readonly string Application = "\\Shazzam\\";
