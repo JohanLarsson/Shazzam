@@ -1,5 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Resources/Brushes.xaml" />
+        <ResourceDictionary Source="/Resources/Geometry.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
     <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Background" Value="Transparent" />
@@ -63,14 +68,14 @@
                     <Rectangle x:Name="rectangle"
                                Width="{TemplateBinding Width}"
                                Height="{TemplateBinding Height}"
-                               Fill="{x:Static local:Brushes.Gray}"
+                               Fill="{StaticResource MediumBrush}"
                                SnapsToDevicePixels="True" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="rectangle" Property="Fill" Value="{x:Static local:Brushes.EnabledText}" />
+                            <Setter TargetName="rectangle" Property="Fill" Value="{StaticResource LightBrush}" />
                         </Trigger>
                         <Trigger Property="IsDragging" Value="true">
-                            <Setter TargetName="rectangle" Property="Fill" Value="{x:Static local:Brushes.Pressed}" />
+                            <Setter TargetName="rectangle" Property="Fill" Value="{StaticResource AccentBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -98,7 +103,7 @@
                             <Path x:Name="ArrowTop"
                                   Margin="3,4,3,3"
                                   Data="{StaticResource UpArrowGeometry}"
-                                  Fill="{StaticResource MediumBrush}"
+                                  Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type RepeatButton}}, Path=Foreground}"
                                   Stretch="Uniform" />
                         </RepeatButton>
                         <Border Grid.Row="1"
@@ -126,17 +131,11 @@
                                       Style="{StaticResource ScrollBarButton}">
                             <Path x:Name="ArrowBottom"
                                   Margin="3,4,3,3"
-                                  Data="M 0,2.5 C0,2.5 0,0.5 0,0.5 0,0.5 3.5,4 3.5,4 3.5,4 7,0.5 7,0.5 7,0.5 7,2.5 7,2.5 7,2.5 3.5,6 3.5,6 3.5,6 0,2.5 0,2.5 z"
-                                  Fill="{StaticResource MediumBrush}"
+                                  Data="{StaticResource DownArrowGeometry}"
+                                  Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type RepeatButton}}, Path=Foreground}"
                                   Stretch="Uniform" />
                         </RepeatButton>
                     </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter TargetName="ArrowTop" Property="Fill" Value="{x:Static local:Brushes.DisabledText}" />
-                            <Setter TargetName="ArrowBottom" Property="Fill" Value="{x:Static local:Brushes.DisabledText}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
