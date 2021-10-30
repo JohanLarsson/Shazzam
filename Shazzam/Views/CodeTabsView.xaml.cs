@@ -17,7 +17,6 @@
     using ICSharpCode.TextEditor.Document;
     using Microsoft.CSharp;
     using Shazzam.CodeGen;
-    using Shazzam.Converters;
 
     public partial class CodeTabView : UserControl, IDisposable
     {
@@ -412,7 +411,7 @@
             {
                 foreach (var register in CodeViewModel.Instance.ShaderModel.Registers)
                 {
-                    var fieldInfo = shaderEffect.GetType().GetField($"{register.RegisterName}Property", BindingFlags.Public | BindingFlags.Static);
+                    var fieldInfo = shaderEffect.GetType().GetField($"{register.Name}Property", BindingFlags.Public | BindingFlags.Static);
                     if (fieldInfo != null)
                     {
                         if (fieldInfo.GetValue(null) is DependencyProperty dependencyProperty)

@@ -1,4 +1,4 @@
-﻿namespace Shazzam.Converters
+﻿namespace Shazzam
 {
     using System;
     using System.Globalization;

@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="Shazzam.Controls.AdjustableSliderTriplet"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters="clr-namespace:Shazzam.Converters">
+             xmlns:converters="clr-namespace:Shazzam">
     <WrapPanel x:Name="MainPanel"
                Margin="0,3">
         <StackPanel MinWidth="290"

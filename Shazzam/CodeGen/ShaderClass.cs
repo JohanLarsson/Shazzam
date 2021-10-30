@@ -12,8 +12,6 @@
     using System.Windows.Media.Media3D;
 
     using Microsoft.CSharp;
-
-    using Shazzam.Converters;
     using Shazzam.Properties;
 
     public static class ShaderClass
@@ -88,7 +86,7 @@
             foreach (var register in shaderModel.Registers)
             {
                 shader.Members.Add(CreateShaderRegisterDependencyProperty(shaderModel, register));
-                shader.Members.Add(CreateClrProperty(register.RegisterName, register.RegisterType, register.Description));
+                shader.Members.Add(CreateClrProperty(register.Name, register.Type, register.Description));
             }
 
             if (!includePixelShaderConstructor)
@@ -147,9 +145,9 @@
             };
         }
 
-        private static CodeMemberField CreateShaderRegisterDependencyProperty(ShaderModel shaderModel, ShaderModelConstantRegister register)
+        private static CodeMemberField CreateShaderRegisterDependencyProperty(ShaderModel shaderModel, Register register)
         {
-            if (typeof(Brush).IsAssignableFrom(register.RegisterType))
+            if (typeof(Brush).IsAssignableFrom(register.Type))
             {
                 return new CodeMemberField
                 {
@@ -158,7 +156,7 @@
                             new CodeCommentStatement("<summary>The ShaderEffect.RegisterPixelShaderSamplerProperty() method must be used with this field as argument. Note the last parameter of this method: it is an integer and it corresponds to the S0 pixel shader register.</summary>"),
                         },
                     Type = new CodeTypeReference("DependencyProperty"),
-                    Name = $"{register.RegisterName}Property",
+                    Name = $"{register.Name}Property",
                     //// ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
                     Attributes = MemberAttributes.Public | MemberAttributes.Static,
                     InitExpression = new CodeMethodInvokeExpression
@@ -170,9 +168,9 @@
                         },
                         Parameters =
                         {
-                            new CodePrimitiveExpression(register.RegisterName),
+                            new CodePrimitiveExpression(register.Name),
                             new CodeTypeOfExpression(shaderModel.GeneratedClassName),
-                            new CodePrimitiveExpression(register.RegisterNumber),
+                            new CodePrimitiveExpression(register.Ordinal),
                         },
                     },
                 };
@@ -181,7 +179,7 @@
             return new CodeMemberField
             {
                 Type = new CodeTypeReference("DependencyProperty"),
-                Name = $"{register.RegisterName}Property",
+                Name = $"{register.Name}Property",
                 //// ReSharper disable once BitwiseOperatorOnEnumWithoutFlags
                 Attributes = MemberAttributes.Public | MemberAttributes.Static,
                 InitExpression = new CodeMethodInvokeExpression
@@ -193,8 +191,8 @@
                     },
                     Parameters =
                     {
-                        new CodePrimitiveExpression(register.RegisterName),
-                        new CodeTypeOfExpression(CreateCodeTypeReference(register.RegisterType)),
+                        new CodePrimitiveExpression(register.Name),
+                        new CodeTypeOfExpression(CreateCodeTypeReference(register.Type)),
                         new CodeTypeOfExpression(shaderModel.GeneratedClassName),
                         new CodeObjectCreateExpression
                         {
@@ -205,11 +203,11 @@
                                     : "PropertyMetadata"),
                             Parameters =
                             {
-                                CreateDefaultValue(register.RegisterType, register.DefaultValue),
+                                CreateDefaultValue(register.Type, register.DefaultValue),
                                 new CodeMethodInvokeExpression
                                 {
                                     Method = new CodeMethodReferenceExpression(null, "PixelShaderConstantCallback"),
-                                    Parameters = { new CodePrimitiveExpression(register.RegisterNumber) },
+                                    Parameters = { new CodePrimitiveExpression(register.Ordinal) },
                                 },
                             },
                         },
@@ -357,7 +355,7 @@
             };
             foreach (var register in shaderModel.Registers)
             {
-                constructor.Statements.Add(CreateUpdateMethod(register.RegisterName));
+                constructor.Statements.Add(CreateUpdateMethod(register.Name));
             }
 
             return constructor;
@@ -380,7 +378,7 @@
             };
             foreach (var register in shaderModel.Registers)
             {
-                constructor.Statements.Add(CreateUpdateMethod(register.RegisterName));
+                constructor.Statements.Add(CreateUpdateMethod(register.Name));
             }
 
             return constructor;

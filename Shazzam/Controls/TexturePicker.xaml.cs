@@ -24,14 +24,14 @@
                 (d, e) => ((TexturePicker)d).OnValueChanged(e)));
 
         private static readonly Dictionary<int, ImageBrush> Images = new();
-        private readonly ShaderModelConstantRegister register;
+        private readonly Register register;
 
-        public TexturePicker(ShaderModelConstantRegister register)
+        public TexturePicker(Register register)
         {
             this.InitializeComponent();
             this.register = register;
             //// attempt to get the already loaded value
-            Images.TryGetValue(this.register.RegisterNumber, out ImageBrush result);
+            Images.TryGetValue(this.register.Ordinal, out ImageBrush result);
             this.Value = result;
             if (this.Value is null)
             {
@@ -57,7 +57,7 @@
         protected virtual void OnValueChanged(DependencyPropertyChangedEventArgs e)
         {
             var brush = (ImageBrush)e.NewValue;
-            Images[this.register.RegisterNumber] = brush;
+            Images[this.register.Ordinal] = brush;
             this.image2.SetCurrentValue(Image.SourceProperty, brush.ImageSource);
             this.image1.SetCurrentValue(Image.SourceProperty, brush.ImageSource);
         }
@@ -81,7 +81,7 @@
                 var brush = new ImageBrush(new BitmapImage(uriLocation));
                 this.SetCurrentValue(ValueProperty, brush);
 
-                switch (this.register.RegisterNumber)
+                switch (this.register.Ordinal)
                 {
                     case 2:
                         {
@@ -118,7 +118,7 @@
                 var brush = new ImageBrush(temp);
                 this.SetCurrentValue(ValueProperty, brush);
 
-                switch (this.register.RegisterNumber)
+                switch (this.register.Ordinal)
                 {
                     case 2:
                         {
@@ -151,7 +151,7 @@
         {
             Uri tempUri;
 
-            switch (this.register.RegisterNumber)
+            switch (this.register.Ordinal)
             {
                 case 2:
                     {

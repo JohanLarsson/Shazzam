@@ -13,14 +13,14 @@
             string generatedNamespace,
             string description,
             TargetFramework targetFramework,
-            List<ShaderModelConstantRegister> registers)
+            List<Register> registers)
         {
             this.ShaderFileName = shaderFileName;
             this.GeneratedClassName = generatedClassName;
             this.GeneratedNamespace = generatedNamespace;
             this.Description = description;
             this.TargetFramework = targetFramework;
-            this.Registers = new ReadOnlyObservableCollection<ShaderModelConstantRegister>(new ObservableCollection<ShaderModelConstantRegister>(registers));
+            this.Registers = new ReadOnlyObservableCollection<Register>(new ObservableCollection<Register>(registers));
         }
 
         public string ShaderFileName { get; }
@@ -33,7 +33,7 @@
 
         public TargetFramework TargetFramework { get; }
 
-        public ReadOnlyObservableCollection<ShaderModelConstantRegister> Registers { get; }
+        public ReadOnlyObservableCollection<Register> Registers { get; }
 
         public string CSharpClass(bool defaultConstructor)
         {
@@ -124,14 +124,14 @@
 
                 foreach (var register in model.Registers)
                 {
-                    this.Summary($"Identifies the {register.RegisterName} dependency property.")
-                        .Line($"public static readonly DependencyProperty {register.RegisterName}Property = DependencyProperty.Register(")
-                        .Line($"    nameof({register.RegisterName}),")
-                        .Line($"    typeof({TypeName(register.RegisterType)}),")
+                    this.Summary($"Identifies the {register.Name} dependency property.")
+                        .Line($"public static readonly DependencyProperty {register.Name}Property = DependencyProperty.Register(")
+                        .Line($"    nameof({register.Name}),")
+                        .Line($"    typeof({TypeName(register.Type)}),")
                         .Line($"    typeof({model.GeneratedClassName}),")
                         .Line("    new UIPropertyMetadata(")
-                        .Line($"        {DefaultValue(register.DefaultValue, register.RegisterType)},")
-                        .Line($"        PixelShaderConstantCallback({register.RegisterNumber})));")
+                        .Line($"        {DefaultValue(register.DefaultValue, register.Type)},")
+                        .Line($"        PixelShaderConstantCallback({register.Ordinal})));")
                         .Line();
                 }
 
@@ -166,7 +166,7 @@
 
                 foreach (var register in model.Registers)
                 {
-                    this.Line($"this.UpdateShaderValue({register.RegisterName}Property);");
+                    this.Line($"this.UpdateShaderValue({register.Name}Property);");
                 }
 
                 return this.EndCurly()
@@ -186,10 +186,10 @@
                 {
                     this.Line()
                         .Summary(register.Description)
-                        .Line($"public {TypeName(register.RegisterType)} {register.RegisterName}")
+                        .Line($"public {TypeName(register.Type)} {register.Name}")
                         .Line("{")
-                        .Line($"    get => ({TypeName(register.RegisterType)})this.GetValue({register.RegisterName}Property);")
-                        .Line($"    set => this.SetValue({register.RegisterName}Property, value);")
+                        .Line($"    get => ({TypeName(register.Type)})this.GetValue({register.Name}Property);")
+                        .Line($"    set => this.SetValue({register.Name}Property, value);")
                         .Line("}");
                 }
 

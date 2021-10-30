@@ -2,10 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:Shazzam.Controls"
-             xmlns:converters="clr-namespace:Shazzam.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:shazzam="clr-namespace:Shazzam"
+             xmlns:local="clr-namespace:Shazzam"
              xmlns:views="clr-namespace:Shazzam.Views"
              DataContext="{x:Static views:CodeViewModel.Instance}"
              mc:Ignorable="d">
@@ -39,7 +38,7 @@
                              IsReadOnlyCaretVisible="True"
                              MouseLeftButtonDown="OutputTextBoxMouseLeftButtonDown"
                              ToolTip="Double-click here to goto error."
-                             Visibility="{Binding Text, Converter={x:Static converters:StringToVisibilityConverter.CollapsedWhenNullOrEmpty}, RelativeSource={RelativeSource Self}}">
+                             Visibility="{Binding Text, Converter={x:Static local:StringToVisibilityConverter.CollapsedWhenNullOrEmpty}, RelativeSource={RelativeSource Self}}">
 
                         <TextBox.Effect>
                             <DropShadowEffect BlurRadius="9"
@@ -103,44 +102,44 @@
                 <TextBlock Grid.Column="0"
                            Margin="5"
                            Text="The current effect has no input parameters."
-                           Visibility="{Binding ShaderModel.Registers, Converter={x:Static converters:AnyToVisibilityConverter.VisibleWhenEmpty}}" />
+                           Visibility="{Binding ShaderModel.Registers, Converter={x:Static local:AnyToVisibilityConverter.VisibleWhenEmpty}}" />
                 <ItemsControl Grid.Column="0" ItemsSource="{Binding ShaderModel.Registers}">
                     <ItemsControl.ItemTemplateSelector>
-                        <views:ShaderModelConstantRegisterTemplateSelector>
-                            <views:ShaderModelConstantRegisterTemplateSelector.ColorTemplate>
-                                <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
+                        <local:RegisterTemplateSelector>
+                            <local:RegisterTemplateSelector.ColorTemplate>
+                                <DataTemplate DataType="{x:Type local:Register}">
                                     <controls:AdjustableColor Value="{Binding Value}" />
                                 </DataTemplate>
-                            </views:ShaderModelConstantRegisterTemplateSelector.ColorTemplate>
+                            </local:RegisterTemplateSelector.ColorTemplate>
 
-                            <views:ShaderModelConstantRegisterTemplateSelector.SingleTemplate>
-                                <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
+                            <local:RegisterTemplateSelector.SingleTemplate>
+                                <DataTemplate DataType="{x:Type local:Register}">
                                     <controls:AdjustableSlider Maximum="{Binding MaxValue, Mode=OneTime}"
                                                                Minimum="{Binding MinValue, Mode=OneTime}"
                                                                Value="{Binding Value}" />
                                 </DataTemplate>
-                            </views:ShaderModelConstantRegisterTemplateSelector.SingleTemplate>
+                            </local:RegisterTemplateSelector.SingleTemplate>
 
-                            <views:ShaderModelConstantRegisterTemplateSelector.PairTemplate>
-                                <DataTemplate DataType="{x:Type shazzam:ShaderModelConstantRegister}">
+                            <local:RegisterTemplateSelector.PairTemplate>
+                                <DataTemplate DataType="{x:Type local:Register}">
                                     <controls:AdjustableSliderPair Maximum="{Binding MaxValue, Mode=OneTime}"
                                                                    Minimum="{Binding MinValue, Mode=OneTime}"
                                                                    Value="{Binding Value}" />
                                 </DataTemplate>
-                            </views:ShaderModelConstantRegisterTemplateSelector.PairTemplate>
+                            </local:RegisterTemplateSelector.PairTemplate>
 
-                            <views:ShaderModelConstantRegisterTemplateSelector.TripleTemplate>
+                            <local:RegisterTemplateSelector.TripleTemplate>
                                 <DataTemplate>
                                     <controls:AdjustableSliderTriplet />
                                 </DataTemplate>
-                            </views:ShaderModelConstantRegisterTemplateSelector.TripleTemplate>
+                            </local:RegisterTemplateSelector.TripleTemplate>
 
-                            <views:ShaderModelConstantRegisterTemplateSelector.QuadrupleTemplate>
+                            <local:RegisterTemplateSelector.QuadrupleTemplate>
                                 <DataTemplate>
                                     <controls:AdjustableSliderQuadruplet />
                                 </DataTemplate>
-                            </views:ShaderModelConstantRegisterTemplateSelector.QuadrupleTemplate>
-                        </views:ShaderModelConstantRegisterTemplateSelector>
+                            </local:RegisterTemplateSelector.QuadrupleTemplate>
+                        </local:RegisterTemplateSelector>
                     </ItemsControl.ItemTemplateSelector>
                 </ItemsControl>
 
@@ -298,7 +297,7 @@
 
         <TabItem x:Name="CsharpTab"
                  Header="Generated Shader - C#"
-                 Visibility="{Binding Visibility, Converter={x:Static converters:VisibilityToVisibilityConverter.CollapsedWhenVisible}, ElementName=OutputTextBox}">
+                 Visibility="{Binding Visibility, Converter={x:Static local:VisibilityToVisibilityConverter.CollapsedWhenVisible}, ElementName=OutputTextBox}">
             <WindowsFormsHost x:Name="FormsHostCs" Margin="2,2,2,2" />
         </TabItem>
     </TabControl>

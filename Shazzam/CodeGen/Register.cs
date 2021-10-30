@@ -7,22 +7,22 @@
     /// <summary>
     ///  Contains the details for each register described in a HLSL shader file
     /// </summary>
-    public class ShaderModelConstantRegister : INotifyPropertyChanged
+    public class Register : INotifyPropertyChanged
     {
         private object? value;
 
-        public ShaderModelConstantRegister(
-            string registerName,
-            Type registerType,
-            int registerNumber,
+        public Register(
+            string name,
+            Type type,
+            int ordinal,
             string description,
             object? minValue,
             object? maxValue,
             object? defaultValue)
         {
-            this.RegisterName = registerName;
-            this.RegisterType = registerType;
-            this.RegisterNumber = registerNumber;
+            this.Name = name;
+            this.Type = type;
+            this.Ordinal = ordinal;
             this.Description = description;
             this.MinValue = minValue;
             this.MaxValue = maxValue;
@@ -35,17 +35,17 @@
         /// <summary>
         /// The name of this register variable.
         /// </summary>
-        public string RegisterName { get; }
+        public string Name { get; }
 
         /// <summary>
         ///  The .NET type of this register variable.
         /// </summary>
-        public Type RegisterType { get; }
+        public Type Type { get; }
 
         /// <summary>
         /// The register number of this register variable.
         /// </summary>
-        public int RegisterNumber { get; }
+        public int Ordinal { get; }
 
         /// <summary>
         /// The description of this register variable.

@@ -77,7 +77,7 @@
             var matches = RegisterConstantDeclarationRegex.Matches(shaderText);
 
             // Create a list of shader model constant registers.
-            var registers = new List<ShaderModelConstantRegister>();
+            var registers = new List<Register>();
             foreach (Match match in matches)
             {
                 var register = CreateRegister(targetFramework, match);
@@ -101,9 +101,9 @@
         /// Returns a ShaderModelConstantRegister object with the information contained in
         /// the given regular expression match.
         /// </summary>
-        private static ShaderModelConstantRegister? CreateRegister(TargetFramework targetFramework, Match match)
+        private static Register? CreateRegister(TargetFramework targetFramework, Match match)
         {
-            ShaderModelConstantRegister? register = null;
+            Register? register = null;
 
             // Figure out the .NET type that corresponds to the register type.
             var registerTypeInHlsl = match.Groups["registerType"].Value;
@@ -145,7 +145,7 @@
                 }
 
                 // Create a structure to hold the register information.
-                register = new ShaderModelConstantRegister(
+                register = new Register(
                     registerName,
                     registerType,
                     registerNumber,

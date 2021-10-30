@@ -18,12 +18,12 @@
                 generatedNamespace: "Shaders",
                 description: "This is MyEffect",
                 targetFramework: TargetFramework.WPF,
-                registers: new List<ShaderModelConstantRegister>
+                registers: new List<Register>
                 {
-                    new ShaderModelConstantRegister(
-                        registerName: "Value",
-                        registerType: typeof(double),
-                        registerNumber: 1,
+                    new Register(
+                        name: "Value",
+                        type: typeof(double),
+                        ordinal: 1,
                         description: "This is the value",
                         minValue: null,
                         maxValue: null,
@@ -103,12 +103,12 @@
                 generatedNamespace: "Shaders",
                 description: "This is MyEffect",
                 targetFramework: TargetFramework.WPF,
-                registers: new List<ShaderModelConstantRegister>
+                registers: new List<Register>
                 {
-                    new ShaderModelConstantRegister(
-                        registerName: "Value",
-                        registerType: typeof(double),
-                        registerNumber: 1,
+                    new Register(
+                        name: "Value",
+                        type: typeof(double),
+                        ordinal: 1,
                         description: "This is the value",
                         minValue: null,
                         maxValue: null,
@@ -180,12 +180,12 @@
                 generatedNamespace: "Shaders",
                 description: "This is MyEffect",
                 targetFramework: TargetFramework.WPF,
-                registers: new List<ShaderModelConstantRegister>
+                registers: new List<Register>
                 {
-                    new ShaderModelConstantRegister(
-                        registerName: "Value",
-                        registerType: typeof(double),
-                        registerNumber: 1,
+                    new Register(
+                        name: "Value",
+                        type: typeof(double),
+                        ordinal: 1,
                         description: "This is the value",
                         minValue: null,
                         maxValue: null,
