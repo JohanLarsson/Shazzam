@@ -67,7 +67,7 @@
     <Style BasedOn="{StaticResource {x:Type ButtonBase}}" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type RadioButton}">
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border x:Name="border"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
