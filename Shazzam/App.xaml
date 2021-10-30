@@ -8,6 +8,7 @@
                 <ResourceDictionary Source="/Resources/Geometry.xaml" />
                 <ResourceDictionary Source="/Resources/Button.xaml" />
                 <ResourceDictionary Source="/Resources/ScrollBar.xaml" />
+                <ResourceDictionary Source="/Resources/Slider.xaml" />
                 <ResourceDictionary Source="/Resources/Menu.xaml" />
                 <ResourceDictionary Source="/Resources/ComboBox.xaml" />
                 <ResourceDictionary Source="/Resources/TabControl.xaml" />
