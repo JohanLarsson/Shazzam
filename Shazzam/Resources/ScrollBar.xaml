@@ -33,31 +33,6 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="ScrollBarThumbVertical" TargetType="{x:Type Thumb}">
-        <Setter Property="OverridesDefaultStyle" Value="true" />
-        <Setter Property="IsTabStop" Value="false" />
-        <Setter Property="Foreground" Value="{StaticResource MediumBrush}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Rectangle x:Name="rectangle"
-                               Width="{TemplateBinding Width}"
-                               Height="{TemplateBinding Height}"
-                               Fill="{TemplateBinding Foreground}"
-                               SnapsToDevicePixels="True" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Foreground" Value="{StaticResource LightBrush}" />
-            </Trigger>
-            <Trigger Property="IsDragging" Value="true">
-                <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
     <Style TargetType="{x:Type ScrollBar}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{StaticResource MediumBrush}" />
@@ -102,7 +77,7 @@
                                 <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource TrackButton}" />
                             </Track.IncreaseRepeatButton>
                             <Track.Thumb>
-                                <Thumb Style="{StaticResource ScrollBarThumbVertical}" />
+                                <Thumb />
                             </Track.Thumb>
                         </Track>
                         <RepeatButton x:Name="PART_LineDownButton"
