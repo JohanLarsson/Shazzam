@@ -62,7 +62,7 @@
                                   Margin="0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
-                                  Data="{StaticResource DownArrowGeometry}"
+                                  Data="{StaticResource ArrowDownGeometry}"
                                   Fill="{TemplateBinding Foreground}" />
                         </Border>
                     </Border>
