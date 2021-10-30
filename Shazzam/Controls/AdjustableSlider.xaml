@@ -27,7 +27,7 @@
             <TextBlock Grid.Column="0"
                        VerticalAlignment="Center">
                 <Run Text="{Binding Name, Mode=OneTime, FallbackValue='name'}" />
-                <Run Text="{Binding RType, Mode=OneTime, StringFormat='{} ({0})', FallbackValue='(type)'}" />
+                <Run Text="{Binding Type, Mode=OneTime, StringFormat='{} ({0})', FallbackValue='(type)'}" />
             </TextBlock>
 
             <TextBlock Grid.Column="1"
