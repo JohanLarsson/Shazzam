@@ -32,126 +32,130 @@
         </Style.Triggers>
     </Style>
 
-    <ControlTemplate x:Key="HorizontalScrollBarTemplate" TargetType="{x:Type ScrollBar}">
-        <Grid x:Name="Bg" SnapsToDevicePixels="true">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}" />
-            </Grid.ColumnDefinitions>
-            <RepeatButton x:Name="PART_LineLeftButton"
-                          Command="{x:Static ScrollBar.LineLeftCommand}"
-                          IsEnabled="{TemplateBinding IsMouseOver}"
-                          Style="{StaticResource ScrollBarButton}">
-                <RepeatButton.Template>
-                    <ControlTemplate TargetType="{x:Type RepeatButton}">
-                        <Border Background="Transparent">
-                            <Path x:Name="ArrowTop"
-                                  Margin="4,3,3,3"
-                                  Data="{StaticResource ArrowLeftGeometry}"
-                                  Fill="{TemplateBinding Foreground}"
-                                  Stretch="Uniform" />
-                        </Border>
-                    </ControlTemplate>
-                </RepeatButton.Template>
-            </RepeatButton>
-            <Border Grid.Column="1"
-                    Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}" />
-            <Track x:Name="PART_Track"
-                   Grid.Column="1"
-                   IsDirectionReversed="true"
-                   IsEnabled="{TemplateBinding IsMouseOver}">
-                <Track.DecreaseRepeatButton>
-                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource TrackButton}" />
-                </Track.DecreaseRepeatButton>
-                <Track.IncreaseRepeatButton>
-                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource TrackButton}" />
-                </Track.IncreaseRepeatButton>
-                <Track.Thumb>
-                    <Thumb />
-                </Track.Thumb>
-            </Track>
-            <RepeatButton x:Name="PART_LineRightButton"
-                          Grid.Column="2"
-                          Command="{x:Static ScrollBar.LineRightCommand}"
-                          IsEnabled="{TemplateBinding IsMouseOver}"
-                          Style="{StaticResource ScrollBarButton}">
-                <RepeatButton.Template>
-                    <ControlTemplate TargetType="{x:Type RepeatButton}">
-                        <Border Background="Transparent">
-                            <Path x:Name="ArrowBottom"
-                                  Margin="3,3,4,3"
-                                  Data="{StaticResource ArrowRightGeometry}"
-                                  Fill="{TemplateBinding Foreground}"
-                                  Stretch="Uniform" />
-                        </Border>
-                    </ControlTemplate>
-                </RepeatButton.Template>
-            </RepeatButton>
-        </Grid>
+    <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid SnapsToDevicePixels="true">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}" />
+                </Grid.ColumnDefinitions>
+                <RepeatButton x:Name="PART_LineLeftButton"
+                              Command="{x:Static ScrollBar.LineLeftCommand}"
+                              IsEnabled="{TemplateBinding IsMouseOver}"
+                              Style="{StaticResource ScrollBarButton}">
+                    <RepeatButton.Template>
+                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                            <Border Background="Transparent">
+                                <Path x:Name="ArrowTop"
+                                      Margin="4,3,3,3"
+                                      Data="{StaticResource ArrowLeftGeometry}"
+                                      Fill="{TemplateBinding Foreground}"
+                                      Stretch="Uniform" />
+                            </Border>
+                        </ControlTemplate>
+                    </RepeatButton.Template>
+                </RepeatButton>
+
+                <Track x:Name="PART_Track"
+                       Grid.Column="1"
+                       IsDirectionReversed="true"
+                       IsEnabled="{TemplateBinding IsMouseOver}">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource TrackButton}" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource TrackButton}" />
+                    </Track.IncreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb />
+                    </Track.Thumb>
+                </Track>
+
+                <RepeatButton x:Name="PART_LineRightButton"
+                              Grid.Column="2"
+                              Command="{x:Static ScrollBar.LineRightCommand}"
+                              IsEnabled="{TemplateBinding IsMouseOver}"
+                              Style="{StaticResource ScrollBarButton}">
+                    <RepeatButton.Template>
+                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                            <Border Background="Transparent">
+                                <Path x:Name="ArrowBottom"
+                                      Margin="3,3,4,3"
+                                      Data="{StaticResource ArrowRightGeometry}"
+                                      Fill="{TemplateBinding Foreground}"
+                                      Stretch="Uniform" />
+                            </Border>
+                        </ControlTemplate>
+                    </RepeatButton.Template>
+                </RepeatButton>
+            </Grid>
+        </Border>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="VerticalScrollBarTemplate" TargetType="{x:Type ScrollBar}">
-        <Grid x:Name="Bg" SnapsToDevicePixels="true">
-            <Grid.RowDefinitions>
-                <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}" />
-                <RowDefinition Height="*" />
-                <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}" />
-            </Grid.RowDefinitions>
-            <RepeatButton x:Name="PART_LineUpButton"
-                          Command="{x:Static ScrollBar.LineUpCommand}"
-                          IsEnabled="{TemplateBinding IsMouseOver}"
-                          Style="{StaticResource ScrollBarButton}">
-                <RepeatButton.Template>
-                    <ControlTemplate TargetType="{x:Type RepeatButton}">
-                        <Border Background="Transparent">
-                            <Path x:Name="ArrowTop"
-                                  Margin="3,4,3,3"
-                                  Data="{StaticResource ArrowUpGeometry}"
-                                  Fill="{TemplateBinding Foreground}"
-                                  Stretch="Uniform" />
-                        </Border>
-                    </ControlTemplate>
-                </RepeatButton.Template>
-            </RepeatButton>
-            <Border Grid.Row="1"
-                    Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}" />
-            <Track x:Name="PART_Track"
-                   Grid.Row="1"
-                   IsDirectionReversed="true"
-                   IsEnabled="{TemplateBinding IsMouseOver}">
-                <Track.DecreaseRepeatButton>
-                    <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource TrackButton}" />
-                </Track.DecreaseRepeatButton>
-                <Track.IncreaseRepeatButton>
-                    <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource TrackButton}" />
-                </Track.IncreaseRepeatButton>
-                <Track.Thumb>
-                    <Thumb />
-                </Track.Thumb>
-            </Track>
-            <RepeatButton x:Name="PART_LineDownButton"
-                          Grid.Row="2"
-                          Command="{x:Static ScrollBar.LineDownCommand}"
-                          IsEnabled="{TemplateBinding IsMouseOver}"
-                          Style="{StaticResource ScrollBarButton}">
-                <RepeatButton.Template>
-                    <ControlTemplate TargetType="{x:Type RepeatButton}">
-                        <Border Background="Transparent">
-                            <Path x:Name="ArrowBottom"
-                                  Margin="3,4,3,3"
-                                  Data="{StaticResource ArrowDownGeometry}"
-                                  Fill="{TemplateBinding Foreground}"
-                                  Stretch="Uniform" />
-                        </Border>
-                    </ControlTemplate>
-                </RepeatButton.Template>
-            </RepeatButton>
-        </Grid>
+    <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid SnapsToDevicePixels="true">
+                <Grid.RowDefinitions>
+                    <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}" />
+                </Grid.RowDefinitions>
+                <RepeatButton x:Name="PART_LineUpButton"
+                              Command="{x:Static ScrollBar.LineUpCommand}"
+                              IsEnabled="{TemplateBinding IsMouseOver}"
+                              Style="{StaticResource ScrollBarButton}">
+                    <RepeatButton.Template>
+                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                            <Border Background="Transparent">
+                                <Path x:Name="ArrowTop"
+                                      Margin="3,4,3,3"
+                                      Data="{StaticResource ArrowUpGeometry}"
+                                      Fill="{TemplateBinding Foreground}"
+                                      Stretch="Uniform" />
+                            </Border>
+                        </ControlTemplate>
+                    </RepeatButton.Template>
+                </RepeatButton>
+
+                <Track x:Name="PART_Track"
+                       Grid.Row="1"
+                       IsDirectionReversed="true"
+                       IsEnabled="{TemplateBinding IsMouseOver}">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Command="{x:Static ScrollBar.PageUpCommand}" Style="{StaticResource TrackButton}" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Command="{x:Static ScrollBar.PageDownCommand}" Style="{StaticResource TrackButton}" />
+                    </Track.IncreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb />
+                    </Track.Thumb>
+                </Track>
+
+                <RepeatButton x:Name="PART_LineDownButton"
+                              Grid.Row="2"
+                              Command="{x:Static ScrollBar.LineDownCommand}"
+                              IsEnabled="{TemplateBinding IsMouseOver}"
+                              Style="{StaticResource ScrollBarButton}">
+                    <RepeatButton.Template>
+                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                            <Border Background="Transparent">
+                                <Path x:Name="ArrowBottom"
+                                      Margin="3,4,3,3"
+                                      Data="{StaticResource ArrowDownGeometry}"
+                                      Fill="{TemplateBinding Foreground}"
+                                      Stretch="Uniform" />
+                            </Border>
+                        </ControlTemplate>
+                    </RepeatButton.Template>
+                </RepeatButton>
+            </Grid>
+        </Border>
     </ControlTemplate>
 
     <Style TargetType="{x:Type ScrollBar}">
@@ -160,10 +164,10 @@
         <Setter Property="BorderThickness" Value="0" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
-                <Setter Property="Template" Value="{StaticResource HorizontalScrollBarTemplate}" />
+                <Setter Property="Template" Value="{StaticResource HorizontalScrollBar}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="Template" Value="{StaticResource VerticalScrollBarTemplate}" />
+                <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
             </Trigger>
         </Style.Triggers>
     </Style>
