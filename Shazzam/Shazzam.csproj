@@ -19,6 +19,7 @@
     <None Include="*.dll" CopyToOutputDirectory="PreserveNewest" />
     <EmbeddedResource Include="Resources\HLSLSyntax.xshd" />
     <None Include="Samples\*.fx" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Tutorials\*.fx" CopyToOutputDirectory="PreserveNewest" />
     <None Include="Samples\*.hlsli" CopyToOutputDirectory="PreserveNewest" />
     <None Include="Images\TextureMaps\*.jpg" CopyToOutputDirectory="PreserveNewest" />
     <None Include="Images\Default\*.png" CopyToOutputDirectory="PreserveNewest" />
