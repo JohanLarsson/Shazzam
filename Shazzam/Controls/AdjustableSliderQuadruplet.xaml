@@ -10,11 +10,9 @@
             <StackPanel Margin="5,3,5,3" Orientation="Horizontal">
                 <TextBlock Width="12"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource HighlightBrush}"
                            Text="X" />
                 <TextBlock Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Min:" />
                 <TextBox x:Name="XMinTextBox"
                          Width="40"
@@ -23,7 +21,6 @@
                          Text="0" />
                 <TextBlock Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Max:" />
                 <TextBox x:Name="XMaxTextBox"
                          Width="40"
@@ -32,13 +29,11 @@
                          Text="100" />
                 <TextBlock Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Value:" />
                 <TextBlock x:Name="XSliderText"
                            Width="90"
                            Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="{Binding ElementName=XSlider, Path=Value, StringFormat=F2}"
                            Visibility="Collapsed" />
                 <Slider x:Name="XSlider"
@@ -54,11 +49,9 @@
             <StackPanel Margin="5,3,5,3" Orientation="Horizontal">
                 <TextBlock Width="12"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource HighlightBrush}"
                            Text="Y" />
                 <TextBlock Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Min:" />
                 <TextBox x:Name="YMinTextBox"
                          Width="40"
@@ -67,7 +60,6 @@
                          Text="0" />
                 <TextBlock Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Max:" />
                 <TextBox x:Name="YMaxTextBox"
                          Width="40"
@@ -76,13 +68,11 @@
                          Text="100" />
                 <TextBlock Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Value:" />
                 <TextBlock x:Name="YSliderText"
                            Width="90"
                            Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="{Binding ElementName=YSlider, Path=Value, StringFormat=F2}"
                            Visibility="Collapsed" />
                 <Slider x:Name="YSlider"
@@ -98,11 +88,9 @@
             <StackPanel Margin="5,3,5,3" Orientation="Horizontal">
                 <TextBlock Width="12"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource HighlightBrush}"
                            Text="Z" />
                 <TextBlock Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Min:" />
                 <TextBox x:Name="ZMinTextBox"
                          Width="40"
@@ -111,7 +99,6 @@
                          Text="0" />
                 <TextBlock Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Max:" />
                 <TextBox x:Name="ZMaxTextBox"
                          Width="40"
@@ -120,13 +107,11 @@
                          Text="100" />
                 <TextBlock Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Value:" />
                 <TextBlock x:Name="ZSliderText"
                            Width="90"
                            Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="{Binding ElementName=ZSlider, Path=Value, StringFormat=F2}"
                            Visibility="Collapsed" />
                 <Slider x:Name="ZSlider"
@@ -142,11 +127,9 @@
             <StackPanel Margin="5,3,5,3" Orientation="Horizontal">
                 <TextBlock Width="12"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource HighlightBrush}"
                            Text="W" />
                 <TextBlock Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Min:" />
                 <TextBox x:Name="WMinTextBox"
                          Width="40"
@@ -155,7 +138,6 @@
                          Text="0" />
                 <TextBlock Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Max:" />
                 <TextBox x:Name="WMaxTextBox"
                          Width="40"
@@ -164,13 +146,11 @@
                          Text="100" />
                 <TextBlock Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Value:" />
                 <TextBlock x:Name="WSliderText"
                            Width="90"
                            Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="{Binding ElementName=WSlider, Path=Value, StringFormat=F2}"
                            Visibility="Collapsed" />
                 <Slider x:Name="WSlider"
@@ -186,7 +166,7 @@
         </StackPanel>
         <Rectangle Width="1"
                    Margin="0,3,-1,3"
-                   Fill="{StaticResource NeutralDarkBrush}"
+                   Fill="{StaticResource LightBackgroundBrush}"
                    SnapsToDevicePixels="True" />
         <StackPanel VerticalAlignment="Center">
             <StackPanel MinWidth="60"
@@ -194,7 +174,6 @@
                         Orientation="Horizontal">
                 <TextBlock MinWidth="55"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Animation:" />
                 <ToggleButton x:Name="NoAnimationToggleButton"
                               Width="22"
@@ -231,7 +210,6 @@
             <StackPanel Margin="5,3,5,3" Orientation="Horizontal">
                 <TextBlock MinWidth="55"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="Duration:" />
                 <TextBox x:Name="DurationTextBox"
                          MinWidth="40"
@@ -240,10 +218,8 @@
                          Text="0.5" />
                 <TextBlock Margin="5,0,0,0"
                            VerticalAlignment="Center"
-                           Foreground="{StaticResource NeutralWhiteBrush}"
                            Text="seconds" />
             </StackPanel>
         </StackPanel>
-
     </WrapPanel>
 </UserControl>

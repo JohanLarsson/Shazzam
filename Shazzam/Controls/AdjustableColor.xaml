@@ -2,9 +2,10 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:extended="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit/extended"
+             xmlns:local="clr-namespace:Shazzam"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              x:Name="Root"
+             d:DataContext="{d:DesignInstance Type=local:Register}"
              mc:Ignorable="d">
 
     <Grid x:Name="MainPanel" Margin="0,3">
@@ -24,17 +25,14 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0"
-                       VerticalAlignment="Center"
-                       Foreground="{StaticResource HighlightBrush}">
-                <Run Text="{Binding RegisterName, Mode=OneTime, FallbackValue='name'}" />
-                <Run Text="{Binding RegisterType, Mode=OneTime, StringFormat='{} ({0})', FallbackValue='(type)'}" />
+            <TextBlock Grid.Column="0" VerticalAlignment="Center">
+                <Run Text="{Binding Name, Mode=OneTime, FallbackValue='name'}" />
+                <Run Text="{Binding Type, Mode=OneTime, StringFormat='{} ({0})', FallbackValue='(type)'}" />
             </TextBlock>
 
             <TextBlock Grid.Column="1"
                        Margin="5,0,0,0"
                        VerticalAlignment="Center"
-                       Foreground="{StaticResource NeutralWhiteBrush}"
                        Text="Value:" />
 
             <ComboBox x:Name="ColorPicker1"
@@ -51,7 +49,7 @@
                    Grid.Column="1"
                    Width="1"
                    Margin="10,2"
-                   Fill="{StaticResource NeutralDarkBrush}"
+                   Fill="{StaticResource LightBackgroundBrush}"
                    SnapsToDevicePixels="True" />
 
         <StackPanel Grid.Row="0"
@@ -60,7 +58,6 @@
                     Orientation="Horizontal">
             <TextBlock MinWidth="55"
                        VerticalAlignment="Center"
-                       Foreground="{StaticResource NeutralWhiteBrush}"
                        Text="Animation:" />
             <ToggleButton x:Name="NoAnimationToggleButton"
                           Width="22"
@@ -96,17 +93,10 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Width="12"
-                       Margin="0"
-                       VerticalAlignment="Center"
-                       Foreground="{StaticResource HighlightBrush}"
-                       Text="͏"
-                       TextAlignment="Center" />
 
             <TextBlock x:Name="EndColorTextBlock"
                        Grid.Column="1"
                        VerticalAlignment="Center"
-                       Foreground="{StaticResource NeutralWhiteBrush}"
                        Text="Animate To Value:" />
 
             <ComboBox Name="EndColorPicker"
@@ -124,7 +114,6 @@
                     Orientation="Horizontal">
             <TextBlock MinWidth="55"
                        VerticalAlignment="Center"
-                       Foreground="{StaticResource NeutralWhiteBrush}"
                        Text="Duration:" />
             <TextBox x:Name="DurationTextBox"
                      MinWidth="40"
@@ -133,7 +122,6 @@
                      Text="2.0" />
             <TextBlock Margin="5,0,0,0"
                        VerticalAlignment="Center"
-                       Foreground="{StaticResource NeutralWhiteBrush}"
                        Text="s" />
         </StackPanel>
     </Grid>
