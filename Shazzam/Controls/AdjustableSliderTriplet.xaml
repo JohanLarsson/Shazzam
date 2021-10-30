@@ -38,10 +38,7 @@
                            Visibility="Collapsed" />
                 <Slider x:Name="XSlider"
                         Width="90"
-                        Margin="5,0,0,0"
-                        AutoToolTipPlacement="TopLeft"
-                        AutoToolTipPrecision="3"
-                        IsMoveToPointEnabled="True"
+                        Style="{StaticResource RegisterSlider}"
                         Maximum="{Binding ElementName=XMaxTextBox, Path=Text}"
                         Minimum="{Binding ElementName=XMinTextBox, Path=Text}"
                         ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Value, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
@@ -77,10 +74,7 @@
                            Visibility="Collapsed" />
                 <Slider x:Name="YSlider"
                         Width="90"
-                        Margin="5,0,0,0"
-                        AutoToolTipPlacement="TopLeft"
-                        AutoToolTipPrecision="3"
-                        IsMoveToPointEnabled="True"
+                        Style="{StaticResource RegisterSlider}"
                         Maximum="{Binding ElementName=YMaxTextBox, Path=Text}"
                         Minimum="{Binding ElementName=YMinTextBox, Path=Text}"
                         ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Value, Converter={x:Static converters:DoubleToStringConverter.F1}}" />
@@ -116,10 +110,7 @@
                            Visibility="Collapsed" />
                 <Slider x:Name="ZSlider"
                         Width="90"
-                        Margin="5,0,0,0"
-                        AutoToolTipPlacement="TopLeft"
-                        AutoToolTipPrecision="3"
-                        IsMoveToPointEnabled="True"
+                        Style="{StaticResource RegisterSlider}"
                         Maximum="{Binding ElementName=ZMaxTextBox, Path=Text}"
                         Minimum="{Binding ElementName=ZMinTextBox, Path=Text}"
                         ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Value, Converter={x:Static converters:DoubleToStringConverter.F1}}" />

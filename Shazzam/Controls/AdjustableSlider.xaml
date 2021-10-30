@@ -107,15 +107,10 @@
 
             <Slider x:Name="Slider"
                     Grid.Column="3"
-                    Margin="5,0"
-                    VerticalAlignment="Center"
-                    AutoToolTipPlacement="TopLeft"
-                    AutoToolTipPrecision="3"
-                    IsMoveToPointEnabled="True"
-                    Maximum="{Binding ElementName=Root, Path=Maximum}"
-                    Minimum="{Binding ElementName=Root, Path=Minimum}"
-                    ToolTip="{Binding ElementName=Root, Path=Value, Converter={x:Static local:DoubleToStringConverter.F2}}"
-                    Value="{Binding ElementName=Root, Path=Value}" />
+                    Style="{StaticResource RegisterSlider}"
+                    Maximum="{Binding MaxValue}"
+                    Minimum="{Binding MinValue}"
+                    Value="{Binding Value}" />
 
             <TextBlock Grid.Column="4"
                        Margin="5,0,0,0"

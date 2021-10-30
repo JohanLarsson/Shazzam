@@ -123,11 +123,7 @@
 
             <Slider x:Name="XSlider"
                     Grid.Column="3"
-                    Margin="5,0"
-                    VerticalAlignment="Center"
-                    AutoToolTipPlacement="TopLeft"
-                    AutoToolTipPrecision="3"
-                    IsMoveToPointEnabled="True"
+                    Style="{StaticResource RegisterSlider}"
                     Maximum="{Binding ElementName=XMaxTextBox, Path=Text}"
                     Minimum="{Binding ElementName=XMinTextBox, Path=Text}"
                     ToolTip="{Binding ElementName=Root, Path=Value}" />
@@ -191,11 +187,7 @@
 
             <Slider x:Name="YSlider"
                     Grid.Column="3"
-                    Margin="5,0"
-                    VerticalAlignment="Center"
-                    AutoToolTipPlacement="TopLeft"
-                    AutoToolTipPrecision="3"
-                    IsMoveToPointEnabled="True"
+                    Style="{StaticResource RegisterSlider}"
                     Maximum="{Binding ElementName=YMaxTextBox, Path=Text}"
                     Minimum="{Binding ElementName=YMinTextBox, Path=Text}"
                     ToolTip="{Binding ElementName=Root, Path=Value}" />
