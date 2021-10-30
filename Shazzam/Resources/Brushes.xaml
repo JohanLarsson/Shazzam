@@ -28,7 +28,7 @@
     <SolidColorBrush x:Key="NeutralWhiteBrush" Color="{StaticResource NeutralWhiteColor}" />
 
     <DrawingBrush x:Key="AlphaGrid"
-                  Stretch="UniformToFill"
+                  Stretch="None"
                   TileMode="Tile"
                   Viewport="0 0 12 12"
                   ViewportUnits="Absolute">
