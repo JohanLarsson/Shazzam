@@ -108,8 +108,8 @@
             <Slider x:Name="Slider"
                     Grid.Column="3"
                     Style="{StaticResource RegisterSlider}"
-                    Maximum="{Binding MaxValue}"
-                    Minimum="{Binding MinValue}"
+                    Maximum="{Binding Max}"
+                    Minimum="{Binding Min}"
                     Value="{Binding Value}" />
 
             <TextBlock Grid.Column="4"

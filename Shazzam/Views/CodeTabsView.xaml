@@ -114,16 +114,16 @@
 
                             <local:RegisterTemplateSelector.SingleTemplate>
                                 <DataTemplate DataType="{x:Type local:Register}">
-                                    <controls:AdjustableSlider Maximum="{Binding MaxValue, Mode=OneTime}"
-                                                               Minimum="{Binding MinValue, Mode=OneTime}"
+                                    <controls:AdjustableSlider Maximum="{Binding Max, Mode=OneTime}"
+                                                               Minimum="{Binding Min, Mode=OneTime}"
                                                                Value="{Binding Value}" />
                                 </DataTemplate>
                             </local:RegisterTemplateSelector.SingleTemplate>
 
                             <local:RegisterTemplateSelector.PairTemplate>
                                 <DataTemplate DataType="{x:Type local:Register}">
-                                    <controls:AdjustableSliderPair Maximum="{Binding MaxValue, Mode=OneTime}"
-                                                                   Minimum="{Binding MinValue, Mode=OneTime}"
+                                    <controls:AdjustableSliderPair Maximum="{Binding Max, Mode=OneTime}"
+                                                                   Minimum="{Binding Min, Mode=OneTime}"
                                                                    Value="{Binding Value}" />
                                 </DataTemplate>
                             </local:RegisterTemplateSelector.PairTemplate>

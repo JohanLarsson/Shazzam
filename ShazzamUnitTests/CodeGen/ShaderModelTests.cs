@@ -25,8 +25,8 @@
                         type: typeof(double),
                         ordinal: 1,
                         description: "This is the value",
-                        minValue: null,
-                        maxValue: null,
+                        min: null,
+                        max: null,
                         defaultValue: 0),
                 });
 
@@ -110,8 +110,8 @@
                         type: typeof(double),
                         ordinal: 1,
                         description: "This is the value",
-                        minValue: null,
-                        maxValue: null,
+                        min: null,
+                        max: null,
                         defaultValue: 0),
                 });
 
@@ -187,8 +187,8 @@
                         type: typeof(double),
                         ordinal: 1,
                         description: "This is the value",
-                        minValue: null,
-                        maxValue: null,
+                        min: null,
+                        max: null,
                         defaultValue: 0),
                 });
 

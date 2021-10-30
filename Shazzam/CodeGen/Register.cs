@@ -16,16 +16,16 @@
             Type type,
             int ordinal,
             string description,
-            object? minValue,
-            object? maxValue,
+            object? min,
+            object? max,
             object? defaultValue)
         {
             this.Name = name;
             this.Type = type;
             this.Ordinal = ordinal;
             this.Description = description;
-            this.MinValue = minValue;
-            this.MaxValue = maxValue;
+            this.Min = min;
+            this.Max = max;
             this.DefaultValue = defaultValue;
             this.value = defaultValue;
         }
@@ -55,12 +55,12 @@
         /// <summary>
         /// The minimum value for this register variable.
         /// </summary>
-        public object? MinValue { get; }
+        public object? Min { get; }
 
         /// <summary>
         /// The maximum value for this register variable.
         /// </summary>
-        public object? MaxValue { get; }
+        public object? Max { get; }
 
         /// <summary>
         /// The default value of this register variable.
