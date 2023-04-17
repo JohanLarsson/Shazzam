@@ -17,7 +17,7 @@
   <ItemGroup Condition="'$(BuildingInsideVisualStudio)' == 'true'">
     <PackageReference Include="Gu.Analyzers" Version="1.8.5" PrivateAssets="all" />
     <PackageReference Include="IDisposableAnalyzers" Version="3.4.15" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" PrivateAssets="all" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.32-alpha" PrivateAssets="all" />
     <PackageReference Include="PropertyChangedAnalyzers" Version="4.0.0" PrivateAssets="all" />
     <PackageReference Include="ReflectionAnalyzers" Version="0.1.22-dev" PrivateAssets="all" />
