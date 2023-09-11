@@ -19,7 +19,7 @@
   <!-- For faster command line builds as tooling does not work with Gu.Roslyn.Extensions. -->
   <ItemGroup Condition="'$(BuildingInsideVisualStudio)' == 'true'">
     <PackageReference Include="Gu.Analyzers" Version="2.0.3" PrivateAssets="all" />
-    <PackageReference Include="IDisposableAnalyzers" Version="4.0.6" PrivateAssets="all" />
+    <PackageReference Include="IDisposableAnalyzers" Version="4.0.7" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" PrivateAssets="all" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.7.30" PrivateAssets="all" />
     <PackageReference Include="PropertyChangedAnalyzers" Version="4.0.0" PrivateAssets="all" />
