@@ -26,21 +26,47 @@
 
         public static Assembly CompileInMemory(string code)
         {
-            using var provider = new CSharpCodeProvider(new Dictionary<string, string> { { "CompilerVersion", "v3.5" } });
+            using var provider = new CSharpCodeProvider(new Dictionary<string, string>
+            {
+                //{ "CompilerVersion", "v3.5" }
+            });
+
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
             var options = new CompilerParameters
             {
                 ReferencedAssemblies =
                 {
-                    "System.dll",
-                    "System.Core.dll",
-                    "WindowsBase.dll",
-                    "PresentationFramework.dll",
-                    "PresentationCore.dll",
+                    GetDllFilePath("System"),
+                    GetDllFilePath("System.Core"),
+                    GetDllFilePath("WindowsBase"),
+                    GetDllFilePath("PresentationFramework"),
+                    GetDllFilePath("PresentationCore"),
+
+                    //"System.dll",
+                    //"System.Core.dll",
+                    //"WindowsBase.dll",
+                    //"PresentationFramework.dll",
+                    //"PresentationCore.dll",
                 },
                 IncludeDebugInformation = false,
                 GenerateExecutable = false,
                 GenerateInMemory = true,
             };
+
+            string GetDllFilePath(string name)
+            {
+                foreach (var assembly in assemblies)
+                {
+                    if (assembly.GetName().Name == name)
+                    {
+                        return assembly.Location;
+                    }
+                }
+
+                throw new FileNotFoundException($"Can not found Assembly {name}");
+            }
+
             var compiled = provider.CompileAssemblyFromSource(options, code);
             if (compiled.Errors.Count == 0)
             {

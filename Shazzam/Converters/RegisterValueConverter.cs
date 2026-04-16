@@ -48,13 +48,24 @@
 
             if (targetType == typeof(Vector))
             {
+                if (value is Vector vector)
+                {
+                    return vector;
+                }
+
                 return (Vector)(Point)value;
             }
 
             if (targetType == typeof(Size))
             {
-                var p = (Point)value;
-                return new Size(Math.Max(0, p.X), Math.Max(0, p.Y));
+                if (value is Point p)
+                {
+                    return new Size(Math.Max(0, p.X), Math.Max(0, p.Y));
+                }
+                else if (value is Size size)
+                {
+                    return size;
+                }
             }
 
             if (targetType == typeof(Vector3D))

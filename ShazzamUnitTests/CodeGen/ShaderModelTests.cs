@@ -44,13 +44,13 @@
     {
         /// <summary>Identifies the Input dependency property.</summary>
         public static readonly DependencyProperty InputProperty = ShaderEffect.RegisterPixelShaderSamplerProperty(
-            nameof(Input),
+            ""Input"",
             typeof(MyEffect),
             0);
 
         /// <summary>Identifies the Value dependency property.</summary>
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            nameof(Value),
+            ""Value"",
             typeof(double),
             typeof(MyEffect),
             new UIPropertyMetadata(
@@ -78,15 +78,15 @@
         /// </summary>
         public Brush Input
         {
-            get => (Brush)this.GetValue(InputProperty);
-            set => this.SetValue(InputProperty, value);
+            get { return (Brush)this.GetValue(InputProperty); }
+            set { this.SetValue(InputProperty, value); }
         }
 
         /// <summary>This is the value</summary>
         public double Value
         {
-            get => (double)this.GetValue(ValueProperty);
-            set => this.SetValue(ValueProperty, value);
+            get { return (double)this.GetValue(ValueProperty); }
+            set { this.SetValue(ValueProperty, value); }
         }
     }
 }
@@ -129,13 +129,13 @@
     {
         /// <summary>Identifies the Input dependency property.</summary>
         public static readonly DependencyProperty InputProperty = ShaderEffect.RegisterPixelShaderSamplerProperty(
-            nameof(Input),
+            ""Input"",
             typeof(MyEffect),
             0);
 
         /// <summary>Identifies the Value dependency property.</summary>
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-            nameof(Value),
+            ""Value"",
             typeof(double),
             typeof(MyEffect),
             new UIPropertyMetadata(
@@ -154,15 +154,15 @@
         /// </summary>
         public Brush Input
         {
-            get => (Brush)this.GetValue(InputProperty);
-            set => this.SetValue(InputProperty, value);
+            get { return (Brush)this.GetValue(InputProperty); }
+            set { this.SetValue(InputProperty, value); }
         }
 
         /// <summary>This is the value</summary>
         public double Value
         {
-            get => (double)this.GetValue(ValueProperty);
-            set => this.SetValue(ValueProperty, value);
+            get { return (double)this.GetValue(ValueProperty); }
+            set { this.SetValue(ValueProperty, value); }
         }
     }
 }

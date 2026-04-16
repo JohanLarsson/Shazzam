@@ -117,7 +117,7 @@
             {
                 this.Summary("Identifies the Input dependency property.")
                     .Line("public static readonly DependencyProperty InputProperty = ShaderEffect.RegisterPixelShaderSamplerProperty(")
-                    .Line("    nameof(Input),")
+                    .Line("    \"Input\",")
                     .Line($"    typeof({model.GeneratedClassName}),")
                     .Line($"    0);")
                     .Line();
@@ -126,7 +126,7 @@
                 {
                     this.Summary($"Identifies the {register.Name} dependency property.")
                         .Line($"public static readonly DependencyProperty {register.Name}Property = DependencyProperty.Register(")
-                        .Line($"    nameof({register.Name}),")
+                        .Line($"    \"{register.Name}\",")
                         .Line($"    typeof({TypeName(register.Type)}),")
                         .Line($"    typeof({model.GeneratedClassName}),")
                         .Line("    new UIPropertyMetadata(")
@@ -178,8 +178,8 @@
                 this.Summary("There has to be a property of type Brush called Input. This property contains the input image and it is usually not set directly - it is set automatically when our effect is applied to a control.")
                     .Line("public Brush Input")
                     .Line("{")
-                    .Line($"    get => (Brush)this.GetValue(InputProperty);")
-                    .Line($"    set => this.SetValue(InputProperty, value);")
+                    .Line("    get { return (Brush)this.GetValue(InputProperty); }")
+                    .Line("    set { this.SetValue(InputProperty, value); }")
                     .Line("}");
 
                 foreach (var register in model.Registers)
@@ -188,8 +188,8 @@
                         .Summary(register.Description)
                         .Line($"public {TypeName(register.Type)} {register.Name}")
                         .Line("{")
-                        .Line($"    get => ({TypeName(register.Type)})this.GetValue({register.Name}Property);")
-                        .Line($"    set => this.SetValue({register.Name}Property, value);")
+                        .Line($"    get {{ return ({TypeName(register.Type)})this.GetValue({register.Name}Property); }}")
+                        .Line($"    set {{ this.SetValue({register.Name}Property, value); }}")
                         .Line("}");
                 }
 
